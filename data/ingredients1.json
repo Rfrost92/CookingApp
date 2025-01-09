@@ -1,0 +1,450 @@
+[
+  {
+    "name": {
+      "en": "Potato",
+      "de": "Kartoffel",
+      "ua": "Картопля",
+      "ru": "Картофель",
+      "pl": "Ziemniak",
+      "fr": "Pomme de terre",
+      "cz": "Brambora",
+      "es": "Patata",
+      "it": "Patata",
+      "pt": "Batata"
+    },
+    "category": "fruits_vegetables",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Tomato",
+      "de": "Tomate",
+      "ua": "Помідор",
+      "ru": "Томат",
+      "pl": "Pomidor",
+      "fr": "Tomate",
+      "cz": "Rajče",
+      "es": "Tomate",
+      "it": "Pomodoro",
+      "pt": "Tomate"
+    },
+    "category": "fruits_vegetables",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Onion",
+      "de": "Zwiebel",
+      "ua": "Цибуля",
+      "ru": "Лук",
+      "pl": "Cebula",
+      "fr": "Oignon",
+      "cz": "Cibule",
+      "es": "Cebolla",
+      "it": "Cipolla",
+      "pt": "Cebola"
+    },
+    "category": "fruits_vegetables",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Carrot",
+      "de": "Karotte",
+      "ua": "Морква",
+      "ru": "Морковь",
+      "pl": "Marchew",
+      "fr": "Carotte",
+      "cz": "Mrkev",
+      "es": "Zanahoria",
+      "it": "Carota",
+      "pt": "Cenoura"
+    },
+    "category": "fruits_vegetables",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Garlic",
+      "de": "Knoblauch",
+      "ua": "Часник",
+      "ru": "Чеснок",
+      "pl": "Czosnek",
+      "fr": "Ail",
+      "cz": "Česnek",
+      "es": "Ajo",
+      "it": "Aglio",
+      "pt": "Alho"
+    },
+    "category": "fruits_vegetables",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Chicken",
+      "de": "Huhn",
+      "ua": "Курка",
+      "ru": "Курица",
+      "pl": "Kurczak",
+      "fr": "Poulet",
+      "cz": "Kuře",
+      "es": "Pollo",
+      "it": "Pollo",
+      "pt": "Frango"
+    },
+    "category": "proteins",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Egg",
+      "de": "Ei",
+      "ua": "Яйце",
+      "ru": "Яйцо",
+      "pl": "Jajko",
+      "fr": "Oeuf",
+      "cz": "Vejce",
+      "es": "Huevo",
+      "it": "Uovo",
+      "pt": "Ovo"
+    },
+    "category": "proteins",
+    "isEssential": true
+  },
+  {
+    "name": {
+      "en": "Fish",
+      "de": "Fisch",
+      "ua": "Риба",
+      "ru": "Рыба",
+      "pl": "Ryba",
+      "fr": "Poisson",
+      "cz": "Ryba",
+      "es": "Pescado",
+      "it": "Pesce",
+      "pt": "Peixe"
+    },
+    "category": "proteins",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Salt",
+      "de": "Salz",
+      "ua": "Сіль",
+      "ru": "Соль",
+      "pl": "Sól",
+      "fr": "Sel",
+      "cz": "Sůl",
+      "es": "Sal",
+      "it": "Sale",
+      "pt": "Sal"
+    },
+    "category": "spices_oils_sauces",
+    "isEssential": true
+  },
+  {
+    "name": {
+      "en": "Pepper",
+      "de": "Pfeffer",
+      "ua": "Перець",
+      "ru": "Перец",
+      "pl": "Pieprz",
+      "fr": "Poivre",
+      "cz": "Pepř",
+      "es": "Pimienta",
+      "it": "Pepe",
+      "pt": "Pimenta"
+    },
+    "category": "spices_oils_sauces",
+    "isEssential": true
+  },
+  {
+    "name": {
+      "en": "Olive Oil",
+      "de": "Olivenöl",
+      "ua": "Оливкова олія",
+      "ru": "Оливковое масло",
+      "pl": "Oliwa z oliwek",
+      "fr": "Huile d'Olive",
+      "cz": "Olivový olej",
+      "es": "Aceite de oliva",
+      "it": "Olio d'oliva",
+      "pt": "Azeite"
+    },
+    "category": "spices_oils_sauces",
+    "isEssential": true
+  },
+  {
+    "name": {
+      "en": "Rice",
+      "de": "Reis",
+      "ua": "Рис",
+      "ru": "Рис",
+      "pl": "Ryż",
+      "fr": "Riz",
+      "cz": "Rýže",
+      "es": "Arroz",
+      "it": "Riso",
+      "pt": "Arroz"
+    },
+    "category": "grains_nuts",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Pasta",
+      "de": "Nudeln",
+      "ua": "Макарони",
+      "ru": "Макароны",
+      "pl": "Makaron",
+      "fr": "Pâtes",
+      "cz": "Těstoviny",
+      "es": "Pasta",
+      "it": "Pasta",
+      "pt": "Massa"
+    },
+    "category": "grains_nuts",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Milk",
+      "de": "Milch",
+      "ua": "Молоко",
+      "ru": "Молоко",
+      "pl": "Mleko",
+      "fr": "Lait",
+      "cz": "Mléko",
+      "es": "Leche",
+      "it": "Latte",
+      "pt": "Leite"
+    },
+    "category": "dairy",
+    "isEssential": true
+  },
+  {
+    "name": {
+      "en": "Cheese",
+      "de": "Käse",
+      "ua": "Сир",
+      "ru": "Сыр",
+      "pl": "Ser",
+      "fr": "Fromage",
+      "cz": "Sýr",
+      "es": "Queso",
+      "it": "Formaggio",
+      "pt": "Queijo"
+    },
+    "category": "dairy",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Walnuts",
+      "de": "Walnüsse",
+      "ua": "Грецькі горіхи",
+      "ru": "Грецкие орехи",
+      "pl": "Orzechy włoskie",
+      "fr": "Noix",
+      "cz": "Vlašské ořechy",
+      "es": "Nueces",
+      "it": "Noci",
+      "pt": "Nozes"
+    },
+    "category": "grains_nuts",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Beef",
+      "de": "Rindfleisch",
+      "ua": "Яловичина",
+      "ru": "Говядина",
+      "pl": "Wołowina",
+      "fr": "Boeuf",
+      "cz": "Hovězí maso",
+      "es": "Carne de res",
+      "it": "Manzo",
+      "pt": "Carne de vaca"
+    },
+    "category": "proteins",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Pork",
+      "de": "Schweinefleisch",
+      "ua": "Свинина",
+      "ru": "Свинина",
+      "pl": "Wieprzowina",
+      "fr": "Porc",
+      "cz": "Vepřové maso",
+      "es": "Cerdo",
+      "it": "Maiale",
+      "pt": "Carne de porco"
+    },
+    "category": "proteins",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Shrimps",
+      "de": "Garnelen",
+      "ua": "Креветки",
+      "ru": "Креветки",
+      "pl": "Krewetki",
+      "fr": "Crevettes",
+      "cz": "Krevety",
+      "es": "Camarones",
+      "it": "Gamberetti",
+      "pt": "Camarões"
+    },
+    "category": "proteins",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Cream Cheese",
+      "de": "Frischkäse",
+      "ua": "Сир кремовий",
+      "ru": "Сливочный сыр",
+      "pl": "Serek śmietankowy",
+      "fr": "Fromage frais",
+      "cz": "Smetanový sýr",
+      "es": "Queso crema",
+      "it": "Formaggio spalmabile",
+      "pt": "Queijo creme"
+    },
+    "category": "dairy",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Cucumber",
+      "de": "Gurke",
+      "ua": "Огірок",
+      "ru": "Огурец",
+      "pl": "Ogórek",
+      "fr": "Concombre",
+      "cz": "Okurka",
+      "es": "Pepino",
+      "it": "Cetriolo",
+      "pt": "Pepino"
+    },
+    "category": "fruits_vegetables",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Honey",
+      "de": "Honig",
+      "ua": "Мед",
+      "ru": "Мёд",
+      "pl": "Miód",
+      "fr": "Miel",
+      "cz": "Med",
+      "es": "Miel",
+      "it": "Miele",
+      "pt": "Mel"
+    },
+    "category": "miscellaneous",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Sugar",
+      "de": "Zucker",
+      "ua": "Цукор",
+      "ru": "Сахар",
+      "pl": "Cukier",
+      "fr": "Sucre",
+      "cz": "Cukr",
+      "es": "Azúcar",
+      "it": "Zucchero",
+      "pt": "Açúcar"
+    },
+    "category": "miscellaneous",
+    "isEssential": true
+  },
+  {
+    "name": {
+      "en": "Wine",
+      "de": "Wein",
+      "ua": "Вино",
+      "ru": "Вино",
+      "pl": "Wino",
+      "fr": "Vin",
+      "cz": "Víno",
+      "es": "Vino",
+      "it": "Vino",
+      "pt": "Vinho"
+    },
+    "category": "beverages",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Butter",
+      "de": "Butter",
+      "ua": "Масло вершкове",
+      "ru": "Сливочное масло",
+      "pl": "Masło",
+      "fr": "Beurre",
+      "cz": "Máslo",
+      "es": "Mantequilla",
+      "it": "Burro",
+      "pt": "Manteiga"
+    },
+    "category": "dairy",
+    "isEssential": true
+  },
+  {
+    "name": {
+      "en": "Basil",
+      "de": "Basilikum",
+      "ua": "Базилік",
+      "ru": "Базилик",
+      "pl": "Bazylia",
+      "fr": "Basilic",
+      "cz": "Bazalka",
+      "es": "Albahaca",
+      "it": "Basilico",
+      "pt": "Manjericão"
+    },
+    "category": "spices_oils_sauces",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Parsley",
+      "de": "Petersilie",
+      "ua": "Петрушка",
+      "ru": "Петрушка",
+      "pl": "Pietruszka",
+      "fr": "Persil",
+      "cz": "Petržel",
+      "es": "Perejil",
+      "it": "Prezzemolo",
+      "pt": "Salsa"
+    },
+    "category": "spices_oils_sauces",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Sunflower Oil",
+      "de": "Sonnenblumenöl",
+      "ua": "Соняшникова олія",
+      "ru": "Подсолнечное масло",
+      "pl": "Olej słonecznikowy",
+      "fr": "Huile de tournesol",
+      "cz": "Slunečnicový olej",
+      "es": "Aceite de girasol",
+      "it": "Olio di girasole",
+      "pt": "Óleo de girassol"
+    },
+    "category": "spices_oils_sauces",
+    "isEssential": true
+  }
+]

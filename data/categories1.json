@@ -1,0 +1,107 @@
+[
+  {
+    "id": "fruits_vegetables",
+    "name": {
+      "en": "Fruits & Vegetables",
+      "de": "Obst & Gemüse",
+      "ua": "Фрукти та овочі",
+      "ru": "Фрукты и овощи",
+      "pl": "Owoce i Warzywa",
+      "fr": "Fruits et Légumes",
+      "cz": "Ovoce a Zelenina",
+      "es": "Frutas y Verduras",
+      "it": "Frutta e Verdura",
+      "pt": "Frutas e Vegetais"
+    }
+  },
+  {
+    "id": "proteins",
+    "name": {
+      "en": "Proteins",
+      "de": "Proteine",
+      "ua": "Протеїни",
+      "ru": "Белки",
+      "pl": "Białka",
+      "fr": "Protéines",
+      "cz": "Proteiny",
+      "es": "Proteínas",
+      "it": "Proteine",
+      "pt": "Proteínas"
+    }
+  },
+  {
+    "id": "grains_nuts",
+    "name": {
+      "en": "Grains, Nuts & Seeds",
+      "de": "Getreide, Nüsse & Samen",
+      "ua": "Зернові, горіхи та насіння",
+      "ru": "Зерновые, орехи и семена",
+      "pl": "Zboża, Orzechy i Nasiona",
+      "fr": "Céréales, Noix et Graines",
+      "cz": "Obiloviny, Ořechy a Semena",
+      "es": "Cereales, Frutos Secos y Semillas",
+      "it": "Cereali, Frutta Secca e Semi",
+      "pt": "Grãos, Nozes e Sementes"
+    }
+  },
+  {
+    "id": "spices_oils_sauces",
+    "name": {
+      "en": "Spices, Oils & Sauces",
+      "de": "Gewürze, Öle & Saucen",
+      "ua": "Спеції, олії та соуси",
+      "ru": "Специи, масла и соусы",
+      "pl": "Przyprawy, Oleje i Sosy",
+      "fr": "Épices, Huiles et Sauces",
+      "cz": "Koření, Oleje a Omáčky",
+      "es": "Especias, Aceites y Salsas",
+      "it": "Spezie, Oli e Salse",
+      "pt": "Especiarias, Óleos e Molhos"
+    }
+  },
+  {
+    "id": "dairy",
+    "name": {
+      "en": "Dairy",
+      "de": "Milchprodukte",
+      "ua": "Молочні",
+      "ru": "Молочные",
+      "pl": "Nabiał",
+      "fr": "Produits Laitiers",
+      "cz": "Mléčné Výrobky",
+      "es": "Lácteos",
+      "it": "Latticini",
+      "pt": "Laticínios"
+    }
+  },
+  {
+    "id": "beverages",
+    "name": {
+      "en": "Beverages",
+      "de": "Getränke",
+      "ua": "Напої",
+      "ru": "Напитки",
+      "pl": "Napoje",
+      "fr": "Boissons",
+      "cz": "Nápoje",
+      "es": "Bebidas",
+      "it": "Bevande",
+      "pt": "Bebidas"
+    }
+  },
+  {
+    "id": "miscellaneous",
+    "name": {
+      "en": "Miscellaneous",
+      "de": "Verschiedenes",
+      "ua": "Різне",
+      "ru": "Разное",
+      "pl": "Różne",
+      "fr": "Divers",
+      "cz": "Různé",
+      "es": "Varios",
+      "it": "Vari",
+      "pt": "Diversos"
+    }
+  }
+]
