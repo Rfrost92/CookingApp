@@ -24,6 +24,7 @@ export default function IngredientSelectionScreen() {
     const [selectedIngredients, setSelectedIngredients] = useState<{ [key: string]: boolean }>({});
     const [searchQuery, setSearchQuery] = useState<string>(""); // Search state
     const [loading, setLoading] = useState(true);
+    const [customIngredient, setCustomIngredient] = useState<string>(""); // Input for new ingredients
     const navigation = useNavigation();
 
     useEffect(() => {
@@ -81,6 +82,51 @@ export default function IngredientSelectionScreen() {
             ...prev,
             [id]: !prev[id],
         }));
+    };
+
+    // Add a custom ingredient to the Miscellaneous category
+    const addCustomIngredient = () => {
+        if (!customIngredient.trim()) {
+            Alert.alert("Error", "Please enter a valid ingredient.");
+            return;
+        }
+
+        const newIngredient = {
+            id: `custom-${Date.now()}`, // Unique ID for custom ingredient
+            name: { en: customIngredient },
+        };
+
+        // Add to Miscellaneous category
+        setCategories((prevCategories) => {
+            return prevCategories.map((category) => {
+                if (category.id === "miscellaneous") {
+                    return {
+                        ...category,
+                        ingredients: [...category.ingredients, newIngredient],
+                    };
+                }
+                return category;
+            });
+        });
+
+        setFilteredCategories((prevCategories) => {
+            return prevCategories.map((category) => {
+                if (category.id === "miscellaneous") {
+                    return {
+                        ...category,
+                        ingredients: [...category.ingredients, newIngredient],
+                    };
+                }
+                return category;
+            });
+        });
+
+        setSelectedIngredients((prev) => ({
+            ...prev,
+            [newIngredient.id]: true, // Automatically select the new ingredient
+        }));
+
+        setCustomIngredient(""); // Clear input field
     };
 
     // Get selected ingredients
@@ -153,6 +199,12 @@ export default function IngredientSelectionScreen() {
     // Render category
     const renderCategory = ({ item }: any) => {
         const isExpanded = expandedCategories[item.id];
+
+        // Calculate the count of selected ingredients in the category
+        const selectedCount = item.ingredients.filter(
+            (ingredient: any) => selectedIngredients[ingredient.id]
+        ).length;
+
         return (
             <View key={item.id} style={styles.categoryContainer}>
                 <TouchableOpacity
@@ -160,7 +212,7 @@ export default function IngredientSelectionScreen() {
                     onPress={() => toggleCategory(item.id)}
                 >
                     <Text style={styles.categoryTitle}>
-                        {item.name.en || "Unknown Category"} ({item.ingredients.length})
+                        {item.name.en || "Unknown Category"} ({selectedCount}/{item.ingredients.length})
                     </Text>
                     <Text style={styles.categoryToggle}>{isExpanded ? "-" : "+"}</Text>
                 </TouchableOpacity>
@@ -174,6 +226,7 @@ export default function IngredientSelectionScreen() {
             </View>
         );
     };
+
 
     if (loading) {
         return (
@@ -193,6 +246,16 @@ export default function IngredientSelectionScreen() {
                 value={searchQuery}
                 onChangeText={handleSearch}
             />
+            {/* Add Custom Ingredient */}
+            <View style={styles.customIngredientContainer}>
+                <TextInput
+                    style={styles.customIngredientInput}
+                    placeholder="Add custom ingredient..."
+                    value={customIngredient}
+                    onChangeText={setCustomIngredient}
+                />
+                <Button title="Add" onPress={addCustomIngredient} />
+            </View>
             {/* Category List */}
             <FlatList
                 data={filteredCategories}
@@ -225,6 +288,20 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingHorizontal: 10,
         marginBottom: 15,
+    },
+    customIngredientContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 15,
+    },
+    customIngredientInput: {
+        flex: 1,
+        height: 40,
+        borderColor: "#ccc",
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        marginRight: 10,
     },
     categoryContainer: {
         marginBottom: 15,
