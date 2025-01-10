@@ -1,16 +1,28 @@
 //IngredientsSelectionScreen.tsx
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Switch, Button, Alert } from 'react-native';
-import { db } from '../firebaseConfig';
-import { collection, getDocs } from 'firebase/firestore';
-import categoriesData from '../data/ingredientCategories.json';
-import { useNavigation } from '@react-navigation/native';
-import {fetchRecipe} from "../services/openaiService";
+import React, { useEffect, useState } from "react";
+import {
+    View,
+    Text,
+    FlatList,
+    StyleSheet,
+    TouchableOpacity,
+    Switch,
+    Button,
+    Alert,
+    TextInput,
+} from "react-native";
+import { db } from "../firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
+import categoriesData from "../data/ingredientCategories.json";
+import { useNavigation } from "@react-navigation/native";
+import { fetchRecipe } from "../services/openaiService";
 
 export default function IngredientSelectionScreen() {
     const [categories, setCategories] = useState<any[]>([]);
+    const [filteredCategories, setFilteredCategories] = useState<any[]>([]);
     const [expandedCategories, setExpandedCategories] = useState<{ [key: string]: boolean }>({});
     const [selectedIngredients, setSelectedIngredients] = useState<{ [key: string]: boolean }>({});
+    const [searchQuery, setSearchQuery] = useState<string>(""); // Search state
     const [loading, setLoading] = useState(true);
     const navigation = useNavigation();
 
@@ -18,7 +30,7 @@ export default function IngredientSelectionScreen() {
         const fetchIngredients = async () => {
             try {
                 // Fetch ingredients from Firestore
-                const ingredientSnapshot = await getDocs(collection(db, 'ingredients'));
+                const ingredientSnapshot = await getDocs(collection(db, "ingredients"));
                 const fetchedIngredients = ingredientSnapshot.docs.map((doc) => ({
                     id: doc.id,
                     ...doc.data(),
@@ -36,12 +48,6 @@ export default function IngredientSelectionScreen() {
                     };
                 });
 
-                // Initialize expanded state for categories
-                const expandedState = groupedCategories.reduce((acc: any, category: any) => {
-                    acc[category.id] = false; // Default to collapsed
-                    return acc;
-                }, {});
-
                 // Preselect essential ingredients
                 const preselected = fetchedIngredients.reduce((acc: any, ingredient: any) => {
                     if (ingredient.isEssential) acc[ingredient.id] = true;
@@ -49,11 +55,11 @@ export default function IngredientSelectionScreen() {
                 }, {});
 
                 setCategories(groupedCategories);
-                setExpandedCategories(expandedState);
-                setSelectedIngredients(preselected);
+                setFilteredCategories(groupedCategories); // Initially show all categories
+                setSelectedIngredients(preselected); // Preselect essential ingredients
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching ingredients:', error);
+                console.error("Error fetching ingredients:", error);
                 setLoading(false);
             }
         };
@@ -109,8 +115,29 @@ export default function IngredientSelectionScreen() {
         }
     };
 
+    // Search functionality
+    const handleSearch = (query: string) => {
+        setSearchQuery(query);
 
+        if (query.length < 2) {
+            setFilteredCategories(categories); // Show all categories if query is less than 2 characters
+            return;
+        }
 
+        const lowerCaseQuery = query.toLowerCase();
+        const filtered = categories
+            .map((category) => {
+                const matchingIngredients = category.ingredients.filter((ingredient: any) =>
+                    ingredient.name.en.toLowerCase().includes(lowerCaseQuery)
+                );
+                return matchingIngredients.length > 0
+                    ? { ...category, ingredients: matchingIngredients }
+                    : null;
+            })
+            .filter(Boolean);
+
+        setFilteredCategories(filtered as any[]);
+    };
 
     // Render individual ingredient
     const renderIngredient = ({ item }: any) => (
@@ -119,7 +146,7 @@ export default function IngredientSelectionScreen() {
                 value={!!selectedIngredients[item.id]}
                 onValueChange={() => toggleIngredient(item.id)}
             />
-            <Text style={styles.ingredientText}>{item.name.en || 'Unknown Ingredient'}</Text>
+            <Text style={styles.ingredientText}>{item.name.en || "Unknown Ingredient"}</Text>
         </View>
     );
 
@@ -133,9 +160,9 @@ export default function IngredientSelectionScreen() {
                     onPress={() => toggleCategory(item.id)}
                 >
                     <Text style={styles.categoryTitle}>
-                        {item.name.en || 'Unknown Category'} ({item.ingredients.length})
+                        {item.name.en || "Unknown Category"} ({item.ingredients.length})
                     </Text>
-                    <Text style={styles.categoryToggle}>{isExpanded ? '-' : '+'}</Text>
+                    <Text style={styles.categoryToggle}>{isExpanded ? "-" : "+"}</Text>
                 </TouchableOpacity>
                 {isExpanded && (
                     <FlatList
@@ -159,8 +186,16 @@ export default function IngredientSelectionScreen() {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Select Ingredients</Text>
+            {/* Search Bar */}
+            <TextInput
+                style={styles.searchBar}
+                placeholder="Search ingredients..."
+                value={searchQuery}
+                onChangeText={handleSearch}
+            />
+            {/* Category List */}
             <FlatList
-                data={categories}
+                data={filteredCategories}
                 keyExtractor={(item) => item.id} // Ensure unique key for categories
                 renderItem={renderCategory}
             />
@@ -175,38 +210,46 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: "#fff",
     },
     title: {
         fontSize: 24,
-        fontWeight: 'bold',
+        fontWeight: "bold",
         marginBottom: 20,
-        textAlign: 'center',
+        textAlign: "center",
+    },
+    searchBar: {
+        height: 40,
+        borderColor: "#ccc",
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        marginBottom: 15,
     },
     categoryContainer: {
         marginBottom: 15,
     },
     categoryHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: "row",
+        justifyContent: "space-between",
         padding: 10,
-        backgroundColor: '#f0f0f0',
+        backgroundColor: "#f0f0f0",
         borderRadius: 5,
     },
     categoryTitle: {
         fontSize: 18,
-        fontWeight: 'bold',
+        fontWeight: "bold",
     },
     categoryToggle: {
         fontSize: 18,
-        fontWeight: 'bold',
+        fontWeight: "bold",
     },
     ingredientRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: "row",
+        alignItems: "center",
         padding: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        borderBottomColor: "#ccc",
     },
     ingredientText: {
         fontSize: 16,

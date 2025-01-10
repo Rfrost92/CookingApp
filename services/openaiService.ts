@@ -13,6 +13,7 @@ export const fetchRecipe = async (selectedIngredients) => {
             ", "
         )}. Can you suggest a recipe using these ingredients?`;
 
+        console.log(prompt);
 
   /*      const response = await openai.chat.completions.create({
             model: "gpt-4o", // Use the appropriate model
