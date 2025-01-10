@@ -1,3 +1,4 @@
+//populateIngredientsScript.ts
 import { db } from "../firebaseConfig";
 import ingredients from "./ingredients1.json"; // Path to your JSON file
 import { collection, doc, setDoc } from "firebase/firestore";

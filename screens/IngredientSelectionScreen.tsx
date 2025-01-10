@@ -1,9 +1,11 @@
+//IngredientsSelectionScreen.tsx
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Switch, Button, Alert } from 'react-native';
 import { db } from '../firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
 import categoriesData from '../data/ingredientCategories.json';
 import { useNavigation } from '@react-navigation/native';
+import {fetchRecipe} from "../services/openaiService";
 
 export default function IngredientSelectionScreen() {
     const [categories, setCategories] = useState<any[]>([]);
@@ -93,25 +95,20 @@ export default function IngredientSelectionScreen() {
     const handleGetRecipe = async () => {
         const selected = getSelectedIngredients();
         if (selected.length === 0) {
-            Alert.alert('No ingredients selected', 'Please select at least one ingredient.');
+            Alert.alert("No ingredients selected", "Please select at least one ingredient.");
             return;
         }
 
-        const prompt = `I have the following ingredients: ${selected.join(
-            ', '
-        )}. Can you suggest a recipe using these ingredients?`;
+        try {
+            const recipe = await fetchRecipe(selected);
 
-        console.log(prompt);
-
-        // Replace this with actual GPT API integration
-        const mockResponse = {
-            recipe: "Here's a simple recipe using your ingredients...",
-            instructions: ['Step 1: Do this', 'Step 2: Do that', 'Step 3: Serve and enjoy!'],
-        };
-
-        // Navigate to RecipeResult with response
-        navigation.navigate('RecipeResult', { recipe: mockResponse });
+            // Navigate to RecipeResult with the generated recipe
+            navigation.navigate("RecipeResult", { recipe });
+        } catch (error) {
+            Alert.alert("Error", "Failed to fetch the recipe. Please try again.");
+        }
     };
+
 
 
 

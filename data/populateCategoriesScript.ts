@@ -1,3 +1,4 @@
+//populateCategoriesScript.ts
 import { db } from "../firebaseConfig";
 import categories from "./categories1.json";
 import { collection, doc, setDoc } from "firebase/firestore";
