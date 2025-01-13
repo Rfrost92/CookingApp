@@ -1,14 +1,26 @@
 // ChooseClassicRecipeScreen.ts
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import {
+    View,
+    Text,
+    FlatList,
+    TouchableOpacity,
+    StyleSheet,
+    TextInput,
+    Button,
+    Alert,
+} from "react-native";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
-import {fetchRecipeScenario2, fetchRecipeScenario3} from "../services/openaiService";
+import { fetchRecipeScenario3 } from "../services/openaiService";
 
 export default function ChooseClassicRecipeScreen() {
     const [dishes, setDishes] = useState<any[]>([]);
+    const [filteredDishes, setFilteredDishes] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [searchQuery, setSearchQuery] = useState<string>("");
+    const [customDish, setCustomDish] = useState<string>("");
     const navigation = useNavigation();
 
     useEffect(() => {
@@ -20,6 +32,7 @@ export default function ChooseClassicRecipeScreen() {
                     ...doc.data(),
                 }));
                 setDishes(fetchedDishes);
+                setFilteredDishes(fetchedDishes);
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching dishes:", error);
@@ -31,9 +44,22 @@ export default function ChooseClassicRecipeScreen() {
         fetchDishes();
     }, []);
 
-    const handleSelectDish = async (dish: any) => {
+    const handleSearch = (query: string) => {
+        setSearchQuery(query);
+        if (query.trim() === "") {
+            setFilteredDishes(dishes);
+        } else {
+            setFilteredDishes(
+                dishes.filter((dish) =>
+                    dish.name.en.toLowerCase().includes(query.toLowerCase())
+                )
+            );
+        }
+    };
+
+    const handleSelectDish = async (dishName: string) => {
         try {
-            const recipe = await fetchRecipeScenario3(dish.name.en);
+            const recipe = await fetchRecipeScenario3(dishName);
 
             // Navigate to RecipeResult with the generated recipe
             navigation.navigate("RecipeResult", { recipe });
@@ -45,7 +71,7 @@ export default function ChooseClassicRecipeScreen() {
     const renderDish = ({ item }: any) => (
         <TouchableOpacity
             style={styles.dishItem}
-            onPress={() => handleSelectDish(item)}
+            onPress={() => handleSelectDish(item.name.en)}
         >
             <Text style={styles.dishName}>{item.name.en}</Text>
         </TouchableOpacity>
@@ -62,8 +88,45 @@ export default function ChooseClassicRecipeScreen() {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Choose a Classic Dish</Text>
+
+            {/* Search Bar */}
+            <TextInput
+                style={styles.searchBar}
+                placeholder="Search dishes..."
+                value={searchQuery}
+                onChangeText={handleSearch}
+            />
+
+            {/* Custom Dish Input */}
+            <View style={styles.customInputContainer}>
+                <TextInput
+                    style={styles.customDishInput}
+                    placeholder="Type a custom dish name"
+                    value={customDish}
+                    onChangeText={setCustomDish}
+                />
+                <TouchableOpacity
+                    style={[
+                        styles.confirmButton,
+                        customDish.trim() !== "" && styles.confirmButtonActive,
+                    ]}
+                    onPress={() => handleSelectDish(customDish)}
+                    disabled={customDish.trim() === ""}
+                >
+                    <Text
+                        style={[
+                            styles.confirmButtonText,
+                            customDish.trim() !== "" && styles.confirmButtonTextActive,
+                        ]}
+                    >
+                        Confirm
+                    </Text>
+                </TouchableOpacity>
+            </View>
+
+            {/* Dish List */}
             <FlatList
-                data={dishes}
+                data={filteredDishes}
                 keyExtractor={(item) => item.id}
                 renderItem={renderDish}
             />
@@ -82,6 +145,44 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginBottom: 20,
         textAlign: "center",
+    },
+    searchBar: {
+        height: 40,
+        borderColor: "#ccc",
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        marginBottom: 15,
+    },
+    customInputContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 20,
+    },
+    customDishInput: {
+        flex: 1,
+        height: 40,
+        borderColor: "#ccc",
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingHorizontal: 10,
+    },
+    confirmButton: {
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderRadius: 5,
+        marginLeft: 10,
+        backgroundColor: "#ccc",
+    },
+    confirmButtonActive: {
+        backgroundColor: "#4caf50",
+    },
+    confirmButtonText: {
+        fontSize: 16,
+        color: "#fff",
+    },
+    confirmButtonTextActive: {
+        color: "#fff",
     },
     dishItem: {
         padding: 15,
