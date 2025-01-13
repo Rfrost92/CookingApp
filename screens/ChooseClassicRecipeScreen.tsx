@@ -7,7 +7,6 @@ import {
     TouchableOpacity,
     StyleSheet,
     TextInput,
-    Button,
     Alert,
 } from "react-native";
 import { collection, getDocs } from "firebase/firestore";
@@ -129,6 +128,8 @@ export default function ChooseClassicRecipeScreen() {
                 data={filteredDishes}
                 keyExtractor={(item) => item.id}
                 renderItem={renderDish}
+                contentContainerStyle={styles.listContainer}
+                style={styles.list}
             />
         </View>
     );
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
     customInputContainer: {
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: 20,
+        marginBottom: 15,
     },
     customDishInput: {
         flex: 1,
@@ -190,8 +191,16 @@ const styles = StyleSheet.create({
         borderColor: "#ccc",
         borderRadius: 5,
         marginBottom: 10,
+        width: "100%",
     },
     dishName: {
         fontSize: 18,
+        textAlign: "center",
+    },
+    listContainer: {
+        paddingBottom: 10,
+    },
+    list: {
+        flex: 1,
     },
 });

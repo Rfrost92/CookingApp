@@ -16,7 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function Scenario2Step1Screen() {
     const [cuisineOptions, setCuisineOptions] = useState<string[]>([
-        "any cuisine",
+        "any",
         "chinese",
         "japanese",
         "any asian",
@@ -24,25 +24,30 @@ export default function Scenario2Step1Screen() {
         "ukrainian",
     ]);
     const [thematicOptions, setThematicOptions] = useState<string[]>([
+        "any",
         "Christmas dinner",
         "Birthday celebration",
         "romantic dinner",
         "business lunch",
     ]);
     const [starIngredientOptions, setStarIngredientOptions] = useState<any[]>([]);
-    const [filteredCuisineOptions, setFilteredCuisineOptions] = useState<string[]>([]);
-    const [filteredThematicOptions, setFilteredThematicOptions] = useState<string[]>([]);
-    const [filteredStarIngredients, setFilteredStarIngredients] = useState<any[]>([]);
+    const [filteredCuisineOptions, setFilteredCuisineOptions] = useState<string[]>([
+        "any",
+    ]);
+    const [filteredThematicOptions, setFilteredThematicOptions] = useState<string[]>(["any"]);
+    const [filteredStarIngredients, setFilteredStarIngredients] = useState<any[]>([
+        { name: { en: "any" } },
+    ]);
 
-    const [selectedCuisine, setSelectedCuisine] = useState<string>("any cuisine");
+    const [selectedCuisine, setSelectedCuisine] = useState<string>("any");
     const [customCuisine, setCustomCuisine] = useState<string>("");
     const [isCustomCuisineSelected, setIsCustomCuisineSelected] = useState<boolean>(false);
 
-    const [selectedThematic, setSelectedThematic] = useState<string>("none");
+    const [selectedThematic, setSelectedThematic] = useState<string>("any");
     const [customThematic, setCustomThematic] = useState<string>("");
     const [isCustomThematicSelected, setIsCustomThematicSelected] = useState<boolean>(false);
 
-    const [selectedStarIngredient, setSelectedStarIngredient] = useState<string>("");
+    const [selectedStarIngredient, setSelectedStarIngredient] = useState<string>("any");
     const [customStarIngredient, setCustomStarIngredient] = useState<string>("");
     const [isCustomStarIngredientSelected, setIsCustomStarIngredientSelected] =
         useState<boolean>(false);
@@ -63,9 +68,12 @@ export default function Scenario2Step1Screen() {
                     ...doc.data(),
                 }));
 
-                const filteredIngredients = fetchedIngredients.filter((ingredient) =>
-                    ["fruits_vegetables", "proteins"].includes(ingredient.category)
-                );
+                const filteredIngredients = [
+                    { name: { en: "any" } },
+                    ...fetchedIngredients.filter((ingredient) =>
+                        ["fruits_vegetables", "proteins"].includes(ingredient.category)
+                    ),
+                ];
 
                 setStarIngredientOptions(filteredIngredients);
                 setFilteredStarIngredients(filteredIngredients);
@@ -109,12 +117,12 @@ export default function Scenario2Step1Screen() {
         setIsCustomCuisineSelected(false);
         setCuisineSearch("");
 
-        setSelectedThematic("none");
+        setSelectedThematic("any");
         setCustomThematic("");
         setIsCustomThematicSelected(false);
         setThematicSearch("");
 
-        setSelectedStarIngredient("");
+        setSelectedStarIngredient("any");
         setCustomStarIngredient("");
         setIsCustomStarIngredientSelected(false);
         setStarIngredientSearch("");
@@ -148,7 +156,6 @@ export default function Scenario2Step1Screen() {
             starIngredient,
         };
 
-        console.log(selectedData);
         navigation.navigate("Scenario2Step2", { selectedData });
     };
 
@@ -196,7 +203,7 @@ export default function Scenario2Step1Screen() {
             <FlatList
                 data={filteredCuisineOptions}
                 horizontal
-                keyExtractor={(item) => item}
+                keyExtractor={(item, index) => `${item}-${index}`} // Ensure a unique key
                 renderItem={({ item }) =>
                     renderChoiceButton(
                         item,
@@ -238,7 +245,7 @@ export default function Scenario2Step1Screen() {
             <FlatList
                 data={filteredThematicOptions}
                 horizontal
-                keyExtractor={(item) => item}
+                keyExtractor={(item, index) => `${item}-${index}`} // Ensure a unique key
                 renderItem={({ item }) =>
                     renderChoiceButton(
                         item,
@@ -280,7 +287,7 @@ export default function Scenario2Step1Screen() {
             <FlatList
                 data={filteredStarIngredients}
                 horizontal
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item, index) => `${item}-${index}`} // Ensure a unique key
                 renderItem={({ item }) =>
                     renderChoiceButton(
                         item.name.en,

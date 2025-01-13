@@ -68,7 +68,8 @@ export const fetchRecipeScenario2 = async (requestData) => {
         }
 
         // Include appliances
-        prompt += `I would be ready to cook using the following appliances: ${requestData.selectedAppliances.join(", ")}. `;
+        if (requestData.selectedAppliances[0].toLowerCase() !== "any") {
+            prompt += `I would be ready to cook using the following appliances: ${requestData.selectedAppliances.join(", ")}. `;        }
 
         // Include meal type, dish type, portions, and cooking time
         prompt += `This should be a ${requestData.mealType} ${requestData.dishType} for ${requestData.portions} portions. `;
