@@ -128,17 +128,17 @@ export default function Scenario2Step1Screen() {
             : selectedStarIngredient;
 
         if (!cuisine || !cuisine.trim()) {
-            Alert.alert("Cuisine Missing", "Please select or add a cuisine.");
+            Alert.alert("Cuisine Missing", "Please select or use a custom cuisine.");
             return;
         }
 
         if (!thematic || !thematic.trim()) {
-            Alert.alert("Thematic Missing", "Please select or add a thematic.");
+            Alert.alert("Thematic Missing", "Please select or use a custom thematic.");
             return;
         }
 
         if (!starIngredient || !starIngredient.trim()) {
-            Alert.alert("Star Ingredient Missing", "Please select or add a star ingredient.");
+            Alert.alert("Star Ingredient Missing", "Please select or use a custom star ingredient.");
             return;
         }
 
@@ -151,16 +151,26 @@ export default function Scenario2Step1Screen() {
         navigation.navigate("Scenario2Step2", selectedData);
     };
 
-    const handleCustomSelection = (
-        customValue: string,
-        setSelectedCustom: React.Dispatch<React.SetStateAction<boolean>>,
-        setSelectedDefault: React.Dispatch<React.SetStateAction<string>>
-    ) => {
-        if (customValue.trim()) {
-            setSelectedCustom(true);
-            setSelectedDefault("");
-        }
-    };
+    const renderChoiceButton = (
+        label: string,
+        isSelected: boolean,
+        onPress: () => void,
+        disabled: boolean = false
+    ) => (
+        <TouchableOpacity
+            style={[
+                styles.choiceItem,
+                isSelected && styles.choiceItemSelected,
+                disabled && styles.choiceItemDisabled,
+            ]}
+            onPress={onPress}
+            disabled={disabled}
+        >
+            <Text style={[styles.choiceText, isSelected && styles.choiceTextSelected]}>
+                {label}
+            </Text>
+        </TouchableOpacity>
+    );
 
     if (loading) {
         return (
@@ -186,47 +196,34 @@ export default function Scenario2Step1Screen() {
                 data={filteredCuisineOptions}
                 horizontal
                 keyExtractor={(item) => item}
-                renderItem={({ item }) => (
-                    <TouchableOpacity
-                        style={[
-                            styles.choiceItem,
-                            selectedCuisine === item && !isCustomCuisineSelected && styles.choiceItemSelected,
-                        ]}
-                        onPress={() => {
+                renderItem={({ item }) =>
+                    renderChoiceButton(
+                        item,
+                        selectedCuisine === item && !isCustomCuisineSelected,
+                        () => {
                             setSelectedCuisine(item);
                             setIsCustomCuisineSelected(false);
-                        }}
-                    >
-                        <Text
-                            style={[
-                                styles.choiceText,
-                                selectedCuisine === item && !isCustomCuisineSelected && styles.choiceTextSelected,
-                            ]}
-                        >
-                            {item}
-                        </Text>
-                    </TouchableOpacity>
-                )}
+                        }
+                    )
+                }
                 showsHorizontalScrollIndicator={false}
             />
             <View style={styles.customInputContainer}>
                 <TextInput
                     style={styles.input}
-                    placeholder="Add custom cuisine"
+                    placeholder="Use custom cuisine"
                     value={customCuisine}
                     onChangeText={setCustomCuisine}
                 />
-                <Button
-                    title="Choose My Custom"
-                    onPress={() =>
-                        handleCustomSelection(
-                            customCuisine,
-                            setIsCustomCuisineSelected,
-                            setSelectedCuisine
-                        )
-                    }
-                    disabled={!customCuisine.trim()}
-                />
+                {renderChoiceButton(
+                    "Use",
+                    isCustomCuisineSelected,
+                    () => {
+                        setIsCustomCuisineSelected(true);
+                        setSelectedCuisine("");
+                    },
+                    !customCuisine.trim()
+                )}
             </View>
 
             {/* Thematic Selection */}
@@ -241,47 +238,34 @@ export default function Scenario2Step1Screen() {
                 data={filteredThematicOptions}
                 horizontal
                 keyExtractor={(item) => item}
-                renderItem={({ item }) => (
-                    <TouchableOpacity
-                        style={[
-                            styles.choiceItem,
-                            selectedThematic === item && !isCustomThematicSelected && styles.choiceItemSelected,
-                        ]}
-                        onPress={() => {
+                renderItem={({ item }) =>
+                    renderChoiceButton(
+                        item,
+                        selectedThematic === item && !isCustomThematicSelected,
+                        () => {
                             setSelectedThematic(item);
                             setIsCustomThematicSelected(false);
-                        }}
-                    >
-                        <Text
-                            style={[
-                                styles.choiceText,
-                                selectedThematic === item && !isCustomThematicSelected && styles.choiceTextSelected,
-                            ]}
-                        >
-                            {item}
-                        </Text>
-                    </TouchableOpacity>
-                )}
+                        }
+                    )
+                }
                 showsHorizontalScrollIndicator={false}
             />
             <View style={styles.customInputContainer}>
                 <TextInput
                     style={styles.input}
-                    placeholder="Add custom thematic"
+                    placeholder="Use custom thematic"
                     value={customThematic}
                     onChangeText={setCustomThematic}
                 />
-                <Button
-                    title="Choose My Custom"
-                    onPress={() =>
-                        handleCustomSelection(
-                            customThematic,
-                            setIsCustomThematicSelected,
-                            setSelectedThematic
-                        )
-                    }
-                    disabled={!customThematic.trim()}
-                />
+                {renderChoiceButton(
+                    "Use",
+                    isCustomThematicSelected,
+                    () => {
+                        setIsCustomThematicSelected(true);
+                        setSelectedThematic("");
+                    },
+                    !customThematic.trim()
+                )}
             </View>
 
             {/* Star Ingredient */}
@@ -296,51 +280,34 @@ export default function Scenario2Step1Screen() {
                 data={filteredStarIngredients}
                 horizontal
                 keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                    <TouchableOpacity
-                        style={[
-                            styles.choiceItem,
-                            selectedStarIngredient === item.name.en &&
-                            !isCustomStarIngredientSelected &&
-                            styles.choiceItemSelected,
-                        ]}
-                        onPress={() => {
+                renderItem={({ item }) =>
+                    renderChoiceButton(
+                        item.name.en,
+                        selectedStarIngredient === item.name.en && !isCustomStarIngredientSelected,
+                        () => {
                             setSelectedStarIngredient(item.name.en);
                             setIsCustomStarIngredientSelected(false);
-                        }}
-                    >
-                        <Text
-                            style={[
-                                styles.choiceText,
-                                selectedStarIngredient === item.name.en &&
-                                !isCustomStarIngredientSelected &&
-                                styles.choiceTextSelected,
-                            ]}
-                        >
-                            {item.name.en}
-                        </Text>
-                    </TouchableOpacity>
-                )}
+                        }
+                    )
+                }
                 showsHorizontalScrollIndicator={false}
             />
             <View style={styles.customInputContainer}>
                 <TextInput
                     style={styles.input}
-                    placeholder="Add custom star ingredient"
+                    placeholder="Use custom star ingredient"
                     value={customStarIngredient}
                     onChangeText={setCustomStarIngredient}
                 />
-                <Button
-                    title="Choose My Custom"
-                    onPress={() =>
-                        handleCustomSelection(
-                            customStarIngredient,
-                            setIsCustomStarIngredientSelected,
-                            setSelectedStarIngredient
-                        )
-                    }
-                    disabled={!customStarIngredient.trim()}
-                />
+                {renderChoiceButton(
+                    "Use",
+                    isCustomStarIngredientSelected,
+                    () => {
+                        setIsCustomStarIngredientSelected(true);
+                        setSelectedStarIngredient("");
+                    },
+                    !customStarIngredient.trim()
+                )}
             </View>
 
             {/* Buttons */}
@@ -387,6 +354,10 @@ const styles = StyleSheet.create({
     choiceItemSelected: {
         backgroundColor: "#d1f5d3",
         borderColor: "#4caf50",
+    },
+    choiceItemDisabled: {
+        backgroundColor: "#f0f0f0",
+        borderColor: "#ccc",
     },
     choiceText: {
         fontSize: 16,
