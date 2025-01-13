@@ -7,11 +7,26 @@ const openai = new OpenAI({
     apiKey: gptApiKey
 });
 
-export const fetchRecipe = async (selectedIngredients) => {
+export const fetchRecipe = async (requestData) => {
+
     try {
-        const prompt = `I have the following ingredients: ${selectedIngredients.join(
-            ", "
-        )}. Can you suggest a recipe using these ingredients?`;
+        let prompt = `I have the following ingredients: ${requestData.selectedIngredients.join(", ")}. 
+        I would be ready to cook using following appliances: ${requestData.selectedAppliances.join(", ")}. 
+        This should be a ${requestData.mealType} ${requestData.dishType} for ${requestData.portions} portions.
+        I would be able to spend cooking up to ${requestData.maxCookingTime} minutes. 
+        Can you suggest a healthy recipe for a human?`;
+
+        if (requestData.openness > 0) {
+            prompt += `On a scale of 3 I have the level ${requestData.openness} openness for additional (except mentioned above ingredients. `;
+        }
+
+        if (requestData.isVegan) {
+            prompt += `The dish should be vegan. `;
+        }
+
+        if (requestData.isVegetarian) {
+            prompt += `The dish should be vegeterian. `;
+        }
 
         console.log(prompt);
 

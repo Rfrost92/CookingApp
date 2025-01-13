@@ -15,7 +15,6 @@ import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import categoriesData from "../data/ingredientCategories.json";
 import { useNavigation } from "@react-navigation/native";
-import { fetchRecipe } from "../services/openaiService";
 
 export default function IngredientSelectionScreen() {
     const [categories, setCategories] = useState<any[]>([]);
@@ -143,24 +142,6 @@ export default function IngredientSelectionScreen() {
         return selected;
     };
 
-    // Submit ingredients to GPT API
-    const handleGetRecipe = async () => {
-        const selected = getSelectedIngredients();
-        if (selected.length === 0) {
-            Alert.alert("No ingredients selected", "Please select at least one ingredient.");
-            return;
-        }
-
-        try {
-            const recipe = await fetchRecipe(selected);
-
-            // Navigate to RecipeResult with the generated recipe
-            navigation.navigate("RecipeResult", { recipe });
-        } catch (error) {
-            Alert.alert("Error", "Failed to fetch the recipe. Please try again.");
-        }
-    };
-
     // Search functionality
     const handleSearch = (query: string) => {
         setSearchQuery(query);
@@ -227,6 +208,14 @@ export default function IngredientSelectionScreen() {
         );
     };
 
+    const handleNext = () => {
+        const selected = getSelectedIngredients();
+        if (selected.length === 0) {
+            Alert.alert("No ingredients selected", "Please select at least one ingredient.");
+            return;
+        }
+        navigation.navigate("ApplianceSelection", { selectedIngredients: selected });
+    };
 
     if (loading) {
         return (
@@ -263,7 +252,7 @@ export default function IngredientSelectionScreen() {
                 renderItem={renderCategory}
             />
             <View style={styles.submitButton}>
-                <Button title="Get Recipe" onPress={handleGetRecipe} />
+                <Button title="Next" onPress={handleNext} />
             </View>
         </View>
     );
