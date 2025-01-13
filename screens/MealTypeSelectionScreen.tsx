@@ -7,11 +7,12 @@ import {
     TouchableOpacity,
     TextInput,
     Button,
-    Alert, Switch,
+    Alert,
+    Switch,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Slider from "@react-native-community/slider";
-import {fetchRecipe} from "../services/openaiService";
+import { fetchRecipe } from "../services/openaiService";
 
 export default function MealTypeSelectionScreen() {
     const [mealType, setMealType] = useState<string>("Dinner"); // Default: Dinner
@@ -34,6 +35,20 @@ export default function MealTypeSelectionScreen() {
         setOpenness(0);
         setIsVegan(false);
         setIsVegetarian(false);
+    };
+
+    const handleVeganChange = (value: boolean) => {
+        setIsVegan(value);
+        if (value) {
+            setIsVegetarian(false); // Unmark Vegetarian if Vegan is selected
+        }
+    };
+
+    const handleVegetarianChange = (value: boolean) => {
+        setIsVegetarian(value);
+        if (value) {
+            setIsVegan(false); // Unmark Vegan if Vegetarian is selected
+        }
     };
 
     const handleSubmit = async () => {
@@ -155,11 +170,11 @@ export default function MealTypeSelectionScreen() {
             {/* Vegan and Vegetarian */}
             <View style={styles.checkmarkContainer}>
                 <View style={styles.checkmarkItem}>
-                    <Switch value={isVegan} onValueChange={setIsVegan} />
+                    <Switch value={isVegan} onValueChange={handleVeganChange} />
                     <Text style={styles.checkmarkText}>Vegan</Text>
                 </View>
                 <View style={styles.checkmarkItem}>
-                    <Switch value={isVegetarian} onValueChange={setIsVegetarian} />
+                    <Switch value={isVegetarian} onValueChange={handleVegetarianChange} />
                     <Text style={styles.checkmarkText}>Vegetarian</Text>
                 </View>
             </View>

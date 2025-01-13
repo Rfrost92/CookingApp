@@ -11,24 +11,34 @@ const appliances = [
     "Blender",
     "Multicooker",
     "Hot-air Grill",
-    "Any", // Special option for default behavior
 ];
 
 export default function ApplianceSelectionScreen() {
-    const [selectedAppliances, setSelectedAppliances] = useState<{ [key: string]: boolean }>({});
+    const [selectedAppliances, setSelectedAppliances] = useState<{ [key: string]: boolean }>({
+        Any: true, // "Any" is selected by default
+    });
     const route = useRoute();
     const navigation = useNavigation();
     const { selectedIngredients } = route.params;
 
     const toggleAppliance = (appliance: string) => {
-        setSelectedAppliances((prev) => ({
-            ...prev,
-            [appliance]: !prev[appliance],
-        }));
+        setSelectedAppliances((prev) => {
+            if (appliance === "Any") {
+                // If "Any" is selected, unselect all others
+                return { Any: !prev.Any };
+            } else {
+                // If a specific appliance is selected, unselect "Any"
+                return {
+                    ...prev,
+                    [appliance]: !prev[appliance],
+                    Any: false,
+                };
+            }
+        });
     };
 
     const resetSelection = () => {
-        setSelectedAppliances({});
+        setSelectedAppliances({ Any: true }); // Reset to default: only "Any" selected
     };
 
     const handleNext = () => {
@@ -50,6 +60,25 @@ export default function ApplianceSelectionScreen() {
         <View style={styles.container}>
             <Text style={styles.title}>Select Appliances</Text>
             <View style={styles.applianceList}>
+                {/* "Any" option is visually distinct */}
+                <TouchableOpacity
+                    style={[
+                        styles.applianceItem,
+                        styles.anyItem,
+                        selectedAppliances.Any && styles.applianceItemSelected,
+                    ]}
+                    onPress={() => toggleAppliance("Any")}
+                >
+                    <Text
+                        style={[
+                            styles.applianceText,
+                            selectedAppliances.Any && styles.applianceTextSelected,
+                        ]}
+                    >
+                        Any
+                    </Text>
+                </TouchableOpacity>
+                {/* Other appliances */}
                 {appliances.map((appliance) => (
                     <TouchableOpacity
                         key={appliance}
@@ -103,6 +132,10 @@ const styles = StyleSheet.create({
         borderColor: "#ccc",
         borderRadius: 5,
         alignItems: "center",
+    },
+    anyItem: {
+        backgroundColor: "#f0f8ff", // Light blue for "Any"
+        borderColor: "#87ceeb",
     },
     applianceItemSelected: {
         backgroundColor: "#d1f5d3",

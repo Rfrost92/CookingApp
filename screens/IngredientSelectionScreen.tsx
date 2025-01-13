@@ -128,6 +128,11 @@ export default function IngredientSelectionScreen() {
         setCustomIngredient(""); // Clear input field
     };
 
+    // Reset all selected ingredients
+    const handleReset = () => {
+        setSelectedIngredients({});
+    };
+
     // Get selected ingredients
     const getSelectedIngredients = () => {
         const selected = [];
@@ -251,7 +256,8 @@ export default function IngredientSelectionScreen() {
                 keyExtractor={(item) => item.id} // Ensure unique key for categories
                 renderItem={renderCategory}
             />
-            <View style={styles.submitButton}>
+            <View style={styles.buttonContainer}>
+                <Button title="Reset" onPress={handleReset} />
                 <Button title="Next" onPress={handleNext} />
             </View>
         </View>
@@ -321,7 +327,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginLeft: 10,
     },
-    submitButton: {
+    buttonContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
         marginTop: 20,
     },
 });
