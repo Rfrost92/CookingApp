@@ -11,7 +11,7 @@ export default function HomeScreen({ navigation }: any) {
             />
             <Button
                 title="I am open to new ideas, I want to cook something from any ingredients"
-                onPress={() => navigation.navigate('IngredientSelection')}
+                onPress={() => navigation.navigate('Scenario2Step1')}
             />
             <Button
                 title="Classic recipes"
