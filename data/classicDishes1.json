@@ -1,0 +1,152 @@
+[
+  {
+    "id": "spaghetti_carbonara",
+    "name": {
+      "en": "Spaghetti Carbonara",
+      "de": "Spaghetti Carbonara",
+      "ua": "Спагеті Карбонара",
+      "ru": "Спагетти Карбонара",
+      "pl": "Spaghetti Carbonara",
+      "fr": "Spaghetti à la Carbonara",
+      "cz": "Špagety Carbonara",
+      "es": "Espaguetis Carbonara",
+      "it": "Spaghetti alla Carbonara",
+      "pt": "Espaguete Carbonara"
+    }
+  },
+  {
+    "id": "beef_bourguignon",
+    "name": {
+      "en": "Beef Bourguignon",
+      "de": "Boeuf Bourguignon",
+      "ua": "Яловичина Бургіньйон",
+      "ru": "Говядина по-бургундски",
+      "pl": "Wołowina po burgundzku",
+      "fr": "Bœuf Bourguignon",
+      "cz": "Hovězí po Burgundsku",
+      "es": "Ternera Bourguignon",
+      "it": "Manzo alla Bourguignonne",
+      "pt": "Carne de Vaca à Bourguignon"
+    }
+  },
+  {
+    "id": "ratatouille",
+    "name": {
+      "en": "Ratatouille",
+      "de": "Ratatouille",
+      "ua": "Рататуй",
+      "ru": "Рататуй",
+      "pl": "Ratatouille",
+      "fr": "Ratatouille",
+      "cz": "Ratatouille",
+      "es": "Ratatouille",
+      "it": "Ratatouille",
+      "pt": "Ratatouille"
+    }
+  },
+  {
+    "id": "chicken_tikka_masala",
+    "name": {
+      "en": "Chicken Tikka Masala",
+      "de": "Hähnchen Tikka Masala",
+      "ua": "Курка Тікка Масала",
+      "ru": "Курица Тикка Масала",
+      "pl": "Kurczak Tikka Masala",
+      "fr": "Poulet Tikka Masala",
+      "cz": "Kuře Tikka Masala",
+      "es": "Pollo Tikka Masala",
+      "it": "Pollo Tikka Masala",
+      "pt": "Frango Tikka Masala"
+    }
+  },
+  {
+    "id": "sushi",
+    "name": {
+      "en": "Sushi",
+      "de": "Sushi",
+      "ua": "Суші",
+      "ru": "Суши",
+      "pl": "Sushi",
+      "fr": "Sushi",
+      "cz": "Sushi",
+      "es": "Sushi",
+      "it": "Sushi",
+      "pt": "Sushi"
+    }
+  },
+  {
+    "id": "paella",
+    "name": {
+      "en": "Paella",
+      "de": "Paella",
+      "ua": "Паелья",
+      "ru": "Паэлья",
+      "pl": "Paella",
+      "fr": "Paella",
+      "cz": "Paella",
+      "es": "Paella",
+      "it": "Paella",
+      "pt": "Paella"
+    }
+  },
+  {
+    "id": "lasagna",
+    "name": {
+      "en": "Lasagna",
+      "de": "Lasagne",
+      "ua": "Лазанья",
+      "ru": "Лазанья",
+      "pl": "Lasagna",
+      "fr": "Lasagnes",
+      "cz": "Lasagne",
+      "es": "Lasaña",
+      "it": "Lasagna",
+      "pt": "Lasanha"
+    }
+  },
+  {
+    "id": "ceviche",
+    "name": {
+      "en": "Ceviche",
+      "de": "Ceviche",
+      "ua": "Севіче",
+      "ru": "Севиче",
+      "pl": "Ceviche",
+      "fr": "Ceviche",
+      "cz": "Ceviche",
+      "es": "Ceviche",
+      "it": "Ceviche",
+      "pt": "Ceviche"
+    }
+  },
+  {
+    "id": "goulash",
+    "name": {
+      "en": "Goulash",
+      "de": "Gulasch",
+      "ua": "Гуляш",
+      "ru": "Гуляш",
+      "pl": "Gulasz",
+      "fr": "Goulash",
+      "cz": "Guláš",
+      "es": "Goulash",
+      "it": "Gulasch",
+      "pt": "Goulash"
+    }
+  },
+  {
+    "id": "tiramisu",
+    "name": {
+      "en": "Tiramisu",
+      "de": "Tiramisu",
+      "ua": "Тірамісу",
+      "ru": "Тирамису",
+      "pl": "Tiramisu",
+      "fr": "Tiramisu",
+      "cz": "Tiramisu",
+      "es": "Tiramisú",
+      "it": "Tiramisù",
+      "pt": "Tiramisù"
+    }
+  }
+]

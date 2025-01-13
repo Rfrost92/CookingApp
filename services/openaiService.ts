@@ -49,7 +49,6 @@ export const fetchRecipeScenario1 = async (requestData) => {
 };
 
 export const fetchRecipeScenario2 = async (requestData) => {
-    console.log(requestData);
     try {
         let prompt = "";
 
@@ -112,4 +111,31 @@ export const fetchRecipeScenario2 = async (requestData) => {
         throw error;
     }
 
+};
+
+export const fetchRecipeScenario3 = async (classicDishName) => {
+    try {
+        const prompt = `Please provide a detailed recipe for the classic dish "${classicDishName}". The recipe should include ingredients, quantities, and step-by-step instructions. Ensure the recipe is clear and easy to follow.`;
+
+        console.log(prompt);
+
+        /* Uncomment the following block to use the actual GPT API
+        const response = await openai.chat.completions.create({
+            model: "gpt-4", // Use the appropriate model
+            messages: [
+                { role: "system", content: "You are a helpful assistant." },
+                { role: "user", content: prompt },
+            ],
+        });
+        const recipe = response.choices[0].message.content;
+        */
+
+        // For testing purposes
+        const recipe = mockedResponses[0].choices[0].message.content;
+
+        return recipe;
+    } catch (error) {
+        console.error("Error fetching recipe for classic dish:", error);
+        throw error;
+    }
 };

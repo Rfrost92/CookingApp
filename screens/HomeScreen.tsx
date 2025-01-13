@@ -15,7 +15,7 @@ export default function HomeScreen({ navigation }: any) {
             />
             <Button
                 title="Classic recipes"
-                onPress={() => navigation.navigate('RecipeResult')}
+                onPress={() => navigation.navigate('ChooseClassicRecipe')}
             />
         </View>
     );
