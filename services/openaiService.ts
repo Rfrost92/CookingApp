@@ -7,7 +7,7 @@ const openai = new OpenAI({
     apiKey: gptApiKey
 });
 
-export const fetchRecipe = async (requestData) => {
+export const fetchRecipeScenario1 = async (requestData) => {
 
     try {
         let prompt = `I have the following ingredients: ${requestData.selectedIngredients.join(", ")}. 
@@ -48,3 +48,68 @@ export const fetchRecipe = async (requestData) => {
     }
 };
 
+export const fetchRecipeScenario2 = async (requestData) => {
+    console.log(requestData);
+    try {
+        let prompt = "";
+
+        // Include cuisine if not "any"
+        if (requestData.cuisine.toLowerCase() !== "any") {
+            prompt += `The cuisine is ${requestData.cuisine}. `;
+        }
+
+        // Include thematic if not "any"
+        if (requestData.thematic.toLowerCase() !== "any") {
+            prompt += `The thematic is ${requestData.thematic}. `;
+        }
+
+        // Include star ingredient if not "any"
+        if (requestData.starIngredient.toLowerCase() !== "any") {
+            prompt += `The star ingredient is ${requestData.starIngredient}. `;
+        }
+
+        // Include appliances
+        prompt += `I would be ready to cook using the following appliances: ${requestData.selectedAppliances.join(", ")}. `;
+
+        // Include meal type, dish type, portions, and cooking time
+        prompt += `This should be a ${requestData.mealType} ${requestData.dishType} for ${requestData.portions} portions. `;
+        prompt += `I would be able to spend cooking up to ${requestData.maxCookingTime} minutes. `;
+
+        // Include openness to additional ingredients
+        if (requestData.openness > 0) {
+            prompt += `On a scale of 3, I have a level ${requestData.openness} openness to additional ingredients (except the ones mentioned above). `;
+        }
+
+        // Include dietary preferences
+        if (requestData.isVegan) {
+            prompt += `The dish should be vegan. `;
+        }
+
+        if (requestData.isVegetarian) {
+            prompt += `The dish should be vegetarian. `;
+        }
+
+        prompt += "Can you suggest a healthy recipe for a human?";
+
+        console.log(prompt);
+
+        /* Uncomment to use actual API
+        const response = await openai.chat.completions.create({
+            model: "gpt-4", // Use the appropriate model
+            messages: [
+                { role: "system", content: "You are a helpful assistant." },
+                { role: "user", content: prompt },
+            ],
+        });
+        const recipe = response.choices[0].message.content;
+        */
+
+        // For testing purposes
+        const recipe = mockedResponses[0].choices[0].message.content;
+        return recipe;
+    } catch (error) {
+        console.error("Error fetching recipe:", error);
+        throw error;
+    }
+
+};

@@ -1,4 +1,4 @@
-// MealTypeSelectionScreen.tsx
+// Scenario2Step3Screen.ts
 import React, { useState } from "react";
 import {
     View,
@@ -12,27 +12,25 @@ import {
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Slider from "@react-native-community/slider";
-import { fetchRecipeScenario1 } from "../services/openaiService";
+import {fetchRecipeScenario2} from "../services/openaiService";
 
-export default function MealTypeSelectionScreen() {
+export default function Scenario2Step3Screen() {
     const [mealType, setMealType] = useState<string>("Dinner"); // Default: Dinner
     const [dishType, setDishType] = useState<string>("Main Course"); // Default: Main Course
     const [portions, setPortions] = useState<string>("2"); // Default: 2 portions
     const [maxCookingTime, setMaxCookingTime] = useState<number>(60); // Default: 60 minutes
-    const [openness, setOpenness] = useState<number>(0); // Default: 0
     const [isVegan, setIsVegan] = useState<boolean>(false);
     const [isVegetarian, setIsVegetarian] = useState<boolean>(false);
 
     const navigation = useNavigation();
     const route = useRoute();
-    const { selectedIngredients, selectedAppliances } = route.params;
+    const { selectedData, selectedAppliances } = route.params;
 
     const handleReset = () => {
         setMealType("Dinner");
         setDishType("Main Course");
         setPortions("2");
         setMaxCookingTime(60);
-        setOpenness(0);
         setIsVegan(false);
         setIsVegetarian(false);
     };
@@ -58,19 +56,18 @@ export default function MealTypeSelectionScreen() {
         }
 
         const requestData = {
-            selectedIngredients,
+            ...selectedData,
             selectedAppliances,
             mealType,
             dishType,
             portions: Number(portions),
             maxCookingTime,
-            openness,
             isVegan,
             isVegetarian,
         };
 
         try {
-            const recipe = await fetchRecipeScenario1(requestData);
+            const recipe = await fetchRecipeScenario2(requestData);
 
             // Navigate to RecipeResult with the generated recipe
             navigation.navigate("RecipeResult", { recipe, requestData });
@@ -152,20 +149,6 @@ export default function MealTypeSelectionScreen() {
                 onValueChange={setMaxCookingTime}
             />
             <Text style={styles.sliderValue}>{maxCookingTime} min</Text>
-
-            {/* Openness to Additional Ingredients */}
-            <Text style={styles.label}>Openness to Additional Ingredients:</Text>
-            <Slider
-                style={styles.slider}
-                minimumValue={0}
-                maximumValue={3}
-                step={1}
-                value={openness}
-                onValueChange={setOpenness}
-            />
-            <Text style={styles.sliderValue}>
-                {["No", "Low", "Medium", "High"][openness]}
-            </Text>
 
             {/* Vegan and Vegetarian */}
             <View style={styles.checkmarkContainer}>

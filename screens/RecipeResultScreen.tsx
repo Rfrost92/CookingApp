@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView, Button, Alert } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { fetchRecipe } from "../services/openaiService";
+import { fetchRecipeScenario1 } from "../services/openaiService";
 
 export default function RecipeResultScreen() {
     const navigation = useNavigation();
@@ -15,7 +15,7 @@ export default function RecipeResultScreen() {
         }
 
         try {
-            const newRecipe = await fetchRecipe(requestData);
+            const newRecipe = await fetchRecipeScenario1(requestData);
             navigation.setParams({ recipe: newRecipe }); // Update the recipe on this screen
         } catch (error) {
             Alert.alert("Error", "Failed to fetch a new recipe. Please try again.");

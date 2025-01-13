@@ -148,7 +148,8 @@ export default function Scenario2Step1Screen() {
             starIngredient,
         };
 
-        navigation.navigate("Scenario2Step2", selectedData);
+        console.log(selectedData);
+        navigation.navigate("Scenario2Step2", { selectedData });
     };
 
     const renderChoiceButton = (

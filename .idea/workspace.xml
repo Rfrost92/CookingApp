@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/data/responseMock.ts" afterDir="false" />
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Step 1 scenario 2 fix">
       <change afterPath="$PROJECT_DIR$/data/secrets.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/openaiService.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/Scenario2Step2Screen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/Scenario2Step3Screen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/populateCategoriesScript.ts" beforeDir="false" afterPath="$PROJECT_DIR$/data/populateCategoriesScript.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/populateIngredientsScript.ts" beforeDir="false" afterPath="$PROJECT_DIR$/data/populateIngredientsScript.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/navigation/RootNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/RootNavigator.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/RecipeResultScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/RecipeResultScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/openaiService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/openaiService.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -63,13 +59,14 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/data" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/screens" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/screens" />
       <recent name="$PROJECT_DIR$/data" />
     </key>
   </component>
@@ -84,6 +81,56 @@
       <workItem from="1736351246605" duration="1454000" />
       <workItem from="1736355231215" duration="5784000" />
     </task>
+    <task id="LOCAL-00001" summary="Attach GPT-API and add mocked responses for testing">
+      <created>1736528503716</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1736528503716</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add the search bar for ingredients">
+      <created>1736529328879</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1736529328879</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add custom ingredients">
+      <created>1736530230584</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1736530230584</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Make scenario 1 work">
+      <created>1736781281888</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1736781281888</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Fine tuning the screens of the scenario 1">
+      <created>1736781883948</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1736781883948</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Step 1 scenario 2">
+      <created>1736783697037</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1736783697037</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Step 1 scenario 2 fix">
+      <created>1736783805368</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1736783805368</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -99,5 +146,15 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Attach GPT-API and add mocked responses for testing" />
+    <MESSAGE value="Add the search bar for ingredients" />
+    <MESSAGE value="Add custom ingredients" />
+    <MESSAGE value="Make scenario 1 work" />
+    <MESSAGE value="Fine tuning the screens of the scenario 1" />
+    <MESSAGE value="Step 1 scenario 2" />
+    <MESSAGE value="Step 1 scenario 2 fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Step 1 scenario 2 fix" />
   </component>
 </project>
