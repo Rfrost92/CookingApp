@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView, Button, Alert } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { fetchRecipeScenario1 } from "../services/openaiService";
+import {fetchRecipeScenario1, fetchRecipeScenario2} from "../services/openaiService";
 
 export default function RecipeResultScreen() {
     const navigation = useNavigation();
     const route = useRoute();
-    const { recipe, requestData } = route.params; // Ensure requestData is passed here
+    const { recipe, requestData, scenario } = route.params; // Ensure requestData is passed here
 
     const handleTryAgain = async () => {
         if (!requestData) {
@@ -15,7 +15,12 @@ export default function RecipeResultScreen() {
         }
 
         try {
-            const newRecipe = await fetchRecipeScenario1(requestData);
+            let newRecipe;
+            if (scenario === 1) {
+                newRecipe = await fetchRecipeScenario1(requestData);
+            } else if (scenario === 2) {
+                newRecipe = await fetchRecipeScenario2(requestData);
+            }
             navigation.setParams({ recipe: newRecipe }); // Update the recipe on this screen
         } catch (error) {
             Alert.alert("Error", "Failed to fetch a new recipe. Please try again.");
@@ -37,7 +42,7 @@ export default function RecipeResultScreen() {
                 <Text style={styles.recipeText}>{recipe}</Text>
             </ScrollView>
             <View style={styles.buttonContainer}>
-                <Button title="Try Again" onPress={handleTryAgain} />
+                {requestData && <Button title="Try Again" onPress={handleTryAgain} />}
                 <Button title="Save to Book of Recipes" onPress={handleSaveToBook} />
                 <Button title="New Recipe" onPress={handleNewRecipe} />
             </View>

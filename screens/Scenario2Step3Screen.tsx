@@ -68,9 +68,9 @@ export default function Scenario2Step3Screen() {
 
         try {
             const recipe = await fetchRecipeScenario2(requestData);
-
+            const scenario = 2
             // Navigate to RecipeResult with the generated recipe
-            navigation.navigate("RecipeResult", { recipe, requestData });
+            navigation.navigate("RecipeResult", { recipe, requestData, scenario });
         } catch (error) {
             Alert.alert("Error", "Failed to fetch the recipe. Please try again.");
         }

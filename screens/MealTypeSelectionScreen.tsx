@@ -71,9 +71,9 @@ export default function MealTypeSelectionScreen() {
 
         try {
             const recipe = await fetchRecipeScenario1(requestData);
-
+            const scenario = 1
             // Navigate to RecipeResult with the generated recipe
-            navigation.navigate("RecipeResult", { recipe, requestData });
+            navigation.navigate("RecipeResult", { recipe, requestData, scenario });
         } catch (error) {
             Alert.alert("Error", "Failed to fetch the recipe. Please try again.");
         }
