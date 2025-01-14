@@ -11,6 +11,8 @@ import Scenario2Step1Screen from "../screens/Scenario2Step1Screen";
 import Scenario2Step2Screen from "../screens/Scenario2Step2Screen";
 import Scenario2Step3Screen from "../screens/Scenario2Step3Screen";
 import ChooseClassicRecipeScreen from "../screens/ChooseClassicRecipeScreen";
+import SignUpScreen from "../screens/SignUpScreen";
+import LogInScreen from "../screens/LogInScreen";
 
 const Stack = createStackNavigator();
 
@@ -27,6 +29,8 @@ export default function RootNavigator() {
                 <Stack.Screen name="Scenario2Step2" component={Scenario2Step2Screen} />
                 <Stack.Screen name="Scenario2Step3" component={Scenario2Step3Screen} />
                 <Stack.Screen name="ChooseClassicRecipe" component={ChooseClassicRecipeScreen} />
+                <Stack.Screen name="SignUp" component={SignUpScreen} />
+                <Stack.Screen name="LogIn" component={LogInScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );

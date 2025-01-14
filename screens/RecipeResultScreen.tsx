@@ -1,3 +1,4 @@
+// RecipeResultScreen.tsx
 import React from "react";
 import { View, Text, StyleSheet, ScrollView, Button, Alert } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";

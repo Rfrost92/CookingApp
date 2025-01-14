@@ -1,5 +1,7 @@
+// firebaseConfig.ts
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
 import { getFirestore, Firestore } from "firebase/firestore";
+import { getAuth, Auth } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
@@ -9,7 +11,8 @@ const firebaseConfig = {
     messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
     appId: "YOUR_APP_ID",
 };
-// Initialize Firebase
+
+// Initialize Firebase app
 let app: FirebaseApp;
 if (!getApps().length) {
     app = initializeApp(firebaseConfig);
@@ -17,5 +20,6 @@ if (!getApps().length) {
     app = getApps()[0];
 }
 
-// Initialize Firestore
+// Initialize Firebase services
+export const auth: Auth = getAuth(app);
 export const db: Firestore = getFirestore(app);
