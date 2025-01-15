@@ -1,10 +1,11 @@
-// firebaseConfig.ts
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
 import { getFirestore, Firestore } from "firebase/firestore";
-import { getAuth, Auth } from "firebase/auth";
+import { initializeAuth, getReactNativePersistence, browserLocalPersistence, setPersistence  } from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {firebaseApiKey} from "./data/secrets";
 
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
+    apiKey: firebaseApiKey,
     authDomain: "cooking-app-3ff5f.firebaseapp.com",
     projectId: "cooking-app-3ff5f",
     storageBucket: "cooking-app-3ff5f.appspot.com",
@@ -20,6 +21,10 @@ if (!getApps().length) {
     app = getApps()[0];
 }
 
-// Initialize Firebase services
-export const auth: Auth = getAuth(app);
+// Initialize Firebase Auth with React Native persistence
+export const auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(AsyncStorage),
+});
+
+// Initialize Firestore
 export const db: Firestore = getFirestore(app);

@@ -2,10 +2,12 @@
 import OpenAI from "openai";
 import {mockedResponses} from "../data/responseMock";
 import {gptApiKey} from "../data/secrets";
+import {incrementRequest} from "../helpers/incrementRequest";
 
 const openai = new OpenAI({
     apiKey: gptApiKey
 });
+const testing = true; //
 
 export const fetchRecipeScenario1 = async (requestData) => {
 
@@ -28,23 +30,26 @@ export const fetchRecipeScenario1 = async (requestData) => {
             prompt += `The dish should be vegeterian. `;
         }
 
-        console.log(prompt);
-
-  /*      const response = await openai.chat.completions.create({
-            model: "gpt-4o", // Use the appropriate model
-            messages: [
-                { role: "system", content: "You are a helpful assistant." },
-                { role: "user", content: prompt },
-            ],
-        });
-*/
-        // for testing:
-        const recipe = mockedResponses[0].choices[0].message.content;
-        // const recipe = response.choices[0].message.content;
+        let recipe: string | null = '';
+        if (testing) {
+            if (requestData.user?.uid) {
+                await incrementRequest(requestData.user.uid);
+            }
+            console.log(prompt);
+            recipe = mockedResponses[0].choices[0].message.content;
+        } else {
+            const response = await openai.chat.completions.create({
+                model: "gpt-4o",
+                messages: [
+                    {role: "system", content: "You are a helpful assistant."},
+                    {role: "user", content: prompt},
+                ],
+            });
+            recipe = response.choices[0].message.content;
+        }
         return recipe;
     } catch (error) {
-        console.error("Error fetching recipe:", error);
-        throw error;
+        return { error: "Daily request limit reached" };
     }
 };
 
@@ -91,52 +96,59 @@ export const fetchRecipeScenario2 = async (requestData) => {
 
         prompt += "Can you suggest a healthy recipe for a human?";
 
-        console.log(prompt);
+        let recipe: string | null = '';
 
-        /* Uncomment to use actual API
-        const response = await openai.chat.completions.create({
-            model: "gpt-4", // Use the appropriate model
-            messages: [
-                { role: "system", content: "You are a helpful assistant." },
-                { role: "user", content: prompt },
-            ],
-        });
-        const recipe = response.choices[0].message.content;
-        */
+        if (testing) {
+            const recipe = mockedResponses[0].choices[0].message.content;
+            if (requestData.user?.uid) {
+                await incrementRequest(requestData.user.uid);
+            }
+            console.log(prompt);
+        } else {
+            const response = await openai.chat.completions.create({
+                model: "gpt-4o",
+                messages: [
+                    { role: "system", content: "You are a helpful assistant." },
+                    { role: "user", content: prompt },
+                ],
+            });
+            recipe = response.choices[0].message.content;
+        }
 
-        // For testing purposes
-        const recipe = mockedResponses[0].choices[0].message.content;
         return recipe;
     } catch (error) {
-        console.error("Error fetching recipe:", error);
-        throw error;
+        if (error.message.includes("Daily request limit reached")) {
+            return { error: "Daily request limit reached" };
+        }
+        throw new Error("Unexpected error occurred");
     }
 
 };
 
-export const fetchRecipeScenario3 = async (classicDishName) => {
+export const fetchRecipeScenario3 = async ({classicDishName, user}) => {
     try {
         const prompt = `Please provide a detailed recipe for the classic dish "${classicDishName}". The recipe should include ingredients, quantities, and step-by-step instructions. Ensure the recipe is clear and easy to follow.`;
 
-        console.log(prompt);
-
-        /* Uncomment the following block to use the actual GPT API
-        const response = await openai.chat.completions.create({
-            model: "gpt-4", // Use the appropriate model
-            messages: [
-                { role: "system", content: "You are a helpful assistant." },
-                { role: "user", content: prompt },
-            ],
-        });
-        const recipe = response.choices[0].message.content;
-        */
-
-        // For testing purposes
-        const recipe = mockedResponses[0].choices[0].message.content;
+        let recipe: string | null = '';
+        if (testing) {
+            recipe = mockedResponses[0].choices[0].message.content;
+            if (user?.uid) {
+                await incrementRequest(user.uid);
+            }
+            console.log(prompt);
+        } else {
+            const response = await openai.chat.completions.create({
+                model: "gpt-4o", // Use the appropriate model
+                messages: [
+                    { role: "system", content: "You are a helpful assistant." },
+                    { role: "user", content: prompt },
+                ],
+            });
+            recipe = response.choices[0].message.content;
+        }
 
         return recipe;
     } catch (error) {
-        console.error("Error fetching recipe for classic dish:", error);
-        throw error;
+        return { error: "Daily request limit reached" };
     }
 };

@@ -1,5 +1,5 @@
 // MealTypeSelectionScreen.tsx
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import {
     View,
     Text,
@@ -13,8 +13,10 @@ import {
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Slider from "@react-native-community/slider";
 import { fetchRecipeScenario1 } from "../services/openaiService";
+import {AuthContext} from "../contexts/AuthContext";
 
 export default function MealTypeSelectionScreen() {
+    const { user, isLoggedIn } = useContext(AuthContext);
     const [mealType, setMealType] = useState<string>("Dinner"); // Default: Dinner
     const [dishType, setDishType] = useState<string>("Main Course"); // Default: Main Course
     const [portions, setPortions] = useState<string>("2"); // Default: 2 portions
@@ -57,6 +59,7 @@ export default function MealTypeSelectionScreen() {
             return;
         }
 
+        const serializableUser = user ? { uid: user.uid } : null;
         const requestData = {
             selectedIngredients,
             selectedAppliances,
@@ -67,15 +70,20 @@ export default function MealTypeSelectionScreen() {
             openness,
             isVegan,
             isVegetarian,
+            user: serializableUser,
         };
 
-        try {
-            const recipe = await fetchRecipeScenario1(requestData);
-            const scenario = 1
-            // Navigate to RecipeResult with the generated recipe
-            navigation.navigate("RecipeResult", { recipe, requestData, scenario });
-        } catch (error) {
-            Alert.alert("Error", "Failed to fetch the recipe. Please try again.");
+        const response = await fetchRecipeScenario1(requestData);
+
+        if (response?.error) {
+            Alert.alert(
+                "Daily Limit Reached",
+                "You have reached your daily limit. Upgrade your subscription for more requests.",
+                [{ text: "OK" }]
+            );
+        } else {
+            const scenario = 1;
+            navigation.navigate("RecipeResult", { recipe: response, requestData, scenario });
         }
     };
 

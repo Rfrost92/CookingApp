@@ -1,14 +1,20 @@
 // authService.ts
-import { auth } from "../firebaseConfig";
+import {auth, db} from "../firebaseConfig";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import {doc, setDoc} from "firebase/firestore";
 
 export const signUp = async (email: string, password: string) => {
-    try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        return userCredential.user;
-    } catch (error) {
-        throw new Error(error.message);
-    }
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // Add user data to Firestore
+    await setDoc(doc(db, "users", user.uid), {
+        email: user.email,
+        subscriptionType: "guest", // Default subscription
+        requestsToday: 0, // Reset daily requests
+    });
+
+    return user;
 };
 
 export const logIn = async (email: string, password: string) => {

@@ -1,5 +1,5 @@
 // Scenario2Step3Screen.ts
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import {
     View,
     Text,
@@ -12,9 +12,11 @@ import {
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Slider from "@react-native-community/slider";
-import {fetchRecipeScenario2} from "../services/openaiService";
+import {fetchRecipeScenario1, fetchRecipeScenario2} from "../services/openaiService";
+import {AuthContext} from "../contexts/AuthContext";
 
 export default function Scenario2Step3Screen() {
+    const { user, isLoggedIn } = useContext(AuthContext);
     const [mealType, setMealType] = useState<string>("Dinner"); // Default: Dinner
     const [dishType, setDishType] = useState<string>("Main Course"); // Default: Main Course
     const [portions, setPortions] = useState<string>("2"); // Default: 2 portions
@@ -55,6 +57,7 @@ export default function Scenario2Step3Screen() {
             return;
         }
 
+        const serializableUser = user ? { uid: user.uid } : null;
         const requestData = {
             ...selectedData,
             selectedAppliances,
@@ -64,15 +67,20 @@ export default function Scenario2Step3Screen() {
             maxCookingTime,
             isVegan,
             isVegetarian,
+            user: serializableUser,
         };
 
-        try {
-            const recipe = await fetchRecipeScenario2(requestData);
-            const scenario = 2
-            // Navigate to RecipeResult with the generated recipe
+        const recipe = await fetchRecipeScenario2(requestData);
+
+        if (recipe?.error) {
+            Alert.alert(
+                "Daily Limit Reached",
+                "You have reached your daily limit. Upgrade your subscription for more requests.",
+                [{ text: "OK" }]
+            );
+        } else {
+            const scenario = 2;
             navigation.navigate("RecipeResult", { recipe, requestData, scenario });
-        } catch (error) {
-            Alert.alert("Error", "Failed to fetch the recipe. Please try again.");
         }
     };
 

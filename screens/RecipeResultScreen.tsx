@@ -1,12 +1,14 @@
 // RecipeResultScreen.tsx
-import React from "react";
+import React, {useContext} from "react";
 import { View, Text, StyleSheet, ScrollView, Button, Alert } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {fetchRecipeScenario1, fetchRecipeScenario2} from "../services/openaiService";
+import {AuthContext} from "../contexts/AuthContext";
 
 export default function RecipeResultScreen() {
     const navigation = useNavigation();
     const route = useRoute();
+    const { user, isLoggedIn } = useContext(AuthContext);
     const { recipe, requestData, scenario } = route.params; // Ensure requestData is passed here
 
     const handleTryAgain = async () => {
@@ -22,9 +24,23 @@ export default function RecipeResultScreen() {
             } else if (scenario === 2) {
                 newRecipe = await fetchRecipeScenario2(requestData);
             }
+
+            // Check if the response contains an error
+            if (newRecipe?.error) {
+                console.log("Error in response:", newRecipe.error);
+
+                Alert.alert(
+                    "Daily Limit Reached",
+                    "You have reached your daily limit. Upgrade your subscription for more requests.",
+                    [{ text: "OK" }]
+                );
+                return;
+            }
+
             navigation.setParams({ recipe: newRecipe }); // Update the recipe on this screen
         } catch (error) {
-            Alert.alert("Error", "Failed to fetch a new recipe. Please try again.");
+            console.error("Error in Try Again:", error);
+            Alert.alert("Error", "An unexpected error occurred. Please try again.");
         }
     };
 
@@ -40,7 +56,13 @@ export default function RecipeResultScreen() {
         <View style={styles.container}>
             <Text style={styles.title}>Your Recipe</Text>
             <ScrollView>
-                <Text style={styles.recipeText}>{recipe}</Text>
+                {typeof recipe === "string" ? (
+                    <Text style={styles.recipeText}>{recipe}</Text>
+                ) : (
+                    <Text style={styles.errorText}>
+                        Unable to display the recipe. Please try again.
+                    </Text>
+                )}
             </ScrollView>
             <View style={styles.buttonContainer}>
                 {requestData && <Button title="Try Again" onPress={handleTryAgain} />}
@@ -66,6 +88,12 @@ const styles = StyleSheet.create({
     recipeText: {
         fontSize: 16,
         lineHeight: 24,
+    },
+    errorText: {
+        fontSize: 16,
+        color: "red",
+        textAlign: "center",
+        marginTop: 20,
     },
     buttonContainer: {
         marginTop: 20,

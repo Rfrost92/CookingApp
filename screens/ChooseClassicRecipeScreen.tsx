@@ -1,5 +1,5 @@
 // ChooseClassicRecipeScreen.ts
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {
     View,
     Text,
@@ -12,9 +12,11 @@ import {
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
-import { fetchRecipeScenario3 } from "../services/openaiService";
+import {fetchRecipeScenario2, fetchRecipeScenario3} from "../services/openaiService";
+import {AuthContext} from "../contexts/AuthContext";
 
 export default function ChooseClassicRecipeScreen() {
+    const { user, isLoggedIn } = useContext(AuthContext);
     const [dishes, setDishes] = useState<any[]>([]);
     const [filteredDishes, setFilteredDishes] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -57,13 +59,18 @@ export default function ChooseClassicRecipeScreen() {
     };
 
     const handleSelectDish = async (dishName: string) => {
-        try {
-            const recipe = await fetchRecipeScenario3(dishName);
+        const serializableUser = user ? { uid: user.uid } : null;
+        const recipe = await fetchRecipeScenario3({dishName, user: serializableUser});
 
-            // Navigate to RecipeResult with the generated recipe
+        if (recipe?.error) {
+            Alert.alert(
+                "Daily Limit Reached",
+                "You have reached your daily limit. Upgrade your subscription for more requests.",
+                [{ text: "OK" }]
+            );
+        } else {
+            const scenario = 1;
             navigation.navigate("RecipeResult", { recipe });
-        } catch (error) {
-            Alert.alert("Error", "Failed to fetch the recipe. Please try again.");
         }
     };
 
