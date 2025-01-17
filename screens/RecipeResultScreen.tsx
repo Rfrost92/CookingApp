@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, ScrollView, Button, Alert } from "react-native"
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {fetchRecipeScenario1, fetchRecipeScenario2} from "../services/openaiService";
 import {AuthContext} from "../contexts/AuthContext";
+import {saveRecipe} from "../helpers/databaseHelpers";
 
 export default function RecipeResultScreen() {
     const navigation = useNavigation();
@@ -44,8 +45,18 @@ export default function RecipeResultScreen() {
         }
     };
 
-    const handleSaveToBook = () => {
-        Alert.alert("Saved", "This recipe has been saved to your book of recipes.");
+    const handleSaveToBook = async () => {
+        if (!isLoggedIn) {
+            Alert.alert("Sign In Required", "Please log in to save recipes.");
+            return;
+        }
+
+        try {
+            await saveRecipe(user?.uid, "Recipe Title", recipe);
+            Alert.alert("Success", "Recipe has been saved to your book.");
+        } catch (error) {
+            Alert.alert("Error", error.message || "Failed to save recipe. Please try again.");
+        }
     };
 
     const handleNewRecipe = () => {

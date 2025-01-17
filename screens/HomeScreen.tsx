@@ -60,7 +60,7 @@ export default function HomeScreen() {
 
     const handleRecipeBookPress = () => {
         if (isLoggedIn) {
-            Alert.alert("Recipe Book", "Feature Coming Soon");
+            navigation.navigate("BookOfRecipes")
         } else {
             Alert.alert("Sign Up Required", "Please log in or sign up to access your recipe book.");
         }
