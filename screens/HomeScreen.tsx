@@ -4,7 +4,8 @@ import { View, Text, TouchableOpacity, StyleSheet, Alert, Modal } from "react-na
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../contexts/AuthContext";
-import { logOut } from "../services/authService"; // Assuming logOut function exists in authService
+import { logOut } from "../services/authService";
+import {isUserTest, resetNonSignedInCounter, resetRequestsForTestUser} from "../helpers/incrementRequest";
 
 export default function HomeScreen() {
     const { user, isLoggedIn } = useContext(AuthContext);
@@ -27,30 +28,14 @@ export default function HomeScreen() {
     }, []);
 
     const handleRequest = async (scenario: string) => {
-        if (isLoggedIn) {
-            try {
-                navigation.navigate(scenario);
-            } catch (error) {
-                Alert.alert(
-                    "Unexpected error occured",
-                    "There is an error",
-                    [{ text: "OK" }]
-                );
-            }
-        } else {
-            if (guestRequests < 2) {
-                const today = new Date().toISOString().split("T")[0];
-                const newCount = guestRequests + 1;
-                setGuestRequests(newCount);
-                await AsyncStorage.setItem(`guestRequests-${today}`, newCount.toString());
-                navigation.navigate(scenario);
-            } else {
-                Alert.alert(
-                    "Daily Limit Reached",
-                    "Sign up to continue!",
-                    [{ text: "Cancel", style: "cancel" }, { text: "Sign Up", onPress: () => navigation.navigate("SignUp") }]
-                );
-            }
+        try {
+            navigation.navigate(scenario);
+        } catch (error) {
+            Alert.alert(
+                "Unexpected error occured",
+                "There is an error",
+                [{ text: "OK" }]
+            );
         }
     };
 
@@ -101,6 +86,10 @@ export default function HomeScreen() {
             <TouchableOpacity style={styles.button} onPress={() => handleRequest("ChooseClassicRecipe")}>
                 <Text style={styles.buttonText}>Classic recipes</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.button}
+                title="Reset Non-Signed-In Counter"
+                onPress={resetNonSignedInCounter}
+            />
             <View style={styles.bottomBar}>
                 <TouchableOpacity style={styles.navButton} onPress={handleAccountPress}>
                     <Text style={styles.navButtonText}>{isLoggedIn ? "Account" : "Log In"}</Text>
@@ -127,6 +116,22 @@ export default function HomeScreen() {
                         <TouchableOpacity style={styles.modalButton} onPress={handleLogout}>
                             <Text style={styles.modalButtonText}>Log Out</Text>
                         </TouchableOpacity>
+                        {/* Reset Requests Button for Test Users */}
+                        {user && isUserTest(user) && (
+                            <TouchableOpacity
+                                style={[styles.modalButton, { backgroundColor: "#ff9800" }]}
+                                onPress={async () => {
+                                    try {
+                                        await resetRequestsForTestUser(user?.uid);
+                                        Alert.alert("Success", "Request count has been reset for today.");
+                                    } catch (error) {
+                                        Alert.alert("Error", error.message || "Failed to reset request count.");
+                                    }
+                                }}
+                            >
+                                <Text style={styles.modalButtonText}>Reset Requests</Text>
+                            </TouchableOpacity>
+                        )}
                         <TouchableOpacity style={styles.modalButton} onPress={() => setAccountModalVisible(false)}>
                             <Text style={styles.modalButtonText}>Close</Text>
                         </TouchableOpacity>

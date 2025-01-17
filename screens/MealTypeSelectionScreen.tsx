@@ -78,7 +78,9 @@ export default function MealTypeSelectionScreen() {
         if (response?.error) {
             Alert.alert(
                 "Daily Limit Reached",
-                "You have reached your daily limit. Upgrade your subscription for more requests.",
+                response.error === "Error: Daily request limit reached for non-signed-in users."
+                    ? "Please sign up for a free account to continue creating recipes."
+                    : "You have reached your daily limit. Upgrade your subscription for more requests.",
                 [{ text: "OK" }]
             );
         } else {

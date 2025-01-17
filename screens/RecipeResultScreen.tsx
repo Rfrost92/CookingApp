@@ -27,11 +27,11 @@ export default function RecipeResultScreen() {
 
             // Check if the response contains an error
             if (newRecipe?.error) {
-                console.log("Error in response:", newRecipe.error);
-
                 Alert.alert(
                     "Daily Limit Reached",
-                    "You have reached your daily limit. Upgrade your subscription for more requests.",
+                    newRecipe.error === "Error: Daily request limit reached for non-signed-in users."
+                        ? "Please sign up for a free account to continue creating recipes."
+                        : "You have reached your daily limit. Upgrade your subscription for more requests.",
                     [{ text: "OK" }]
                 );
                 return;

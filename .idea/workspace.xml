@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Skeleton for sign up and login">
-      <change afterPath="$PROJECT_DIR$/contexts/AuthContext.tsx" afterDir="false" />
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="User sign up and login works. Daily limits for logged in users work.">
       <change afterPath="$PROJECT_DIR$/data/secrets.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/helpers/firebase-auth-overrides.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/helpers/incrementRequest.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/firebaseConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/firebaseConfig.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/incrementRequest.ts" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/incrementRequest.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/ChooseClassicRecipeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ChooseClassicRecipeScreen.tsx" afterDir="false" />
@@ -17,9 +14,7 @@
       <change beforePath="$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/RecipeResultScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/RecipeResultScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/Scenario2Step3Screen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Scenario2Step3Screen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/authService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/authService.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/openaiService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/openaiService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,7 +54,9 @@
     <setting file="file://$PROJECT_DIR$/screens/SignUpScreen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/data/secrets.ts" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/services/authService.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/App.tsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/screens/ChooseClassicRecipeScreen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/screens/RecipeResultScreen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/contexts/AuthContext.tsx" root0="FORCE_HIGHLIGHTING" />
@@ -67,6 +64,7 @@
     <setting file="file://$PROJECT_DIR$/screens/HomeScreen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/services/openaiService.ts" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/navigation/RootNavigator.tsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/helpers/firebase-auth-overrides.d.ts" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="2rLvbteVlqKhdO1mKxSPd3Ubp0Y" />
   <component name="ProjectViewState">
@@ -101,7 +99,7 @@
       <updated>1736351245164</updated>
       <workItem from="1736351246605" duration="1454000" />
       <workItem from="1736355231215" duration="5784000" />
-      <workItem from="1736945528355" duration="9821000" />
+      <workItem from="1736945528355" duration="16487000" />
     </task>
     <task id="LOCAL-00001" summary="Attach GPT-API and add mocked responses for testing">
       <created>1736528503716</created>
@@ -194,7 +192,14 @@
       <option name="project" value="LOCAL" />
       <updated>1736889169816</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="User sign up and login works. Daily limits for logged in users work.">
+      <created>1736962341538</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1736962341538</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,6 +230,7 @@
     <MESSAGE value="Some fine tuning for all scenarios" />
     <MESSAGE value="Handle try again" />
     <MESSAGE value="Skeleton for sign up and login" />
-    <option name="LAST_COMMIT_MESSAGE" value="Skeleton for sign up and login" />
+    <MESSAGE value="User sign up and login works. Daily limits for logged in users work." />
+    <option name="LAST_COMMIT_MESSAGE" value="User sign up and login works. Daily limits for logged in users work." />
   </component>
 </project>

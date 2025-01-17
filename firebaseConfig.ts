@@ -1,3 +1,4 @@
+// firebaseConfig.ts
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
 import { getFirestore, Firestore } from "firebase/firestore";
 import { initializeAuth, getReactNativePersistence, browserLocalPersistence, setPersistence  } from "firebase/auth";

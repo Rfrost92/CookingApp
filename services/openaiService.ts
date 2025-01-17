@@ -2,7 +2,7 @@
 import OpenAI from "openai";
 import {mockedResponses} from "../data/responseMock";
 import {gptApiKey} from "../data/secrets";
-import {incrementRequest} from "../helpers/incrementRequest";
+import {incrementNonSignedInRequests, incrementRequest} from "../helpers/incrementRequest";
 
 const openai = new OpenAI({
     apiKey: gptApiKey
@@ -31,10 +31,12 @@ export const fetchRecipeScenario1 = async (requestData) => {
         }
 
         let recipe: string | null = '';
+        if (requestData.user?.uid) {
+            await incrementRequest(requestData.user.uid);
+        } else if (!requestData.user?.uid) {
+            await incrementNonSignedInRequests();
+        }
         if (testing) {
-            if (requestData.user?.uid) {
-                await incrementRequest(requestData.user.uid);
-            }
             console.log(prompt);
             recipe = mockedResponses[0].choices[0].message.content;
         } else {
@@ -49,7 +51,7 @@ export const fetchRecipeScenario1 = async (requestData) => {
         }
         return recipe;
     } catch (error) {
-        return { error: "Daily request limit reached" };
+        return { error: error.toString() };
     }
 };
 
@@ -98,11 +100,14 @@ export const fetchRecipeScenario2 = async (requestData) => {
 
         let recipe: string | null = '';
 
+        if (requestData.user?.uid) {
+            await incrementRequest(requestData.user.uid);
+        } else if (!requestData.user?.uid) {
+            await incrementNonSignedInRequests();
+        }
+
         if (testing) {
-            const recipe = mockedResponses[0].choices[0].message.content;
-            if (requestData.user?.uid) {
-                await incrementRequest(requestData.user.uid);
-            }
+            recipe = mockedResponses[0].choices[0].message.content;
             console.log(prompt);
         } else {
             const response = await openai.chat.completions.create({
@@ -118,7 +123,7 @@ export const fetchRecipeScenario2 = async (requestData) => {
         return recipe;
     } catch (error) {
         if (error.message.includes("Daily request limit reached")) {
-            return { error: "Daily request limit reached" };
+            return { error: error.toString() };
         }
         throw new Error("Unexpected error occurred");
     }
@@ -130,11 +135,13 @@ export const fetchRecipeScenario3 = async ({classicDishName, user}) => {
         const prompt = `Please provide a detailed recipe for the classic dish "${classicDishName}". The recipe should include ingredients, quantities, and step-by-step instructions. Ensure the recipe is clear and easy to follow.`;
 
         let recipe: string | null = '';
+        if (user?.uid) {
+            await incrementRequest(user.uid);
+        } else if (!user?.uid) {
+            await incrementNonSignedInRequests();
+        }
         if (testing) {
             recipe = mockedResponses[0].choices[0].message.content;
-            if (user?.uid) {
-                await incrementRequest(user.uid);
-            }
             console.log(prompt);
         } else {
             const response = await openai.chat.completions.create({
@@ -149,6 +156,6 @@ export const fetchRecipeScenario3 = async ({classicDishName, user}) => {
 
         return recipe;
     } catch (error) {
-        return { error: "Daily request limit reached" };
+        return { error: error.toString() };
     }
 };
