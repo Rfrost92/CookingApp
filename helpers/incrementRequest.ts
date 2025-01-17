@@ -34,6 +34,9 @@ export const incrementRequest = async (userId: string) => {
                 lastUpdated: serverTimestamp(),
             });
         } else {
+            const deviceId = await getDeviceId();
+            const requestKey = `nonSignedInRequests-${deviceId}-${today}`;
+            await AsyncStorage.setItem(requestKey, '2');
             throw new Error("Daily request limit reached");
         }
     }
