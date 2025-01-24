@@ -60,7 +60,7 @@ export default function ChooseClassicRecipeScreen() {
 
     const handleSelectDish = async (dishName: string) => {
         const serializableUser = user ? { uid: user.uid } : null;
-        const recipe = await fetchRecipeScenario3({dishName, user: serializableUser});
+        const recipe = await fetchRecipeScenario3({classicDishName: dishName, user: serializableUser});
 
         if (recipe?.error) {
             Alert.alert(

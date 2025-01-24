@@ -7,7 +7,7 @@ import {incrementNonSignedInRequests, incrementRequest} from "../helpers/increme
 const openai = new OpenAI({
     apiKey: gptApiKey
 });
-const testing = true; //
+const testing = true; // to test
 
 export const fetchRecipeScenario1 = async (requestData) => {
 

@@ -2495,10 +2495,10 @@
   resolved "https://registry.npmjs.org/@react-native-community/slider/-/slider-4.5.5.tgz"
   integrity sha512-x2N415pg4ZxIltArOKczPwn7JEYh+1OxQ4+hTnafomnMsqs65HZuEWcX+Ch8c5r8V83DiunuQUf5hWGWlw8hQQ==
 
-"@react-native-firebase/app@^21.6.2", "@react-native-firebase/app@21.6.2":
-  version "21.6.2"
-  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-21.6.2.tgz"
-  integrity sha512-yNEzADATa565Nfp1EoWdUgxUw9myCk+u0dblTOu0WQcWddBxug7zEhdvol0k2vkRlEuyLb0biTt7oUy72kKJpw==
+"@react-native-firebase/app@^21.7.1", "@react-native-firebase/app@21.6.2", "@react-native-firebase/app@21.7.1":
+  version "21.7.1"
+  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-21.7.1.tgz"
+  integrity sha512-sBXKJE+Uu2+G8SBQzUXMEIyWK932GqxfKsCAVOfzEegxknQuQ8l6qx/tIbMeEFuBJlo334GNctMa4ehePog5lQ==
   dependencies:
     firebase "10.13.2"
 
@@ -2509,10 +2509,15 @@
   dependencies:
     plist "^3.1.0"
 
-"@react-native-firebase/firestore@^21.6.2":
-  version "21.6.2"
-  resolved "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-21.6.2.tgz"
-  integrity sha512-TgG8uyVp7WuCzVxh8b4LoTU0TolP8pgsLvb/TSwqVN8kNvnczRfc2zcoAmCP86SpHW1EFCMra71Z2uUojqtQkQ==
+"@react-native-firebase/firestore@^21.7.1":
+  version "21.7.1"
+  resolved "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-21.7.1.tgz"
+  integrity sha512-tW1nfya6q/OK0KvQv3/6dJlyeagPoWWGKIvAhPDxjun33ZvCPPsKDJdRkSluaE6cszsCa2IP7srg56FespaWJA==
+
+"@react-native-firebase/storage@^21.7.1":
+  version "21.7.1"
+  resolved "https://registry.npmjs.org/@react-native-firebase/storage/-/storage-21.7.1.tgz"
+  integrity sha512-37l/agWMp/cxtRnxYvx1NaVxVzhHAx89PaWHlx3Wv5lby0Azh3/7csxyRKVKhID44rKCXbf0sH+iAkr+phdjBw==
 
 "@react-native/assets-registry@0.76.5":
   version "0.76.5"
