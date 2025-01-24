@@ -2,10 +2,14 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView } from "react-native";
 import { fetchRecipeById } from "../helpers/databaseHelpers";
+import { useLanguage } from "../services/LanguageContext";
+import translations from "../data/translations.json";
 
 export default function RecipeDetailScreen({ route }: any) {
     const { recipeId } = route.params;
     const [recipe, setRecipe] = useState<any>(null);
+    const { language } = useLanguage();
+    const t = (key: string) => translations[language][key] || key;
 
     useEffect(() => {
         const fetchRecipe = async () => {
@@ -14,7 +18,7 @@ export default function RecipeDetailScreen({ route }: any) {
                 setRecipe(fetchedRecipe);
             } catch (error) {
                 console.error("Error fetching recipe:", error);
-                Alert.alert("Error", "Failed to load recipe.");
+                Alert.alert(t("error"), t("failed_to_load_recipe"));
             }
         };
 
@@ -24,7 +28,7 @@ export default function RecipeDetailScreen({ route }: any) {
     if (!recipe) {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Loading...</Text>
+                <Text style={styles.title}>{t("loading")}</Text>
             </View>
         );
     }

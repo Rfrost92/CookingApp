@@ -1,5 +1,5 @@
 // MealTypeSelectionScreen.tsx
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import {
     View,
     Text,
@@ -13,15 +13,20 @@ import {
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Slider from "@react-native-community/slider";
 import { fetchRecipeScenario1 } from "../services/openaiService";
-import {AuthContext} from "../contexts/AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
+import { useLanguage } from "../services/LanguageContext";
+import translations from "../data/translations.json";
 
 export default function MealTypeSelectionScreen() {
-    const { user, isLoggedIn } = useContext(AuthContext);
-    const [mealType, setMealType] = useState<string>("Dinner"); // Default: Dinner
-    const [dishType, setDishType] = useState<string>("Main Course"); // Default: Main Course
-    const [portions, setPortions] = useState<string>("2"); // Default: 2 portions
-    const [maxCookingTime, setMaxCookingTime] = useState<number>(60); // Default: 60 minutes
-    const [openness, setOpenness] = useState<number>(0); // Default: 0
+    const { user } = useContext(AuthContext);
+    const { language } = useLanguage();
+    const t = (key: string) => translations[language][key] || key;
+
+    const [mealType, setMealType] = useState<string>("Dinner");
+    const [dishType, setDishType] = useState<string>("Main Course");
+    const [portions, setPortions] = useState<string>("2");
+    const [maxCookingTime, setMaxCookingTime] = useState<number>(60);
+    const [openness, setOpenness] = useState<number>(0);
     const [isVegan, setIsVegan] = useState<boolean>(false);
     const [isVegetarian, setIsVegetarian] = useState<boolean>(false);
 
@@ -42,24 +47,23 @@ export default function MealTypeSelectionScreen() {
     const handleVeganChange = (value: boolean) => {
         setIsVegan(value);
         if (value) {
-            setIsVegetarian(false); // Unmark Vegetarian if Vegan is selected
+            setIsVegetarian(false);
         }
     };
 
     const handleVegetarianChange = (value: boolean) => {
         setIsVegetarian(value);
         if (value) {
-            setIsVegan(false); // Unmark Vegan if Vegetarian is selected
+            setIsVegan(false);
         }
     };
 
     const handleSubmit = async () => {
         if (!portions || isNaN(Number(portions)) || Number(portions) <= 0) {
-            Alert.alert("Invalid Input", "Please enter a valid number of portions.");
+            Alert.alert(t("invalid_input"), t("valid_portions"));
             return;
         }
 
-        const serializableUser = user ? { uid: user.uid } : null;
         const requestData = {
             selectedIngredients,
             selectedAppliances,
@@ -70,17 +74,18 @@ export default function MealTypeSelectionScreen() {
             openness,
             isVegan,
             isVegetarian,
-            user: serializableUser,
+            user: user ? { uid: user.uid } : null,
+            language: language
         };
 
         const response = await fetchRecipeScenario1(requestData);
 
         if (response?.error) {
             Alert.alert(
-                "Daily Limit Reached",
+                t("daily_limit_reached"),
                 response.error === "Error: Daily request limit reached for non-signed-in users."
-                    ? "Please sign up for a free account to continue creating recipes."
-                    : "You have reached your daily limit. Upgrade your subscription for more requests.",
+                    ? t("signup_to_continue")
+                    : t("upgrade_subscription"),
                 [{ text: "OK" }]
             );
         } else {
@@ -91,10 +96,9 @@ export default function MealTypeSelectionScreen() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Customize Your Recipe</Text>
+            <Text style={styles.title}>{t("customize_recipe")}</Text>
 
-            {/* Meal Type */}
-            <Text style={styles.label}>Meal Type:</Text>
+            <Text style={styles.label}>{t("meal_type")}:</Text>
             <View style={styles.choiceContainer}>
                 {["Breakfast", "Lunch", "Dinner"].map((type) => (
                     <TouchableOpacity
@@ -111,14 +115,13 @@ export default function MealTypeSelectionScreen() {
                                 mealType === type && styles.choiceTextSelected,
                             ]}
                         >
-                            {type}
+                            {t(type.toLowerCase())}
                         </Text>
                     </TouchableOpacity>
                 ))}
             </View>
 
-            {/* Dish Type */}
-            <Text style={styles.label}>Dish Type:</Text>
+            <Text style={styles.label}>{t("dish_type")}:</Text>
             <View style={styles.choiceContainer}>
                 {["Starter", "Main Course", "Dessert"].map((type) => (
                     <TouchableOpacity
@@ -135,24 +138,22 @@ export default function MealTypeSelectionScreen() {
                                 dishType === type && styles.choiceTextSelected,
                             ]}
                         >
-                            {type}
+                            {t(type.toLowerCase().replace(" ", "_"))}
                         </Text>
                     </TouchableOpacity>
                 ))}
             </View>
 
-            {/* Portions */}
-            <Text style={styles.label}>Number of Portions:</Text>
+            <Text style={styles.label}>{t("number_of_portions")}:</Text>
             <TextInput
                 style={styles.input}
                 keyboardType="numeric"
                 value={portions}
                 onChangeText={setPortions}
-                placeholder="Enter number of portions"
+                placeholder={t("enter_portions")}
             />
 
-            {/* Maximum Cooking Time */}
-            <Text style={styles.label}>Maximum Cooking Time (minutes):</Text>
+            <Text style={styles.label}>{t("max_cooking_time")}:</Text>
             <Slider
                 style={styles.slider}
                 minimumValue={10}
@@ -161,10 +162,9 @@ export default function MealTypeSelectionScreen() {
                 value={maxCookingTime}
                 onValueChange={setMaxCookingTime}
             />
-            <Text style={styles.sliderValue}>{maxCookingTime} min</Text>
+            <Text style={styles.sliderValue}>{maxCookingTime} {t("minutes")}</Text>
 
-            {/* Openness to Additional Ingredients */}
-            <Text style={styles.label}>Openness to Additional Ingredients:</Text>
+            <Text style={styles.label}>{t("openness_to_ingredients")}:</Text>
             <Slider
                 style={styles.slider}
                 minimumValue={0}
@@ -173,26 +173,22 @@ export default function MealTypeSelectionScreen() {
                 value={openness}
                 onValueChange={setOpenness}
             />
-            <Text style={styles.sliderValue}>
-                {["No", "Low", "Medium", "High"][openness]}
-            </Text>
+            <Text style={styles.sliderValue}>{t(["no", "low", "medium", "high"][openness])}</Text>
 
-            {/* Vegan and Vegetarian */}
             <View style={styles.checkmarkContainer}>
                 <View style={styles.checkmarkItem}>
                     <Switch value={isVegan} onValueChange={handleVeganChange} />
-                    <Text style={styles.checkmarkText}>Vegan</Text>
+                    <Text style={styles.checkmarkText}>{t("vegan")}</Text>
                 </View>
                 <View style={styles.checkmarkItem}>
                     <Switch value={isVegetarian} onValueChange={handleVegetarianChange} />
-                    <Text style={styles.checkmarkText}>Vegetarian</Text>
+                    <Text style={styles.checkmarkText}>{t("vegetarian")}</Text>
                 </View>
             </View>
 
-            {/* Buttons */}
             <View style={styles.buttonContainer}>
-                <Button title="Reset" onPress={handleReset} />
-                <Button title="Submit" onPress={handleSubmit} />
+                <Button title={t("reset")} onPress={handleReset} />
+                <Button title={t("submit")} onPress={handleSubmit} />
             </View>
         </View>
     );

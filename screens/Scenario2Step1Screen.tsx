@@ -13,41 +13,46 @@ import {
 import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
+import { useLanguage } from "../services/LanguageContext";
+import translations from "../data/translations.json";
 
 export default function Scenario2Step1Screen() {
+    const { language } = useLanguage();
+    const t = (key: string) => translations[language][key] || key;
+
     const [cuisineOptions, setCuisineOptions] = useState<string[]>([
-        "any",
-        "chinese",
-        "japanese",
-        "any asian",
-        "any european",
-        "ukrainian",
+        t("any"),
+        t("chinese"),
+        t("japanese"),
+        t("any_asian"),
+        t("any_european"),
+        t("ukrainian"),
     ]);
     const [thematicOptions, setThematicOptions] = useState<string[]>([
-        "any",
-        "Christmas dinner",
-        "Birthday celebration",
-        "romantic dinner",
-        "business lunch",
+        t("any"),
+        t("christmas_dinner"),
+        t("birthday_celebration"),
+        t("romantic_dinner"),
+        t("business_lunch"),
     ]);
     const [starIngredientOptions, setStarIngredientOptions] = useState<any[]>([]);
     const [filteredCuisineOptions, setFilteredCuisineOptions] = useState<string[]>([
-        "any",
+        t("any"),
     ]);
-    const [filteredThematicOptions, setFilteredThematicOptions] = useState<string[]>(["any"]);
+    const [filteredThematicOptions, setFilteredThematicOptions] = useState<string[]>([t("any")]);
     const [filteredStarIngredients, setFilteredStarIngredients] = useState<any[]>([
-        { name: { en: "any" } },
+        { name: { [language]: t("any") } },
     ]);
 
-    const [selectedCuisine, setSelectedCuisine] = useState<string>("any");
+    const [selectedCuisine, setSelectedCuisine] = useState<string>(t("any"));
     const [customCuisine, setCustomCuisine] = useState<string>("");
     const [isCustomCuisineSelected, setIsCustomCuisineSelected] = useState<boolean>(false);
 
-    const [selectedThematic, setSelectedThematic] = useState<string>("any");
+    const [selectedThematic, setSelectedThematic] = useState<string>(t("any"));
     const [customThematic, setCustomThematic] = useState<string>("");
     const [isCustomThematicSelected, setIsCustomThematicSelected] = useState<boolean>(false);
 
-    const [selectedStarIngredient, setSelectedStarIngredient] = useState<string>("any");
+    const [selectedStarIngredient, setSelectedStarIngredient] = useState<string>(t("any"));
     const [customStarIngredient, setCustomStarIngredient] = useState<string>("");
     const [isCustomStarIngredientSelected, setIsCustomStarIngredientSelected] =
         useState<boolean>(false);
@@ -69,7 +74,7 @@ export default function Scenario2Step1Screen() {
                 }));
 
                 const filteredIngredients = [
-                    { name: { en: "any" } },
+                    { name: { [language]: t("any") } },
                     ...fetchedIngredients.filter((ingredient) =>
                         ["fruits_vegetables", "proteins"].includes(ingredient.category)
                     ),
@@ -85,7 +90,7 @@ export default function Scenario2Step1Screen() {
         };
 
         fetchIngredients();
-    }, []);
+    }, [language]);
 
     useEffect(() => {
         setFilteredCuisineOptions(
@@ -106,23 +111,23 @@ export default function Scenario2Step1Screen() {
     useEffect(() => {
         setFilteredStarIngredients(
             starIngredientOptions.filter((ingredient: any) =>
-                ingredient.name.en.toLowerCase().includes(starIngredientSearch.toLowerCase())
+                ingredient.name[language].toLowerCase().includes(starIngredientSearch.toLowerCase())
             )
         );
-    }, [starIngredientSearch, starIngredientOptions]);
+    }, [starIngredientSearch, starIngredientOptions, language]);
 
     const handleReset = () => {
-        setSelectedCuisine("any cuisine");
+        setSelectedCuisine(t("any"));
         setCustomCuisine("");
         setIsCustomCuisineSelected(false);
         setCuisineSearch("");
 
-        setSelectedThematic("any");
+        setSelectedThematic(t("any"));
         setCustomThematic("");
         setIsCustomThematicSelected(false);
         setThematicSearch("");
 
-        setSelectedStarIngredient("any");
+        setSelectedStarIngredient(t("any"));
         setCustomStarIngredient("");
         setIsCustomStarIngredientSelected(false);
         setStarIngredientSearch("");
@@ -136,17 +141,17 @@ export default function Scenario2Step1Screen() {
             : selectedStarIngredient;
 
         if (!cuisine || !cuisine.trim()) {
-            Alert.alert("Cuisine Missing", "Please select or use a custom cuisine.");
+            Alert.alert(t("cuisine_missing"), t("select_or_custom_cuisine"));
             return;
         }
 
         if (!thematic || !thematic.trim()) {
-            Alert.alert("Thematic Missing", "Please select or use a custom thematic.");
+            Alert.alert(t("thematic_missing"), t("select_or_custom_thematic"));
             return;
         }
 
         if (!starIngredient || !starIngredient.trim()) {
-            Alert.alert("Star Ingredient Missing", "Please select or use a custom star ingredient.");
+            Alert.alert(t("star_ingredient_missing"), t("select_or_custom_star_ingredient"));
             return;
         }
 
@@ -183,20 +188,20 @@ export default function Scenario2Step1Screen() {
     if (loading) {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Loading...</Text>
+                <Text style={styles.title}>{t("loading")}</Text>
             </View>
         );
     }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Customize Your Recipe</Text>
+            <Text style={styles.title}>{t("customize_recipe")}</Text>
 
             {/* Cuisine Selection */}
-            <Text style={styles.label}>Cuisine:</Text>
+            <Text style={styles.label}>{t("cuisine")}:</Text>
             <TextInput
                 style={styles.searchBar}
-                placeholder="Search cuisine..."
+                placeholder={t("search_cuisine")}
                 value={cuisineSearch}
                 onChangeText={setCuisineSearch}
             />
@@ -219,12 +224,12 @@ export default function Scenario2Step1Screen() {
             <View style={styles.customInputContainer}>
                 <TextInput
                     style={styles.input}
-                    placeholder="Use custom cuisine"
+                    placeholder={t("custom_cuisine")}
                     value={customCuisine}
                     onChangeText={setCustomCuisine}
                 />
                 {renderChoiceButton(
-                    "Use",
+                    t("use"),
                     isCustomCuisineSelected,
                     () => {
                         setIsCustomCuisineSelected(true);
@@ -235,10 +240,10 @@ export default function Scenario2Step1Screen() {
             </View>
 
             {/* Thematic Selection */}
-            <Text style={styles.label}>Thematic:</Text>
+            <Text style={styles.label}>{t("thematic")}:</Text>
             <TextInput
                 style={styles.searchBar}
-                placeholder="Search thematic..."
+                placeholder={t("search_thematic")}
                 value={thematicSearch}
                 onChangeText={setThematicSearch}
             />
@@ -261,12 +266,12 @@ export default function Scenario2Step1Screen() {
             <View style={styles.customInputContainer}>
                 <TextInput
                     style={styles.input}
-                    placeholder="Use custom thematic"
+                    placeholder={t("custom_thematic")}
                     value={customThematic}
                     onChangeText={setCustomThematic}
                 />
                 {renderChoiceButton(
-                    "Use",
+                    t("use"),
                     isCustomThematicSelected,
                     () => {
                         setIsCustomThematicSelected(true);
@@ -277,10 +282,10 @@ export default function Scenario2Step1Screen() {
             </View>
 
             {/* Star Ingredient */}
-            <Text style={styles.label}>Star Ingredient:</Text>
+            <Text style={styles.label}>{t("star_ingredient")}:</Text>
             <TextInput
                 style={styles.searchBar}
-                placeholder="Search star ingredient..."
+                placeholder={t("search_star_ingredient")}
                 value={starIngredientSearch}
                 onChangeText={setStarIngredientSearch}
             />
@@ -290,10 +295,10 @@ export default function Scenario2Step1Screen() {
                 keyExtractor={(item, index) => `${item}-${index}`} // Ensure a unique key
                 renderItem={({ item }) =>
                     renderChoiceButton(
-                        item.name.en,
-                        selectedStarIngredient === item.name.en && !isCustomStarIngredientSelected,
+                        item.name[language],
+                        selectedStarIngredient === item.name[language] && !isCustomStarIngredientSelected,
                         () => {
-                            setSelectedStarIngredient(item.name.en);
+                            setSelectedStarIngredient(item.name[language]);
                             setIsCustomStarIngredientSelected(false);
                         }
                     )
@@ -303,12 +308,12 @@ export default function Scenario2Step1Screen() {
             <View style={styles.customInputContainer}>
                 <TextInput
                     style={styles.input}
-                    placeholder="Use custom star ingredient"
+                    placeholder={t("custom_star_ingredient")}
                     value={customStarIngredient}
                     onChangeText={setCustomStarIngredient}
                 />
                 {renderChoiceButton(
-                    "Use",
+                    t("use"),
                     isCustomStarIngredientSelected,
                     () => {
                         setIsCustomStarIngredientSelected(true);
@@ -320,8 +325,8 @@ export default function Scenario2Step1Screen() {
 
             {/* Buttons */}
             <View style={styles.buttonContainer}>
-                <Button title="Reset" onPress={handleReset} />
-                <Button title="Next" onPress={handleNext} />
+                <Button title={t("reset")} onPress={handleReset} />
+                <Button title={t("next")} onPress={handleNext} />
             </View>
         </View>
     );

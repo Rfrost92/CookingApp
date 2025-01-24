@@ -4,9 +4,14 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert, TextInput } 
 import { fetchUserRecipes, deleteRecipeById } from "../helpers/databaseHelpers";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
+import { useLanguage } from "../services/LanguageContext";
+import translations from "../data/translations.json";
 
 export default function BookOfRecipesScreen() {
     const { user } = useContext(AuthContext);
+    const { language } = useLanguage();
+    const t = (key: string) => translations[language][key] || key;
+
     const [recipes, setRecipes] = useState<any[]>([]);
     const [filteredRecipes, setFilteredRecipes] = useState<any[]>([]);
     const [searchQuery, setSearchQuery] = useState<string>("");
@@ -20,7 +25,7 @@ export default function BookOfRecipesScreen() {
                 setFilteredRecipes(userRecipes);
             } catch (error) {
                 console.error("Error fetching recipes:", error);
-                Alert.alert("Error", "Failed to load recipes.");
+                Alert.alert(t("error"), t("failed_to_load_recipes"));
             }
         };
 
@@ -45,10 +50,10 @@ export default function BookOfRecipesScreen() {
             await deleteRecipeById(recipeId);
             setRecipes((prev) => prev.filter((recipe) => recipe.id !== recipeId));
             setFilteredRecipes((prev) => prev.filter((recipe) => recipe.id !== recipeId));
-            Alert.alert("Success", "Recipe deleted successfully.");
+            Alert.alert(t("success"), t("recipe_deleted"));
         } catch (error) {
             console.error("Error deleting recipe:", error);
-            Alert.alert("Error", "Failed to delete recipe.");
+            Alert.alert(t("error"), t("failed_to_delete_recipe"));
         }
     };
 
@@ -65,17 +70,17 @@ export default function BookOfRecipesScreen() {
                 style={styles.deleteButton}
                 onPress={() => handleDeleteRecipe(item.id)}
             >
-                <Text style={styles.deleteButtonText}>Delete</Text>
+                <Text style={styles.deleteButtonText}>{t("delete")}</Text>
             </TouchableOpacity>
         </View>
     );
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Book of Recipes</Text>
+            <Text style={styles.title}>{t("book_of_recipes")}</Text>
             <TextInput
                 style={styles.searchBar}
-                placeholder="Search recipes..."
+                placeholder={t("search_recipes")}
                 value={searchQuery}
                 onChangeText={handleSearch}
             />

@@ -12,17 +12,22 @@ import {
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
-import {fetchRecipeScenario2, fetchRecipeScenario3} from "../services/openaiService";
-import {AuthContext} from "../contexts/AuthContext";
+import { fetchRecipeScenario3 } from "../services/openaiService";
+import { AuthContext } from "../contexts/AuthContext";
+import { useLanguage } from "../services/LanguageContext";
+import translations from "../data/translations.json";
 
 export default function ChooseClassicRecipeScreen() {
     const { user, isLoggedIn } = useContext(AuthContext);
+    const { language } = useLanguage();
     const [dishes, setDishes] = useState<any[]>([]);
     const [filteredDishes, setFilteredDishes] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [customDish, setCustomDish] = useState<string>("");
     const navigation = useNavigation();
+
+    const t = (key: string) => translations[language][key] || key;
 
     useEffect(() => {
         const fetchDishes = async () => {
@@ -37,7 +42,7 @@ export default function ChooseClassicRecipeScreen() {
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching dishes:", error);
-                Alert.alert("Error", "Failed to load classic dishes.");
+                Alert.alert(t("error"), t("load_dishes_fail"));
                 setLoading(false);
             }
         };
@@ -52,7 +57,7 @@ export default function ChooseClassicRecipeScreen() {
         } else {
             setFilteredDishes(
                 dishes.filter((dish) =>
-                    dish.name.en.toLowerCase().includes(query.toLowerCase())
+                    dish.name[language]?.toLowerCase().includes(query.toLowerCase())
                 )
             );
         }
@@ -60,18 +65,17 @@ export default function ChooseClassicRecipeScreen() {
 
     const handleSelectDish = async (dishName: string) => {
         const serializableUser = user ? { uid: user.uid } : null;
-        const recipe = await fetchRecipeScenario3({classicDishName: dishName, user: serializableUser});
+        const recipe = await fetchRecipeScenario3({ classicDishName: dishName, user: serializableUser, language: language });
 
         if (recipe?.error) {
             Alert.alert(
-                "Daily Limit Reached",
+                t("daily_limit_reached"),
                 recipe.error === "Error: Daily request limit reached for non-signed-in users."
-                    ? "Please sign up for a free account to continue creating recipes."
-                    : "You have reached your daily limit. Upgrade your subscription for more requests.",
+                    ? t("signup_for_free")
+                    : t("upgrade_subscription"),
                 [{ text: "OK" }]
             );
         } else {
-            const scenario = 1;
             navigation.navigate("RecipeResult", { recipe });
         }
     };
@@ -79,28 +83,28 @@ export default function ChooseClassicRecipeScreen() {
     const renderDish = ({ item }: any) => (
         <TouchableOpacity
             style={styles.dishItem}
-            onPress={() => handleSelectDish(item.name.en)}
+            onPress={() => handleSelectDish(item.name[language])}
         >
-            <Text style={styles.dishName}>{item.name.en}</Text>
+            <Text style={styles.dishName}>{item.name[language]}</Text>
         </TouchableOpacity>
     );
 
     if (loading) {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Loading dishes...</Text>
+                <Text style={styles.title}>{t("loading_dishes")}</Text>
             </View>
         );
     }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Choose a Classic Dish</Text>
+            <Text style={styles.title}>{t("choose_classic_dish")}</Text>
 
             {/* Search Bar */}
             <TextInput
                 style={styles.searchBar}
-                placeholder="Search dishes..."
+                placeholder={t("search_dishes_placeholder")}
                 value={searchQuery}
                 onChangeText={handleSearch}
             />
@@ -109,7 +113,7 @@ export default function ChooseClassicRecipeScreen() {
             <View style={styles.customInputContainer}>
                 <TextInput
                     style={styles.customDishInput}
-                    placeholder="Type a custom dish name"
+                    placeholder={t("type_custom_dish")}
                     value={customDish}
                     onChangeText={setCustomDish}
                 />
@@ -127,7 +131,7 @@ export default function ChooseClassicRecipeScreen() {
                             customDish.trim() !== "" && styles.confirmButtonTextActive,
                         ]}
                     >
-                        Confirm
+                        {t("confirm")}
                     </Text>
                 </TouchableOpacity>
             </View>

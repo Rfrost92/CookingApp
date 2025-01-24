@@ -7,6 +7,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { logOut } from "../services/authService";
 import { isUserTest, resetNonSignedInCounter, resetRequestsForTestUser } from "../helpers/incrementRequest";
 import { useLanguage } from "../services/LanguageContext";
+import translations from "../data/translations.json";
 
 const availableLanguages = [
     { code: "en", name: "English" },
@@ -22,6 +23,8 @@ export default function HomeScreen() {
     const [guestRequests, setGuestRequests] = useState<number>(0);
     const [accountModalVisible, setAccountModalVisible] = useState(false);
     const [languageModalVisible, setLanguageModalVisible] = useState(false);
+
+    const t = (key: string) => translations[language][key] || key;
 
     useEffect(() => {
         const fetchGuestRequests = async () => {
@@ -41,7 +44,7 @@ export default function HomeScreen() {
         try {
             navigation.navigate(scenario);
         } catch (error) {
-            Alert.alert("Unexpected error occurred", "There is an error", [{ text: "OK" }]);
+            Alert.alert(t("unexpected_error"), t("error_message"), [{ text: "OK" }]);
         }
     };
 
@@ -57,10 +60,10 @@ export default function HomeScreen() {
         try {
             await logOut();
             setAccountModalVisible(false);
-            Alert.alert("Logged Out", "You have been logged out successfully.");
+            Alert.alert(t("logged_out"), t("logout_success"));
         } catch (error) {
             console.error("Error logging out:", error);
-            Alert.alert("Error", "Failed to log out. Please try again.");
+            Alert.alert(t("error"), t("logout_fail"));
         }
     };
 
@@ -68,7 +71,7 @@ export default function HomeScreen() {
         if (isLoggedIn) {
             navigation.navigate("BookOfRecipes");
         } else {
-            Alert.alert("Sign Up Required", "Please log in or sign up to access your recipe book.");
+            Alert.alert(t("signup_required"), t("recipe_book_access"));
         }
     };
 
@@ -79,35 +82,31 @@ export default function HomeScreen() {
     const selectLanguage = (code: string) => {
         setLanguage(code);
         setLanguageModalVisible(false);
-        Alert.alert("Language Changed", `You have selected ${availableLanguages.find(lang => lang.code === code)?.name}.`);
+        Alert.alert(t("language_changed"), `${t("selected_language")} ${availableLanguages.find(lang => lang.code === code)?.name}`);
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Welcome to the Cooking App</Text>
+            <Text style={styles.title}>{t("welcome")}</Text>
             <TouchableOpacity style={styles.button} onPress={() => handleRequest("IngredientSelection")}>
-                <Text style={styles.buttonText}>
-                    I would like to cook something from the ingredients available at home
-                </Text>
+                <Text style={styles.buttonText}>{t("ingredient_selection")}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => handleRequest("Scenario2Step1")}>
-                <Text style={styles.buttonText}>
-                    I am open to new ideas, I want to cook something from any ingredients
-                </Text>
+                <Text style={styles.buttonText}>{t("open_to_ideas")}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => handleRequest("ChooseClassicRecipe")}>
-                <Text style={styles.buttonText}>Classic recipes</Text>
+                <Text style={styles.buttonText}>{t("classic_recipes")}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} title="Reset Non-Signed-In Counter" onPress={resetNonSignedInCounter} />
+            <TouchableOpacity style={styles.button} title={t("reset_counter")} onPress={resetNonSignedInCounter} />
             <View style={styles.bottomBar}>
                 <TouchableOpacity style={styles.navButton} onPress={handleAccountPress}>
-                    <Text style={styles.navButtonText}>{isLoggedIn ? "Account" : "Log In"}</Text>
+                    <Text style={styles.navButtonText}>{isLoggedIn ? t("account") : t("login")}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.navButton} onPress={handleRecipeBookPress}>
-                    <Text style={styles.navButtonText}>Book</Text>
+                    <Text style={styles.navButtonText}>{t("book")}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.navButton} onPress={handleLanguageChange}>
-                    <Text style={styles.navButtonText}>Language</Text>
+                    <Text style={styles.navButtonText}>{t("language")}</Text>
                 </TouchableOpacity>
             </View>
 
@@ -120,10 +119,10 @@ export default function HomeScreen() {
             >
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Account Menu</Text>
-                        <Text style={styles.modalText}>Welcome, {user?.email || "User"}!</Text>
+                        <Text style={styles.modalTitle}>{t("account_menu")}</Text>
+                        <Text style={styles.modalText}>{t("welcome_user", { user: user?.email || t("user") })}</Text>
                         <TouchableOpacity style={styles.modalButton} onPress={handleLogout}>
-                            <Text style={styles.modalButtonText}>Log Out</Text>
+                            <Text style={styles.modalButtonText}>{t("logout")}</Text>
                         </TouchableOpacity>
                         {user && isUserTest(user) && (
                             <TouchableOpacity
@@ -131,17 +130,17 @@ export default function HomeScreen() {
                                 onPress={async () => {
                                     try {
                                         await resetRequestsForTestUser(user?.uid);
-                                        Alert.alert("Success", "Request count has been reset for today.");
+                                        Alert.alert(t("success"), t("request_reset_success"));
                                     } catch (error) {
-                                        Alert.alert("Error", error.message || "Failed to reset request count.");
+                                        Alert.alert(t("error"), t("request_reset_fail"));
                                     }
                                 }}
                             >
-                                <Text style={styles.modalButtonText}>Reset Requests</Text>
+                                <Text style={styles.modalButtonText}>{t("reset_requests")}</Text>
                             </TouchableOpacity>
                         )}
                         <TouchableOpacity style={styles.modalButton} onPress={() => setAccountModalVisible(false)}>
-                            <Text style={styles.modalButtonText}>Close</Text>
+                            <Text style={styles.modalButtonText}>{t("close")}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -156,7 +155,7 @@ export default function HomeScreen() {
             >
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Select Language</Text>
+                        <Text style={styles.modalTitle}>{t("select_language")}</Text>
                         <FlatList
                             data={availableLanguages}
                             keyExtractor={(item) => item.code}
@@ -173,7 +172,7 @@ export default function HomeScreen() {
                             )}
                         />
                         <TouchableOpacity style={styles.modalButton} onPress={() => setLanguageModalVisible(false)}>
-                            <Text style={styles.modalButtonText}>Close</Text>
+                            <Text style={styles.modalButtonText}>{t("close")}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

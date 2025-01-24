@@ -2,39 +2,46 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import { logIn } from "../services/authService";
+import { useLanguage } from "../services/LanguageContext";
+import translations from "../data/translations.json";
 
 export default function LogInScreen({ navigation }: any) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { language } = useLanguage();
+    const t = (key: string) => translations[language][key] || key;
 
     const handleLogIn = async () => {
         try {
             await logIn(email, password);
-            Alert.alert("Success", "Logged in successfully!");
+            Alert.alert(t("success"), t("logged_in_successfully"));
             navigation.navigate("Home"); // Redirect to home screen
         } catch (error: any) {
-            Alert.alert("Error", error.message);
+            Alert.alert(t("error"), error.message);
         }
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Log In</Text>
+            <Text style={styles.title}>{t("log_in")}</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Email"
+                placeholder={t("email")}
                 value={email}
                 onChangeText={setEmail}
             />
             <TextInput
                 style={styles.input}
-                placeholder="Password"
+                placeholder={t("password")}
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
             />
-            <Button title="Log In" onPress={handleLogIn} />
-            <Button title="Don't have an account? Sign Up" onPress={() => navigation.navigate("SignUp")} />
+            <Button title={t("log_in")} onPress={handleLogIn} />
+            <Button
+                title={t("dont_have_account")}
+                onPress={() => navigation.navigate("SignUp")}
+            />
         </View>
     );
 }

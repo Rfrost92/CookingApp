@@ -2,39 +2,46 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import { signUp } from "../services/authService";
+import { useLanguage } from "../services/LanguageContext";
+import translations from "../data/translations.json";
 
 export default function SignUpScreen({ navigation }: any) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { language } = useLanguage();
+    const t = (key: string) => translations[language][key] || key;
 
     const handleSignUp = async () => {
         try {
             await signUp(email, password);
-            Alert.alert("Success", "Account created successfully!");
+            Alert.alert(t("success"), t("account_created_successfully"));
             navigation.navigate("LogIn"); // Redirect to login
         } catch (error: any) {
-            Alert.alert("Error", error.message);
+            Alert.alert(t("error"), error.message);
         }
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Sign Up</Text>
+            <Text style={styles.title}>{t("sign_up")}</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Email"
+                placeholder={t("email")}
                 value={email}
                 onChangeText={setEmail}
             />
             <TextInput
                 style={styles.input}
-                placeholder="Password"
+                placeholder={t("password")}
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
             />
-            <Button title="Sign Up" onPress={handleSignUp} />
-            <Button title="Already have an account? Log In" onPress={() => navigation.navigate("LogIn")} />
+            <Button title={t("sign_up")} onPress={handleSignUp} />
+            <Button
+                title={t("already_have_account")}
+                onPress={() => navigation.navigate("LogIn")}
+            />
         </View>
     );
 }

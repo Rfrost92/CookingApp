@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Button, Alert, TouchableOpacity } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import translations from "../data/translations.json";
+import { useLanguage } from "../services/LanguageContext";
 
 const appliances = [
     "Oven",
@@ -17,6 +19,9 @@ export default function Scenario2Step2Screen() {
     const [selectedAppliances, setSelectedAppliances] = useState<{ [key: string]: boolean }>({
         Any: true, // "Any" is selected by default
     });
+    const { language } = useLanguage();
+    const t = (key: string) => translations[language][key] || key;
+
     const route = useRoute();
     const navigation = useNavigation();
     const { selectedData } = route.params;
@@ -45,11 +50,10 @@ export default function Scenario2Step2Screen() {
         const selected = Object.keys(selectedAppliances).filter((key) => selectedAppliances[key]);
 
         if (selected.length === 0) {
-            Alert.alert("No appliances selected", "Please select at least one appliance or choose 'Any'.");
+            Alert.alert(t("no_appliances_selected"), t("select_appliance_prompt"));
             return;
         }
 
-        // Navigate to the next screen (Meal Type selection) with the selected appliances
         navigation.navigate("Scenario2Step3", {
             selectedData,
             selectedAppliances: selected.includes("Any") ? ["Any"] : selected,
@@ -58,9 +62,8 @@ export default function Scenario2Step2Screen() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Select Appliances</Text>
+            <Text style={styles.title}>{t("select_appliances")}</Text>
             <View style={styles.applianceList}>
-                {/* "Any" option is visually distinct */}
                 <TouchableOpacity
                     style={[
                         styles.applianceItem,
@@ -75,10 +78,9 @@ export default function Scenario2Step2Screen() {
                             selectedAppliances.Any && styles.applianceTextSelected,
                         ]}
                     >
-                        Any
+                        {t("any")}
                     </Text>
                 </TouchableOpacity>
-                {/* Other appliances */}
                 {appliances.map((appliance) => (
                     <TouchableOpacity
                         key={appliance}
@@ -94,14 +96,14 @@ export default function Scenario2Step2Screen() {
                                 selectedAppliances[appliance] && styles.applianceTextSelected,
                             ]}
                         >
-                            {appliance}
+                            {t(appliance.toLowerCase())}
                         </Text>
                     </TouchableOpacity>
                 ))}
             </View>
             <View style={styles.buttonContainer}>
-                <Button title="Reset" onPress={resetSelection} />
-                <Button title="Next" onPress={handleNext} />
+                <Button title={t("reset")} onPress={resetSelection} />
+                <Button title={t("next")} onPress={handleNext} />
             </View>
         </View>
     );
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     anyItem: {
-        backgroundColor: "#f0f8ff", // Light blue for "Any"
+        backgroundColor: "#f0f8ff",
         borderColor: "#87ceeb",
     },
     applianceItemSelected: {

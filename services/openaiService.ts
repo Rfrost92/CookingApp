@@ -7,19 +7,31 @@ import {incrementNonSignedInRequests, incrementRequest} from "../helpers/increme
 const openai = new OpenAI({
     apiKey: gptApiKey
 });
-const testing = true; // to test
+
+const testing = true; // Set to `false` for production
+
+const getLocalizedPromptPrefix = (language: string) => {
+    const prefixMap = {
+        en: "Please provide the recipe in English.",
+        de: "Bitte geben Sie das Rezept auf Deutsch an.",
+        ua: "Будь ласка, надайте рецепт українською мовою.",
+        ru: "Пожалуйста, предоставьте рецепт на русском языке.",
+    };
+    return prefixMap[language] || prefixMap.en;
+};
 
 export const fetchRecipeScenario1 = async (requestData) => {
-
     try {
-        let prompt = `I have the following ingredients: ${requestData.selectedIngredients.join(", ")}. 
-        I would be ready to cook using following appliances: ${requestData.selectedAppliances.join(", ")}. 
+        const languagePrefix = getLocalizedPromptPrefix(requestData.language);
+
+        let prompt = `${languagePrefix}\nI have the following ingredients: ${requestData.selectedIngredients.join(", ")}. 
+        I would be ready to cook using the following appliances: ${requestData.selectedAppliances.join(", ")}. 
         This should be a ${requestData.mealType} ${requestData.dishType} for ${requestData.portions} portions.
         I would be able to spend cooking up to ${requestData.maxCookingTime} minutes. 
         Can you suggest a healthy recipe for a human?`;
 
         if (requestData.openness > 0) {
-            prompt += `On a scale of 3 I have the level ${requestData.openness} openness for additional (except mentioned above ingredients. `;
+            prompt += `On a scale of 3, I have a level ${requestData.openness} openness to additional ingredients (except the ones mentioned above). `;
         }
 
         if (requestData.isVegan) {
@@ -27,15 +39,16 @@ export const fetchRecipeScenario1 = async (requestData) => {
         }
 
         if (requestData.isVegetarian) {
-            prompt += `The dish should be vegeterian. `;
+            prompt += `The dish should be vegetarian. `;
         }
 
-        let recipe: string | null = '';
+        let recipe: string | null = "";
         if (requestData.user?.uid) {
             await incrementRequest(requestData.user.uid);
         } else if (!requestData.user?.uid) {
             await incrementNonSignedInRequests();
         }
+
         if (testing) {
             console.log(prompt);
             recipe = mockedResponses[0].choices[0].message.content;
@@ -43,8 +56,8 @@ export const fetchRecipeScenario1 = async (requestData) => {
             const response = await openai.chat.completions.create({
                 model: "gpt-4o",
                 messages: [
-                    {role: "system", content: "You are a helpful assistant."},
-                    {role: "user", content: prompt},
+                    { role: "system", content: "You are a helpful assistant." },
+                    { role: "user", content: prompt },
                 ],
             });
             recipe = response.choices[0].message.content;
@@ -57,7 +70,9 @@ export const fetchRecipeScenario1 = async (requestData) => {
 
 export const fetchRecipeScenario2 = async (requestData) => {
     try {
-        let prompt = "";
+        const languagePrefix = getLocalizedPromptPrefix(requestData.language);
+
+        let prompt = `${languagePrefix}\n`;
 
         // Include cuisine if not "any"
         if (requestData.cuisine.toLowerCase() !== "any") {
@@ -76,7 +91,8 @@ export const fetchRecipeScenario2 = async (requestData) => {
 
         // Include appliances
         if (requestData.selectedAppliances[0].toLowerCase() !== "any") {
-            prompt += `I would be ready to cook using the following appliances: ${requestData.selectedAppliances.join(", ")}. `;        }
+            prompt += `I would be ready to cook using the following appliances: ${requestData.selectedAppliances.join(", ")}. `;
+        }
 
         // Include meal type, dish type, portions, and cooking time
         prompt += `This should be a ${requestData.mealType} ${requestData.dishType} for ${requestData.portions} portions. `;
@@ -98,7 +114,7 @@ export const fetchRecipeScenario2 = async (requestData) => {
 
         prompt += "Can you suggest a healthy recipe for a human?";
 
-        let recipe: string | null = '';
+        let recipe: string | null = "";
 
         if (requestData.user?.uid) {
             await incrementRequest(requestData.user.uid);
@@ -107,8 +123,8 @@ export const fetchRecipeScenario2 = async (requestData) => {
         }
 
         if (testing) {
-            recipe = mockedResponses[0].choices[0].message.content;
             console.log(prompt);
+            recipe = mockedResponses[0].choices[0].message.content;
         } else {
             const response = await openai.chat.completions.create({
                 model: "gpt-4o",
@@ -127,25 +143,26 @@ export const fetchRecipeScenario2 = async (requestData) => {
         }
         throw new Error("Unexpected error occurred");
     }
-
 };
 
-export const fetchRecipeScenario3 = async ({classicDishName, user}) => {
+export const fetchRecipeScenario3 = async ({ classicDishName, user, language }) => {
     try {
-        const prompt = `Please provide a detailed recipe for the classic dish "${classicDishName}". The recipe should include ingredients, quantities, and step-by-step instructions. Ensure the recipe is clear and easy to follow.`;
+        const languagePrefix = getLocalizedPromptPrefix(language);
+        const prompt = `${languagePrefix}\nPlease provide a detailed recipe for the classic dish "${classicDishName}". The recipe should include ingredients, quantities, and step-by-step instructions. Ensure the recipe is clear and easy to follow.`;
 
-        let recipe: string | null = '';
+        let recipe: string | null = "";
         if (user?.uid) {
             await incrementRequest(user.uid);
         } else if (!user?.uid) {
             await incrementNonSignedInRequests();
         }
+
         if (testing) {
-            recipe = mockedResponses[0].choices[0].message.content;
             console.log(prompt);
+            recipe = mockedResponses[0].choices[0].message.content;
         } else {
             const response = await openai.chat.completions.create({
-                model: "gpt-4o", // Use the appropriate model
+                model: "gpt-4o",
                 messages: [
                     { role: "system", content: "You are a helpful assistant." },
                     { role: "user", content: prompt },
