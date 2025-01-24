@@ -15,8 +15,11 @@ import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import categoriesData from "../data/ingredientCategories.json";
 import { useNavigation } from "@react-navigation/native";
+import { useLanguage } from "../services/LanguageContext";
+import { getTranslation } from "../helpers/loadTranslations";
 
 export default function IngredientSelectionScreen() {
+    const { language } = useLanguage(); // Get the selected language
     const [categories, setCategories] = useState<any[]>([]);
     const [filteredCategories, setFilteredCategories] = useState<any[]>([]);
     const [expandedCategories, setExpandedCategories] = useState<{ [key: string]: boolean }>({});
@@ -86,13 +89,16 @@ export default function IngredientSelectionScreen() {
     // Add a custom ingredient to the Miscellaneous category
     const addCustomIngredient = () => {
         if (!customIngredient.trim()) {
-            Alert.alert("Error", "Please enter a valid ingredient.");
+            Alert.alert(
+                getTranslation(language, "error"),
+                getTranslation(language, "enter_valid_ingredient")
+            );
             return;
         }
 
         const newIngredient = {
             id: `custom-${Date.now()}`, // Unique ID for custom ingredient
-            name: { en: customIngredient },
+            name: { [language]: customIngredient },
         };
 
         // Add to Miscellaneous category
@@ -141,7 +147,7 @@ export default function IngredientSelectionScreen() {
                 const ingredient = categories
                     .flatMap((category: any) => category.ingredients)
                     .find((ingredient: any) => ingredient.id === id);
-                if (ingredient) selected.push(ingredient.name.en);
+                if (ingredient) selected.push(ingredient.name[language] || ingredient.name.en);
             }
         }
         return selected;
@@ -160,7 +166,9 @@ export default function IngredientSelectionScreen() {
         const filtered = categories
             .map((category) => {
                 const matchingIngredients = category.ingredients.filter((ingredient: any) =>
-                    ingredient.name.en.toLowerCase().includes(lowerCaseQuery)
+                    (ingredient.name[language] || ingredient.name.en)
+                        .toLowerCase()
+                        .includes(lowerCaseQuery)
                 );
                 return matchingIngredients.length > 0
                     ? { ...category, ingredients: matchingIngredients }
@@ -178,7 +186,9 @@ export default function IngredientSelectionScreen() {
                 value={!!selectedIngredients[item.id]}
                 onValueChange={() => toggleIngredient(item.id)}
             />
-            <Text style={styles.ingredientText}>{item.name.en || "Unknown Ingredient"}</Text>
+            <Text style={styles.ingredientText}>
+                {item.name[language] || item.name.en || "Unknown Ingredient"}
+            </Text>
         </View>
     );
 
@@ -198,7 +208,8 @@ export default function IngredientSelectionScreen() {
                     onPress={() => toggleCategory(item.id)}
                 >
                     <Text style={styles.categoryTitle}>
-                        {item.name.en || "Unknown Category"} ({selectedCount}/{item.ingredients.length})
+                        {item.name[language] || item.name.en || "Unknown Category"} ({selectedCount}
+                        /{item.ingredients.length})
                     </Text>
                     <Text style={styles.categoryToggle}>{isExpanded ? "-" : "+"}</Text>
                 </TouchableOpacity>
@@ -216,7 +227,10 @@ export default function IngredientSelectionScreen() {
     const handleNext = () => {
         const selected = getSelectedIngredients();
         if (selected.length === 0) {
-            Alert.alert("No ingredients selected", "Please select at least one ingredient.");
+            Alert.alert(
+                getTranslation(language, "no_ingredients_selected"),
+                getTranslation(language, "please_select_ingredients")
+            );
             return;
         }
         navigation.navigate("ApplianceSelection", { selectedIngredients: selected });
@@ -225,18 +239,18 @@ export default function IngredientSelectionScreen() {
     if (loading) {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Loading...</Text>
+                <Text style={styles.title}>{getTranslation(language, "loading")}</Text>
             </View>
         );
     }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Select Ingredients</Text>
+            <Text style={styles.title}>{getTranslation(language, "select_ingredients")}</Text>
             {/* Search Bar */}
             <TextInput
                 style={styles.searchBar}
-                placeholder="Search ingredients..."
+                placeholder={getTranslation(language, "search_ingredients")}
                 value={searchQuery}
                 onChangeText={handleSearch}
             />
@@ -244,11 +258,14 @@ export default function IngredientSelectionScreen() {
             <View style={styles.customIngredientContainer}>
                 <TextInput
                     style={styles.customIngredientInput}
-                    placeholder="Add custom ingredient..."
+                    placeholder={getTranslation(language, "add_custom_ingredient")}
                     value={customIngredient}
                     onChangeText={setCustomIngredient}
                 />
-                <Button title="Add" onPress={addCustomIngredient} />
+                <Button
+                    title={getTranslation(language, "add")}
+                    onPress={addCustomIngredient}
+                />
             </View>
             {/* Category List */}
             <FlatList
@@ -257,8 +274,14 @@ export default function IngredientSelectionScreen() {
                 renderItem={renderCategory}
             />
             <View style={styles.buttonContainer}>
-                <Button title="Reset" onPress={handleReset} />
-                <Button title="Next" onPress={handleNext} />
+                <Button
+                    title={getTranslation(language, "reset")}
+                    onPress={handleReset}
+                />
+                <Button
+                    title={getTranslation(language, "next")}
+                    onPress={handleNext}
+                />
             </View>
         </View>
     );

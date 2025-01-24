@@ -1,17 +1,27 @@
 //HomeScreen.tsx
 import React, { useContext, useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Alert, Modal } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Alert, Modal, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../contexts/AuthContext";
 import { logOut } from "../services/authService";
-import {isUserTest, resetNonSignedInCounter, resetRequestsForTestUser} from "../helpers/incrementRequest";
+import { isUserTest, resetNonSignedInCounter, resetRequestsForTestUser } from "../helpers/incrementRequest";
+import { useLanguage } from "../services/LanguageContext";
+
+const availableLanguages = [
+    { code: "en", name: "English" },
+    { code: "de", name: "German" },
+    { code: "ua", name: "Ukrainian" },
+    { code: "ru", name: "Russian" },
+];
 
 export default function HomeScreen() {
     const { user, isLoggedIn } = useContext(AuthContext);
+    const { language, setLanguage } = useLanguage();
     const navigation = useNavigation();
     const [guestRequests, setGuestRequests] = useState<number>(0);
     const [accountModalVisible, setAccountModalVisible] = useState(false);
+    const [languageModalVisible, setLanguageModalVisible] = useState(false);
 
     useEffect(() => {
         const fetchGuestRequests = async () => {
@@ -31,11 +41,7 @@ export default function HomeScreen() {
         try {
             navigation.navigate(scenario);
         } catch (error) {
-            Alert.alert(
-                "Unexpected error occured",
-                "There is an error",
-                [{ text: "OK" }]
-            );
+            Alert.alert("Unexpected error occurred", "There is an error", [{ text: "OK" }]);
         }
     };
 
@@ -60,14 +66,20 @@ export default function HomeScreen() {
 
     const handleRecipeBookPress = () => {
         if (isLoggedIn) {
-            navigation.navigate("BookOfRecipes")
+            navigation.navigate("BookOfRecipes");
         } else {
             Alert.alert("Sign Up Required", "Please log in or sign up to access your recipe book.");
         }
     };
 
     const handleLanguageChange = () => {
-        Alert.alert("Change Language", "Feature Coming Soon");
+        setLanguageModalVisible(true);
+    };
+
+    const selectLanguage = (code: string) => {
+        setLanguage(code);
+        setLanguageModalVisible(false);
+        Alert.alert("Language Changed", `You have selected ${availableLanguages.find(lang => lang.code === code)?.name}.`);
     };
 
     return (
@@ -86,10 +98,7 @@ export default function HomeScreen() {
             <TouchableOpacity style={styles.button} onPress={() => handleRequest("ChooseClassicRecipe")}>
                 <Text style={styles.buttonText}>Classic recipes</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button}
-                title="Reset Non-Signed-In Counter"
-                onPress={resetNonSignedInCounter}
-            />
+            <TouchableOpacity style={styles.button} title="Reset Non-Signed-In Counter" onPress={resetNonSignedInCounter} />
             <View style={styles.bottomBar}>
                 <TouchableOpacity style={styles.navButton} onPress={handleAccountPress}>
                     <Text style={styles.navButtonText}>{isLoggedIn ? "Account" : "Log In"}</Text>
@@ -116,7 +125,6 @@ export default function HomeScreen() {
                         <TouchableOpacity style={styles.modalButton} onPress={handleLogout}>
                             <Text style={styles.modalButtonText}>Log Out</Text>
                         </TouchableOpacity>
-                        {/* Reset Requests Button for Test Users */}
                         {user && isUserTest(user) && (
                             <TouchableOpacity
                                 style={[styles.modalButton, { backgroundColor: "#ff9800" }]}
@@ -133,6 +141,38 @@ export default function HomeScreen() {
                             </TouchableOpacity>
                         )}
                         <TouchableOpacity style={styles.modalButton} onPress={() => setAccountModalVisible(false)}>
+                            <Text style={styles.modalButtonText}>Close</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+
+            {/* Language Modal */}
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={languageModalVisible}
+                onRequestClose={() => setLanguageModalVisible(false)}
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalTitle}>Select Language</Text>
+                        <FlatList
+                            data={availableLanguages}
+                            keyExtractor={(item) => item.code}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity
+                                    style={[
+                                        styles.languageOption,
+                                        language === item.code && styles.languageOptionSelected,
+                                    ]}
+                                    onPress={() => selectLanguage(item.code)}
+                                >
+                                    <Text style={styles.languageText}>{item.name}</Text>
+                                </TouchableOpacity>
+                            )}
+                        />
+                        <TouchableOpacity style={styles.modalButton} onPress={() => setLanguageModalVisible(false)}>
                             <Text style={styles.modalButtonText}>Close</Text>
                         </TouchableOpacity>
                     </View>
@@ -227,11 +267,27 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
-        marginBottom: 10,
+        marginTop: 20,
     },
     modalButtonText: {
         color: "#fff",
         fontSize: 16,
         fontWeight: "bold",
+    },
+    languageOption: {
+        padding: 10,
+        borderWidth: 1,
+        borderColor: "#ccc",
+        borderRadius: 5,
+        marginVertical: 5,
+        width: "100%",
+        alignItems: "center",
+    },
+    languageOptionSelected: {
+        backgroundColor: "#d1f5d3",
+        borderColor: "#4caf50",
+    },
+    languageText: {
+        fontSize: 16,
     },
 });

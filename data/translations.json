@@ -1,0 +1,54 @@
+{
+  "en": {
+    "select_ingredients": "Select Ingredients",
+    "search_ingredients": "Search ingredients...",
+    "reset": "Reset",
+    "next": "Next",
+    "add": "Add",
+    "add_custom_ingredient": "Add custom ingredient...",
+    "loading": "Loading...",
+    "no_ingredients_selected": "No ingredients selected",
+    "please_select_ingredients": "Please select at least one ingredient.",
+    "error": "Error",
+    "enter_valid_ingredient": "Please enter a valid ingredient."
+  },
+  "de": {
+    "select_ingredients": "Zutaten auswählen",
+    "search_ingredients": "Zutaten suchen...",
+    "reset": "Zurücksetzen",
+    "next": "Weiter",
+    "add": "Hinzufügen",
+    "add_custom_ingredient": "Eigene Zutat hinzufügen...",
+    "loading": "Wird geladen...",
+    "no_ingredients_selected": "Keine Zutaten ausgewählt",
+    "please_select_ingredients": "Bitte wählen Sie mindestens eine Zutat aus.",
+    "error": "Fehler",
+    "enter_valid_ingredient": "Bitte geben Sie eine gültige Zutat ein."
+  },
+  "ua": {
+    "select_ingredients": "Виберіть інгредієнти",
+    "search_ingredients": "Шукати інгредієнти...",
+    "reset": "Скинути",
+    "next": "Далі",
+    "add": "Додати",
+    "add_custom_ingredient": "Додати свій інгредієнт...",
+    "loading": "Завантаження...",
+    "no_ingredients_selected": "Жоден інгредієнт не вибрано",
+    "please_select_ingredients": "Будь ласка, виберіть хоча б один інгредієнт.",
+    "error": "Помилка",
+    "enter_valid_ingredient": "Будь ласка, введіть дійсний інгредієнт."
+  },
+  "ru": {
+    "select_ingredients": "Выберите ингредиенты",
+    "search_ingredients": "Искать ингредиенты...",
+    "reset": "Сбросить",
+    "next": "Далее",
+    "add": "Добавить",
+    "add_custom_ingredient": "Добавить свой ингредиент...",
+    "loading": "Загрузка...",
+    "no_ingredients_selected": "Не выбрано ни одного ингредиента",
+    "please_select_ingredients": "Пожалуйста, выберите хотя бы один ингредиент.",
+    "error": "Ошибка",
+    "enter_valid_ingredient": "Пожалуйста, введите действительный ингредиент."
+  }
+}
