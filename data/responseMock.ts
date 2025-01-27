@@ -7,7 +7,16 @@ export const mockedResponses = [
         "index": 0,
         "message": {
           "role": "assistant",
-          "content": "Certainly! With the ingredients you have, you can make a simple omelette. Here's a basic recipe:\n\n### Simple Omelette\n\n#### Ingredients:\n- 2 large eggs\n- 1 tablespoon milk\n- Salt, to taste\n- Pepper, to taste\n- 1 tablespoon butter or olive oil (for cooking)\n\n#### Optional:\n- A pinch of sugar (for a hint of sweetness)\n- Olive oil and sunflower oil, if you want to mix oils for cooking\n\n#### Instructions:\n1. **Beat the Eggs**: In a bowl, crack the eggs. Add the milk, a pinch of salt, and a pinch of pepper. If you like, add a tiny pinch of sugar to balance the flavors. Beat the eggs and other ingredients together until well combined.\n\n2. **Heat the Pan**: Place a non-stick skillet over medium heat. Add the butter (or olive oil, or a mix of olive and sunflower oil) to the pan. Allow it to melt and coat the bottom of the skillet evenly.\n\n3. **Cook the Omelette**: Pour the egg mixture into the pan. Let it cook undisturbed for a minute or two until the edges start to set. With a spatula, gently lift the edges and tilt the pan to allow uncooked egg to flow to the edges.\n\n4. **Fold and Finish**: Once the omelette is mostly set, you can fold it in half. Let it cook for another 30 seconds to a minute, until fully set but still tender.\n\n5. **Serve**: Slide the omelette onto a plate. Garnish with additional salt and pepper if desired.\n\nEnjoy your simple homemade omelette! You can also experiment by adding other ingredients such as cheese, herbs, or vegetables if you have them on hand."
+          "content": "```json\n" +
+              "{\n" +
+              "    \"Prewords\": \"Enjoy a delicious and healthy fish and rice dinner.\",\n" +
+              "    \"Title\": \"Garlic Butter Fish with Rice and Tomato-Cucumber Salad\",\n" +
+              "    \"Description\": \"A savory fish dish accompanied by fluffy rice and a refreshing tomato-cucumber salad.\",\n" +
+              "    \"Ingredients\": \"2 pieces of Fish\\\\n1 cup Rice\\\\n2 tablespoons Butter\\\\n1 tablespoon Olive Oil\\\\nSalt, to taste\\\\nPepper, to taste\\\\n2 cloves Garlic, minced\\\\n1 Tomato, diced\\\\n1 Cucumber, diced\\\\n1 tablespoon Sunflower Oil\\\\n1 tablespoon Lemon Juice (optional, not in ingredients)\",\n" +
+              "    \"Calories\": \"Approximately 500-600 kcal per serving\",\n" +
+              "    \"Steps\": \"1. Rinse the rice and cook it in the multicooker with 2 cups of water and a pinch of salt. Set to cook for 25 minutes.\\\\n2. While the rice is cooking, heat the olive oil and 1 tablespoon of butter in a pan over medium heat on the stove.\\\\n3. Season the fish with salt and pepper, then place it in the heated pan. Cook for 3-4 minutes on each side until golden brown and cooked through. Remove from the pan.\\\\n4. In the same pan, add the minced garlic and sauté for 1 minute. Then add the remaining 1 tablespoon of butter. Stir to create a garlic butter sauce.\\\\n5. Return the fish to the pan and coat it with the garlic butter sauce. Cook for another 1-2 minutes.\\\\n6. In a bowl, combine the diced tomato and cucumber. Add the sunflower oil and lemon juice if available. Season with salt and pepper and mix well.\\\\n7. Serve the cooked fish on a plate alongside the rice. Add the tomato-cucumber salad on the side.\"\n" +
+              "}\n" +
+              "```\n"
         }
       }
     ],

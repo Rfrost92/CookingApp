@@ -24,25 +24,36 @@ export const fetchRecipeScenario1 = async (requestData) => {
     try {
         const languagePrefix = getLocalizedPromptPrefix(requestData.language);
 
-        let prompt = `${languagePrefix}\nI have the following ingredients: ${requestData.selectedIngredients.join(", ")}. 
+        const prompt = `${languagePrefix}\n
+        I have the following ingredients: ${requestData.selectedIngredients.join(", ")}. 
         I would be ready to cook using the following appliances: ${requestData.selectedAppliances.join(", ")}. 
-        This should be a ${requestData.mealType} ${requestData.dishType} for ${requestData.portions} portions.
+        This should be a ${requestData.mealType} ${requestData.dishType} for ${requestData.portions} portions. 
         I would be able to spend cooking up to ${requestData.maxCookingTime} minutes. 
-        Can you suggest a healthy recipe for a human?`;
-
-        if (requestData.openness > 0) {
-            prompt += `On a scale of 3, I have a level ${requestData.openness} openness to additional ingredients (except the ones mentioned above). `;
+        ${
+            requestData.openness > 0
+                ? `On a scale of 3, I have a level ${requestData.openness} openness to additional ingredients (except the ones mentioned above). `
+                : ""
         }
+        ${
+            requestData.isVegan ? "The dish should be vegan. " : ""
+        }${requestData.isVegetarian ? "The dish should be vegetarian. " : ""}
+        Can you suggest a healthy recipe for a human, using only edible ingredients?
 
-        if (requestData.isVegan) {
-            prompt += `The dish should be vegan. `;
+        Please format your response strictly as a JSON object in the following structure:
+        {
+            "Prewords": "string",
+            "Title": "string",
+            "Description": "string",
+            "Ingredients": "string",
+            "Calories": "string",
+            "Steps": "string"
         }
-
-        if (requestData.isVegetarian) {
-            prompt += `The dish should be vegetarian. `;
-        }
+        All ingredients and all steps should start with a new line. All steps should be numerated. New line should be marked as always with one backslash followed by letter n. 
+        No other additional formatting characters should be present.
+        Do not include any other text or explanations outside of this JSON object.`;
 
         let recipe: string | null = "";
+
         if (requestData.user?.uid) {
             await incrementRequest(requestData.user.uid);
         } else if (!requestData.user?.uid) {
@@ -64,9 +75,11 @@ export const fetchRecipeScenario1 = async (requestData) => {
         }
         return recipe;
     } catch (error) {
+        console.error("Error fetching recipe:", error);
         return { error: error.toString() };
     }
 };
+
 
 export const fetchRecipeScenario2 = async (requestData) => {
     try {
@@ -112,7 +125,20 @@ export const fetchRecipeScenario2 = async (requestData) => {
             prompt += `The dish should be vegetarian. `;
         }
 
-        prompt += "Can you suggest a healthy recipe for a human?";
+        prompt += `Can you suggest a healthy recipe for a human, using only edible ingredients?
+
+        Please format your response strictly as a JSON object in the following structure:
+        {
+            "Prewords": "string",
+            "Title": "string",
+            "Description": "string",
+            "Ingredients": "string",
+            "Calories": "string",
+            "Steps": "string"
+        }
+        All ingredients and all steps should start with a new line. All steps should be numerated. New line should be marked as always with one backslash followed by letter n. 
+        No other additional formatting characters should be present.
+        Do not include any other text or explanations outside of this JSON object.`;
 
         let recipe: string | null = "";
 
@@ -138,17 +164,31 @@ export const fetchRecipeScenario2 = async (requestData) => {
 
         return recipe;
     } catch (error) {
-        if (error.message.includes("Daily request limit reached")) {
-            return { error: error.toString() };
-        }
-        throw new Error("Unexpected error occurred");
+        console.error("Error fetching recipe:", error);
+        return { error: error.toString() };
     }
 };
+
 
 export const fetchRecipeScenario3 = async ({ classicDishName, user, language }) => {
     try {
         const languagePrefix = getLocalizedPromptPrefix(language);
-        const prompt = `${languagePrefix}\nPlease provide a detailed recipe for the classic dish "${classicDishName}". The recipe should include ingredients, quantities, and step-by-step instructions. Ensure the recipe is clear and easy to follow.`;
+        const prompt = `${languagePrefix}\nPlease provide a detailed recipe for the classic dish "${classicDishName}". 
+
+        The recipe should include ingredients, quantities, and step-by-step instructions. Ensure the recipe is clear and easy to follow.
+
+        Please format your response strictly as a JSON object in the following structure:
+        {
+            "Prewords": "string",
+            "Title": "string",
+            "Description": "string",
+            "Ingredients": "string",
+            "Calories": "string",
+            "Steps": "string"
+        }
+        All ingredients and all steps should start with a new line. All steps should be numerated. New line should be marked as always with one backslash followed by letter n. 
+        No other additional formatting characters should be present.
+        Do not include any other text or explanations outside of this JSON object.`;
 
         let recipe: string | null = "";
         if (user?.uid) {
@@ -173,6 +213,8 @@ export const fetchRecipeScenario3 = async ({ classicDishName, user, language }) 
 
         return recipe;
     } catch (error) {
+        console.error("Error fetching recipe:", error);
         return { error: error.toString() };
     }
 };
+

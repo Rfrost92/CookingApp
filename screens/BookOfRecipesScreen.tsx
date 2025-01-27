@@ -1,7 +1,7 @@
 // BookOfRecipesScreen.tsx
 import React, { useEffect, useState, useContext } from "react";
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert, TextInput } from "react-native";
-import { fetchUserRecipes, deleteRecipeById } from "../helpers/databaseHelpers";
+import {fetchUserRecipes, deleteRecipeById, sanitizeAndParseRecipe} from "../helpers/recipeHelpers";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 import { useLanguage } from "../services/LanguageContext";
@@ -61,19 +61,23 @@ export default function BookOfRecipesScreen() {
         navigation.navigate("RecipeDetail", { recipeId });
     };
 
-    const renderRecipe = ({ item }: any) => (
-        <View style={styles.recipeItem}>
-            <TouchableOpacity onPress={() => handleRecipePress(item.id)}>
-                <Text style={styles.recipeTitle}>{item.title}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.deleteButton}
-                onPress={() => handleDeleteRecipe(item.id)}
-            >
-                <Text style={styles.deleteButtonText}>{t("delete")}</Text>
-            </TouchableOpacity>
-        </View>
-    );
+    const renderRecipe = ({ item }: any) => {
+        const recipeContent = sanitizeAndParseRecipe(item.content);
+
+        return (
+            <View style={styles.recipeItem}>
+                <TouchableOpacity onPress={() => handleRecipePress(item.id)}>
+                    <Text style={styles.recipeTitle}>{recipeContent?.Title || t("no_title")}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.deleteButton}
+                    onPress={() => handleDeleteRecipe(item.id)}
+                >
+                    <Text style={styles.deleteButtonText}>{t("delete")}</Text>
+                </TouchableOpacity>
+            </View>
+        );
+    };
 
     return (
         <View style={styles.container}>

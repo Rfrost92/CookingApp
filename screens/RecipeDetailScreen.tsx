@@ -1,7 +1,7 @@
 // RecipeDetailScreen.tsx
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView } from "react-native";
-import { fetchRecipeById } from "../helpers/databaseHelpers";
+import {fetchRecipeById, sanitizeAndParseRecipe} from "../helpers/recipeHelpers";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
 
@@ -15,7 +15,8 @@ export default function RecipeDetailScreen({ route }: any) {
         const fetchRecipe = async () => {
             try {
                 const fetchedRecipe = await fetchRecipeById(recipeId);
-                setRecipe(fetchedRecipe);
+                const parsedRecipe = sanitizeAndParseRecipe(fetchedRecipe.content);
+                setRecipe(parsedRecipe);
             } catch (error) {
                 console.error("Error fetching recipe:", error);
                 Alert.alert(t("error"), t("failed_to_load_recipe"));
@@ -35,8 +36,24 @@ export default function RecipeDetailScreen({ route }: any) {
 
     return (
         <ScrollView style={styles.container}>
-            <Text style={styles.title}>{recipe.title}</Text>
-            <Text style={styles.content}>{recipe.content}</Text>
+            <Text style={styles.title}>{recipe.Title}</Text>
+            <Text style={styles.prewords}>{recipe.Prewords}</Text>
+            <Text style={styles.description}>{recipe.Description}</Text>
+
+            <View style={styles.section}>
+                <Text style={styles.sectionHeader}>{t("ingredients")}</Text>
+                <Text style={styles.sectionContent}>{recipe.Ingredients.replace(/\\n/g, "\n")}</Text>
+            </View>
+
+            <View style={styles.section}>
+                <Text style={styles.sectionHeader}>{t("steps")}</Text>
+                <Text style={styles.sectionContent}>{recipe.Steps.replace(/\\n/g, "\n")}</Text>
+            </View>
+
+            <View style={styles.section}>
+                <Text style={styles.sectionHeader}>{t("calories")}</Text>
+                <Text style={styles.sectionContent}>{recipe.Calories}</Text>
+            </View>
         </ScrollView>
     );
 }
@@ -44,5 +61,9 @@ export default function RecipeDetailScreen({ route }: any) {
 const styles = StyleSheet.create({
     container: { flex: 1, padding: 20, backgroundColor: "#fff" },
     title: { fontSize: 24, fontWeight: "bold", marginBottom: 20, textAlign: "center" },
-    content: { fontSize: 16, lineHeight: 24 },
+    prewords: { fontSize: 16, fontStyle: "italic", marginBottom: 15 },
+    description: { fontSize: 16, marginBottom: 15 },
+    section: { marginBottom: 20 },
+    sectionHeader: { fontSize: 18, fontWeight: "bold", marginBottom: 5 },
+    sectionContent: { fontSize: 16, lineHeight: 24 },
 });

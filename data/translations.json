@@ -135,7 +135,9 @@
     "dont_have_account": "Don't have an account? Sign Up",
     "sign_up": "Sign Up",
     "account_created_successfully": "Account created successfully!",
-    "already_have_account": "Already have an account? Log In"
+    "already_have_account": "Already have an account? Log In",
+    "recipe_already_exists": "A recipe with the same title already exists.",
+    "invalid_recipe_format": "The recipe format is invalid."
   },
 
 
@@ -275,7 +277,9 @@
     "dont_have_account": "Sie haben kein Konto? Registrieren",
     "sign_up": "Registrieren",
     "account_created_successfully": "Konto erfolgreich erstellt!",
-    "already_have_account": "Sie haben bereits ein Konto? Einloggen"
+    "already_have_account": "Sie haben bereits ein Konto? Einloggen",
+    "recipe_already_exists": "Ein Rezept mit demselben Titel existiert bereits.",
+    "invalid_recipe_format": "Das Rezeptformat ist ungültig."
   },
 
 
@@ -415,7 +419,9 @@
     "dont_have_account": "Немає облікового запису? Зареєструватися",
     "sign_up": "Реєстрація",
     "account_created_successfully": "Обліковий запис успішно створено!",
-    "already_have_account": "Вже є обліковий запис? Увійти"
+    "already_have_account": "Вже є обліковий запис? Увійти",
+    "recipe_already_exists": "Рецепт з такою ж назвою вже існує.",
+    "invalid_recipe_format": "Формат рецепту недійсний."
   },
 
 
@@ -555,6 +561,8 @@
     "dont_have_account": "Нет аккаунта? Зарегистрироваться",
     "sign_up": "Регистрация",
     "account_created_successfully": "Аккаунт успешно создан!",
-    "already_have_account": "Уже есть аккаунт? Войти"
+    "already_have_account": "Уже есть аккаунт? Войти",
+    "recipe_already_exists": "Рецепт с таким же названием уже существует.",
+    "invalid_recipe_format": "Формат рецепта недействителен."
   }
 }

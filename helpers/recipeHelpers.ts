@@ -1,4 +1,4 @@
-// helpers/databaseHelpers.ts
+// helpers/recipeHelpers.ts
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { db } from "../firebaseConfig";
 import { doc, collection, addDoc, getDoc, deleteDoc, getDocs, query, where } from "firebase/firestore";
@@ -10,6 +10,15 @@ export const saveRecipe = async (userId: string, title: string, content: string)
     const storageRef = ref(storage, filePath);
 
     try {
+        // Check if a recipe with the same title already exists for the user
+        const recipesRef = collection(db, "savedRecipes");
+        const q = query(recipesRef, where("userId", "==", userId), where("title", "==", title));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            return { message: "Recipe with the same title already exists." };
+        }
+
         // Convert content to JSON and upload it as a file to Firebase Storage
         const contentBlob = new Blob([JSON.stringify({ content })], { type: "application/json" });
         console.log("contentBlob", contentBlob);
@@ -22,11 +31,9 @@ export const saveRecipe = async (userId: string, title: string, content: string)
         }
 
         // Get the download URL for the file
-
         const downloadURL = await getDownloadURL(storageRef);
 
         // Save metadata in Firestore
-        const recipesRef = collection(db, "savedRecipes");
         const recipeData = {
             userId,
             title,
@@ -37,7 +44,7 @@ export const saveRecipe = async (userId: string, title: string, content: string)
         const docRef = await addDoc(recipesRef, recipeData);
 
         console.log("Recipe saved with ID:", docRef.id);
-        return docRef.id;
+        return { id: docRef.id, message: "Recipe saved successfully." };
     } catch (error) {
         console.error("Error saving recipe:", error.code, error.message);
         throw new Error("Failed to save recipe. Please try again.");
@@ -143,3 +150,26 @@ export const fetchUserRecipes = async (userId: string) => {
         throw new Error("Failed to fetch recipes. Please try again.");
     }
 };
+
+export const sanitizeAndParseRecipe = (rawRecipe: string | object) => {
+    try {
+        console.log("rawrecipe", rawRecipe);
+
+        // If the recipe is already an object, return it directly
+        if (typeof rawRecipe === "object" && rawRecipe !== null) {
+            return rawRecipe;
+        }
+
+        // Otherwise, sanitize and parse it as a string
+        if (typeof rawRecipe === "string") {
+            const sanitized = rawRecipe.replace(/```json\n/, "").replace(/```/, "");
+            return JSON.parse(sanitized);
+        }
+
+        throw new Error("Invalid recipe format: not a string or object");
+    } catch (error) {
+        console.error("Error parsing recipe JSON:", error);
+        return null;
+    }
+};
+

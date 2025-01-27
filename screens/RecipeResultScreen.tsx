@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, ScrollView, Button, Alert } from "react-native"
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { fetchRecipeScenario1, fetchRecipeScenario2 } from "../services/openaiService";
 import { AuthContext } from "../contexts/AuthContext";
-import { saveRecipe } from "../helpers/databaseHelpers";
+import {sanitizeAndParseRecipe, saveRecipe} from "../helpers/recipeHelpers";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
 
@@ -30,7 +30,6 @@ export default function RecipeResultScreen() {
                 newRecipe = await fetchRecipeScenario2(requestData);
             }
 
-            // Check if the response contains an error
             if (newRecipe?.error) {
                 Alert.alert(
                     t("daily_limit_reached"),
@@ -56,8 +55,18 @@ export default function RecipeResultScreen() {
         }
 
         try {
-            await saveRecipe(user?.uid, "Recipe Title", recipe);
-            Alert.alert(t("success"), t("recipe_saved"));
+            const parsedRecipe = sanitizeAndParseRecipe(recipe);
+            if (!parsedRecipe) {
+                Alert.alert(t("error"), t("invalid_recipe_format"));
+                return;
+            }
+
+            const saveResult = await saveRecipe(user?.uid, parsedRecipe.Title, parsedRecipe);
+            if (saveResult.message === "Recipe with the same title already exists.") {
+                Alert.alert(t("error"), t("recipe_already_exists"));
+            } else {
+                Alert.alert(t("success"), t("recipe_saved"));
+            }
         } catch (error) {
             Alert.alert(t("error"), error.message || t("failed_to_save"));
         }
@@ -67,16 +76,44 @@ export default function RecipeResultScreen() {
         navigation.navigate("Home");
     };
 
+    const renderRecipe = () => {
+        const parsedRecipe = sanitizeAndParseRecipe(recipe);
+
+        if (parsedRecipe) {
+            return (
+                <View>
+                    <Text style={styles.sectionTitle}>{parsedRecipe.Prewords}</Text>
+                    <Text style={styles.recipeTitle}>{parsedRecipe.Title}</Text>
+                    <Text style={styles.description}>{parsedRecipe.Description}</Text>
+
+                    <View style={styles.section}>
+                        <Text style={styles.sectionHeader}>{t("ingredients")}</Text>
+                        <Text style={styles.sectionContent}>
+                            {parsedRecipe.Ingredients.replace(/\\n/g, "\n")}
+                        </Text>
+                    </View>
+
+                    <View style={styles.section}>
+                        <Text style={styles.sectionHeader}>{t("steps")}</Text>
+                        <Text style={styles.sectionContent}>
+                            {parsedRecipe.Steps.replace(/\\n/g, "\n")}
+                        </Text>
+                    </View>
+
+                    <View style={styles.section}>
+                        <Text style={styles.sectionHeader}>{t("calories")}</Text>
+                        <Text style={styles.sectionContent}>{parsedRecipe.Calories}</Text>
+                    </View>
+                </View>
+            );
+        }
+
+        return <Text style={styles.errorText}>{t("recipe_error")}</Text>;
+    };
+
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{t("your_recipe")}</Text>
-            <ScrollView>
-                {typeof recipe === "string" ? (
-                    <Text style={styles.recipeText}>{recipe}</Text>
-                ) : (
-                    <Text style={styles.errorText}>{t("recipe_error")}</Text>
-                )}
-            </ScrollView>
+            <ScrollView>{renderRecipe()}</ScrollView>
             <View style={styles.buttonContainer}>
                 {requestData && <Button title={t("try_again")} onPress={handleTryAgain} />}
                 <Button title={t("save_to_book")} onPress={handleSaveToBook} />
@@ -92,13 +129,27 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: "#fff",
     },
-    title: {
+    recipeTitle: {
         fontSize: 24,
         fontWeight: "bold",
-        marginBottom: 20,
+        textAlign: "center",
+        marginVertical: 10,
+    },
+    description: {
+        fontSize: 16,
+        fontStyle: "italic",
+        marginBottom: 15,
         textAlign: "center",
     },
-    recipeText: {
+    section: {
+        marginBottom: 20,
+    },
+    sectionHeader: {
+        fontSize: 18,
+        fontWeight: "bold",
+        marginBottom: 5,
+    },
+    sectionContent: {
         fontSize: 16,
         lineHeight: 24,
     },
@@ -112,5 +163,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
         flexDirection: "row",
         justifyContent: "space-between",
+    },
+    sectionTitle: {
+        fontSize: 16,
+        color: "#4caf50",
+        marginBottom: 10,
+        textAlign: "center",
     },
 });
