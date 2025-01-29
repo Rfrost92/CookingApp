@@ -76,19 +76,21 @@ export default function Scenario2Step3Screen() {
             language
         };
 
-        const recipe = await fetchRecipeScenario2(requestData);
+        const response = await fetchRecipeScenario2(requestData);
 
-        if (recipe?.error) {
+        if (response?.error) {
             Alert.alert(
                 t("daily_limit_reached"),
-                recipe.error === "Error: Daily request limit reached for non-signed-in users."
+                response.error === "Error: Daily request limit reached for non-signed-in users."
                     ? t("signup_to_continue")
                     : t("upgrade_for_more"),
                 [{ text: t("ok") }]
             );
+            return;
         } else {
             const scenario = 2;
-            navigation.navigate("RecipeResult", { recipe, requestData, scenario });
+            const recipe = response.recipe;
+            navigation.navigate("RecipeResult", { recipe, requestData, scenario, image:response.image });
         }
     };
 

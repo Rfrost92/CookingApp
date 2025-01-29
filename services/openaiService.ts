@@ -1,8 +1,9 @@
 //openaiService.ts
 import OpenAI from "openai";
-import {mockedResponses} from "../data/responseMock";
+import {mockedResponses, mockImageUrl} from "../data/responseMock";
 import {gptApiKey} from "../data/secrets";
 import {incrementNonSignedInRequests, incrementRequest} from "../helpers/incrementRequest";
+import {sanitizeAndParseRecipe} from "../helpers/recipeHelpers";
 
 const openai = new OpenAI({
     apiKey: gptApiKey
@@ -53,6 +54,7 @@ export const fetchRecipeScenario1 = async (requestData) => {
         Do not include any other text or explanations outside of this JSON object.`;
 
         let recipe: string | null = "";
+        let image: string | null = "";
 
         if (requestData.user?.uid) {
             await incrementRequest(requestData.user.uid);
@@ -63,6 +65,8 @@ export const fetchRecipeScenario1 = async (requestData) => {
         if (testing) {
             console.log(prompt);
             recipe = mockedResponses[0].choices[0].message.content;
+            image = mockImageUrl;
+            console.log('image', image)
         } else {
             const response = await openai.chat.completions.create({
                 model: "gpt-4o",
@@ -72,8 +76,10 @@ export const fetchRecipeScenario1 = async (requestData) => {
                 ],
             });
             recipe = response.choices[0].message.content;
+            const parsedRecipe = sanitizeAndParseRecipe(recipe);
+            image = await generateRecipeImage(parsedRecipe.Title, parsedRecipe.Description)
         }
-        return recipe;
+        return {recipe, image};
     } catch (error) {
         console.error("Error fetching recipe:", error);
         return { error: error.toString() };
@@ -141,6 +147,7 @@ export const fetchRecipeScenario2 = async (requestData) => {
         Do not include any other text or explanations outside of this JSON object.`;
 
         let recipe: string | null = "";
+        let image: string | null = "";
 
         if (requestData.user?.uid) {
             await incrementRequest(requestData.user.uid);
@@ -151,6 +158,8 @@ export const fetchRecipeScenario2 = async (requestData) => {
         if (testing) {
             console.log(prompt);
             recipe = mockedResponses[0].choices[0].message.content;
+            image = mockImageUrl;
+            console.log('image', image)
         } else {
             const response = await openai.chat.completions.create({
                 model: "gpt-4o",
@@ -160,9 +169,10 @@ export const fetchRecipeScenario2 = async (requestData) => {
                 ],
             });
             recipe = response.choices[0].message.content;
+            const parsedRecipe = sanitizeAndParseRecipe(recipe);
+            image = await generateRecipeImage(parsedRecipe.Title, parsedRecipe.Description)
         }
-
-        return recipe;
+        return {recipe, image};
     } catch (error) {
         console.error("Error fetching recipe:", error);
         return { error: error.toString() };
@@ -191,6 +201,7 @@ export const fetchRecipeScenario3 = async ({ classicDishName, user, language }) 
         Do not include any other text or explanations outside of this JSON object.`;
 
         let recipe: string | null = "";
+        let image: string | null = "";
         if (user?.uid) {
             await incrementRequest(user.uid);
         } else if (!user?.uid) {
@@ -200,6 +211,8 @@ export const fetchRecipeScenario3 = async ({ classicDishName, user, language }) 
         if (testing) {
             console.log(prompt);
             recipe = mockedResponses[0].choices[0].message.content;
+            image = mockImageUrl;
+            console.log('image', image)
         } else {
             const response = await openai.chat.completions.create({
                 model: "gpt-4o",
@@ -209,12 +222,40 @@ export const fetchRecipeScenario3 = async ({ classicDishName, user, language }) 
                 ],
             });
             recipe = response.choices[0].message.content;
+            const parsedRecipe = sanitizeAndParseRecipe(recipe);
+            image = await generateRecipeImage(parsedRecipe.Title, parsedRecipe.Description)
         }
 
-        return recipe;
+        return {recipe, image};
     } catch (error) {
         console.error("Error fetching recipe:", error);
         return { error: error.toString() };
     }
 };
 
+export const generateRecipeImage = async (title: string, description: string) => {
+    try {
+        const origPrompt = `A realistic, photorealistic, appetizing image of the dish "${title}", which is described as: ${description}.
+        The image should be photorealistic and should not include any text, watermarks, or letters.`;
+        const maxLength = 980;
+        let prompt = origPrompt.length > maxLength ? origPrompt.slice(0, maxLength) : origPrompt;
+        if (prompt.length == 980) {
+            prompt += '. etc...'
+        }
+        console.log(prompt);
+        const response = await openai.images.generate({
+            prompt,
+            n: 1, // Number of images to generate
+            size: "512x512", // Specify the size of the image
+        });
+
+        if (response?.data?.[0]?.url) {
+            return response.data[0].url;
+        } else {
+            throw new Error("Image generation failed");
+        }
+    } catch (error) {
+        console.error("Error generating recipe image:", error);
+        return null; // Fallback to null if image generation fails
+    }
+};

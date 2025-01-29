@@ -1,20 +1,23 @@
 // RecipeResultScreen.tsx
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import { View, Text, StyleSheet, ScrollView, Button, Alert } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { fetchRecipeScenario1, fetchRecipeScenario2 } from "../services/openaiService";
 import { AuthContext } from "../contexts/AuthContext";
-import {sanitizeAndParseRecipe, saveRecipe} from "../helpers/recipeHelpers";
+import { sanitizeAndParseRecipe, saveRecipe } from "../helpers/recipeHelpers";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
+import RecipeImage from "../services/RecipeImage";
 
 export default function RecipeResultScreen() {
     const navigation = useNavigation();
     const route = useRoute();
     const { user, isLoggedIn } = useContext(AuthContext);
-    const { recipe, requestData, scenario } = route.params; // Ensure requestData is passed here
+    const { recipe, requestData, scenario, image } = route.params;
     const { language } = useLanguage();
-    const t = (key: string) => translations[language][key] || key;
+    const t = (key) => translations[language][key] || key;
+
+    const [base64Image, setBase64Image] = useState(null); // Store Base64 image
 
     const handleTryAgain = async () => {
         if (!requestData) {
@@ -41,7 +44,7 @@ export default function RecipeResultScreen() {
                 return;
             }
 
-            navigation.setParams({ recipe: newRecipe }); // Update the recipe on this screen
+            navigation.setParams({ recipe: newRecipe });
         } catch (error) {
             console.error("Error in Try Again:", error);
             Alert.alert(t("error"), t("unexpected_error"));
@@ -61,7 +64,7 @@ export default function RecipeResultScreen() {
                 return;
             }
 
-            const saveResult = await saveRecipe(user?.uid, parsedRecipe.Title, parsedRecipe);
+            const saveResult = await saveRecipe(user?.uid, parsedRecipe.Title, parsedRecipe, base64Image);
             if (saveResult.message === "Recipe with the same title already exists.") {
                 Alert.alert(t("error"), t("recipe_already_exists"));
             } else {
@@ -85,6 +88,9 @@ export default function RecipeResultScreen() {
                     <Text style={styles.sectionTitle}>{parsedRecipe.Prewords}</Text>
                     <Text style={styles.recipeTitle}>{parsedRecipe.Title}</Text>
                     <Text style={styles.description}>{parsedRecipe.Description}</Text>
+
+                    {/* Use RecipeImage component */}
+                    {image && <RecipeImage imageUrl={image} onImageFetched={setBase64Image} />}
 
                     <View style={styles.section}>
                         <Text style={styles.sectionHeader}>{t("ingredients")}</Text>

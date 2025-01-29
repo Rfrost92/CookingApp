@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="App localized fully to four languages: en, de, ua, ru">
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Recipes are coming back form GPT in json format and being parsed on our end">
+      <change afterPath="$PROJECT_DIR$/services/RecipeImage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contexts/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/contexts/AuthContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/responseMock.ts" beforeDir="false" afterPath="$PROJECT_DIR$/data/responseMock.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/translations.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/translations.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/databaseHelpers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/recipeHelpers.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/recipeHelpers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/recipeHelpers.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/BookOfRecipesScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/BookOfRecipesScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/ChooseClassicRecipeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ChooseClassicRecipeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/RecipeDetailScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/RecipeDetailScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/RecipeResultScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/RecipeResultScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Scenario2Step3Screen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Scenario2Step3Screen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/openaiService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/openaiService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,13 +47,16 @@
     <setting file="file://$PROJECT_DIR$/data/ingredientCategories.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/firebaseConfig.ts" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/services/RecipeImage.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/screens/ChooseClassicRecipeScreen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/screens/RecipeResultScreen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/screens/HomeScreen.tsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/node_modules/openai/src/resources/images.ts" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/services/openaiService.ts" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/navigation/RootNavigator.tsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/node_modules/axios/index.d.ts" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/tsconfig.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/index.ts" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/data/categories1.json" root0="FORCE_HIGHLIGHTING" />
@@ -55,6 +65,7 @@
     <setting file="file://$PROJECT_DIR$/data/populateIngredientsScript.ts" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/screens/Scenario2Step2Screen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/data/ingredients1.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/node_modules/react-native/Libraries/StyleSheet/StyleSheet.d.ts" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/screens/LogInScreen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/screens/SignUpScreen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/services/authService.ts" root0="FORCE_HIGHLIGHTING" />
@@ -62,8 +73,13 @@
     <setting file="file://$PROJECT_DIR$/App.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/helpers/recipeHelpers.ts" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/data/secrets.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/data/responseMock.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/node_modules/openai/src/index.ts" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/contexts/AuthContext.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/helpers/firebase-auth-overrides.d.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/data/translations.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/screens/RecipeDetailScreen.tsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/screens/BookOfRecipesScreen.tsx" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="2rLvbteVlqKhdO1mKxSPd3Ubp0Y" />
   <component name="ProjectViewState">
@@ -99,7 +115,7 @@
       <workItem from="1736351246605" duration="1454000" />
       <workItem from="1736355231215" duration="5784000" />
       <workItem from="1736945528355" duration="18232000" />
-      <workItem from="1737968967614" duration="6096000" />
+      <workItem from="1737968967614" duration="18066000" />
     </task>
     <task id="LOCAL-00001" summary="Attach GPT-API and add mocked responses for testing">
       <created>1736528503716</created>
@@ -234,7 +250,14 @@
       <option name="project" value="LOCAL" />
       <updated>1737736592234</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Recipes are coming back form GPT in json format and being parsed on our end">
+      <created>1738008090581</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1738008090581</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,7 +294,8 @@
     <MESSAGE value="Book of recipes works with the firebase Storage" />
     <MESSAGE value="Languages initially work" />
     <MESSAGE value="App localized fully to four languages: en, de, ua, ru" />
-    <option name="LAST_COMMIT_MESSAGE" value="App localized fully to four languages: en, de, ua, ru" />
+    <MESSAGE value="Recipes are coming back form GPT in json format and being parsed on our end" />
+    <option name="LAST_COMMIT_MESSAGE" value="Recipes are coming back form GPT in json format and being parsed on our end" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

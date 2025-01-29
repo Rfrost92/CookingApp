@@ -1,52 +1,69 @@
 // helpers/recipeHelpers.ts
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, uploadString } from "firebase/storage";
 import { db } from "../firebaseConfig";
 import { doc, collection, addDoc, getDoc, deleteDoc, getDocs, query, where } from "firebase/firestore";
+import * as FileSystem from "expo-file-system";
+import base64js from "base64-js";
 
 // Save a recipe
-export const saveRecipe = async (userId: string, title: string, content: string) => {
-    const storage = getStorage(); // Initialize Firebase Storage
-    const filePath = `recipes/${userId}/${Date.now()}.json`; // Generate a unique file path
+export const saveRecipe = async (userId, title, content, imageBase64) => {
+    const storage = getStorage();
+    const filePath = `recipes/${userId}/${Date.now()}.json`;
+    const imagePath = `recipes/${userId}/${Date.now()}.png`;
     const storageRef = ref(storage, filePath);
+    const imageRef = ref(storage, imagePath);
 
     try {
-        // Check if a recipe with the same title already exists for the user
-        const recipesRef = collection(db, "savedRecipes");
-        const q = query(recipesRef, where("userId", "==", userId), where("title", "==", title));
-        const querySnapshot = await getDocs(q);
-
-        if (!querySnapshot.empty) {
-            return { message: "Recipe with the same title already exists." };
-        }
-
-        // Convert content to JSON and upload it as a file to Firebase Storage
         const contentBlob = new Blob([JSON.stringify({ content })], { type: "application/json" });
-        console.log("contentBlob", contentBlob);
-        try {
-            await uploadBytes(storageRef, contentBlob);
-            console.log("File uploaded successfully");
-        } catch (uploadError) {
-            console.error("Upload error:", uploadError.code, uploadError.message);
-            throw uploadError;
+        await uploadBytes(storageRef, contentBlob);
+        let imageURL = null;
+
+        // Convert Base64 to File & Upload
+        if (imageBase64) {
+            console.log("Received Base64 Image:", imageBase64.substring(0, 50));
+            // Ensure Base64 is valid
+            if (!imageBase64.startsWith("data:image/png;base64,")) {
+                console.error("Invalid base64 format for image");
+                throw new Error("Invalid base64 format for image");
+            }
+
+            // Save Base64 to a Local File
+            const fileUri = `${FileSystem.cacheDirectory}recipe-${Date.now()}.png`;
+            await FileSystem.writeAsStringAsync(fileUri, imageBase64.split(",")[1], {
+                encoding: FileSystem.EncodingType.Base64,
+            });
+
+            console.log("Image saved to file:", fileUri);
+
+            // Upload File to Firebase Storage**
+            const response = await fetch(fileUri);
+            const blob = await response.blob();
+            await uploadBytes(imageRef, blob);
+
+            // **Get Image Download URL**
+            imageURL = await getDownloadURL(imageRef);
+            console.log("Image uploaded successfully!", imageURL);
         }
 
-        // Get the download URL for the file
+        // Get JSON Download URL**
         const downloadURL = await getDownloadURL(storageRef);
 
-        // Save metadata in Firestore
+        // Save Recipe Metadata in Firestore**
+        const recipesRef = collection(db, "savedRecipes");
         const recipeData = {
             userId,
             title,
-            filePath, // Path to the file in Storage
-            downloadURL, // URL to access the file
+            filePath,
+            imageURL,
+            downloadURL,
             savedAt: new Date(),
         };
         const docRef = await addDoc(recipesRef, recipeData);
 
-        console.log("Recipe saved with ID:", docRef.id);
+        console.log("Recipe saved successfully:", docRef.id);
         return { id: docRef.id, message: "Recipe saved successfully." };
     } catch (error) {
-        console.error("Error saving recipe:", error.code, error.message);
+        console.error("Error saving recipe:", error);
         throw new Error("Failed to save recipe. Please try again.");
     }
 };
@@ -153,8 +170,6 @@ export const fetchUserRecipes = async (userId: string) => {
 
 export const sanitizeAndParseRecipe = (rawRecipe: string | object) => {
     try {
-        console.log("rawrecipe", rawRecipe);
-
         // If the recipe is already an object, return it directly
         if (typeof rawRecipe === "object" && rawRecipe !== null) {
             return rawRecipe;

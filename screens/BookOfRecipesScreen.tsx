@@ -1,6 +1,6 @@
 // BookOfRecipesScreen.tsx
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert, TextInput } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert, TextInput, Image } from "react-native";
 import {fetchUserRecipes, deleteRecipeById, sanitizeAndParseRecipe} from "../helpers/recipeHelpers";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
@@ -61,11 +61,16 @@ export default function BookOfRecipesScreen() {
         navigation.navigate("RecipeDetail", { recipeId });
     };
 
-    const renderRecipe = ({ item }: any) => {
+    const renderRecipe = ({ item }) => {
         const recipeContent = sanitizeAndParseRecipe(item.content);
 
         return (
             <View style={styles.recipeItem}>
+                <Image
+                    source={{ uri: item.imageURL }}
+                    style={styles.recipeThumbnail}
+                    resizeMode="cover"
+                />
                 <TouchableOpacity onPress={() => handleRecipePress(item.id)}>
                     <Text style={styles.recipeTitle}>{recipeContent?.Title || t("no_title")}</Text>
                 </TouchableOpacity>
@@ -125,4 +130,10 @@ const styles = StyleSheet.create({
     deleteButtonText: { color: "#fff", fontWeight: "bold" },
     listContainer: { paddingBottom: 10 },
     list: { flex: 1 },
+    recipeThumbnail: {
+        width: 50,
+        height: 50,
+        borderRadius: 5,
+        marginRight: 10,
+    },
 });

@@ -52,3 +52,6 @@ export const mockedResponses = [
     }
   }
 ]
+
+export const mockImageUrl = 'https://thecozycook.com/wp-content/uploads/2022/04/Lasagna-Recipe-f.jpg';
+

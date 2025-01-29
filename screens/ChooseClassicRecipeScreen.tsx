@@ -65,9 +65,8 @@ export default function ChooseClassicRecipeScreen() {
 
     const handleSelectDish = async (dishName: string) => {
         const serializableUser = user ? { uid: user.uid } : null;
-        const recipe = await fetchRecipeScenario3({ classicDishName: dishName, user: serializableUser, language: language });
-
-        if (recipe?.error) {
+        const response = await fetchRecipeScenario3({ classicDishName: dishName, user: serializableUser, language: language });
+        if (response?.error) {
             Alert.alert(
                 t("daily_limit_reached"),
                 recipe.error === "Error: Daily request limit reached for non-signed-in users."
@@ -76,7 +75,8 @@ export default function ChooseClassicRecipeScreen() {
                 [{ text: "OK" }]
             );
         } else {
-            navigation.navigate("RecipeResult", { recipe });
+            const recipe = response.recipe;
+            navigation.navigate("RecipeResult", { recipe, image:response.image });
         }
     };
 

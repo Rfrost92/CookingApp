@@ -18,7 +18,7 @@ import translations from "../data/translations.json";
 
 export default function Scenario2Step1Screen() {
     const { language } = useLanguage();
-    const t = (key: string) => translations[language][key] || key;
+    const t = (key: string) => translations[language][key] || key ||'';
 
     const [cuisineOptions, setCuisineOptions] = useState<string[]>([
         t("any"),
@@ -95,7 +95,7 @@ export default function Scenario2Step1Screen() {
     useEffect(() => {
         setFilteredCuisineOptions(
             cuisineOptions.filter((option) =>
-                option.toLowerCase().includes(cuisineSearch.toLowerCase())
+                option?.toLowerCase()?.includes(cuisineSearch.toLowerCase())
             )
         );
     }, [cuisineSearch, cuisineOptions]);
@@ -103,7 +103,7 @@ export default function Scenario2Step1Screen() {
     useEffect(() => {
         setFilteredThematicOptions(
             thematicOptions.filter((option) =>
-                option.toLowerCase().includes(thematicSearch.toLowerCase())
+                option?.toLowerCase()?.includes(thematicSearch.toLowerCase())
             )
         );
     }, [thematicSearch, thematicOptions]);
@@ -111,7 +111,7 @@ export default function Scenario2Step1Screen() {
     useEffect(() => {
         setFilteredStarIngredients(
             starIngredientOptions.filter((ingredient: any) =>
-                ingredient.name[language].toLowerCase().includes(starIngredientSearch.toLowerCase())
+                ingredient?.name?.[language]?.toLowerCase()?.includes(starIngredientSearch.toLowerCase())
             )
         );
     }, [starIngredientSearch, starIngredientOptions, language]);

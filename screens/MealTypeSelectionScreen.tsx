@@ -90,7 +90,8 @@ export default function MealTypeSelectionScreen() {
             );
         } else {
             const scenario = 1;
-            navigation.navigate("RecipeResult", { recipe: response, requestData, scenario });
+            const recipe = response.recipe;
+            navigation.navigate("RecipeResult", { recipe, requestData, scenario, image:response.image });
         }
     };
 
