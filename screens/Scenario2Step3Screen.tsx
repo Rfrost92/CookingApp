@@ -81,17 +81,17 @@ export default function Scenario2Step3Screen() {
         if (response?.error) {
             Alert.alert(
                 t("daily_limit_reached"),
-                response.error === "Error: Daily request limit reached for non-signed-in users."
+                response.error === "Error: Daily request limit reached."
                     ? t("signup_to_continue")
                     : t("upgrade_for_more"),
                 [{ text: t("ok") }]
             );
-            return;
-        } else {
-            const scenario = 2;
-            const recipe = response.recipe;
-            navigation.navigate("RecipeResult", { recipe, requestData, scenario, image:response.image });
+            return; // **Prevent further execution**
         }
+
+        const scenario = 2;
+        const recipe = response.recipe;
+        navigation.navigate("RecipeResult", { recipe, requestData, scenario, image: response.image });
     };
 
     return (

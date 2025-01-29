@@ -56,10 +56,15 @@ export const fetchRecipeScenario1 = async (requestData) => {
         let recipe: string | null = "";
         let image: string | null = "";
 
-        if (requestData.user?.uid) {
-            await incrementRequest(requestData.user.uid);
-        } else if (!requestData.user?.uid) {
-            await incrementNonSignedInRequests();
+        try {
+            if (requestData.user?.uid) {
+                await incrementRequest(requestData.user.uid);
+            } else {
+                await incrementNonSignedInRequests();
+            }
+        } catch (error) {
+            console.warn("Daily limit reached:", error);
+            return { error: "Error: Daily request limit reached." };
         }
 
         if (testing) {
@@ -77,9 +82,9 @@ export const fetchRecipeScenario1 = async (requestData) => {
             });
             recipe = response.choices[0].message.content;
             const parsedRecipe = sanitizeAndParseRecipe(recipe);
-            image = await generateRecipeImage(parsedRecipe.Title, parsedRecipe.Description)
+            image = await generateRecipeImage(parsedRecipe.Title, parsedRecipe.Description);
         }
-        return {recipe, image};
+        return { recipe, image };
     } catch (error) {
         console.error("Error fetching recipe:", error);
         return { error: error.toString() };
@@ -93,36 +98,26 @@ export const fetchRecipeScenario2 = async (requestData) => {
 
         let prompt = `${languagePrefix}\n`;
 
-        // Include cuisine if not "any"
         if (requestData.cuisine.toLowerCase() !== "any") {
             prompt += `The cuisine is ${requestData.cuisine}. `;
         }
-
-        // Include thematic if not "any"
         if (requestData.thematic.toLowerCase() !== "any") {
             prompt += `The thematic is ${requestData.thematic}. `;
         }
-
-        // Include star ingredient if not "any"
         if (requestData.starIngredient.toLowerCase() !== "any") {
             prompt += `The star ingredient is ${requestData.starIngredient}. `;
         }
-
-        // Include appliances
         if (requestData.selectedAppliances[0].toLowerCase() !== "any") {
             prompt += `I would be ready to cook using the following appliances: ${requestData.selectedAppliances.join(", ")}. `;
         }
 
-        // Include meal type, dish type, portions, and cooking time
         prompt += `This should be a ${requestData.mealType} ${requestData.dishType} for ${requestData.portions} portions. `;
         prompt += `I would be able to spend cooking up to ${requestData.maxCookingTime} minutes. `;
 
-        // Include openness to additional ingredients
         if (requestData.openness > 0) {
             prompt += `On a scale of 3, I have a level ${requestData.openness} openness to additional ingredients (except the ones mentioned above). `;
         }
 
-        // Include dietary preferences
         if (requestData.isVegan) {
             prompt += `The dish should be vegan. `;
         }
@@ -149,10 +144,15 @@ export const fetchRecipeScenario2 = async (requestData) => {
         let recipe: string | null = "";
         let image: string | null = "";
 
-        if (requestData.user?.uid) {
-            await incrementRequest(requestData.user.uid);
-        } else if (!requestData.user?.uid) {
-            await incrementNonSignedInRequests();
+        try {
+            if (requestData.user?.uid) {
+                await incrementRequest(requestData.user.uid);
+            } else {
+                await incrementNonSignedInRequests();
+            }
+        } catch (error) {
+            console.warn("Daily limit reached:", error);
+            return { error: "Error: Daily request limit reached." };
         }
 
         if (testing) {
@@ -170,9 +170,9 @@ export const fetchRecipeScenario2 = async (requestData) => {
             });
             recipe = response.choices[0].message.content;
             const parsedRecipe = sanitizeAndParseRecipe(recipe);
-            image = await generateRecipeImage(parsedRecipe.Title, parsedRecipe.Description)
+            image = await generateRecipeImage(parsedRecipe.Title, parsedRecipe.Description);
         }
-        return {recipe, image};
+        return { recipe, image };
     } catch (error) {
         console.error("Error fetching recipe:", error);
         return { error: error.toString() };
@@ -202,10 +202,16 @@ export const fetchRecipeScenario3 = async ({ classicDishName, user, language }) 
 
         let recipe: string | null = "";
         let image: string | null = "";
-        if (user?.uid) {
-            await incrementRequest(user.uid);
-        } else if (!user?.uid) {
-            await incrementNonSignedInRequests();
+
+        try {
+            if (user?.uid) {
+                await incrementRequest(user.uid);
+            } else {
+                await incrementNonSignedInRequests();
+            }
+        } catch (error) {
+            console.warn("Daily limit reached:", error);
+            return { error: "Error: Daily request limit reached." }; // Properly return error
         }
 
         if (testing) {
@@ -223,10 +229,10 @@ export const fetchRecipeScenario3 = async ({ classicDishName, user, language }) 
             });
             recipe = response.choices[0].message.content;
             const parsedRecipe = sanitizeAndParseRecipe(recipe);
-            image = await generateRecipeImage(parsedRecipe.Title, parsedRecipe.Description)
+            image = await generateRecipeImage(parsedRecipe.Title, parsedRecipe.Description);
         }
 
-        return {recipe, image};
+        return { recipe, image };
     } catch (error) {
         console.error("Error fetching recipe:", error);
         return { error: error.toString() };

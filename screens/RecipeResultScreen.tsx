@@ -26,17 +26,17 @@ export default function RecipeResultScreen() {
         }
 
         try {
-            let newRecipe;
+            let newRecipeResponse;
             if (scenario === 1) {
-                newRecipe = await fetchRecipeScenario1(requestData);
+                newRecipeResponse = await fetchRecipeScenario1(requestData);
             } else if (scenario === 2) {
-                newRecipe = await fetchRecipeScenario2(requestData);
+                newRecipeResponse = await fetchRecipeScenario2(requestData);
             }
 
-            if (newRecipe?.error) {
+            if (newRecipeResponse?.error) {
                 Alert.alert(
                     t("daily_limit_reached"),
-                    newRecipe.error === "Error: Daily request limit reached for non-signed-in users."
+                    newRecipeResponse.error === "Error: Daily request limit reached."
                         ? t("signup_to_continue")
                         : t("upgrade_subscription"),
                     [{ text: "OK" }]
@@ -44,7 +44,19 @@ export default function RecipeResultScreen() {
                 return;
             }
 
-            navigation.setParams({ recipe: newRecipe });
+            // Parse the new recipe correctly
+            const parsedRecipe = sanitizeAndParseRecipe(newRecipeResponse.recipe);
+            if (!parsedRecipe || !parsedRecipe.Title) {
+                Alert.alert(t("error"), t("recipe_parsing_failed"));
+                return;
+            }
+
+            // Update navigation parameters with the new parsed recipe & image
+            navigation.setParams({
+                recipe: newRecipeResponse.recipe,
+                image: newRecipeResponse.image
+            });
+
         } catch (error) {
             console.error("Error in Try Again:", error);
             Alert.alert(t("error"), t("unexpected_error"));
@@ -95,20 +107,20 @@ export default function RecipeResultScreen() {
                     <View style={styles.section}>
                         <Text style={styles.sectionHeader}>{t("ingredients")}</Text>
                         <Text style={styles.sectionContent}>
-                            {parsedRecipe.Ingredients.replace(/\\n/g, "\n")}
+                            {parsedRecipe?.Ingredients?.replace(/\\n/g, "\n")}
                         </Text>
                     </View>
 
                     <View style={styles.section}>
                         <Text style={styles.sectionHeader}>{t("steps")}</Text>
                         <Text style={styles.sectionContent}>
-                            {parsedRecipe.Steps.replace(/\\n/g, "\n")}
+                            {parsedRecipe?.Steps?.replace(/\\n/g, "\n")}
                         </Text>
                     </View>
 
                     <View style={styles.section}>
                         <Text style={styles.sectionHeader}>{t("calories")}</Text>
-                        <Text style={styles.sectionContent}>{parsedRecipe.Calories}</Text>
+                        <Text style={styles.sectionContent}>{parsedRecipe?.Calories}</Text>
                     </View>
                 </View>
             );
