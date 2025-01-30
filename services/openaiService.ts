@@ -1,9 +1,10 @@
 //openaiService.ts
 import OpenAI from "openai";
 import {mockedResponses, mockImageUrl} from "../data/responseMock";
-import {gptApiKey} from "../data/secrets";
+import {gptApiKey, runwareApiKey} from "../data/secrets";
 import {incrementNonSignedInRequests, incrementRequest} from "../helpers/incrementRequest";
 import {sanitizeAndParseRecipe} from "../helpers/recipeHelpers";
+import uuid from 'react-native-uuid';
 
 const openai = new OpenAI({
     apiKey: gptApiKey
@@ -47,8 +48,11 @@ export const fetchRecipeScenario1 = async (requestData) => {
             "Description": "string",
             "Ingredients": "string",
             "Calories": "string",
-            "Steps": "string"
+            "Steps": "string",
+            "TitleEng": "string",
+            "DescriptionEng": "string"
         }
+        Fields TitleEng and DescriptionEng should be translations of Title and Description into English. If the recipe is already in english, those fields should be the same as Title and Description
         All ingredients and all steps should start with a new line. All steps should be numerated. New line should be marked as always with one backslash followed by letter n. 
         No other additional formatting characters should be present.
         Do not include any other text or explanations outside of this JSON object.`;
@@ -82,7 +86,7 @@ export const fetchRecipeScenario1 = async (requestData) => {
             });
             recipe = response.choices[0].message.content;
             const parsedRecipe = sanitizeAndParseRecipe(recipe);
-            image = await generateRecipeImage(parsedRecipe.Title, parsedRecipe.Description);
+            image = await generateRecipeFluxImage(parsedRecipe.TitleEng, parsedRecipe.DescriptionEng);
         }
         return { recipe, image };
     } catch (error) {
@@ -135,8 +139,11 @@ export const fetchRecipeScenario2 = async (requestData) => {
             "Description": "string",
             "Ingredients": "string",
             "Calories": "string",
-            "Steps": "string"
+            "Steps": "string",
+            "TitleEng": "string",
+            "DescriptionEng": "string"
         }
+        Fields TitleEng and DescriptionEng should be translations of Title and Description into English. If the recipe is already in english, those fields should be the same as Title and Description
         All ingredients and all steps should start with a new line. All steps should be numerated. New line should be marked as always with one backslash followed by letter n. 
         No other additional formatting characters should be present.
         Do not include any other text or explanations outside of this JSON object.`;
@@ -170,7 +177,7 @@ export const fetchRecipeScenario2 = async (requestData) => {
             });
             recipe = response.choices[0].message.content;
             const parsedRecipe = sanitizeAndParseRecipe(recipe);
-            image = await generateRecipeImage(parsedRecipe.Title, parsedRecipe.Description);
+            image = await generateRecipeFluxImage(parsedRecipe.TitleEng, parsedRecipe.DescriptionEng);
         }
         return { recipe, image };
     } catch (error) {
@@ -194,8 +201,11 @@ export const fetchRecipeScenario3 = async ({ classicDishName, user, language }) 
             "Description": "string",
             "Ingredients": "string",
             "Calories": "string",
-            "Steps": "string"
+            "Steps": "string",
+            "TitleEng": "string",
+            "DescriptionEng": "string"
         }
+        Fields TitleEng and DescriptionEng should be translations of Title and Description into English. If the recipe is already in english, those fields should be the same as Title and Description
         All ingredients and all steps should start with a new line. All steps should be numerated. New line should be marked as always with one backslash followed by letter n. 
         No other additional formatting characters should be present.
         Do not include any other text or explanations outside of this JSON object.`;
@@ -229,7 +239,7 @@ export const fetchRecipeScenario3 = async ({ classicDishName, user, language }) 
             });
             recipe = response.choices[0].message.content;
             const parsedRecipe = sanitizeAndParseRecipe(recipe);
-            image = await generateRecipeImage(parsedRecipe.Title, parsedRecipe.Description);
+            image = await generateRecipeFluxImage(parsedRecipe.TitleEng, parsedRecipe.DescriptionEng);
         }
 
         return { recipe, image };
@@ -241,8 +251,14 @@ export const fetchRecipeScenario3 = async ({ classicDishName, user, language }) 
 
 export const generateRecipeImage = async (title: string, description: string) => {
     try {
-        const origPrompt = `A realistic, photorealistic, appetizing image of the dish "${title}", which is described as: ${description}.
-        The image should be photorealistic and should not include any text, watermarks, or letters.`;
+        const origPrompt = `A high-quality, ultra-realistic food photograph of "${title}".
+        - The dish is described as: ${description}.
+        - The image should be highly detailed and photorealistic.
+        - It should resemble professional food photography.
+        - No artificial elements, no cartoonish styles.
+        - The background should be blurred to create a depth effect.
+        - NO text, NO labels, NO watermarks, NO letters.
+        - The dish should be plated on a natural setting with soft lighting.`;
         const maxLength = 980;
         let prompt = origPrompt.length > maxLength ? origPrompt.slice(0, maxLength) : origPrompt;
         if (prompt.length == 980) {
@@ -263,5 +279,53 @@ export const generateRecipeImage = async (title: string, description: string) =>
     } catch (error) {
         console.error("Error generating recipe image:", error);
         return null; // Fallback to null if image generation fails
+    }
+};
+
+const generateRecipeFluxImage = async (title, description) => {
+    try {
+        const apiKey = runwareApiKey
+        const taskUUID = uuid.v4();
+        const requestBody = [
+            {
+                "taskType": "authentication",
+                "apiKey": apiKey
+            },
+            {
+                "taskType": "imageInference",
+                "taskUUID": taskUUID, // Generate a unique task ID
+                "positivePrompt": `A high-quality, ultra-realistic food photograph of "${title}".
+                                    - The dish is described as: ${description}.
+                                    - The image should be highly detailed and photorealistic.
+                                    - It should resemble professional food photography.
+                                    - No artificial elements, no cartoonish styles.
+                                    - The background should be blurred to create a depth effect.
+                                    - NO text, NO labels, NO watermarks, NO letters.
+                                    - The dish should be plated on a natural setting with soft lighting.`,
+                "width": 512,
+                "height": 512,
+                "model": "runware:100@1", // Flux Schnell
+                "numberResults": 1
+            }
+        ];
+        const response = await fetch("https://api.runware.ai/v1", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify(requestBody),
+        });
+
+        const data = await response.json();
+        if (data?.data?.length > 0 && data.data[0].imageURL) {
+            const imageResult = data.data[0].imageURL;
+            console.log('imageResult:', imageResult);
+            return imageResult; //Return the image URL
+        }
+        throw new Error("Image URL not found in response.");
+    } catch (error) {
+        console.error("Error generating recipe image:", error);
+        return null;
     }
 };
