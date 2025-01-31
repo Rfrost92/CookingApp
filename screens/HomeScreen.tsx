@@ -23,6 +23,7 @@ export default function HomeScreen() {
     const [guestRequests, setGuestRequests] = useState<number>(0);
     const [accountModalVisible, setAccountModalVisible] = useState(false);
     const [languageModalVisible, setLanguageModalVisible] = useState(false);
+    const [isTestUser, setIsTestUser] = useState<boolean | null>(null);
 
     const t = (key: string) => translations[language][key] || key;
 
@@ -36,9 +37,20 @@ export default function HomeScreen() {
                 console.error("Error fetching guest requests:", error);
             }
         };
-
+        const checkUserTestStatus = async () => {
+            if (user && isLoggedIn) {
+                try {
+                    const testStatus = await isUserTest(user.uid);
+                    setIsTestUser(testStatus);
+                } catch (error) {
+                    console.error("Error checking test user:", error);
+                    setIsTestUser(false); // Assume false if error occurs
+                }
+            }
+        };
+        checkUserTestStatus();
         fetchGuestRequests();
-    }, []);
+    }, [user]);
 
     const handleRequest = async (scenario: string) => {
         try {
@@ -120,11 +132,11 @@ export default function HomeScreen() {
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>{t("account_menu")}</Text>
-                        <Text style={styles.modalText}>{t("welcome_user", { user: user?.email || t("user") })}</Text>
+                        <Text style={styles.modalText}>{t("welcome_user")} { user?.email || t("user") }</Text>
                         <TouchableOpacity style={styles.modalButton} onPress={handleLogout}>
                             <Text style={styles.modalButtonText}>{t("logout")}</Text>
                         </TouchableOpacity>
-                        {user && isUserTest(user) && (
+                        {isTestUser && (
                             <TouchableOpacity
                                 style={[styles.modalButton, { backgroundColor: "#ff9800" }]}
                                 onPress={async () => {

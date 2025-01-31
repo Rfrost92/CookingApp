@@ -15,6 +15,7 @@ import SignUpScreen from "../screens/SignUpScreen";
 import LogInScreen from "../screens/LogInScreen";
 import BookOfRecipesScreen from "../screens/BookOfRecipesScreen";
 import RecipeDetailScreen from "../screens/RecipeDetailScreen";
+import ResetPasswordScreen from "../screens/ResetPasswordScreen";
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,7 @@ export default function RootNavigator() {
                 <Stack.Screen name="LogIn" component={LogInScreen} />
                 <Stack.Screen name="BookOfRecipes" component={BookOfRecipesScreen} />
                 <Stack.Screen name="RecipeDetail" component={RecipeDetailScreen} />
+                <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );

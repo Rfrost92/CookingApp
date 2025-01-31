@@ -98,7 +98,7 @@ export const resetRequestsForTestUser = async (userId: string) => {
 };
 
 export const isUserTest = async (userId: string) => {
-    const userDoc = doc(db, "users", userId);
+    const userDoc = await doc(db, "users", userId);
     const userSnap = await getDoc(userDoc);
 
     if (userSnap.exists()) {

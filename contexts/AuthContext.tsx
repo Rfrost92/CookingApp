@@ -1,6 +1,6 @@
 // AuthContext.tsx
 import React, { createContext, useState, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 
 export const AuthContext = createContext({
@@ -13,10 +13,22 @@ export const AuthProvider = ({ children }: any) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            //console.log("Auth State Changed:", currentUser);
-            setUser(currentUser);
-            setIsLoggedIn(!!currentUser);
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            if (currentUser) {
+                // Check if the user has verified their email
+                if (!currentUser.emailVerified) {
+                    console.log("User email not verified. Logging out.");
+                    await signOut(auth);
+                    setUser(null);
+                    setIsLoggedIn(false);
+                } else {
+                    setUser(currentUser);
+                    setIsLoggedIn(true);
+                }
+            } else {
+                setUser(null);
+                setIsLoggedIn(false);
+            }
         });
 
         return () => unsubscribe();
