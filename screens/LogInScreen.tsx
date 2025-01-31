@@ -40,8 +40,13 @@ export default function LogInScreen({ navigation }: any) {
     };
 
     const handleResendVerification = async () => {
+        if (!email.trim()) {
+            Alert.alert(t("error"), t("please_enter_email"));
+            return;
+        }
+
         try {
-            await resendVerificationEmail();
+            await resendVerificationEmail(email.trim(), t);
             Alert.alert(t("success"), t("verification_email_resent"));
         } catch (error) {
             Alert.alert(t("error"), error.message);

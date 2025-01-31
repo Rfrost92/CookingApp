@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Images on flux generator">
-      <change afterPath="$PROJECT_DIR$/screens/ResetPasswordScreen.tsx" afterDir="false" />
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Authentication with email almost fully works">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contexts/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/contexts/AuthContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/translations.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/translations.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/incrementRequest.ts" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/incrementRequest.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/navigation/RootNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/RootNavigator.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/LogInScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/LogInScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/SignUpScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/SignUpScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/authService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/authService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +102,7 @@
       <workItem from="1736351246605" duration="1454000" />
       <workItem from="1736355231215" duration="5784000" />
       <workItem from="1736945528355" duration="18232000" />
-      <workItem from="1737968967614" duration="35788000" />
+      <workItem from="1737968967614" duration="40897000" />
     </task>
     <task id="LOCAL-00001" summary="Attach GPT-API and add mocked responses for testing">
       <created>1736528503716</created>
@@ -275,7 +265,14 @@
       <option name="project" value="LOCAL" />
       <updated>1738271876580</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Authentication with email almost fully works">
+      <created>1738340935547</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1738340935548</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -316,7 +313,8 @@
     <MESSAGE value="Images are generated and work across the application" />
     <MESSAGE value="Fix some error-handling" />
     <MESSAGE value="Images on flux generator" />
-    <option name="LAST_COMMIT_MESSAGE" value="Images on flux generator" />
+    <MESSAGE value="Authentication with email almost fully works" />
+    <option name="LAST_COMMIT_MESSAGE" value="Authentication with email almost fully works" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
