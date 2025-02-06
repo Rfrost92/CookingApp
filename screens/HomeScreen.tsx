@@ -8,6 +8,7 @@ import { logOut } from "../services/authService";
 import { isUserTest, resetNonSignedInCounter, resetRequestsForTestUser } from "../helpers/incrementRequest";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
+import { Ionicons } from '@expo/vector-icons';
 
 const availableLanguages = [
     { code: "en", name: "English" },
@@ -97,8 +98,21 @@ export default function HomeScreen() {
         Alert.alert(t("language_changed"), `${t("selected_language")} ${availableLanguages.find(lang => lang.code === code)?.name}`);
     };
 
+    const handleClassicRecipesPress = () => {
+        if (isLoggedIn) {
+            navigation.navigate("ChooseClassicRecipe");
+        } else {
+            Alert.alert(t("signup_required"), t("classic_recipes_access"));
+        }
+    };
+
+
     return (
         <View style={styles.container}>
+            {/* Help Button */}
+            <TouchableOpacity style={styles.helpButton} onPress={() => navigation.navigate("HelpScreen")}>
+                <Ionicons name="help-circle-outline" size={30} color="#4caf50" />
+            </TouchableOpacity>
             <Text style={styles.title}>{t("welcome")}</Text>
             <TouchableOpacity style={styles.button} onPress={() => handleRequest("IngredientSelection")}>
                 <Text style={styles.buttonText}>{t("ingredient_selection")}</Text>
@@ -106,7 +120,7 @@ export default function HomeScreen() {
             <TouchableOpacity style={styles.button} onPress={() => handleRequest("Scenario2Step1")}>
                 <Text style={styles.buttonText}>{t("open_to_ideas")}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => handleRequest("ChooseClassicRecipe")}>
+            <TouchableOpacity style={styles.button} onPress={handleClassicRecipesPress}>
                 <Text style={styles.buttonText}>{t("classic_recipes")}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} title={t("reset_counter")} onPress={resetNonSignedInCounter} />
@@ -200,6 +214,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         padding: 20,
         backgroundColor: "#f5f5f5",
+    },
+    helpButton: {
+        position: "absolute",
+        top: 40,  // Adjust for status bar
+        right: 20,
+        zIndex: 1,
     },
     title: {
         fontSize: 24,

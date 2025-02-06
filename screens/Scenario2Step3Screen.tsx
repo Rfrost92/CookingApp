@@ -185,6 +185,24 @@ export default function Scenario2Step3Screen() {
                 <Button title={t("reset")} onPress={handleReset} />
                 <Button title={t("submit")} onPress={handleSubmit} />
             </View>
+            {!user && (
+                <View style={styles.agreementContainer}>
+                    <Text style={styles.agreementText}>
+                        {t("by_clicking_submit")}
+                        <Text style={styles.linkText} onPress={() => navigation.navigate("HelpScreen")}>
+                            {t("terms_of_use")}
+                        </Text>
+                        {t("comma")}
+                        <Text style={styles.linkText} onPress={() => navigation.navigate("HelpScreen")}>
+                            {t("privacy_policy")}
+                        </Text>
+                        {t("and")}
+                        <Text style={styles.linkText} onPress={() => navigation.navigate("HelpScreen")}>
+                            {t("disclaimer")}
+                        </Text>.
+                    </Text>
+                </View>
+            )}
         </View>
     );
 }
@@ -261,5 +279,18 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         marginTop: 20,
+    },
+    agreementContainer: {
+        marginVertical: 10,
+        paddingHorizontal: 5,
+    },
+    agreementText: {
+        fontSize: 12,
+        color: "#555",
+        textAlign: "center",
+    },
+    linkText: {
+        color: "#007BFF",
+        textDecorationLine: "underline",
     },
 });

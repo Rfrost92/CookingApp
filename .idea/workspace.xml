@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Authentication with email almost fully works">
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Authentication with email likely fully works">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/translations.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/translations.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigation/RootNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/RootNavigator.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/LogInScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/LogInScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/authService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/authService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Scenario2Step3Screen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Scenario2Step3Screen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/SignUpScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/SignUpScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +43,7 @@
     <setting file="file://$PROJECT_DIR$/screens/ChooseClassicRecipeScreen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/screens/RecipeResultScreen.tsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/screens/ResetPasswordScreen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/screens/HomeScreen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/node_modules/openai/src/resources/images.ts" root0="SKIP_INSPECTION" />
@@ -77,7 +83,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/data" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -102,7 +108,11 @@
       <workItem from="1736351246605" duration="1454000" />
       <workItem from="1736355231215" duration="5784000" />
       <workItem from="1736945528355" duration="18232000" />
-      <workItem from="1737968967614" duration="40897000" />
+      <workItem from="1737968967614" duration="42549000" />
+      <workItem from="1738581989454" duration="21000" />
+      <workItem from="1738607299925" duration="490000" />
+      <workItem from="1738850514192" duration="1748000" />
+      <workItem from="1738854720902" duration="1389000" />
     </task>
     <task id="LOCAL-00001" summary="Attach GPT-API and add mocked responses for testing">
       <created>1736528503716</created>
@@ -272,7 +282,14 @@
       <option name="project" value="LOCAL" />
       <updated>1738340935548</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Authentication with email likely fully works">
+      <created>1738346274023</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1738346274023</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -314,7 +331,8 @@
     <MESSAGE value="Fix some error-handling" />
     <MESSAGE value="Images on flux generator" />
     <MESSAGE value="Authentication with email almost fully works" />
-    <option name="LAST_COMMIT_MESSAGE" value="Authentication with email almost fully works" />
+    <MESSAGE value="Authentication with email likely fully works" />
+    <option name="LAST_COMMIT_MESSAGE" value="Authentication with email likely fully works" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -327,7 +345,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/helpers/recipeHelpers.ts</url>
           <line>64</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>

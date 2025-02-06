@@ -160,7 +160,26 @@
     "error_reset_password": "Failed to send password reset email. Please try again.",
     "error_email_already_registered": "This email is already registered.",
     "error_invalid_credentials": "Invalid credentials. Please try again.",
-    "error_weak_password": "Password should be at least 6 characters long."
+    "error_weak_password": "Password should be at least 6 characters long.",
+    "help": "Help",
+    "instructions": "Instructions",
+    "instructions_text": "Here's how to use the app: \n1. Choose ingredients...\n2. Follow steps...",
+    "disclaimer": "Disclaimer",
+    "disclaimer_text": "The recipes are AI-generated. We recommend verifying ingredients and steps before cooking. The user is solely responsible for their health and safety.",
+    "terms_and_conditions": "Terms and Conditions",
+    "privacy_policy": "Privacy Policy",
+    "send_feedback": "Send Feedback",
+    "enter_feedback": "Enter your feedback here...",
+    "thank_you": "Thank you!",
+    "feedback_received": "Your feedback has been received.",
+    "please_enter_feedback": "Please enter some feedback before submitting.",
+    "by_signing_up": "By signing up, you confirm that you have read and agree to the ",
+    "by_signing_in": "By signing in, you confirm that you have read and agree to the ",
+    "terms_of_use": "Terms of Use",
+    "and": " and the ",
+    "by_clicking_submit": "By clicking Submit, you confirm that you have read and agree to the ",
+    "comma": ", ",
+    "classic_recipes_access": "Please log in or sign up to be able to use the classic recipes feature"
   },
 
 

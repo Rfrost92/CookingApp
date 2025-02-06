@@ -1,6 +1,6 @@
 // LogInScreen.tsx
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, Alert, Linking, TouchableOpacity } from "react-native";
 import { logIn, resendVerificationEmail } from "../services/authService";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
@@ -62,6 +62,21 @@ export default function LogInScreen({ navigation }: any) {
             {showResend && <Button title={t("resend_verification")} onPress={handleResendVerification} />}
             <Button title={t("forgot_password")} onPress={() => navigation.navigate("ResetPassword")} />
             <Button title={t("dont_have_account")} onPress={() => navigation.navigate("SignUp")} />
+
+            {/* Terms and Conditions Notice */}
+            <Text style={styles.agreementText}>
+                {t("by_signing_in")}
+                <TouchableOpacity onPress={() => Linking.openURL("https://yourapp.com/terms")}>
+                    <Text style={styles.linkText}>{t("terms_of_use")}</Text>
+                </TouchableOpacity>,
+                <TouchableOpacity onPress={() => Linking.openURL("https://yourapp.com/privacy")}>
+                    <Text style={styles.linkText}>{t("privacy_policy")}</Text>
+                </TouchableOpacity>
+                {t("and")}
+                <TouchableOpacity onPress={() => Linking.openURL("https://yourapp.com/disclaimer")}>
+                    <Text style={styles.linkText}>{t("disclaimer")}</Text>
+                </TouchableOpacity>.
+            </Text>
         </View>
     );
 }
@@ -70,4 +85,6 @@ const styles = StyleSheet.create({
     container: { flex: 1, justifyContent: "center", padding: 20, backgroundColor: "#fff" },
     title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
     input: { height: 40, borderColor: "#ccc", borderWidth: 1, borderRadius: 5, paddingHorizontal: 10, marginBottom: 15 },
+    agreementText: { fontSize: 12, color: "#555", marginTop: 20, textAlign: "center" },
+    linkText: { color: "#1E90FF", textDecorationLine: "underline" },
 });
