@@ -1,6 +1,6 @@
 //HomeScreen.tsx
 import React, { useContext, useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Alert, Modal, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Alert, Modal, FlatList, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../contexts/AuthContext";
@@ -25,6 +25,7 @@ export default function HomeScreen() {
     const [accountModalVisible, setAccountModalVisible] = useState(false);
     const [languageModalVisible, setLanguageModalVisible] = useState(false);
     const [isTestUser, setIsTestUser] = useState<boolean | null>(null);
+    const [isLemonMenuVisible, setLemonMenuVisible] = useState(false);
 
     const t = (key: string) => translations[language][key] || key;
 
@@ -109,10 +110,6 @@ export default function HomeScreen() {
 
     return (
         <View style={styles.container}>
-            {/* Help Button */}
-            <TouchableOpacity style={styles.helpButton} onPress={() => navigation.navigate("HelpScreen")}>
-                <Ionicons name="help-circle-outline" size={30} color="#4caf50" />
-            </TouchableOpacity>
             <Text style={styles.title}>{t("welcome")}</Text>
             <TouchableOpacity style={styles.button} onPress={() => handleRequest("IngredientSelection")}>
                 <Text style={styles.buttonText}>{t("ingredient_selection")}</Text>
@@ -124,13 +121,38 @@ export default function HomeScreen() {
                 <Text style={styles.buttonText}>{t("classic_recipes")}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} title={t("reset_counter")} onPress={resetNonSignedInCounter} />
+            {isLemonMenuVisible && (
+                <View style={styles.lemonMenu}>
+                    {/* Account/Login Button */}
+                    <TouchableOpacity style={styles.lemonMenuItem} onPress={handleAccountPress}>
+                        <Text style={styles.lemonMenuText}>{isLoggedIn ? t("account") : t("login")}</Text>
+                    </TouchableOpacity>
+
+                    {/* Help Button */}
+                    <TouchableOpacity style={styles.lemonMenuItem} onPress={() => navigation.navigate("HelpScreen")}>
+                        <Text style={styles.lemonMenuText}>{t("help")}</Text>
+                    </TouchableOpacity>
+
+                    {/* Home Button (Only visible when NOT on Home) */}
+                    {navigation.getState().index !== 0 && (
+                        <TouchableOpacity style={styles.lemonMenuItem} onPress={() => navigation.navigate("Home")}>
+                            <Text style={styles.lemonMenuText}>{t("home")}</Text>
+                        </TouchableOpacity>
+                    )}
+                </View>
+            )}
             <View style={styles.bottomBar}>
-                <TouchableOpacity style={styles.navButton} onPress={handleAccountPress}>
-                    <Text style={styles.navButtonText}>{isLoggedIn ? t("account") : t("login")}</Text>
+                {/* Lemon Button */}
+                <TouchableOpacity style={styles.lemonButton} onPress={() => setLemonMenuVisible(!isLemonMenuVisible)}>
+                    <Image source={require("../assets/favicon.png")} style={styles.lemonIcon} />
                 </TouchableOpacity>
+
+                {/* Recipe Book Button */}
                 <TouchableOpacity style={styles.navButton} onPress={handleRecipeBookPress}>
                     <Text style={styles.navButtonText}>{t("book")}</Text>
                 </TouchableOpacity>
+
+                {/* Language Button */}
                 <TouchableOpacity style={styles.navButton} onPress={handleLanguageChange}>
                     <Text style={styles.navButtonText}>{t("language")}</Text>
                 </TouchableOpacity>
@@ -320,5 +342,38 @@ const styles = StyleSheet.create({
     },
     languageText: {
         fontSize: 16,
+    },
+    lemonButton: {
+        flex: 1, // Same as other buttons
+        alignItems: "center",
+    },
+    lemonIcon: {
+        width: 30,
+        height: 30,
+        resizeMode: "contain",
+    },
+
+    lemonMenu: {
+        position: "absolute",
+        bottom: 60,
+        left: 10,
+        backgroundColor: "white",
+        padding: 10,
+        borderRadius: 10,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+
+    lemonMenuItem: {
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+    },
+
+    lemonMenuText: {
+        fontSize: 16,
+        fontWeight: "bold",
     },
 });
