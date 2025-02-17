@@ -112,12 +112,17 @@ export default function HomeScreen() {
         <View style={styles.container}>
             <Text style={styles.title}>{t("welcome")}</Text>
             <TouchableOpacity style={styles.button} onPress={() => handleRequest("IngredientSelection")}>
+                <Ionicons name="cart-outline" style={styles.buttonIcon} color="gold" />
                 <Text style={styles.buttonText}>{t("ingredient_selection")}</Text>
             </TouchableOpacity>
+
             <TouchableOpacity style={styles.button} onPress={() => handleRequest("Scenario2Step1")}>
+                <Ionicons name="star-outline" style={styles.buttonIcon} color="gold" />
                 <Text style={styles.buttonText}>{t("open_to_ideas")}</Text>
             </TouchableOpacity>
+
             <TouchableOpacity style={styles.button} onPress={handleClassicRecipesPress}>
+                <Ionicons name="restaurant-outline" style={styles.buttonIcon} color="gold" />
                 <Text style={styles.buttonText}>{t("classic_recipes")}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} title={t("reset_counter")} onPress={resetNonSignedInCounter} />
@@ -147,14 +152,14 @@ export default function HomeScreen() {
                     <Image source={require("../assets/favicon.png")} style={styles.lemonIcon} />
                 </TouchableOpacity>
 
-                {/* Recipe Book Button */}
+                {/* Recipe Book Icon */}
                 <TouchableOpacity style={styles.navButton} onPress={handleRecipeBookPress}>
-                    <Text style={styles.navButtonText}>{t("book")}</Text>
+                    <Ionicons name="book-outline" size={28} color="white" />
                 </TouchableOpacity>
 
-                {/* Language Button */}
+                {/* Language Selection (Current Language Code) */}
                 <TouchableOpacity style={styles.navButton} onPress={handleLanguageChange}>
-                    <Text style={styles.navButtonText}>{t("language")}</Text>
+                    <Text style={styles.languageCode}>{language.toUpperCase()}</Text>
                 </TouchableOpacity>
             </View>
 
@@ -234,8 +239,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        padding: 20,
-        backgroundColor: "#f5f5f5",
+        padding: 0,
+        backgroundColor: "#71f2c9", // Light mint green
     },
     helpButton: {
         position: "absolute",
@@ -244,41 +249,57 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     title: {
-        fontSize: 24,
+        fontSize: 22,  // Reduce font size
         fontWeight: "bold",
+        color: "#000",
+        textAlign: "left",
+        width: "85%",  // Reduce width slightly
+        marginTop: 40,  // Increased spacing
+        marginBottom: 20,  // Added bottom spacing
+    },
+
+    subtitle: {
+        fontSize: 18,
+        color: "#333",
         marginBottom: 20,
+        textAlign: "left",
+        width: "90%",
     },
     button: {
-        backgroundColor: "#4caf50",
-        paddingVertical: 15,
-        paddingHorizontal: 20,
-        borderRadius: 10,
-        marginBottom: 20,
+        flexDirection: "row",
         alignItems: "center",
+        backgroundColor: "#fff",
+        paddingVertical: 15,
+        paddingHorizontal: 15,
+        borderRadius: 20,
+        marginBottom: 15,
+        width: "90%",
         shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 2,
-        elevation: 3,
-        width: "100%",
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 4,
+    },
+    buttonIcon: {
+        marginRight: 12,
+        fontSize: 28,  // Increase icon size
     },
     buttonText: {
         fontSize: 16,
         fontWeight: "bold",
-        color: "#fff",
-        textAlign: "center",
+        color: "#000",
+        flexShrink: 1,  // Ensures text wraps instead of overflowing
     },
     bottomBar: {
         flexDirection: "row",
-        justifyContent: "space-around",
         alignItems: "center",
+        justifyContent: "space-between",  // Ensure equal spacing
         position: "absolute",
         bottom: 0,
-        width: "100%",
-        backgroundColor: "#fff",
-        paddingVertical: 10,
-        borderTopWidth: 1,
-        borderTopColor: "#ddd",
+        width: "100%",  // Ensure it stretches full width
+        backgroundColor: "#000",  // Black background
+        paddingVertical: 12,
+        paddingHorizontal: 25,
     },
     navButton: {
         flex: 1,
@@ -343,13 +364,18 @@ const styles = StyleSheet.create({
     languageText: {
         fontSize: 16,
     },
+    languageCode: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "white",
+    },
     lemonButton: {
         flex: 1, // Same as other buttons
         alignItems: "center",
     },
     lemonIcon: {
-        width: 30,
-        height: 30,
+        width: 35,
+        height: 35,
         resizeMode: "contain",
     },
 
