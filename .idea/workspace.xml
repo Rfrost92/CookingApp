@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Add the lemon button on homescreen">
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Style homescreen new">
+      <change afterPath="$PROJECT_DIR$/assets/lemonIcon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/translations.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/translations.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigation/RootNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/RootNavigator.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/BookOfRecipesScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/BookOfRecipesScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/HelpScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HelpScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,6 +93,7 @@
       <recent name="$PROJECT_DIR$/screens" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets" />
       <recent name="$PROJECT_DIR$/contexts" />
     </key>
   </component>
@@ -107,7 +112,9 @@
       <workItem from="1738581989454" duration="21000" />
       <workItem from="1738607299925" duration="490000" />
       <workItem from="1738850514192" duration="1748000" />
-      <workItem from="1738854720902" duration="9090000" />
+      <workItem from="1738854720902" duration="14324000" />
+      <workItem from="1739876361598" duration="47000" />
+      <workItem from="1739876437732" duration="6859000" />
     </task>
     <task id="LOCAL-00001" summary="Attach GPT-API and add mocked responses for testing">
       <created>1736528503716</created>
@@ -298,7 +305,14 @@
       <option name="project" value="LOCAL" />
       <updated>1739805662231</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Style homescreen new">
+      <created>1739810074779</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1739810074779</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -317,7 +331,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add the search bar for ingredients" />
     <MESSAGE value="Add custom ingredients" />
     <MESSAGE value="Make scenario 1 work" />
     <MESSAGE value="Fine tuning the screens of the scenario 1" />
@@ -342,7 +355,8 @@
     <MESSAGE value="Authentication with email likely fully works" />
     <MESSAGE value="Add terms, conditions, privacy and disclaimer skeleton" />
     <MESSAGE value="Add the lemon button on homescreen" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add the lemon button on homescreen" />
+    <MESSAGE value="Style homescreen new" />
+    <option name="LAST_COMMIT_MESSAGE" value="Style homescreen new" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -23,7 +23,7 @@ const Stack = createStackNavigator();
 export default function RootNavigator() {
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="IngredientSelection" component={IngredientSelectionScreen} />
                 <Stack.Screen name="RecipeResult" component={RecipeResultScreen} />

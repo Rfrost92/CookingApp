@@ -149,7 +149,7 @@ export default function HomeScreen() {
             <View style={styles.bottomBar}>
                 {/* Lemon Button */}
                 <TouchableOpacity style={styles.lemonButton} onPress={() => setLemonMenuVisible(!isLemonMenuVisible)}>
-                    <Image source={require("../assets/favicon.png")} style={styles.lemonIcon} />
+                    <Image source={require("../assets/lemonIcon.png")} style={styles.lemonIcon} />
                 </TouchableOpacity>
 
                 {/* Recipe Book Icon */}
@@ -164,22 +164,15 @@ export default function HomeScreen() {
             </View>
 
             {/* Account Modal */}
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={accountModalVisible}
-                onRequestClose={() => setAccountModalVisible(false)}
-            >
+            <Modal animationType="slide" transparent={true} visible={accountModalVisible} onRequestClose={() => setAccountModalVisible(false)}>
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>{t("account_menu")}</Text>
                         <Text style={styles.modalText}>{t("welcome_user")} { user?.email || t("user") }</Text>
-                        <TouchableOpacity style={styles.modalButton} onPress={handleLogout}>
-                            <Text style={styles.modalButtonText}>{t("logout")}</Text>
-                        </TouchableOpacity>
+
                         {isTestUser && (
                             <TouchableOpacity
-                                style={[styles.modalButton, { backgroundColor: "#ff9800" }]}
+                                style={[styles.accountButton, styles.logoutButton]}
                                 onPress={async () => {
                                     try {
                                         await resetRequestsForTestUser(user?.uid);
@@ -192,40 +185,41 @@ export default function HomeScreen() {
                                 <Text style={styles.modalButtonText}>{t("reset_requests")}</Text>
                             </TouchableOpacity>
                         )}
-                        <TouchableOpacity style={styles.modalButton} onPress={() => setAccountModalVisible(false)}>
-                            <Text style={styles.modalButtonText}>{t("close")}</Text>
+
+                        {/* LOGOUT BUTTON */}
+                        <TouchableOpacity style={[styles.accountButton, styles.logoutButton]} onPress={handleLogout}>
+                            <Text style={styles.logoutButtonText}>{t("logout")}</Text>
+                        </TouchableOpacity>
+
+                        {/* CLOSE BUTTON */}
+                        <TouchableOpacity style={[styles.accountButton, styles.closeButton]} onPress={() => setAccountModalVisible(false)}>
+                            <Text style={styles.closeButtonText}>{t("close")}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
 
+
             {/* Language Modal */}
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={languageModalVisible}
-                onRequestClose={() => setLanguageModalVisible(false)}
-            >
+            <Modal animationType="slide" transparent={true} visible={languageModalVisible} onRequestClose={() => setLanguageModalVisible(false)}>
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>{t("select_language")}</Text>
-                        <FlatList
-                            data={availableLanguages}
-                            keyExtractor={(item) => item.code}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity
-                                    style={[
-                                        styles.languageOption,
-                                        language === item.code && styles.languageOptionSelected,
-                                    ]}
-                                    onPress={() => selectLanguage(item.code)}
-                                >
-                                    <Text style={styles.languageText}>{item.name}</Text>
-                                </TouchableOpacity>
-                            )}
-                        />
-                        <TouchableOpacity style={styles.modalButton} onPress={() => setLanguageModalVisible(false)}>
-                            <Text style={styles.modalButtonText}>{t("close")}</Text>
+                        {availableLanguages.map((item) => (
+                            <TouchableOpacity
+                                key={item.code}
+                                style={[
+                                    styles.languageOption,
+                                    language === item.code && styles.languageOptionSelected,
+                                ]}
+                                onPress={() => selectLanguage(item.code)}
+                            >
+                                <Text style={styles.languageText}>{item.name}</Text>
+                            </TouchableOpacity>
+                        ))}
+                        {/* SAVE BUTTON */}
+                        <TouchableOpacity style={styles.saveButton} onPress={() => setLanguageModalVisible(false)}>
+                            <Text style={styles.saveButtonText}>{t("close")}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -241,6 +235,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         padding: 0,
         backgroundColor: "#71f2c9", // Light mint green
+        //backgroundColor: "#33d7a5", // Darker mint green
+        //backgroundColor: "#66ffcc", // Other light mint green
     },
     helpButton: {
         position: "absolute",
@@ -309,16 +305,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
     },
-    modalOverlay: {
-        flex: 1,
-        backgroundColor: "rgba(0,0,0,0.5)",
-        justifyContent: "center",
-        alignItems: "center",
-    },
     modalContent: {
         width: "80%",
         backgroundColor: "#fff",
-        borderRadius: 10,
+        borderRadius: 20,  // More rounded edges for consistency
         padding: 20,
         alignItems: "center",
         shadowColor: "#000",
@@ -330,11 +320,71 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontSize: 20,
         fontWeight: "bold",
-        marginBottom: 10,
+        marginBottom: 15,
+        textAlign: "center",
     },
     modalText: {
         fontSize: 16,
         marginBottom: 20,
+        textAlign: "center",
+    },
+    accountButton: {
+        paddingVertical: 12,
+        paddingHorizontal: 40,
+        borderRadius: 8,
+        marginVertical: 8,
+        width: "80%",
+        alignItems: "center",
+    },
+    logoutButton: {
+        backgroundColor: "#000", // Black button for "Logout"
+    },
+    logoutButtonText: {
+        color: "#fff", // White text for Logout button
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    closeButton: {
+        backgroundColor: "#fff", // White background for "Close"
+        borderWidth: 2,
+        borderColor: "#000",
+    },
+    closeButtonText: {
+        color: "#000", // Black text for Close button
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    modalOverlay: {
+        flex: 1,
+        backgroundColor: "rgba(0,0,0,0.5)",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    languageOption: {
+        padding: 15,
+        borderWidth: 2,
+        borderColor: "#000",
+        borderRadius: 8,
+        marginVertical: 8,
+        width: "80%",
+        alignItems: "center",
+        backgroundColor: "#fff", // Default white background
+    },
+    languageOptionSelected: {
+        backgroundColor: "yellow", // Change selected language button to yellow
+        borderColor: "#000",
+    },
+    saveButton: {
+        backgroundColor: "#000", // Black button for "Save"
+        paddingVertical: 12,
+        paddingHorizontal: 40,
+        borderRadius: 8,
+        marginTop: 20,
+    },
+    saveButtonText: {
+        color: "#fff", // White text for "Save" button
+        fontSize: 16,
+        fontWeight: "bold",
     },
     modalButton: {
         backgroundColor: "#4caf50",
@@ -347,19 +397,6 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 16,
         fontWeight: "bold",
-    },
-    languageOption: {
-        padding: 10,
-        borderWidth: 1,
-        borderColor: "#ccc",
-        borderRadius: 5,
-        marginVertical: 5,
-        width: "100%",
-        alignItems: "center",
-    },
-    languageOptionSelected: {
-        backgroundColor: "#d1f5d3",
-        borderColor: "#4caf50",
     },
     languageText: {
         fontSize: 16,
