@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Style homescreen new">
-      <change afterPath="$PROJECT_DIR$/assets/lemonIcon.png" afterDir="false" />
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="New design for help, home, book of recipes, IngredientSelectionScreen">
+      <change afterPath="$PROJECT_DIR$/assets/availableingr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/beverages.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/classic.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/dairy.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/grain.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/kkalfire.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/miscellaneous.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/newingr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/orange.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/person.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/plantvegan.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/protein.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/spice.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/time.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/vegetable.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/navigation/RootNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/RootNavigator.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/BookOfRecipesScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/BookOfRecipesScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/HelpScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HelpScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ingredientCategories.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/ingredientCategories.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +128,7 @@
       <workItem from="1738850514192" duration="1748000" />
       <workItem from="1738854720902" duration="14324000" />
       <workItem from="1739876361598" duration="47000" />
-      <workItem from="1739876437732" duration="6859000" />
+      <workItem from="1739876437732" duration="10575000" />
     </task>
     <task id="LOCAL-00001" summary="Attach GPT-API and add mocked responses for testing">
       <created>1736528503716</created>
@@ -312,7 +326,14 @@
       <option name="project" value="LOCAL" />
       <updated>1739810074779</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="New design for help, home, book of recipes, IngredientSelectionScreen">
+      <created>1739892303857</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1739892303857</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -331,7 +352,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add custom ingredients" />
     <MESSAGE value="Make scenario 1 work" />
     <MESSAGE value="Fine tuning the screens of the scenario 1" />
     <MESSAGE value="Step 1 scenario 2" />
@@ -356,7 +376,8 @@
     <MESSAGE value="Add terms, conditions, privacy and disclaimer skeleton" />
     <MESSAGE value="Add the lemon button on homescreen" />
     <MESSAGE value="Style homescreen new" />
-    <option name="LAST_COMMIT_MESSAGE" value="Style homescreen new" />
+    <MESSAGE value="New design for help, home, book of recipes, IngredientSelectionScreen" />
+    <option name="LAST_COMMIT_MESSAGE" value="New design for help, home, book of recipes, IngredientSelectionScreen" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

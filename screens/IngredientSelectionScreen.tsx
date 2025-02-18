@@ -8,6 +8,7 @@ import {
     TouchableOpacity,
     TextInput,
     Alert,
+    Image
 } from "react-native";
 import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
@@ -192,6 +193,15 @@ export default function IngredientSelectionScreen() {
         </View>
     );
 
+    const categoryIcons: { [key: string]: any } = {
+        "fruits_vegetables": require("../assets/vegetable.png"),
+        "proteins": require("../assets/protein.png"),
+        "grains_nuts": require("../assets/grain.png"),
+        "spices_oils_sauces": require("../assets/spice.png"),
+        "dairy": require("../assets/dairy.png"),
+        "beverages": require("../assets/beverages.png"),
+        "miscellaneous": require("../assets/miscellaneous.png"),
+    };
     // Render category
     const renderCategory = ({ item }: any) => {
         const isExpanded = expandedCategories[item.id];
@@ -288,7 +298,7 @@ export default function IngredientSelectionScreen() {
                         <View style={styles.categoryContainer}>
                             <TouchableOpacity style={styles.categoryHeader} onPress={() => toggleCategory(item.id)}>
                                 <View style={styles.categoryTitleContainer}>
-                                    <Ionicons name="restaurant" size={24} color="black" style={styles.categoryIcon} />
+                                    <Image source={categoryIcons[item.id]} style={styles.categoryImage} />
                                     <Text style={styles.categoryTitle}>
                                         {item.name[language] || item.name.en} ({selectedCount}/{item.ingredients.length})
                                     </Text>
@@ -466,13 +476,13 @@ const styles = StyleSheet.create({
 
     ingredientText: {
         fontSize: 18, // Slightly smaller than category name
-        fontWeight: "700", // Medium-bold for better visibility
+        fontWeight: "500", // Medium-bold for better visibility
         marginLeft: 10, // Ensures alignment under category name
     },
 
     ingredientsContainer: {
         marginTop: 5,
-        paddingLeft: 5, // Align with category text
+        paddingLeft: 10, // Align with category text
     },
 
     ingredientRow: {
@@ -490,5 +500,11 @@ const styles = StyleSheet.create({
     emptyCheckbox: {
         width: 22,
         height: 22,
+    },
+
+    categoryImage: {
+        width: 30,
+        height: 30,
+        marginRight: 12,
     },
 });

@@ -1,6 +1,7 @@
 [
   {
     "id": "fruits_vegetables",
+    "icon": "vegetable.png",
     "name": {
       "en": "Fruits & Vegetables",
       "de": "Obst & Gemüse",
@@ -16,6 +17,7 @@
   },
   {
     "id": "proteins",
+    "icon": "protein.png",
     "name": {
       "en": "Proteins",
       "de": "Proteine",
@@ -31,6 +33,7 @@
   },
   {
     "id": "grains_nuts",
+    "icon": "grain.png",
     "name": {
       "en": "Grains, Nuts & Seeds",
       "de": "Getreide, Nüsse & Samen",
@@ -46,6 +49,7 @@
   },
   {
     "id": "spices_oils_sauces",
+    "icon": "spice.png",
     "name": {
       "en": "Spices, Oils & Sauces",
       "de": "Gewürze, Öle & Saucen",
@@ -61,6 +65,7 @@
   },
   {
     "id": "dairy",
+    "icon": "dairy.png",
     "name": {
       "en": "Dairy",
       "de": "Milchprodukte",
@@ -76,6 +81,7 @@
   },
   {
     "id": "beverages",
+    "icon": "beverages.png",
     "name": {
       "en": "Beverages",
       "de": "Getränke",
@@ -91,6 +97,7 @@
   },
   {
     "id": "miscellaneous",
+    "icon": "miscellaneous.png",
     "name": {
       "en": "Miscellaneous",
       "de": "Verschiedenes",
