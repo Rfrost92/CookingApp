@@ -1,47 +1,51 @@
 // ApplianceSelectionScreen.tsx
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Button, Alert, TouchableOpacity } from "react-native";
+import {View, Text, StyleSheet, Button, Alert, TouchableOpacity, FlatList} from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useLanguage } from "../services/LanguageContext";
+import { getTranslation } from "../helpers/loadTranslations";
 import translations from "../data/translations.json";
+import { Ionicons } from "@expo/vector-icons";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 const appliances = [
-    "Oven",
-    "Microwave",
-    "Stove",
-    "Mixer",
-    "Blender",
-    "Multicooker",
-    "Hot-air Grill",
+    { id: "any", name: "Any" },
+    { id: "oven", name: "Oven" },
+    { id: "microwave", name: "Microwave" },
+    { id: "stove", name: "Stove" },
+    { id: "mixer", name: "Mixer" },
+    { id: "blender", name: "Blender" },
+    { id: "multicooker", name: "Multicooker" },
+    { id: "hot_air_grill", name: "Hot-air Grill" },
 ];
 
 export default function ApplianceSelectionScreen() {
     const { language } = useLanguage();
-    const t = (key: string) => translations[language][key] || key;
+    const navigation = useNavigation();
+    const route = useRoute();
+    const { selectedIngredients } = route.params;
+    const t = (key: string) => getTranslation(language, key);
 
     const [selectedAppliances, setSelectedAppliances] = useState<{ [key: string]: boolean }>({
-        Any: true, // "Any" is selected by default
+        any: true, // Default selection
     });
-    const route = useRoute();
-    const navigation = useNavigation();
-    const { selectedIngredients } = route.params;
 
-    const toggleAppliance = (appliance: string) => {
+    const toggleAppliance = (id: string) => {
         setSelectedAppliances((prev) => {
-            if (appliance === "Any") {
-                return { Any: !prev.Any }; // If "Any" is selected, unselect all others
+            if (id === "any") {
+                return { any: !prev.any };
             } else {
                 return {
                     ...prev,
-                    [appliance]: !prev[appliance],
-                    Any: false, // If a specific appliance is selected, unselect "Any"
+                    [id]: !prev[id],
+                    any: false, // If a specific appliance is selected, unselect "Any"
                 };
             }
         });
     };
 
-    const resetSelection = () => {
-        setSelectedAppliances({ Any: true }); // Reset to default: only "Any" selected
+    const handleReset = () => {
+        setSelectedAppliances({ any: true }); // Reset to default
     };
 
     const handleNext = () => {
@@ -54,101 +58,128 @@ export default function ApplianceSelectionScreen() {
 
         navigation.navigate("MealTypeSelection", {
             selectedIngredients,
-            selectedAppliances: selected.includes("Any") ? ["Any"] : selected,
+            selectedAppliances: selected.includes("any") ? ["Any"] : selected,
         });
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>{t("select_appliances")}</Text>
-            <View style={styles.applianceList}>
-                <TouchableOpacity
-                    style={[
-                        styles.applianceItem,
-                        styles.anyItem,
-                        selectedAppliances.Any && styles.applianceItemSelected,
-                    ]}
-                    onPress={() => toggleAppliance("Any")}
-                >
-                    <Text
-                        style={[
-                            styles.applianceText,
-                            selectedAppliances.Any && styles.applianceTextSelected,
-                        ]}
-                    >
-                        {t("any")}
-                    </Text>
+        <SafeAreaView style={styles.container}>
+            {/* Header */}
+            <View style={styles.header}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                    <Ionicons name="arrow-back" size={28} color="black" />
                 </TouchableOpacity>
-                {appliances.map((appliance) => (
+                <Text style={styles.title}>{t("select_appliances")}</Text>
+                <Text style={styles.stepText}>2/3</Text>
+            </View>
+
+            {/* Appliance List */}
+            <FlatList
+                data={appliances}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
                     <TouchableOpacity
-                        key={appliance}
                         style={[
                             styles.applianceItem,
-                            selectedAppliances[appliance] && styles.applianceItemSelected,
+                            selectedAppliances[item.id] && styles.applianceItemSelected,
                         ]}
-                        onPress={() => toggleAppliance(appliance)}
+                        onPress={() => toggleAppliance(item.id)}
                     >
                         <Text
                             style={[
                                 styles.applianceText,
-                                selectedAppliances[appliance] && styles.applianceTextSelected,
+                                selectedAppliances[item.id] && styles.applianceTextSelected,
                             ]}
                         >
-                            {t(appliance.toLowerCase())}
+                            {t(item.name.toLowerCase())}
                         </Text>
                     </TouchableOpacity>
-                ))}
+                )}
+                contentContainerStyle={styles.listContent}
+            />
+
+            {/* Bottom Bar */}
+            <View style={styles.bottomBar}>
+                <TouchableOpacity style={styles.bottomButton} onPress={handleReset}>
+                    <Text style={styles.bottomButtonText}>{t("reset")}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.bottomButton} onPress={handleNext}>
+                    <Text style={styles.bottomButtonText}>{t("next")}</Text>
+                </TouchableOpacity>
             </View>
-            <View style={styles.buttonContainer}>
-                <Button title={t("reset")} onPress={resetSelection} />
-                <Button title={t("next")} onPress={handleNext} />
-            </View>
-        </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
-        backgroundColor: "#fff",
+        backgroundColor: "#71f2c9",
+    },
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: 15,
+        paddingBottom: 0,
+        backgroundColor: "#71f2c9",
+        borderBottomWidth: 1,
+        borderColor: "#71f2c9",
+    },
+    backButton: {
+        padding: 5,
     },
     title: {
-        fontSize: 24,
+        fontSize: 22,
         fontWeight: "bold",
-        marginBottom: 20,
-        textAlign: "center",
     },
-    applianceList: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+    stepText: {
+        fontSize: 18,
+        fontWeight: "bold",
+    },
+    listContent: {
+        padding: 20,
     },
     applianceItem: {
         padding: 15,
         marginVertical: 5,
-        width: "80%",
-        borderWidth: 1,
+        width: "90%",
+        alignSelf: "center",
+      //  borderWidth: 1,
         borderColor: "#ccc",
-        borderRadius: 5,
+        borderRadius: 8,
         alignItems: "center",
-    },
-    anyItem: {
-        backgroundColor: "#f0f8ff", // Light blue for "Any"
-        borderColor: "#87ceeb",
+        backgroundColor: "#fff",
     },
     applianceItemSelected: {
-        backgroundColor: "#d1f5d3",
-        borderColor: "#4caf50",
+        backgroundColor: "#FCE71C",
+        borderColor: "yellow",
     },
     applianceText: {
         fontSize: 18,
     },
     applianceTextSelected: {
-        color: "#4caf50",
+      //  color: "#4caf50",
+        fontWeight: "bold",
     },
-    buttonContainer: {
+    bottomBar: {
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 0,
         flexDirection: "row",
         justifyContent: "space-between",
+        alignItems: "center",
+        backgroundColor: "#000",
+        paddingVertical: 12,
+        paddingHorizontal: 35,
+    },
+    bottomButton: {
+        paddingVertical: 10,
+    },
+    bottomButtonText: {
+        fontSize: 18,
+        color: "#fff",
     },
 });
+

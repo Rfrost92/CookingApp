@@ -38,6 +38,8 @@
     "upgrade_subscription": "You have reached your daily limit. Upgrade your subscription for more requests.",
     "select_ingredients": "Select Ingredients",
     "search_ingredients": "Search ingredients...",
+    "ingredients": "Ingredients",
+    "process": "Steps to cook",
     "reset": "Reset",
     "next": "Next",
     "add": "Add",

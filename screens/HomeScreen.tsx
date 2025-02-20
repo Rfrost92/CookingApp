@@ -28,6 +28,7 @@ export default function HomeScreen() {
     const [isLemonMenuVisible, setLemonMenuVisible] = useState(false);
 
     const t = (key: string) => translations[language][key] || key;
+    const testMode = false;
 
     useEffect(() => {
         const fetchGuestRequests = async () => {
@@ -110,22 +111,28 @@ export default function HomeScreen() {
 
     return (
         <View style={styles.container}>
+            {/* Logo at the top */}
+            <Image source={require("../assets/orange.png")} style={styles.logo} />
+
             <Text style={styles.title}>{t("welcome")}</Text>
+
+            {/* Menu Options */}
             <TouchableOpacity style={styles.button} onPress={() => handleRequest("IngredientSelection")}>
-                <Ionicons name="cart-outline" style={styles.buttonIcon} color="gold" />
+                <Image source={require("../assets/availableingr.png")} style={styles.buttonIcon} />
                 <Text style={styles.buttonText}>{t("ingredient_selection")}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.button} onPress={() => handleRequest("Scenario2Step1")}>
-                <Ionicons name="star-outline" style={styles.buttonIcon} color="gold" />
+                <Image source={require("../assets/newingr.png")} style={styles.buttonIcon} />
                 <Text style={styles.buttonText}>{t("open_to_ideas")}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={handleClassicRecipesPress}>
-                <Ionicons name="restaurant-outline" style={styles.buttonIcon} color="gold" />
+            <TouchableOpacity style={styles.button} onPress={() => handleRequest("ChooseClassicRecipe")}>
+                <Image source={require("../assets/classic.png")} style={styles.buttonIcon} />
                 <Text style={styles.buttonText}>{t("classic_recipes")}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} title={t("reset_counter")} onPress={resetNonSignedInCounter} />
+
+            {testMode && <TouchableOpacity style={styles.button} title={t("reset_counter")} onPress={resetNonSignedInCounter} />}
             {isLemonMenuVisible && (
                 <View style={styles.lemonMenu}>
                     {/* Account/Login Button */}
@@ -154,7 +161,7 @@ export default function HomeScreen() {
 
                 {/* Recipe Book Icon */}
                 <TouchableOpacity style={styles.navButton} onPress={handleRecipeBookPress}>
-                    <Ionicons name="book-outline" size={28} color="white" />
+                    <Image source={require("../assets/book.png")} style={styles.bookIcon} />
                 </TouchableOpacity>
 
                 {/* Language Selection (Current Language Code) */}
@@ -238,6 +245,12 @@ const styles = StyleSheet.create({
         //backgroundColor: "#33d7a5", // Darker mint green
         //backgroundColor: "#66ffcc", // Other light mint green
     },
+    logo: {
+        width: 150,
+        height: 150,
+        resizeMode: "contain",
+        marginTop: 0,
+    },
     helpButton: {
         position: "absolute",
         top: 40,  // Adjust for status bar
@@ -248,10 +261,10 @@ const styles = StyleSheet.create({
         fontSize: 22,  // Reduce font size
         fontWeight: "bold",
         color: "#000",
-        textAlign: "left",
-        width: "85%",  // Reduce width slightly
-        marginTop: 40,  // Increased spacing
-        marginBottom: 20,  // Added bottom spacing
+        textAlign: "center",
+        width: "65%",  // Reduce width slightly
+        marginTop: 60,  // Increased spacing
+        marginBottom: 40,  // Added bottom spacing
     },
 
     subtitle: {
@@ -277,8 +290,10 @@ const styles = StyleSheet.create({
         elevation: 4,
     },
     buttonIcon: {
+        width: 32,
+        height: 32,
         marginRight: 12,
-        fontSize: 28,  // Increase icon size
+        resizeMode: "contain",
     },
     buttonText: {
         fontSize: 16,
@@ -409,6 +424,11 @@ const styles = StyleSheet.create({
     lemonButton: {
         flex: 1, // Same as other buttons
         alignItems: "center",
+    },
+    bookIcon: {
+        width: 50,
+        height: 28,
+        resizeMode: "stretch",
     },
     lemonIcon: {
         width: 35,

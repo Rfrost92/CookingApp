@@ -404,7 +404,7 @@ const styles = StyleSheet.create({
     searchBar: {
         height: 40,
         borderColor: "#000",
-        borderWidth: 1,
+        // borderWidth: 1,
         borderRadius: 8,
         paddingHorizontal: 10,
         backgroundColor: "#fff",
@@ -413,13 +413,13 @@ const styles = StyleSheet.create({
     customIngredientContainer: {
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: 10,
+        marginBottom: 20,
     },
     customIngredientInput: {
         flex: 1,
         height: 40,
         borderColor: "#000",
-        borderWidth: 1,
+        // borderWidth: 1,
         borderRadius: 8,
         paddingHorizontal: 10,
         backgroundColor: "#fff",
@@ -440,10 +440,10 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 15,
         marginBottom: 10,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
+      //  shadowColor: "#000",
+      //  shadowOffset: { width: 0, height: 2 },
+      //  shadowOpacity: 0.1,
+       // shadowRadius: 4,
     },
 
     categoryHeader: {
