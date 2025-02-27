@@ -16,6 +16,10 @@ import { fetchRecipeScenario3 } from "../services/openaiService";
 import { AuthContext } from "../contexts/AuthContext";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+import {containsInappropriateWords, logInappropriateInput} from "../helpers/validator";
+import {getTranslation} from "../helpers/loadTranslations";
 
 export default function ChooseClassicRecipeScreen() {
     const { user, isLoggedIn } = useContext(AuthContext);
@@ -65,7 +69,14 @@ export default function ChooseClassicRecipeScreen() {
 
     const handleSelectDish = async (dishName: string) => {
         const serializableUser = user ? { uid: user.uid } : null;
-
+        if (containsInappropriateWords(dishName.trim())) {
+            Alert.alert(
+                getTranslation(language, "error"),
+                getTranslation(language, "inappropriate_enter_valid_dish")
+            );
+            await logInappropriateInput(user?.uid, dishName)
+            return;
+        }
         const response = await fetchRecipeScenario3({
             classicDishName: dishName,
             user: serializableUser,
@@ -73,6 +84,15 @@ export default function ChooseClassicRecipeScreen() {
         });
 
         if (response?.error) {
+            if (response.error === "Error: Your input might be inappropriate or invalid. Try a different request.") {
+                Alert.alert(
+                    t("error"),
+                    t("inappropriate"),
+                    [{ text: "OK" }]
+                );
+                await logInappropriateInput(user?.uid, dishName)
+                return;
+            }
             Alert.alert(
                 t("daily_limit_reached"),
                 response.error === "Error: Daily request limit reached."
@@ -84,7 +104,7 @@ export default function ChooseClassicRecipeScreen() {
         }
 
         const recipe = response.recipe;
-        navigation.navigate("RecipeResult", { recipe, image: response.image });
+        navigation.navigate("RecipeResult", { recipe, image: response.image, classicRecipe: dishName });
     };
 
     const renderDish = ({ item }: any) => (
@@ -105,8 +125,15 @@ export default function ChooseClassicRecipeScreen() {
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>{t("choose_classic_dish")}</Text>
+        <SafeAreaView style={styles.container}>
+            {/* Header */}
+            <View style={styles.header}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                    <Ionicons name="arrow-back" size={28} color="black" />
+                </TouchableOpacity>
+                <Text style={styles.title}>{t("choose_classic_dish")}</Text>
+                <Text style={styles.stepText}>1/1</Text>
+            </View>
 
             {/* Search Bar */}
             <TextInput
@@ -148,32 +175,42 @@ export default function ChooseClassicRecipeScreen() {
                 data={filteredDishes}
                 keyExtractor={(item) => item.id}
                 renderItem={renderDish}
-                contentContainerStyle={styles.listContainer}
-                style={styles.list}
+                contentContainerStyle={styles.listContent}
             />
-        </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: "#71f2c9",
         padding: 20,
-        backgroundColor: "#fff",
+    },
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: 10,
+    },
+    backButton: {
+        padding: 5
     },
     title: {
-        fontSize: 24,
+        fontSize: 22,
         fontWeight: "bold",
-        marginBottom: 20,
-        textAlign: "center",
+    },
+    stepText: {
+        fontSize: 18,
+        fontWeight: "bold",
     },
     searchBar: {
         height: 40,
-        borderColor: "#ccc",
-        borderWidth: 1,
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        marginBottom: 15,
+        backgroundColor: "white",
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        fontSize: 16,
+        marginBottom: 10,
     },
     customInputContainer: {
         flexDirection: "row",
@@ -183,44 +220,61 @@ const styles = StyleSheet.create({
     customDishInput: {
         flex: 1,
         height: 40,
-        borderColor: "#ccc",
-        borderWidth: 1,
-        borderRadius: 5,
-        paddingHorizontal: 10,
+        backgroundColor: "white",
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        fontSize: 16,
     },
     confirmButton: {
         paddingVertical: 10,
         paddingHorizontal: 15,
-        borderRadius: 5,
+        borderRadius: 8,
         marginLeft: 10,
         backgroundColor: "#ccc",
     },
     confirmButtonActive: {
-        backgroundColor: "#4caf50",
+        backgroundColor: "#FCE71C",
     },
     confirmButtonText: {
         fontSize: 16,
-        color: "#fff",
+        color: "white",
+        fontWeight: "bold",
     },
     confirmButtonTextActive: {
-        color: "#fff",
+        color: "black",
     },
     dishItem: {
-        padding: 15,
-        borderWidth: 1,
-        borderColor: "#ccc",
-        borderRadius: 5,
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 10,
+        backgroundColor: "white",
         marginBottom: 10,
-        width: "100%",
+        alignItems: "center",
     },
     dishName: {
         fontSize: 18,
-        textAlign: "center",
+        fontWeight: "bold",
     },
-    listContainer: {
+    listContent: {
         paddingBottom: 10,
     },
-    list: {
-        flex: 1,
+    bottomBar: {
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 0,
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#000",
+        paddingVertical: 12,
+        paddingHorizontal: 35,
+    },
+    bottomButton: {
+        paddingVertical: 10,
+    },
+    bottomButtonText: {
+        fontSize: 18,
+        color: "#fff",
     },
 });

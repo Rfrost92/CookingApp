@@ -1,5 +1,5 @@
 //IngredientsSelectionScreen.tsx
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
     View,
     Text,
@@ -13,15 +13,18 @@ import {
 import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import categoriesData from "../data/ingredientCategories.json";
-import { useNavigation } from "@react-navigation/native";
+import {useNavigation, useRoute} from "@react-navigation/native";
 import { useLanguage } from "../services/LanguageContext";
 import { getTranslation } from "../helpers/loadTranslations";
 import { Ionicons } from "@expo/vector-icons";
 import {SafeAreaView} from "react-native-safe-area-context";
+import {containsInappropriateWords, logInappropriateInput} from "../helpers/validator";
+import {AuthContext} from "../contexts/AuthContext";
 
 export default function IngredientSelectionScreen() {
     const { language } = useLanguage(); // Get the selected language
     const [categories, setCategories] = useState<any[]>([]);
+    const { user, isLoggedIn } = useContext(AuthContext);
     const [filteredCategories, setFilteredCategories] = useState<any[]>([]);
     const [expandedCategories, setExpandedCategories] = useState<{ [key: string]: boolean }>({});
     const [selectedIngredients, setSelectedIngredients] = useState<{ [key: string]: boolean }>({});
@@ -88,12 +91,20 @@ export default function IngredientSelectionScreen() {
     };
 
     // Add a custom ingredient to the Miscellaneous category
-    const addCustomIngredient = () => {
+    const addCustomIngredient = async () => {
         if (!customIngredient.trim()) {
             Alert.alert(
                 getTranslation(language, "error"),
                 getTranslation(language, "enter_valid_ingredient")
             );
+            return;
+        }
+        if (containsInappropriateWords(customIngredient.trim())) {
+            Alert.alert(
+                getTranslation(language, "error"),
+                getTranslation(language, "inappropriate_enter_valid_ingredient")
+            );
+            await logInappropriateInput(user?.uid, customIngredient.trim())
             return;
         }
 

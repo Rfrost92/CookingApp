@@ -16,6 +16,8 @@ import { fetchRecipeScenario2 } from "../services/openaiService";
 import { AuthContext } from "../contexts/AuthContext";
 import translations from "../data/translations.json";
 import { useLanguage } from "../services/LanguageContext";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Scenario2Step3Screen() {
     const { user } = useContext(AuthContext);
@@ -79,6 +81,14 @@ export default function Scenario2Step3Screen() {
         const response = await fetchRecipeScenario2(requestData);
 
         if (response?.error) {
+            if (response.error === "Error: Your input might be inappropriate or invalid. Try a different request.") {
+                Alert.alert(
+                    t("error"),
+                    t("inappropriate"),
+                    [{ text: "OK" }]
+                );
+                return;
+            }
             Alert.alert(
                 t("daily_limit_reached"),
                 response.error === "Error: Daily request limit reached."
@@ -95,11 +105,18 @@ export default function Scenario2Step3Screen() {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>{t("customize_recipe")}</Text>
+        <SafeAreaView style={styles.container}>
+            {/* Header */}
+            <View style={styles.header}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                    <Ionicons name="arrow-back" size={28} color="black" />
+                </TouchableOpacity>
+                <Text style={styles.title}>{t("customize_recipe")}</Text>
+                <Text style={styles.stepText}>3/3</Text>
+            </View>
 
-            {/* Meal Type */}
-            <Text style={styles.label}>{t("meal_type")}:</Text>
+            {/* Meal Type Selection */}
+            <Text style={styles.label}>{t("meal_type")}</Text>
             <View style={styles.choiceContainer}>
                 {["Breakfast", "Lunch", "Dinner"].map((type) => (
                     <TouchableOpacity
@@ -111,10 +128,7 @@ export default function Scenario2Step3Screen() {
                         onPress={() => setMealType(type)}
                     >
                         <Text
-                            style={[
-                                styles.choiceText,
-                                mealType === type && styles.choiceTextSelected,
-                            ]}
+                            style={mealType === type ? styles.choiceTextSelected : styles.choiceText}
                         >
                             {t(type.toLowerCase())}
                         </Text>
@@ -122,10 +136,10 @@ export default function Scenario2Step3Screen() {
                 ))}
             </View>
 
-            {/* Dish Type */}
-            <Text style={styles.label}>{t("dish_type")}:</Text>
+            {/* Dish Type Selection */}
+            <Text style={styles.label}>{t("dish_type")}</Text>
             <View style={styles.choiceContainer}>
-                {["Starter", "Main_Course", "Dessert"].map((type) => (
+                {["Starter", "Main Course", "Dessert"].map((type) => (
                     <TouchableOpacity
                         key={type}
                         style={[
@@ -135,89 +149,105 @@ export default function Scenario2Step3Screen() {
                         onPress={() => setDishType(type)}
                     >
                         <Text
-                            style={[
-                                styles.choiceText,
-                                dishType === type && styles.choiceTextSelected,
-                            ]}
+                            style={dishType === type ? styles.choiceTextSelected : styles.choiceText}
                         >
-                            {t(type.toLowerCase())}
+                            {t(type.toLowerCase().replace(" ", "_"))}
                         </Text>
                     </TouchableOpacity>
                 ))}
             </View>
 
-            {/* Portions */}
-            <Text style={styles.label}>{t("portions")}:</Text>
+            {/* Portions Input */}
+            <Text style={styles.label}>{t("number_of_portions")}</Text>
             <TextInput
                 style={styles.input}
                 keyboardType="numeric"
                 value={portions}
                 onChangeText={setPortions}
-                placeholder={t("enter_portions")}
+                placeholder={t("e.g. 2")}
             />
 
-            {/* Maximum Cooking Time */}
-            <Text style={styles.label}>{t("max_cooking_time")}:</Text>
-            <Slider
-                style={styles.slider}
-                minimumValue={10}
-                maximumValue={120}
-                step={5}
-                value={maxCookingTime}
-                onValueChange={setMaxCookingTime}
-            />
-            <Text style={styles.sliderValue}>{maxCookingTime} {t("minutes")}</Text>
+            {/* Cooking Time Slider */}
+            <Text style={styles.label}>{t("max_cooking_time")} ⏱</Text>
+            <View style={styles.sliderContainer}>
+                <Slider
+                    style={styles.slider}
+                    minimumValue={10}
+                    maximumValue={120}
+                    step={5}
+                    value={maxCookingTime}
+                    onValueChange={setMaxCookingTime}
+                    minimumTrackTintColor="#FCE71C"
+                    maximumTrackTintColor="#CCC"
+                    thumbTintColor="#FCE71C"
+                />
+                <Text style={styles.sliderValue}>{maxCookingTime} {t("minutes")}</Text>
+            </View>
 
-            {/* Vegan and Vegetarian */}
-            <View style={styles.checkmarkContainer}>
-                <View style={styles.checkmarkItem}>
-                    <Switch value={isVegan} onValueChange={handleVeganChange} />
-                    <Text style={styles.checkmarkText}>{t("vegan")}</Text>
+            {/* Vegan & Vegetarian Options */}
+            <View style={styles.dietContainer}>
+                <View style={styles.dietRow}>
+                    <Text style={styles.dietText}>{t("vegetarian")}</Text>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setIsVegetarian((prev) => !prev);
+                            setIsVegan(false);
+                        }}
+                        style={styles.checkBox}
+                    >
+                        {isVegetarian && <Ionicons name="checkmark" size={22} color="black" />}
+                    </TouchableOpacity>
                 </View>
-                <View style={styles.checkmarkItem}>
-                    <Switch value={isVegetarian} onValueChange={handleVegetarianChange} />
-                    <Text style={styles.checkmarkText}>{t("vegetarian")}</Text>
+                <View style={styles.dietRow}>
+                    <Text style={styles.dietText}>{t("vegan")}</Text>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setIsVegan((prev) => !prev);
+                            setIsVegetarian(false);
+                        }}
+                        style={styles.checkBox}
+                    >
+                        {isVegan && <Ionicons name="checkmark" size={22} color="black" />}
+                    </TouchableOpacity>
                 </View>
             </View>
 
-            {/* Buttons */}
-            <View style={styles.buttonContainer}>
-                <Button title={t("reset")} onPress={handleReset} />
-                <Button title={t("submit")} onPress={handleSubmit} />
+            {/* Bottom Bar */}
+            <View style={styles.bottomBar}>
+                <TouchableOpacity style={styles.bottomButton} onPress={handleReset}>
+                    <Text style={styles.bottomButtonText}>{t("reset")}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.bottomButton} onPress={handleSubmit}>
+                    <Text style={[styles.bottomButtonText, styles.submitButtonText]}>{t("submit")}</Text>
+                </TouchableOpacity>
             </View>
-            {!user && (
-                <View style={styles.agreementContainer}>
-                    <Text style={styles.agreementText}>
-                        {t("by_clicking_submit")}
-                        <Text style={styles.linkText} onPress={() => navigation.navigate("HelpScreen")}>
-                            {t("terms_of_use")}
-                        </Text>
-                        {t("comma")}
-                        <Text style={styles.linkText} onPress={() => navigation.navigate("HelpScreen")}>
-                            {t("privacy_policy")}
-                        </Text>
-                        {t("and")}
-                        <Text style={styles.linkText} onPress={() => navigation.navigate("HelpScreen")}>
-                            {t("disclaimer")}
-                        </Text>.
-                    </Text>
-                </View>
-            )}
-        </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: 10,
+    },
+    backButton: {
+        padding: 5
+    },
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: "#fff",
+        backgroundColor: "#71f2c9",
     },
     title: {
-        fontSize: 24,
+        fontSize: 22,
         fontWeight: "bold",
-        marginBottom: 20,
         textAlign: "center",
+    },
+    stepText: {
+        fontSize: 18,
+        fontWeight: "bold",
     },
     label: {
         fontSize: 18,
@@ -230,37 +260,43 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     choiceItem: {
-        padding: 10,
-        borderWidth: 1,
-        borderColor: "#ccc",
-        borderRadius: 5,
+        backgroundColor: "white",
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 10,
+        //  borderWidth: 2,
+        borderColor: "gray",
+        marginHorizontal: 5,
     },
     choiceItemSelected: {
-        backgroundColor: "#d1f5d3",
-        borderColor: "#4caf50",
+        backgroundColor: "#FCE71C",
+        // borderColor: "yellow",
     },
-    choiceText: {
-        fontSize: 16,
-    },
-    choiceTextSelected: {
-        color: "#4caf50",
-    },
+    choiceText: { fontSize: 16, color: "black" },
+    choiceTextSelected: { fontSize: 16, fontWeight: "bold", color: "black" },
+
     input: {
+        backgroundColor: "white",
         borderWidth: 1,
-        borderColor: "#ccc",
-        borderRadius: 5,
-        padding: 10,
-        fontSize: 16,
-        marginBottom: 15,
+        borderColor: "lightgray",
+        borderRadius: 8,
+        paddingHorizontal: 10,
+        height: 40,
+    },
+    sliderContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginVertical: 10,
     },
     slider: {
-        width: "100%",
+        flex: 1,
         height: 40,
     },
     sliderValue: {
-        textAlign: "center",
-        fontSize: 16,
-        marginVertical: 5,
+        fontSize: 18,
+        fontWeight: "bold",
+        marginLeft: 10,
+        // color: "#ffb440", // Orange Text
     },
     checkmarkContainer: {
         flexDirection: "row",
@@ -270,10 +306,42 @@ const styles = StyleSheet.create({
     checkmarkItem: {
         flexDirection: "row",
         alignItems: "center",
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 8,
     },
     checkmarkText: {
-        marginLeft: 10,
         fontSize: 16,
+        fontWeight: "bold",
+        color: "black",
+        marginRight: 8,
+    },
+    submitButtonText: {
+        fontWeight: "bold",
+        color: "#FCE71C",
+    },
+    dietContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginVertical: 20,
+    },
+    dietRow: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    dietText: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "black",
+        marginRight: 10,
+    },
+    checkBox: {
+        width: 30,
+        height: 30,
+        backgroundColor: "#FCE71C",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 5,
     },
     buttonContainer: {
         flexDirection: "row",
@@ -292,5 +360,24 @@ const styles = StyleSheet.create({
     linkText: {
         color: "#007BFF",
         textDecorationLine: "underline",
+    },
+    bottomBar: {
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 0,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        backgroundColor: "#000",
+        paddingVertical: 12,
+        paddingHorizontal: 35,
+    },
+    bottomButton: {
+        paddingVertical: 10,
+    },
+    bottomButtonText: {
+        fontSize: 18,
+        color: "#fff",
     },
 });

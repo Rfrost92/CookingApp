@@ -23,7 +23,7 @@ export default function ApplianceSelectionScreen() {
     const { language } = useLanguage();
     const navigation = useNavigation();
     const route = useRoute();
-    const { selectedIngredients } = route.params;
+    const { selectedIngredients, selectedData } = route.params;
     const t = (key: string) => getTranslation(language, key);
 
     const [selectedAppliances, setSelectedAppliances] = useState<{ [key: string]: boolean }>({
@@ -56,10 +56,17 @@ export default function ApplianceSelectionScreen() {
             return;
         }
 
-        navigation.navigate("MealTypeSelection", {
-            selectedIngredients,
-            selectedAppliances: selected.includes("any") ? ["Any"] : selected,
-        });
+        if (selectedIngredients) {
+            navigation.navigate("MealTypeSelection", {
+                selectedIngredients,
+                selectedAppliances: selected.includes("any") ? ["Any"] : selected,
+            });
+        } else if (selectedData) {
+            navigation.navigate("Scenario2Step3", {
+                selectedData,
+                selectedAppliances: selected.includes("any") ? ["Any"] : selected,
+            });
+        }
     };
 
     return (

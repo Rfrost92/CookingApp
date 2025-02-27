@@ -84,6 +84,7 @@ export default function BookOfRecipesScreen() {
 
                 {/* Recipe List */}
                 <FlatList
+                    showsVerticalScrollIndicator={false}
                     data={filteredRecipes}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (

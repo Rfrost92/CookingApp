@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
     languageOption: {
         padding: 15,
         borderWidth: 2,
-        borderColor: "#000",
+        borderColor: "#71f2c9",
         borderRadius: 8,
         marginVertical: 8,
         width: "80%",
@@ -386,8 +386,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff", // Default white background
     },
     languageOptionSelected: {
-        backgroundColor: "yellow", // Change selected language button to yellow
-        borderColor: "#000",
+        backgroundColor: "#FCE71C", // Change selected language button to yellow
+        borderColor: "#71f2c9",
     },
     saveButton: {
         backgroundColor: "#000", // Black button for "Save"

@@ -1,8 +1,8 @@
 {
   "en": {
     "welcome": "Hey Chef, what are we cooking today?",
-    "ingredient_selection": "I would like to cook something from the ingredients available at home",
-    "open_to_ideas": "I am open to new ideas, I want to cook something from any ingredients",
+    "ingredient_selection": "Cook from available ingredients",
+    "open_to_ideas": "Create my own personalized recipe",
     "classic_recipes": "Classic recipes",
     "reset_counter": "Reset Non-Signed-In Counter",
     "account": "Account",
@@ -181,7 +181,12 @@
     "and": " and the ",
     "by_clicking_submit": "By clicking Submit, you confirm that you have read and agree to the ",
     "comma": ", ",
-    "classic_recipes_access": "Please log in or sign up to be able to use the classic recipes feature"
+    "classic_recipes_access": "Please log in or sign up to be able to use the classic recipes feature",
+    "inappropriate": "Your input might be inappropriate or invalid. Try a different request.",
+    "inappropriate_enter_valid_ingredient": "Your input contains inappropriate words! Please enter a valid ingredient name. You may be temporarily or permanently banned if you continue using inappropriate words.",
+    "inappropriate_enter_valid_dish": "Your input contains inappropriate words! Please enter a valid dish name. You may be temporarily or permanently banned if you continue using inappropriate words.",
+    "inappropriate_enter_valid": "Your input contains inappropriate words! Please enter a valid input. You may be temporarily or permanently banned if you continue using inappropriate words.",
+    "recipe_parsing_failed": "Something went wrong preparing your recipe. Try again."
   },
 
 

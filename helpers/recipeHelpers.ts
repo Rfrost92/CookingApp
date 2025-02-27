@@ -14,6 +14,12 @@ export const saveRecipe = async (userId, title, content, imageBase64) => {
     const imageRef = ref(storage, imagePath);
 
     try {
+        const recipesRef = collection(db, "savedRecipes");
+        const querySnapshot = await getDocs(query(recipesRef, where("userId", "==", userId), where("title", "==", title)));
+        if (!querySnapshot.empty) {
+            console.warn("Recipe with the same title already exists.");
+            return { message: "Recipe with the same title already exists." };  // ✅ Prevent duplicate save
+        }
         const contentBlob = new Blob([JSON.stringify({ content })], { type: "application/json" });
         await uploadBytes(storageRef, contentBlob);
         let imageURL = null;
@@ -49,7 +55,6 @@ export const saveRecipe = async (userId, title, content, imageBase64) => {
         const downloadURL = await getDownloadURL(storageRef);
 
         // Save Recipe Metadata in Firestore**
-        const recipesRef = collection(db, "savedRecipes");
         const recipeData = {
             userId,
             title,
@@ -183,8 +188,7 @@ export const sanitizeAndParseRecipe = (rawRecipe: string | object) => {
 
         throw new Error("Invalid recipe format: not a string or object");
     } catch (error) {
-        console.error("Error parsing recipe JSON:", error);
-        return null;
+        return { error: "Error parsing recipe JSON:" + error + "" }
     }
 };
 

@@ -1,3 +1,4 @@
+//RecipeResultScreen.ts
 import React, { useContext, useState } from "react";
 import {
     View,
@@ -17,12 +18,13 @@ import translations from "../data/translations.json";
 import RecipeImage from "../services/RecipeImage";
 import { Ionicons } from "@expo/vector-icons";
 import {SafeAreaView} from "react-native-safe-area-context";
+import {logParseErrors} from "../helpers/validator";
 
 export default function RecipeResultScreen() {
     const navigation = useNavigation();
     const route = useRoute();
     const { user, isLoggedIn } = useContext(AuthContext);
-    const { recipe, requestData, scenario, image } = route.params;
+    const { recipe, requestData, scenario, image, classicRecipe } = route.params;
     const { language } = useLanguage();
     const t = (key) => translations[language][key] || key;
 
@@ -54,6 +56,27 @@ export default function RecipeResultScreen() {
             }
 
             const parsedRecipe = sanitizeAndParseRecipe(newRecipeResponse.recipe);
+            if (parsedRecipe?.error && parsedRecipe.error.includes("Error parsing recipe JSON:")) {
+                let stringToLog: string = ''
+                if (requestData?.selectedIngredients) {
+                    stringToLog += requestData.selectedIngredients.join(", ") + '; '
+                }
+                if (requestData?.cuisine) {
+                    stringToLog += requestData.cuisine + '; '
+                }
+                if (requestData?.thematic) {
+                    stringToLog += requestData.thematic + '; '
+                }
+                if (requestData?.starIngredient) {
+                    stringToLog += requestData.starIngredient + '; '
+                }
+                if (requestData?.starIngredient) {
+                    stringToLog += requestData.starIngredient + '; '
+                }
+                Alert.alert(t("error"), t("recipe_parsing_failed"));
+                logParseErrors(user?.uid, parsedRecipe.error, newRecipeResponse.recipe.substring(0, 100), stringToLog)
+                return;
+            }
             if (!parsedRecipe || !parsedRecipe.Title) {
                 Alert.alert(t("error"), t("recipe_parsing_failed"));
                 return;
@@ -100,6 +123,30 @@ export default function RecipeResultScreen() {
 
     const renderRecipe = () => {
         const parsedRecipe = sanitizeAndParseRecipe(recipe);
+        if (parsedRecipe?.error && parsedRecipe.error.includes("Error parsing recipe JSON:")) {
+            let stringToLog: string = ''
+            if (requestData?.selectedIngredients) {
+                stringToLog += requestData.selectedIngredients.join(", ") + '; '
+            }
+            if (requestData?.cuisine) {
+                stringToLog += requestData.cuisine + '; '
+            }
+            if (requestData?.thematic) {
+                stringToLog += requestData.thematic + '; '
+            }
+            if (requestData?.starIngredient) {
+                stringToLog += requestData.starIngredient + '; '
+            }
+            if (requestData?.starIngredient) {
+                stringToLog += requestData.starIngredient + '; '
+            }
+            if (requestData?.classicRecipe) {
+                stringToLog += requestData.classicRecipe + '; '
+            }
+            Alert.alert(t("error"), t("recipe_parsing_failed"));
+            logParseErrors(user?.uid, parsedRecipe.error, recipe.substring(0, 100), stringToLog)
+            return;
+        }
 
         if (parsedRecipe) {
             return (
@@ -110,7 +157,9 @@ export default function RecipeResultScreen() {
                     {/* Top Block with Image & Info */}
                     <View style={styles.topBlock}>
                         {/* Recipe Image */}
-                        <Image source={{ uri: image }} style={styles.recipeImage} />
+                        {image && <RecipeImage imageUrl={image} style={styles.recipeImage} onImageFetched={setBase64Image} />}
+
+                        {/*<Image source={{ uri: image }} style={styles.recipeImage} />*/}
 
                         {/* Recipe Info */}
                         <View style={styles.recipeInfo}>
@@ -118,13 +167,13 @@ export default function RecipeResultScreen() {
                                 <Ionicons name="flame" size={20} color="black" />
                                 <Text style={styles.infoText}>{parsedRecipe.Calories}</Text>
                             </View>
-                            {requestData.isVegetarian && (
+                            {parsedRecipe.isVegetarian && (
                                 <View style={styles.infoRow}>
                                     <Ionicons name="leaf" size={20} color="black" />
                                     <Text style={styles.infoText}>Vegetarian</Text>
                                 </View>
                             )}
-                            {requestData.isVegan && (
+                            {parsedRecipe.isVegan && (
                                 <View style={styles.infoRow}>
                                     <Ionicons name="leaf" size={20} color="black" />
                                     <Text style={styles.infoText}>Vegan</Text>
@@ -132,11 +181,11 @@ export default function RecipeResultScreen() {
                             )}
                             <View style={styles.infoRow}>
                                 <Ionicons name="person" size={20} color="black" />
-                                <Text style={styles.infoText}>{requestData.portions}</Text>
+                                <Text style={styles.infoText}>{requestData?.portions ? requestData.portions : parsedRecipe.Portions}</Text>
                             </View>
                             <View style={styles.infoRow}>
                                 <Ionicons name="time" size={20} color="black" />
-                                <Text style={styles.infoText}>{requestData.maxCookingTime} min</Text>
+                                <Text style={styles.infoText}>{parsedRecipe.cookingTime} min</Text>
                             </View>
                         </View>
                     </View>
@@ -150,8 +199,11 @@ export default function RecipeResultScreen() {
                     <View style={styles.section}>
                         <Text style={styles.sectionHeader}>{t("ingredients")}</Text>
                         <View style={styles.ingredientList}>
-                            {parsedRecipe?.Ingredients?.split("\\n").map((item, index) => (
-                                <Text key={index} style={styles.ingredientItem}>• {item.trim()}</Text>
+                            {(parsedRecipe?.Ingredients?.includes("\\n")
+                                    ? parsedRecipe?.Ingredients?.split("\\n")
+                                    : parsedRecipe?.Ingredients?.split("\n")
+                            ).map((item, index) => (
+                                <Text key={index} style={styles.ingredientItem}>• {item.replace('- ', '').trim()}</Text>
                             ))}
                         </View>
                     </View>
@@ -159,8 +211,10 @@ export default function RecipeResultScreen() {
                     {/* Process Section */}
                     <View style={styles.section}>
                         <Text style={styles.sectionHeader}>{t("Steps to cook")}</Text>
-                        {parsedRecipe?.Steps?.split("\\n").map((step, index) => {
-                            // Remove existing numbers (e.g., "1. ", "2. ") from steps
+                        {(parsedRecipe?.Steps?.includes("\\n")
+                                ? parsedRecipe?.Steps?.split("\\n")
+                                : parsedRecipe?.Steps?.split("\n")
+                        ).map((step, index) => {
                             const stepText = step.replace(/^\d+\.\s*/, "").trim();
                             return (
                                 <View key={index} style={styles.processItemContainer}>

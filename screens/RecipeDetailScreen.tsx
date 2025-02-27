@@ -1,11 +1,22 @@
 // RecipeDetailScreen.tsx
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, Image, ActivityIndicator } from "react-native";
+import {
+    View,
+    Text,
+    StyleSheet,
+    Alert,
+    ScrollView,
+    Image,
+    ActivityIndicator,
+    TouchableOpacity,
+} from "react-native";
 import { fetchRecipeById, sanitizeAndParseRecipe } from "../helpers/recipeHelpers";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 
-export default function RecipeDetailScreen({ route }: any) {
+export default function RecipeDetailScreen({ route, navigation }: any) {
     const { recipeId } = route.params;
     const [recipe, setRecipe] = useState<any>(null);
     const [imageURL, setImageURL] = useState<string | null>(null);
@@ -49,53 +60,202 @@ export default function RecipeDetailScreen({ route }: any) {
     }
 
     return (
-        <ScrollView style={styles.container}>
-            {imageURL && (
-                <Image
-                    source={{ uri: imageURL }}
-                    style={styles.recipeImage}
-                    resizeMode="cover"
-                />
-            )}
-            <Text style={styles.title}>{recipe.Title}</Text>
-            <Text style={styles.prewords}>{recipe.Prewords}</Text>
-            <Text style={styles.description}>{recipe.Description}</Text>
-
-            <View style={styles.section}>
-                <Text style={styles.sectionHeader}>{t("ingredients")}</Text>
-                <Text style={styles.sectionContent}>{recipe.Ingredients.replace(/\\n/g, "\n")}</Text>
+        <SafeAreaView style={styles.container}>
+            {/* Header with Back Button */}
+            <View style={styles.header}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                    <Ionicons name="arrow-back" size={28} color="black" />
+                </TouchableOpacity>
+                {/* Recipe Title */}
+                <Text style={styles.recipeTitle}>{recipe.Title}</Text>
+                <Text style={styles.recipeTitle}>🍽️</Text>
             </View>
 
-            <View style={styles.section}>
-                <Text style={styles.sectionHeader}>{t("steps")}</Text>
-                <Text style={styles.sectionContent}>{recipe.Steps.replace(/\\n/g, "\n")}</Text>
-            </View>
+            <ScrollView style={styles.content}>
+                {/* Recipe Image */}
+                {imageURL && (
+                    <Image source={{ uri: imageURL }} style={styles.recipeImage} resizeMode="cover" />
+                )}
 
-            <View style={styles.section}>
-                <Text style={styles.sectionHeader}>{t("calories")}</Text>
-                <Text style={styles.sectionContent}>{recipe.Calories}</Text>
-            </View>
-        </ScrollView>
+                {/* Recipe Info Section */}
+                <View style={styles.infoContainer}>
+                    <View style={styles.infoRow}>
+                        <Ionicons name="flame" size={20} color="black" />
+                        <Text style={styles.infoText}>{recipe.Calories}</Text>
+                    </View>
+                    {recipe.isVegetarian && (
+                        <View style={styles.infoRow}>
+                            <Ionicons name="leaf" size={20} color="black" />
+                            <Text style={styles.infoText}>Vegetarian</Text>
+                        </View>
+                    )}
+                    {recipe.isVegan && (
+                        <View style={styles.infoRow}>
+                            <Ionicons name="leaf" size={20} color="black" />
+                            <Text style={styles.infoText}>Vegan</Text>
+                        </View>
+                    )}
+                    <View style={styles.infoRow}>
+                        <Ionicons name="time" size={20} color="black" />
+                        <Text style={styles.infoText}>{recipe.cookingTime} min</Text>
+                    </View>
+                </View>
+
+                {/* Prewords (Short Intro) */}
+                <View style={styles.prewordsContainer}>
+                    <Text style={styles.prewordsText}>{recipe.Prewords}</Text>
+                </View>
+
+                {/* Ingredients Section */}
+                <View style={styles.section}>
+                    <Text style={styles.sectionHeader}>{t("ingredients")}</Text>
+                    <View style={styles.ingredientList}>
+                        {(recipe?.Ingredients?.includes("\\n")
+                                ? recipe?.Ingredients?.split("\\n")
+                                : recipe?.Ingredients?.split("\n")
+                        ).map((item, index) => (
+                            <Text key={index} style={styles.ingredientItem}>• {item.replace('- ', '').trim()}</Text>
+                        ))}
+                    </View>
+                </View>
+
+                {/* Process Section */}
+                <View style={styles.section}>
+                    <Text style={styles.sectionHeader}>{t("Steps to cook")}</Text>
+                    {(recipe?.Steps?.includes("\\n")
+                            ? recipe?.Steps?.split("\\n")
+                            : recipe?.Steps?.split("\n")
+                    ).map((step, index) => {
+                        const stepText = step.replace(/^\d+\.\s*/, "").trim();
+                        return (
+                            <View key={index} style={styles.processItemContainer}>
+                                <Text style={styles.stepNumber}>{index + 1}.</Text>
+                                <Text style={styles.processItem}>{stepText}</Text>
+                            </View>
+                        );
+                    })}
+                </View>
+            </ScrollView>
+
+            {/* Bottom Bar */}
+{/*            <View style={styles.bottomBar}>
+                <TouchableOpacity style={styles.bottomButton} onPress={() => navigation.goBack()}>
+                    <Text style={styles.bottomButtonText}>Back</Text>
+                </TouchableOpacity>
+            </View>*/}
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 20, backgroundColor: "#fff" },
-    loadingContainer: {
+    container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+        backgroundColor: "#71f2c9",
     },
-    title: { fontSize: 24, fontWeight: "bold", marginBottom: 20, textAlign: "center" },
+    content: {
+        flex: 1,
+        padding: 20,
+        paddingTop:0,
+    },
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: 10,
+    },
+    backButton: {
+        padding: 5,
+    },
+    recipeTitle: {
+        fontSize: 24,
+        fontWeight: "bold",
+        textAlign: "center",
+        marginVertical: 10,
+    },
     recipeImage: {
         width: "100%",
         height: 250,
         borderRadius: 10,
         marginBottom: 15,
     },
-    prewords: { fontSize: 16, fontStyle: "italic", marginBottom: 15 },
-    description: { fontSize: 16, marginBottom: 15 },
-    section: { marginBottom: 20 },
-    sectionHeader: { fontSize: 18, fontWeight: "bold", marginBottom: 5 },
-    sectionContent: { fontSize: 16, lineHeight: 24 },
+    infoContainer: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        backgroundColor: "white",
+        borderRadius: 10,
+        padding: 10,
+        marginBottom: 15,
+    },
+    infoRow: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    infoText: {
+        marginLeft: 5,
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    prewordsContainer: {
+        backgroundColor: "white",
+        borderRadius: 10,
+        padding: 15,
+        marginBottom: 10,
+    },
+    prewordsText: {
+        fontSize: 16,
+        fontStyle: "italic",
+        textAlign: "center",
+    },
+    section: {
+        backgroundColor: "white",
+        borderRadius: 10,
+        padding: 15,
+        marginBottom: 10,
+    },
+    sectionHeader: {
+        fontSize: 18,
+        fontWeight: "bold",
+        marginBottom: 5,
+    },
+    ingredientList: {
+        paddingLeft: 10,
+        marginTop: 5,
+    },
+    ingredientItem: {
+        fontSize: 16,
+        marginVertical: 3,
+    },
+    processItemContainer: {
+        flexDirection: "row",
+        alignItems: "flex-start",
+        marginVertical: 5,
+    },
+    stepNumber: {
+        fontWeight: "bold",
+        color: "#FCE71C",
+        fontSize: 18,
+        marginRight: 8,
+    },
+    processItem: {
+        fontSize: 16,
+        flex: 1,
+    },
+    bottomBar: {
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 0,
+        flexDirection: "row",
+        justifyContent: "center",
+        backgroundColor: "#000",
+        paddingVertical: 12,
+    },
+    bottomButton: {
+        paddingVertical: 10,
+    },
+    bottomButtonText: {
+        fontSize: 18,
+        color: "white",
+        fontWeight: "bold",
+    },
 });

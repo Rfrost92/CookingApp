@@ -1,5 +1,5 @@
 // Scenario2Step1Screen.tsx
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
     View,
     Text,
@@ -15,6 +15,11 @@ import { collection, getDocs } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+import {containsInappropriateWords, logInappropriateInput} from "../helpers/validator";
+import {getTranslation} from "../helpers/loadTranslations";
+import {AuthContext} from "../contexts/AuthContext";
 
 export default function Scenario2Step1Screen() {
     const { language } = useLanguage();
@@ -60,6 +65,8 @@ export default function Scenario2Step1Screen() {
     const [cuisineSearch, setCuisineSearch] = useState<string>("");
     const [thematicSearch, setThematicSearch] = useState<string>("");
     const [starIngredientSearch, setStarIngredientSearch] = useState<string>("");
+
+    const { user, isLoggedIn } = useContext(AuthContext);
 
     const [loading, setLoading] = useState<boolean>(true);
     const navigation = useNavigation();
@@ -133,7 +140,7 @@ export default function Scenario2Step1Screen() {
         setStarIngredientSearch("");
     };
 
-    const handleNext = () => {
+    const handleNext = async () => {
         const cuisine = isCustomCuisineSelected ? customCuisine : selectedCuisine;
         const thematic = isCustomThematicSelected ? customThematic : selectedThematic;
         const starIngredient = isCustomStarIngredientSelected
@@ -155,13 +162,22 @@ export default function Scenario2Step1Screen() {
             return;
         }
 
+        if (containsInappropriateWords(cuisine.trim()) || containsInappropriateWords(thematic.trim()) || containsInappropriateWords(starIngredient.trim())) {
+            Alert.alert(
+                getTranslation(language, "error"),
+                getTranslation(language, "inappropriate_enter_valid")
+            );
+            await logInappropriateInput(user?.uid, cuisine.trim() + ', ' + thematic.trim() + ', ' + starIngredient.trim())
+            return;
+        }
+
         const selectedData = {
             cuisine,
             thematic,
             starIngredient,
         };
 
-        navigation.navigate("Scenario2Step2", { selectedData });
+        navigation.navigate("ApplianceSelection", { selectedData });
     };
 
     const renderChoiceButton = (
@@ -194,18 +210,26 @@ export default function Scenario2Step1Screen() {
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>{t("customize_recipe")}</Text>
+        <SafeAreaView style={styles.container}>
+            {/* Header */}
+            <View style={styles.header}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                    <Ionicons name="arrow-back" size={28} color="black" />
+                </TouchableOpacity>
+                <Text style={styles.title}>{t("customize_recipe")}</Text>
+                <Text style={styles.stepText}>1/3</Text>
+            </View>
 
             {/* Cuisine Selection */}
             <Text style={styles.label}>{t("cuisine")}:</Text>
+            <View style={styles.choiceSearchBox}>
             <TextInput
                 style={styles.searchBar}
                 placeholder={t("search_cuisine")}
                 value={cuisineSearch}
                 onChangeText={setCuisineSearch}
             />
-            <FlatList
+            <FlatList style={styles.customFlatlist}
                 data={filteredCuisineOptions}
                 horizontal
                 keyExtractor={(item, index) => `${item}-${index}`} // Ensure a unique key
@@ -221,6 +245,7 @@ export default function Scenario2Step1Screen() {
                 }
                 showsHorizontalScrollIndicator={false}
             />
+            </View>
             <View style={styles.customInputContainer}>
                 <TextInput
                     style={styles.input}
@@ -241,13 +266,14 @@ export default function Scenario2Step1Screen() {
 
             {/* Thematic Selection */}
             <Text style={styles.label}>{t("thematic")}:</Text>
+            <View style={styles.choiceSearchBox}>
             <TextInput
                 style={styles.searchBar}
                 placeholder={t("search_thematic")}
                 value={thematicSearch}
                 onChangeText={setThematicSearch}
             />
-            <FlatList
+            <FlatList style={styles.customFlatlist}
                 data={filteredThematicOptions}
                 horizontal
                 keyExtractor={(item, index) => `${item}-${index}`} // Ensure a unique key
@@ -263,6 +289,7 @@ export default function Scenario2Step1Screen() {
                 }
                 showsHorizontalScrollIndicator={false}
             />
+            </View>
             <View style={styles.customInputContainer}>
                 <TextInput
                     style={styles.input}
@@ -283,13 +310,14 @@ export default function Scenario2Step1Screen() {
 
             {/* Star Ingredient */}
             <Text style={styles.label}>{t("star_ingredient")}:</Text>
+            <View style={styles.choiceSearchBox}>
             <TextInput
                 style={styles.searchBar}
                 placeholder={t("search_star_ingredient")}
                 value={starIngredientSearch}
                 onChangeText={setStarIngredientSearch}
             />
-            <FlatList
+            <FlatList style={styles.customFlatlist}
                 data={filteredStarIngredients}
                 horizontal
                 keyExtractor={(item, index) => `${item}-${index}`} // Ensure a unique key
@@ -305,6 +333,7 @@ export default function Scenario2Step1Screen() {
                 }
                 showsHorizontalScrollIndicator={false}
             />
+            </View>
             <View style={styles.customInputContainer}>
                 <TextInput
                     style={styles.input}
@@ -323,12 +352,19 @@ export default function Scenario2Step1Screen() {
                 )}
             </View>
 
-            {/* Buttons */}
-            <View style={styles.buttonContainer}>
-                <Button title={t("reset")} onPress={handleReset} />
-                <Button title={t("next")} onPress={handleNext} />
+            {/* Bottom Navigation */}
+            <View style={styles.bottomBar}>
+                {/* Reset Button - Replaces Back Button */}
+                <TouchableOpacity style={styles.bottomButton} onPress={handleReset}>
+                    <Text style={styles.bottomButtonText}>{t("reset")}</Text>
+                </TouchableOpacity>
+
+                {/* Next Button - Now White Instead of Yellow */}
+                <TouchableOpacity style={styles.bottomButton} onPress={handleNext}>
+                    <Text style={styles.bottomButtonText}>{t("next")}</Text>
+                </TouchableOpacity>
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 
@@ -336,13 +372,25 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: "#fff",
+        backgroundColor: "#71f2c9",
+    },
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: 10,
+    },
+    backButton: {
+        padding: 5,
     },
     title: {
-        fontSize: 24,
+        fontSize: 22,
         fontWeight: "bold",
-        marginBottom: 20,
         textAlign: "center",
+    },
+    stepText: {
+        fontSize: 18,
+        fontWeight: "bold",
     },
     label: {
         fontSize: 18,
@@ -351,49 +399,107 @@ const styles = StyleSheet.create({
     },
     searchBar: {
         height: 40,
-        borderColor: "#ccc",
-        borderWidth: 1,
-        borderRadius: 5,
-        paddingHorizontal: 10,
+        backgroundColor: "white",
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        fontSize: 16,
         marginBottom: 10,
     },
     choiceItem: {
-        padding: 10,
-        borderWidth: 1,
-        borderColor: "#ccc",
-        borderRadius: 5,
-        marginHorizontal: 5,
+        backgroundColor: "white",
+        paddingVertical: 8,
+        paddingHorizontal: 15,
+        borderRadius: 8,
+        borderColor: "gray",
+        marginHorizontal: 4,
+        minHeight: 40,
+        maxHeight: 40,
+        alignItems: "center",
+        justifyContent: "center",
     },
     choiceItemSelected: {
-        backgroundColor: "#d1f5d3",
-        borderColor: "#4caf50",
+        backgroundColor: "#FCE71C",
+    },
+    choiceText: {
+        fontSize: 14,
+        color: "black",
+    },
+    choiceTextSelected: {
+        fontSize: 14,
+        fontWeight: "bold",
+        color: "black",
+    },
+    bottomBar: {
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 0,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        backgroundColor: "#000",
+        paddingVertical: 12,
+        paddingHorizontal: 35,
+    },
+    bottomButton: {
+        paddingVertical: 10,
+    },
+    bottomButtonText: {
+        fontSize: 18,
+        color: "#fff",
+    },
+    submitButtonText: {
+        fontWeight: "bold",
+        color: "#FCE71C",
     },
     choiceItemDisabled: {
         backgroundColor: "#f0f0f0",
         borderColor: "#ccc",
-    },
-    choiceText: {
-        fontSize: 16,
-    },
-    choiceTextSelected: {
-        color: "#4caf50",
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: "#ccc",
-        borderRadius: 5,
-        padding: 10,
-        fontSize: 16,
-        flex: 1,
-    },
-    customInputContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        marginBottom: 15,
     },
     buttonContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
         marginTop: 20,
     },
+    customFlatlist: {
+        marginBottom: 5,  // Reduce space after slider
+    },
+    choiceSearchBox: {
+    },
+    customInputContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 20,  // Ensures spacing remains balanced
+        marginTop: 5,  // Bring it closer
+    },
+    input: {
+        backgroundColor: "white",
+        borderWidth: 1,
+        borderColor: "#ccc",
+        borderRadius: 8,
+        padding: 10,
+        fontSize: 16,
+        flex: 1,
+        marginRight: 10,  // Ensure spacing from "Use" button
+    },
+    useButton: {
+        backgroundColor: "black",  // Default black
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderRadius: 8,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    useButtonText: {
+        color: "white",
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    useButtonDisabled: {
+        backgroundColor: "#ccc", // Light gray when disabled
+    },
+    useButtonSelected: {
+        backgroundColor: "#FCE71C", // Yellow when selected
+    },
+
 });

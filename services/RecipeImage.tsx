@@ -43,9 +43,8 @@ export default function RecipeImage({ imageUrl, onImageFetched }) {
 
 const styles = StyleSheet.create({
     recipeImage: {
-        width: "100%",
-        height: 200,
+        width: "50%", // Makes sure it takes half of the `topBlock`
+        height: "100%", // Ensures the image fills the space properly
         borderRadius: 10,
-        marginBottom: 15,
     },
 });

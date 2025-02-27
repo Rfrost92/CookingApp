@@ -5,19 +5,20 @@ import {gptApiKey, runwareApiKey} from "../data/secrets";
 import {incrementNonSignedInRequests, incrementRequest} from "../helpers/incrementRequest";
 import {sanitizeAndParseRecipe} from "../helpers/recipeHelpers";
 import uuid from 'react-native-uuid';
+import {logGptErrorResponse} from "../helpers/validator";
 
 const openai = new OpenAI({
     apiKey: gptApiKey
 });
 
-const testing = true; // Set to `false` for production
+const testing = false; // Set to `false` for production
 
 const getLocalizedPromptPrefix = (language: string) => {
     const prefixMap = {
-        en: "Please provide the recipe in English.",
-        de: "Bitte geben Sie das Rezept auf Deutsch an.",
-        ua: "Будь ласка, надайте рецепт українською мовою.",
-        ru: "Пожалуйста, предоставьте рецепт на русском языке.",
+        en: "Please provide the recipe in English language. The whole response should be in English language",
+        de: "Bitte geben Sie das Rezept auf Deutsch an. Die ganze Antwort muss auf Deutsch sein.",
+        ua: "Будь ласка, надайте рецепт українською мовою. Вся відповідь має бути українською мовою",
+        ru: "Пожалуйста, предоставьте рецепт на русском языке. Весь ответ должен быть на русском языке",
     };
     return prefixMap[language] || prefixMap.en;
 };
@@ -43,16 +44,18 @@ export const fetchRecipeScenario1 = async (requestData) => {
 
         Please format your response strictly as a JSON object in the following structure:
         {
-            "Prewords": "string",
-            "Title": "string",
-            "Description": "string",
-            "Ingredients": "string",
-            "Calories": "string",
-            "Steps": "string",
-            "TitleEng": "string",
-            "DescriptionEng": "string"
+            "Prewords": "string", // should be in the requested before language
+            "Title": "string", // should be in the requested before language
+            "Description": "string", // should be in the requested before language
+            "Ingredients": "string", // should be in the requested before language
+            "Calories": "string", // per serving, in format: (n-m kcal) e.g. "500-600 kcal"
+            "isVegan": "boolean" // true or false
+            "isVegeterian": "boolean" // true or false
+            "cookingTime": "number" // number of minutes to cook a dish in format: (n), e.g. "60"
+            "Steps": "string", // should be in the requested before language
+            "TitleEng": "string", // should be the Title of the dish in English
+            "DescriptionEng": "string" // should be the Description of the dish in English
         }
-        Fields TitleEng and DescriptionEng should be translations of Title and Description into English. If the recipe is already in english, those fields should be the same as Title and Description
         All ingredients and all steps should start with a new line. All steps should be numerated. New line should be marked as always with one backslash followed by letter n. 
         No other additional formatting characters should be present.
         Do not include any other text or explanations outside of this JSON object.`;
@@ -86,6 +89,11 @@ export const fetchRecipeScenario1 = async (requestData) => {
             });
             recipe = response.choices[0].message.content;
             const parsedRecipe = sanitizeAndParseRecipe(recipe);
+            if (!recipe || recipe.includes("I'm sorry") || recipe.includes("I am sorry") || recipe.includes("I can't") || recipe.includes("I can not")) {
+                console.warn("Blocked content detected. Showing user-friendly message.");
+                logGptErrorResponse('UnknownUser', 'Sorry Error', recipe?.substring(0,100), prompt);
+                return { error: "Error: Your input might be inappropriate or invalid. Try a different request." };
+            }
             image = await generateRecipeFluxImage(parsedRecipe.TitleEng, parsedRecipe.DescriptionEng);
         }
         return { recipe, image };
@@ -134,16 +142,18 @@ export const fetchRecipeScenario2 = async (requestData) => {
 
         Please format your response strictly as a JSON object in the following structure:
         {
-            "Prewords": "string",
-            "Title": "string",
-            "Description": "string",
-            "Ingredients": "string",
-            "Calories": "string",
-            "Steps": "string",
-            "TitleEng": "string",
-            "DescriptionEng": "string"
+            "Prewords": "string", // should be in the requested before language
+            "Title": "string", // should be in the requested before language
+            "Description": "string", // should be in the requested before language
+            "Ingredients": "string", // should be in the requested before language
+            "Calories": "string", // per serving, in format: (n-m kcal) e.g. "500-600 kcal"
+            "isVegan": "boolean" // true or false
+            "isVegeterian": "boolean" // true or false
+            "cookingTime": "number" // number of minutes to cook a dish in format: (n), e.g. "60"
+            "Steps": "string", // should be in the requested before language
+            "TitleEng": "string", // should be the Title of the dish in English
+            "DescriptionEng": "string" // should be the Description of the dish in English
         }
-        Fields TitleEng and DescriptionEng should be translations of Title and Description into English. If the recipe is already in english, those fields should be the same as Title and Description
         All ingredients and all steps should start with a new line. All steps should be numerated. New line should be marked as always with one backslash followed by letter n. 
         No other additional formatting characters should be present.
         Do not include any other text or explanations outside of this JSON object.`;
@@ -176,6 +186,11 @@ export const fetchRecipeScenario2 = async (requestData) => {
                 ],
             });
             recipe = response.choices[0].message.content;
+            if (!recipe || recipe.includes("I'm sorry") || recipe.includes("I am sorry") || recipe.includes("I can't") || recipe.includes("I can not")) {
+                console.warn("Blocked content detected. Showing user-friendly message.");
+                logGptErrorResponse('UnknownUser', 'Sorry Error', recipe?.substring(0,100), prompt);
+                return { error: "Error: Your input might be inappropriate or invalid. Try a different request." };
+            }
             const parsedRecipe = sanitizeAndParseRecipe(recipe);
             image = await generateRecipeFluxImage(parsedRecipe.TitleEng, parsedRecipe.DescriptionEng);
         }
@@ -196,16 +211,19 @@ export const fetchRecipeScenario3 = async ({ classicDishName, user, language }) 
 
         Please format your response strictly as a JSON object in the following structure:
         {
-            "Prewords": "string",
-            "Title": "string",
-            "Description": "string",
-            "Ingredients": "string",
-            "Calories": "string",
-            "Steps": "string",
-            "TitleEng": "string",
-            "DescriptionEng": "string"
+            "Prewords": "string", // should be in the requested before language
+            "Title": "string", // should be in the requested before language
+            "Description": "string", // should be in the requested before language
+            "Ingredients": "string", // should be in the requested before language
+            "Calories": "string", // per serving, in format: (n-m kcal) e.g. "500-600 kcal"
+            "isVegan": "boolean" // true or false
+            "isVegeterian": "boolean" // true or false
+            "cookingTime": "number" // number of minutes to cook a dish in format: (n), e.g. "60"
+            "Steps": "string", // should be in the requested before language
+            "TitleEng": "string", // should be the Title of the dish in English
+            "DescriptionEng": "string" // should be the Description of the dish in English
+            "Portions": "number" // should be the number of servings in format (n), e.g. "2"
         }
-        Fields TitleEng and DescriptionEng should be translations of Title and Description into English. If the recipe is already in english, those fields should be the same as Title and Description
         All ingredients and all steps should start with a new line. All steps should be numerated. New line should be marked as always with one backslash followed by letter n. 
         No other additional formatting characters should be present.
         Do not include any other text or explanations outside of this JSON object.`;
@@ -238,6 +256,11 @@ export const fetchRecipeScenario3 = async ({ classicDishName, user, language }) 
                 ],
             });
             recipe = response.choices[0].message.content;
+            if (!recipe || recipe.includes("I'm sorry") || recipe.includes("I am sorry") || recipe.includes("I can't") || recipe.includes("I can not")) {
+                console.warn("Blocked content detected. Showing user-friendly message.");
+                logGptErrorResponse('UnknownUser', 'Sorry Error', recipe?.substring(0,100), prompt);
+                return { error: "Error: Your input might be inappropriate or invalid. Try a different request." };
+            }
             const parsedRecipe = sanitizeAndParseRecipe(recipe);
             image = await generateRecipeFluxImage(parsedRecipe.TitleEng, parsedRecipe.DescriptionEng);
         }
@@ -305,6 +328,7 @@ const generateRecipeFluxImage = async (title, description) => {
                 "width": 512,
                 "height": 512,
                 "model": "runware:100@1", // Flux Schnell
+               // "model": "runware:101@1", // Flux Dev
                 "numberResults": 1
             }
         ];

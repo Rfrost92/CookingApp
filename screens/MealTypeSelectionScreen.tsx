@@ -84,6 +84,14 @@ export default function MealTypeSelectionScreen() {
         const response = await fetchRecipeScenario1(requestData);
 
         if (response?.error) {
+            if (response.error === "Error: Your input might be inappropriate or invalid. Try a different request.") {
+                Alert.alert(
+                    t("error"),
+                    t("inappropriate"),
+                    [{ text: "OK" }]
+                );
+                return;
+            }
             Alert.alert(
                 t("daily_limit_reached"),
                 response.error === "Error: Daily request limit reached for non-signed-in users."
