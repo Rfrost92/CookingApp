@@ -2,12 +2,19 @@
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 
-const inappropriateWords = ["penis", "shit", "fuck", "ass", "bitch"]
-
 export const containsInappropriateWords = (text) => {
-    return inappropriateWords.some((word) =>
+    return containsTotallyInappropriateWords(text) || containsContextSensitiveWords(text)
+};
+
+export const containsTotallyInappropriateWords = (text) => {
+    return inappropriateWordsStrict.some((word) =>
         text.toLowerCase().includes(word)
     );
+};
+
+export const containsContextSensitiveWords = (text) => {
+    const words = text.toLowerCase().split(/[\s,;:.!?]/); // Split text into individual words
+    return words.some((word) => inappropriateWordsExact.includes(word));
 };
 
 export const logInappropriateInput = async (userId, input) => {
