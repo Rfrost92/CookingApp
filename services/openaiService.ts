@@ -11,7 +11,7 @@ const openai = new OpenAI({
     apiKey: gptApiKey
 });
 
-const testing = false; // Set to `false` for production
+const testing = true; // Set to `false` for production
 
 const getLocalizedPromptPrefix = (language: string) => {
     const prefixMap = {
@@ -79,6 +79,11 @@ export const fetchRecipeScenario1 = async (requestData) => {
             recipe = mockedResponses[0].choices[0].message.content;
             image = mockImageUrl;
             console.log('image', image)
+            if (!recipe || recipe.includes("I'm sorry") || recipe.includes("I am sorry") || recipe.includes("I can't") || recipe.includes("I can not")) {
+                console.warn("Blocked content detected. Showing user-friendly message.");
+                logGptErrorResponse('UnknownUser', 'Sorry Error', recipe?.substring(0,100), prompt);
+                return { error: "Error: Your input might be inappropriate or invalid. Try a different request." };
+            }
         } else {
             const response = await openai.chat.completions.create({
                 model: "gpt-4o",
@@ -177,6 +182,11 @@ export const fetchRecipeScenario2 = async (requestData) => {
             recipe = mockedResponses[0].choices[0].message.content;
             image = mockImageUrl;
             console.log('image', image)
+            if (!recipe || recipe.includes("I'm sorry") || recipe.includes("I am sorry") || recipe.includes("I can't") || recipe.includes("I can not")) {
+                console.warn("Blocked content detected. Showing user-friendly message.");
+                logGptErrorResponse('UnknownUser', 'Sorry Error', recipe?.substring(0,100), prompt);
+                return { error: "Error: Your input might be inappropriate or invalid. Try a different request." };
+            }
         } else {
             const response = await openai.chat.completions.create({
                 model: "gpt-4o",
@@ -246,7 +256,12 @@ export const fetchRecipeScenario3 = async ({ classicDishName, user, language }) 
             console.log(prompt);
             recipe = mockedResponses[0].choices[0].message.content;
             image = mockImageUrl;
-            console.log('image', image)
+            console.log('image', image);
+            if (!recipe || recipe.includes("I'm sorry") || recipe.includes("I am sorry") || recipe.includes("I can't") || recipe.includes("I can not")) {
+                console.warn("Blocked content detected. Showing user-friendly message.");
+                logGptErrorResponse('UnknownUser', 'Sorry Error', recipe?.substring(0,100), prompt);
+                return { error: "Error: Your input might be inappropriate or invalid. Try a different request." };
+            }
         } else {
             const response = await openai.chat.completions.create({
                 model: "gpt-4o",

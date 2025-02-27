@@ -74,7 +74,7 @@ export default function RecipeResultScreen() {
                     stringToLog += requestData.starIngredient + '; '
                 }
                 Alert.alert(t("error"), t("recipe_parsing_failed"));
-                logParseErrors(user?.uid, parsedRecipe.error, newRecipeResponse.recipe.substring(0, 100), stringToLog)
+                logParseErrors(user?.uid, parsedRecipe.error, newRecipeResponse.recipe.substring(0, 100), stringToLog);
                 return;
             }
             if (!parsedRecipe || !parsedRecipe.Title) {
@@ -144,7 +144,8 @@ export default function RecipeResultScreen() {
                 stringToLog += requestData.classicRecipe + '; '
             }
             Alert.alert(t("error"), t("recipe_parsing_failed"));
-            logParseErrors(user?.uid, parsedRecipe.error, recipe.substring(0, 100), stringToLog)
+            logParseErrors(user?.uid, parsedRecipe.error, recipe.substring(0, 100), stringToLog);
+            navigation.navigate("Home");
             return;
         }
 
