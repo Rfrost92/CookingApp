@@ -9,6 +9,8 @@ import {
     Button,
     Alert,
     Switch,
+    Modal,
+    ActivityIndicator
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Slider from "@react-native-community/slider";
@@ -32,6 +34,7 @@ export default function MealTypeSelectionScreen() {
     const [openness, setOpenness] = useState<number>(0);
     const [isVegan, setIsVegan] = useState<boolean>(false);
     const [isVegetarian, setIsVegetarian] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigation = useNavigation();
     const route = useRoute();
@@ -67,6 +70,8 @@ export default function MealTypeSelectionScreen() {
             return;
         }
 
+        setIsLoading(true); // Show loading screen
+
         const requestData = {
             selectedIngredients,
             selectedAppliances,
@@ -82,6 +87,8 @@ export default function MealTypeSelectionScreen() {
         };
 
         const response = await fetchRecipeScenario1(requestData);
+
+        setIsLoading(false); // Hide loading screen
 
         if (response?.error) {
             if (response.error === "Error: Your input might be inappropriate or invalid. Try a different request.") {
@@ -238,6 +245,16 @@ export default function MealTypeSelectionScreen() {
                     <Text style={[styles.bottomButtonText, styles.submitButtonText]}>Submit</Text>
                 </TouchableOpacity>
             </View>
+            <Modal visible={isLoading} transparent={true} animationType="fade">
+                <View style={styles.loadingContainer}>
+                    <View style={styles.loadingBox}>
+                        <ActivityIndicator size="large" color="#FCE71C" />
+                        <Text style={styles.loadingText}>{t("generating_recipe")}</Text>
+                        {/* Placeholder for Ad: Future Implementation */}
+                        {/* <AdComponent /> */}
+                    </View>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 }
@@ -396,5 +413,27 @@ const styles = StyleSheet.create({
     bottomButtonText: {
         fontSize: 18,
         color: "#fff",
+    },
+    loadingContainer: {
+        flex: 1,
+        backgroundColor: "rgba(0, 0, 0, 0.6)", // Semi-transparent background
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    loadingBox: {
+        backgroundColor: "#FFF",
+        padding: 20,
+        borderRadius: 10,
+        alignItems: "center",
+        width: "80%",
+    },
+
+    loadingText: {
+        marginTop: 10,
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "#000",
+        textAlign: "center"
     },
 });

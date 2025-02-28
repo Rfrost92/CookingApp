@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     StyleSheet,
     TextInput,
-    Alert,
+    Alert, Modal, ActivityIndicator,
 } from "react-native";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
@@ -29,6 +29,7 @@ export default function ChooseClassicRecipeScreen() {
     const [loading, setLoading] = useState<boolean>(true);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [customDish, setCustomDish] = useState<string>("");
+    const [isLoading, setIsLoading] = useState(false);
     const navigation = useNavigation();
 
     const t = (key: string) => translations[language][key] || key;
@@ -69,6 +70,8 @@ export default function ChooseClassicRecipeScreen() {
 
     const handleSelectDish = async (dishName: string) => {
         const serializableUser = user ? { uid: user.uid } : null;
+        console.log('here');
+
         if (containsInappropriateWords(dishName.trim())) {
             Alert.alert(
                 getTranslation(language, "error"),
@@ -77,11 +80,14 @@ export default function ChooseClassicRecipeScreen() {
             await logInappropriateInput(user?.uid, dishName)
             return;
         }
+        setIsLoading(true);
+
         const response = await fetchRecipeScenario3({
             classicDishName: dishName,
             user: serializableUser,
             language: language
         });
+        setIsLoading(false); // Hide loading screen
 
         if (response?.error) {
             if (response.error === "Error: Your input might be inappropriate or invalid. Try a different request.") {
@@ -177,6 +183,16 @@ export default function ChooseClassicRecipeScreen() {
                 renderItem={renderDish}
                 contentContainerStyle={styles.listContent}
             />
+            <Modal visible={isLoading} transparent={true} animationType="fade">
+                <View style={styles.loadingContainer}>
+                    <View style={styles.loadingBox}>
+                        <ActivityIndicator size="large" color="#FCE71C" />
+                        <Text style={styles.loadingText}>{t("generating_recipe")}</Text>
+                        {/* Placeholder for Ad: Future Implementation */}
+                        {/* <AdComponent /> */}
+                    </View>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 }
@@ -277,4 +293,26 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: "#fff",
     },
+    loadingContainer: {
+        flex: 1,
+        backgroundColor: "rgba(0, 0, 0, 0.6)", // Semi-transparent background
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    loadingBox: {
+        backgroundColor: "#FFF",
+        padding: 20,
+        borderRadius: 10,
+        alignItems: "center",
+        width: "80%",
+    },
+
+    loadingText: {
+        marginTop: 10,
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "#000",
+        textAlign: "center"
+    }
 });

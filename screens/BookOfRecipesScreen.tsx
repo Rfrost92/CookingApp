@@ -1,5 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert, TextInput, Image } from "react-native";
+import {
+    View,
+    Text,
+    FlatList,
+    TouchableOpacity,
+    StyleSheet,
+    Alert,
+    TextInput,
+    Image,
+    Modal,
+    ActivityIndicator
+} from "react-native";
 import { fetchUserRecipes, deleteRecipeById } from "../helpers/recipeHelpers";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
@@ -16,14 +27,19 @@ export default function BookOfRecipesScreen() {
     const [recipes, setRecipes] = useState<any[]>([]);
     const [filteredRecipes, setFilteredRecipes] = useState<any[]>([]);
     const [searchQuery, setSearchQuery] = useState<string>("");
+    const [isLoading, setIsLoading] = useState(false);
     const navigation = useNavigation();
 
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
+                setIsLoading(true);
+
                 const userRecipes = await fetchUserRecipes(user?.uid);
                 setRecipes(userRecipes);
                 setFilteredRecipes(userRecipes);
+                setIsLoading(false);
+
             } catch (error) {
                 console.error("Error fetching recipes:", error);
                 Alert.alert(t("error"), t("failed_to_load_recipes"));
@@ -108,6 +124,16 @@ export default function BookOfRecipesScreen() {
                     style={styles.list}
                 />
             </View>
+            <Modal visible={isLoading} transparent={true} animationType="fade">
+                <View style={styles.loadingContainer}>
+                    <View style={styles.loadingBox}>
+                        <ActivityIndicator size="large" color="#FCE71C" />
+                        <Text style={styles.loadingText}>{t("loading_recipes")}</Text>
+                        {/* Placeholder for Ad: Future Implementation */}
+                        {/* <AdComponent /> */}
+                    </View>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 }
@@ -186,5 +212,27 @@ const styles = StyleSheet.create({
     },
     list: {
         flex: 1,
+    },
+    loadingContainer: {
+        flex: 1,
+        backgroundColor: "rgba(0, 0, 0, 0.6)", // Semi-transparent background
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    loadingBox: {
+        backgroundColor: "#FFF",
+        padding: 20,
+        borderRadius: 10,
+        alignItems: "center",
+        width: "80%",
+    },
+
+    loadingText: {
+        marginTop: 10,
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "#000",
+        textAlign: "center"
     },
 });

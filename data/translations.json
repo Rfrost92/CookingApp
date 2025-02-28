@@ -186,7 +186,10 @@
     "inappropriate_enter_valid_ingredient": "Your input contains inappropriate words! Please enter a valid ingredient name. You may be temporarily or permanently banned if you continue using inappropriate words.",
     "inappropriate_enter_valid_dish": "Your input contains inappropriate words! Please enter a valid dish name. You may be temporarily or permanently banned if you continue using inappropriate words.",
     "inappropriate_enter_valid": "Your input contains inappropriate words! Please enter a valid input. You may be temporarily or permanently banned if you continue using inappropriate words.",
-    "recipe_parsing_failed": "Something went wrong preparing your recipe. Try again."
+    "recipe_parsing_failed": "Something went wrong preparing your recipe. Try again.",
+    "generating_recipe": "Your recipe is being generated...",
+    "loading_recipes": "Your recipes are being loaded...",
+    "loading_recipe": "Your recipe is being loaded..."
   },
 
 

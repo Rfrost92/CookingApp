@@ -8,7 +8,7 @@ import {
     ScrollView,
     Image,
     ActivityIndicator,
-    TouchableOpacity,
+    TouchableOpacity, Modal,
 } from "react-native";
 import { fetchRecipeById, sanitizeAndParseRecipe } from "../helpers/recipeHelpers";
 import { useLanguage } from "../services/LanguageContext";
@@ -45,8 +45,16 @@ export default function RecipeDetailScreen({ route, navigation }: any) {
     if (loading) {
         return (
             <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#4caf50" />
-                <Text>{t("loading")}</Text>
+                <Modal visible={loading} transparent={true} animationType="fade">
+                    <View style={styles.loadingContainer}>
+                        <View style={styles.loadingBox}>
+                            <ActivityIndicator size="large" color="#FCE71C" />
+                            <Text style={styles.loadingText}>{t("loading_recipe")}</Text>
+                            {/* Placeholder for Ad: Future Implementation */}
+                            {/* <AdComponent /> */}
+                        </View>
+                    </View>
+                </Modal>
             </View>
         );
     }
@@ -257,5 +265,27 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: "white",
         fontWeight: "bold",
+    },
+    loadingContainer: {
+        flex: 1,
+        backgroundColor: "#71f2c9", // Semi-transparent background
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    loadingBox: {
+        backgroundColor: "#FFF",
+        padding: 20,
+        borderRadius: 10,
+        alignItems: "center",
+        width: "80%",
+    },
+
+    loadingText: {
+        marginTop: 10,
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "#000",
+        textAlign: "center"
     },
 });

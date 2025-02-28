@@ -1,19 +1,24 @@
 //validator.ts
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import {inappropriateWordsExact, inappropriateWordsStrict} from "../data/inappropriateWords";
 
 export const containsInappropriateWords = (text) => {
-    return containsTotallyInappropriateWords(text) || containsContextSensitiveWords(text)
+    if (!text || typeof text !== "string") {
+        console.warn("Invalid text input for inappropriate words check.");
+        return false;
+    }
+
+    return containsTotallyInappropriateWords(text) || containsContextSensitiveWords(text);
 };
 
 export const containsTotallyInappropriateWords = (text) => {
-    return inappropriateWordsStrict.some((word) =>
-        text.toLowerCase().includes(word)
-    );
+    return inappropriateWordsStrict.some((word) => text.toLowerCase().includes(word));
 };
 
 export const containsContextSensitiveWords = (text) => {
-    const words = text.toLowerCase().split(/[\s,;:.!?]/); // Split text into individual words
+    // Ensure text is properly sanitized and split
+    const words = text.toLowerCase().match(/\b\w+\b/g) || []; // Extract words properly
     return words.some((word) => inappropriateWordsExact.includes(word));
 };
 
