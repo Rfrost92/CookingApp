@@ -189,7 +189,8 @@
     "recipe_parsing_failed": "Something went wrong preparing your recipe. Try again.",
     "generating_recipe": "Your recipe is being generated...",
     "loading_recipes": "Your recipes are being loaded...",
-    "loading_recipe": "Your recipe is being loaded..."
+    "loading_recipe": "Your recipe is being loaded...",
+    "saving_recipe": "Your recipe is being saved..."
   },
 
 

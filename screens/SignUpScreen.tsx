@@ -1,9 +1,11 @@
 // SignUpScreen.tsx
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert, Linking, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, Alert, Linking, TouchableOpacity, StyleSheet } from "react-native";
 import { signUp, resendVerificationEmail } from "../services/authService";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function SignUpScreen({ navigation }: any) {
     const [email, setEmail] = useState("");
@@ -13,6 +15,11 @@ export default function SignUpScreen({ navigation }: any) {
     const t = (key: string) => translations[language][key] || key;
 
     const handleSignUp = async () => {
+        if (!email.trim() || !password.trim()) {
+            Alert.alert(t("error"), t("please_enter_email_password"));
+            return;
+        }
+
         try {
             await signUp(email, password);
             Alert.alert(t("success"), t("account_created_successfully") + "\n" + t("please_verify_email"));
@@ -23,8 +30,13 @@ export default function SignUpScreen({ navigation }: any) {
     };
 
     const handleResendVerification = async () => {
+        if (!email.trim()) {
+            Alert.alert(t("error"), t("please_enter_email"));
+            return;
+        }
+
         try {
-            await resendVerificationEmail();
+            await resendVerificationEmail(email.trim(), t);
             Alert.alert(t("success"), t("verification_email_resent"));
         } catch (error) {
             Alert.alert(t("error"), error.message);
@@ -32,36 +44,136 @@ export default function SignUpScreen({ navigation }: any) {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>{t("sign_up")}</Text>
-            <TextInput style={styles.input} placeholder={t("email")} value={email} onChangeText={setEmail} />
-            <TextInput style={styles.input} placeholder={t("password")} value={password} onChangeText={setPassword} secureTextEntry />
-            <Button title={t("sign_up")} onPress={handleSignUp} />
-            {showResend && <Button title={t("resend_verification")} onPress={handleResendVerification} />}
-            <Button title={t("already_have_account")} onPress={() => navigation.navigate("LogIn")} />
+        <SafeAreaView style={styles.container}>
+            {/* Header with Back Button */}
+            <View style={styles.header}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                    <Ionicons name="arrow-back" size={28} color="black"/>
+                </TouchableOpacity>
+                <Text style={styles.title}>{t("sign_up")}</Text>
+                <View style={{width: 28}}/> {/* Empty view to balance layout */}
+            </View>
+
+            <View>
+                {/* Input Fields */}
+                <TextInput
+                    style={styles.input}
+                    placeholder={t("email")}
+                    placeholderTextColor="#777"
+                    value={email}
+                    onChangeText={setEmail}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder={t("password")}
+                    placeholderTextColor="#777"
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry
+                />
+
+                {/* Sign Up Button */}
+                <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+                    <Text style={styles.buttonText}>{t("sign_up")}</Text>
+                </TouchableOpacity>
+
+                {showResend && (
+                    <TouchableOpacity style={styles.secondaryButton} onPress={handleResendVerification}>
+                        <Text style={styles.secondaryButtonText}>{t("resend_verification")}</Text>
+                    </TouchableOpacity>
+                )}
+
+                {/* Already Have an Account? */}
+                {/*
+                <TouchableOpacity style={styles.secondaryButton} onPress={() => navigation.navigate("LogIn")}>
+                    <Text style={styles.secondaryButtonText}>{t("already_have_account")}</Text>
+                </TouchableOpacity>
+                */}
+            </View>
 
             {/* Terms and Conditions Notice */}
             <Text style={styles.agreementText}>
-                {t("by_signing_up")}
-                <TouchableOpacity onPress={() => Linking.openURL("https://yourapp.com/terms")}>
-                    <Text style={styles.linkText}>{t("terms_of_use")}</Text>
-                </TouchableOpacity>,
-                <TouchableOpacity onPress={() => Linking.openURL("https://yourapp.com/privacy")}>
-                    <Text style={styles.linkText}>{t("privacy_policy")}</Text>
-                </TouchableOpacity>
-                {t("and")}
-                <TouchableOpacity onPress={() => Linking.openURL("https://yourapp.com/disclaimer")}>
-                    <Text style={styles.linkText}>{t("disclaimer")}</Text>
-                </TouchableOpacity>.
+                {t("by_signing_up")}{" "}
+                <Text onPress={() => Linking.openURL("https://yourapp.com/terms")} style={styles.linkText}>
+                    {t("terms_of_use")}
+                </Text>,{" "}
+                <Text onPress={() => Linking.openURL("https://yourapp.com/privacy")} style={styles.linkText}>
+                    {t("privacy_policy")}
+                </Text>{" "}
+                {t("and")}{" "}
+                <Text onPress={() => Linking.openURL("https://yourapp.com/disclaimer")} style={styles.linkText}>
+                    {t("disclaimer")}
+                </Text>
             </Text>
-        </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, justifyContent: "center", padding: 20, backgroundColor: "#fff" },
-    title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
-    input: { height: 40, borderColor: "#ccc", borderWidth: 1, borderRadius: 5, paddingHorizontal: 10, marginBottom: 15 },
-    agreementText: { fontSize: 12, color: "#555", marginTop: 20, textAlign: "center" },
-    linkText: { color: "#1E90FF", textDecorationLine: "underline" },
+    container: {
+        flex: 1,
+        backgroundColor: "#71f2c9",
+        padding: 20,
+        justifyContent: "space-between",
+    },
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: 20,
+    },
+    backButton: {
+        padding: 5,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: "bold",
+        textAlign: "center",
+        flex: 1,
+    },
+    input: {
+        height: 45,
+        backgroundColor: "white",
+        borderRadius: 8,
+        paddingHorizontal: 15,
+        fontSize: 16,
+        marginBottom: 15,
+        shadowColor: "#000",
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+        elevation: 3,
+    },
+    button: {
+        backgroundColor: "#FCE71C",
+        paddingVertical: 15,
+        borderRadius: 8,
+        alignItems: "center",
+        marginBottom: 10,
+    },
+    buttonText: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "black",
+    },
+    secondaryButton: {
+        paddingVertical: 12,
+        alignItems: "center",
+        marginBottom: 10,
+    },
+    secondaryButtonText: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "black",
+    },
+    agreementText: {
+        fontSize: 12,
+        color: "#555",
+        textAlign: "center",
+        marginTop: 20,
+    },
+    linkText: {
+        color: "#007BFF",
+        textDecorationLine: "underline",
+    },
 });

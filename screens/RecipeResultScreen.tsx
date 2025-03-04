@@ -7,7 +7,7 @@ import {
     ScrollView,
     TouchableOpacity,
     Alert,
-    Image,
+    Image, Modal, ActivityIndicator,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { fetchRecipeScenario1, fetchRecipeScenario2 } from "../services/openaiService";
@@ -29,6 +29,8 @@ export default function RecipeResultScreen() {
     const t = (key) => translations[language][key] || key;
 
     const [base64Image, setBase64Image] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+
 
     const handleTryAgain = async () => {
         if (!requestData) {
@@ -100,6 +102,7 @@ export default function RecipeResultScreen() {
         }
 
         try {
+            setIsLoading(true); // Show loading screen
             const parsedRecipe = sanitizeAndParseRecipe(recipe);
             if (!parsedRecipe) {
                 Alert.alert(t("error"), t("invalid_recipe_format"));
@@ -107,6 +110,7 @@ export default function RecipeResultScreen() {
             }
 
             const saveResult = await saveRecipe(user?.uid, parsedRecipe.Title, parsedRecipe, base64Image);
+            setIsLoading(false); // Hide loading screen
             if (saveResult.message === "Recipe with the same title already exists.") {
                 Alert.alert(t("error"), t("recipe_already_exists"));
             } else {
@@ -256,6 +260,16 @@ export default function RecipeResultScreen() {
                     <Text style={styles.bottomButtonText}>{t("new_recipe")}</Text>
                 </TouchableOpacity>
             </View>
+            <Modal visible={isLoading} transparent={true} animationType="fade">
+                <View style={styles.loadingContainer}>
+                    <View style={styles.loadingBox}>
+                        <ActivityIndicator size="large" color="#FCE71C" />
+                        <Text style={styles.loadingText}>{t("saving_recipe")}</Text>
+                        {/* Placeholder for Ad: Future Implementation */}
+                        {/* <AdComponent /> */}
+                    </View>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 }
@@ -385,6 +399,28 @@ const styles = StyleSheet.create({
         fontSize: 16,
         flex: 1,
         lineHeight: 22,
+    },
+    loadingContainer: {
+        flex: 1,
+        backgroundColor: "rgba(0, 0, 0, 0.6)", // Semi-transparent background
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    loadingBox: {
+        backgroundColor: "#FFF",
+        padding: 20,
+        borderRadius: 10,
+        alignItems: "center",
+        width: "80%",
+    },
+
+    loadingText: {
+        marginTop: 10,
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "#000",
+        textAlign: "center"
     },
 });
 
