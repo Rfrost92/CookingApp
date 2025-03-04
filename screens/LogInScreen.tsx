@@ -63,7 +63,8 @@ export default function LogInScreen({navigation}: any) {
                     <Ionicons name="arrow-back" size={28} color="black"/>
                 </TouchableOpacity>
                 <Text style={styles.title}>{t("log_in")}</Text>
-                <View style={{width: 28}}/> {/* Empty view to balance layout */}
+                <Text style={styles.headerPlaceholder}>{''}</Text>
+
             </View>
 
             <View>
@@ -89,11 +90,11 @@ export default function LogInScreen({navigation}: any) {
                     <Text style={styles.buttonText}>{t("log_in")}</Text>
                 </TouchableOpacity>
 
-                {showResend && (
+                {showResend ? (
                     <TouchableOpacity style={styles.secondaryButton} onPress={handleResendVerification}>
                         <Text style={styles.secondaryButtonText}>{t("resend_verification")}</Text>
                     </TouchableOpacity>
-                )}
+                ): null}
 
                 {/* Forgot Password & Sign Up */}
                 <TouchableOpacity style={styles.secondaryButton} onPress={() => navigation.navigate("ResetPassword")}>
@@ -108,15 +109,16 @@ export default function LogInScreen({navigation}: any) {
             </View>
             {/* Terms and Conditions Notice */}
             <Text style={styles.agreementText}>
-                {t("by_signing_in")}{" "}
-                <Text onPress={() => Linking.openURL("https://yourapp.com/terms")} style={styles.linkText}>
+                {t("by_signing_in") + " "}
+                <Text style={styles.linkText} onPress={() => Linking.openURL("https://yourapp.com/terms")}>
                     {t("terms_of_use")}
-                </Text>,{" "}
-                <Text onPress={() => Linking.openURL("https://yourapp.com/privacy")} style={styles.linkText}>
+                </Text>
+                {", "}
+                <Text style={styles.linkText} onPress={() => Linking.openURL("https://yourapp.com/privacy")}>
                     {t("privacy_policy")}
-                </Text>{" "}
-                {t("and")}{" "}
-                <Text onPress={() => Linking.openURL("https://yourapp.com/disclaimer")} style={styles.linkText}>
+                </Text>
+                {" " + t("and") + " "}
+                <Text style={styles.linkText} onPress={() => Linking.openURL("https://yourapp.com/disclaimer")}>
                     {t("disclaimer")}
                 </Text>
             </Text>
@@ -191,6 +193,12 @@ const styles = StyleSheet.create({
     linkText: {
         color: "#007BFF",
         textDecorationLine: "underline",
+    },
+    headerPlaceholder: {
+        fontSize: 24,
+        fontWeight: "bold",
+        textAlign: "center",
+        marginVertical: 10,
     },
 });
 

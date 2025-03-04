@@ -51,7 +51,7 @@ export default function SignUpScreen({ navigation }: any) {
                     <Ionicons name="arrow-back" size={28} color="black"/>
                 </TouchableOpacity>
                 <Text style={styles.title}>{t("sign_up")}</Text>
-                <View style={{width: 28}}/> {/* Empty view to balance layout */}
+                <Text style={styles.headerPlaceholder}>{''}</Text>
             </View>
 
             <View>
@@ -175,5 +175,11 @@ const styles = StyleSheet.create({
     linkText: {
         color: "#007BFF",
         textDecorationLine: "underline",
+    },
+    headerPlaceholder: {
+        fontSize: 24,
+        fontWeight: "bold",
+        textAlign: "center",
+        marginVertical: 10,
     },
 });

@@ -76,7 +76,7 @@ export default function RecipeDetailScreen({ route, navigation }: any) {
                 </TouchableOpacity>
                 {/* Recipe Title */}
                 <Text style={styles.recipeTitle}>{recipe.Title}</Text>
-                <Text style={styles.recipeTitle}>🍽️</Text>
+                <Text style={styles.recipeTitle}>{''}</Text>
             </View>
 
             <ScrollView style={styles.content}>

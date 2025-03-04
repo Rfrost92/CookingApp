@@ -77,6 +77,7 @@ export default function HelpScreen() {
                 </TouchableOpacity>
             </View>
 
+            <View style={{height: 20}}/>
             {/* Instructions/Disclaimer Modal */}
             <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
                 <View style={styles.modalOverlay}>
@@ -120,6 +121,7 @@ const styles = StyleSheet.create({
     safeContainer: {
         flex: 1,
         backgroundColor: "#71f2c9", // Mint green background for consistency
+        justifyContent: "space-between",
     },
     container: {
         flex: 1,
