@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Modal, Linking, TextInput, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { db } from "../firebaseConfig";
+import { collection, addDoc } from "firebase/firestore";
+import {AuthContext} from "../contexts/AuthContext";
 
 export default function HelpScreen() {
+    const { user, isLoggedIn } = useContext(AuthContext);
     const { language } = useLanguage();
     const navigation = useNavigation();
     const t = (key: string) => translations[language][key] || key;
@@ -32,11 +36,23 @@ export default function HelpScreen() {
         }
     };
 
-    const sendFeedback = () => {
+
+    const sendFeedback = async () => {
         if (feedbackText.trim()) {
-            Alert.alert(t("thank_you"), t("feedback_received"));
-            setFeedbackText("");
-            setFeedbackVisible(false);
+            try {
+                await addDoc(collection(db, "userFeedback"), {
+                    userId: user?.uid,
+                    userEmail: user?.email || null,
+                    feedback: feedbackText.trim(),
+                    timestamp: new Date(),
+                });
+                Alert.alert(t("thank_you"), t("feedback_received"));
+                setFeedbackText("");
+                setFeedbackVisible(false);
+            } catch (error) {
+                console.error("Error saving feedback:", error);
+                Alert.alert(t("error"), t("feedback_not_sent"));
+            }
         } else {
             Alert.alert(t("error"), t("please_enter_feedback"));
         }
