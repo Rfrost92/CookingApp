@@ -9,8 +9,10 @@ import { db } from "../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import {AuthContext} from "../contexts/AuthContext";
 
+const MAX_FEEDBACK_LENGTH = 500; // Define a reasonable limit for user feedback storage
+
 export default function HelpScreen() {
-    const { user, isLoggedIn } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const { language } = useLanguage();
     const navigation = useNavigation();
     const t = (key: string) => translations[language][key] || key;
@@ -28,6 +30,7 @@ export default function HelpScreen() {
         }
         setModalVisible(true);
     };
+
     const handleBack = () => {
         if (navigation.canGoBack()) {
             navigation.goBack();
@@ -36,12 +39,11 @@ export default function HelpScreen() {
         }
     };
 
-
     const sendFeedback = async () => {
         if (feedbackText.trim()) {
             try {
                 await addDoc(collection(db, "userFeedback"), {
-                    userId: user?.uid,
+                    userId: user?.uid || "anonymous",
                     userEmail: user?.email || null,
                     feedback: feedbackText.trim(),
                     timestamp: new Date(),
@@ -62,7 +64,7 @@ export default function HelpScreen() {
         <SafeAreaView style={styles.safeContainer}>
             {/* Custom Header with Back Button */}
             <View style={styles.titleBar}>
-                <TouchableOpacity style={styles.backButton} onPress={() => handleBack()}>
+                <TouchableOpacity style={styles.backButton} onPress={handleBack}>
                     <Ionicons name="arrow-back" size={28} color="black" />
                 </TouchableOpacity>
                 <Text style={styles.title}>{t("help")}</Text>
@@ -93,7 +95,6 @@ export default function HelpScreen() {
                 </TouchableOpacity>
             </View>
 
-            <View style={{height: 20}}/>
             {/* Instructions/Disclaimer Modal */}
             <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
                 <View style={styles.modalOverlay}>
@@ -113,13 +114,22 @@ export default function HelpScreen() {
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>{t("send_feedback")}</Text>
                         <TextInput
-                            style={styles.input}
+                            style={styles.feedbackInput}
                             placeholder={t("enter_feedback")}
                             value={feedbackText}
-                            onChangeText={setFeedbackText}
+                            onChangeText={(text) => {
+                                if (text.length <= MAX_FEEDBACK_LENGTH) {
+                                    setFeedbackText(text);
+                                }
+                            }}
                             multiline
-                            numberOfLines={4}
+                            numberOfLines={6}
                         />
+                        {/* Character Count */}
+                        <Text style={styles.charCount}>
+                            {feedbackText.length}/{MAX_FEEDBACK_LENGTH}
+                        </Text>
+
                         <TouchableOpacity style={styles.submitButton} onPress={sendFeedback}>
                             <Text style={styles.submitButtonText}>{t("submit")}</Text>
                         </TouchableOpacity>
@@ -137,12 +147,13 @@ const styles = StyleSheet.create({
     safeContainer: {
         flex: 1,
         backgroundColor: "#71f2c9", // Mint green background for consistency
-        justifyContent: "space-between",
+        justifyContent: "center",
     },
     container: {
         flex: 1,
         paddingHorizontal: 20,
         alignItems: "center",
+        justifyContent: "center", // Centering elements
     },
     titleBar: {
         flexDirection: "row",
@@ -163,14 +174,13 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     button: {
-        flexDirection: "row",
-        alignItems: "center",
         backgroundColor: "white",
         paddingVertical: 15,
         paddingHorizontal: 15,
         borderRadius: 20,
         marginBottom: 15,
         width: "90%",
+        alignItems: "center",
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.1,
@@ -200,36 +210,32 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     modalContent: {
-        width: "80%",
+        width: "85%",
         backgroundColor: "#fff",
         borderRadius: 20,
         padding: 20,
         alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
     },
     modalTitle: {
         fontSize: 20,
         fontWeight: "bold",
         marginBottom: 15,
-        textAlign: "center",
     },
-    modalText: {
-        fontSize: 16,
-        marginBottom: 20,
-        textAlign: "center",
-    },
-    input: {
+    feedbackInput: {
         width: "100%",
+        height: 120,
         borderColor: "#ccc",
         borderWidth: 1,
         borderRadius: 10,
         padding: 10,
-        marginBottom: 15,
         textAlignVertical: "top",
+        fontSize: 16,
+    },
+    charCount: {
+        fontSize: 12,
+        color: "#555",
+        marginTop: 5,
+        alignSelf: "flex-end",
     },
     submitButton: {
         backgroundColor: "#000",
@@ -258,3 +264,4 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
 });
+
