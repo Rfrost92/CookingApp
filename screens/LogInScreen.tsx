@@ -13,6 +13,11 @@ export default function LogInScreen({navigation}: any) {
     const [showResend, setShowResend] = useState(false);
     const {language} = useLanguage();
     const t = (key: string) => translations[language][key] || key;
+ //   const { promptAsync } = useGoogleSignIn();
+
+    const handleGoogleLogin = async () => {
+ //       await promptAsync();
+    };
 
     const handleLogIn = async () => {
         if (!email.trim() || !password.trim()) {
@@ -41,6 +46,16 @@ export default function LogInScreen({navigation}: any) {
         }
     };
 
+ /*   const handleGoogleLogin = async () => {
+        try {
+            const user = await signInWithGoogle();
+            Alert.alert(t("success"), t("logged_in_successfully"));
+            navigation.navigate("Home");
+        } catch (error) {
+            Alert.alert(t("error"), error.message);
+        }
+    };
+*/
     const handleResendVerification = async () => {
         if (!email.trim()) {
             Alert.alert(t("error"), t("please_enter_email"));
@@ -95,6 +110,13 @@ export default function LogInScreen({navigation}: any) {
                         <Text style={styles.secondaryButtonText}>{t("resend_verification")}</Text>
                     </TouchableOpacity>
                 ): null}
+
+                <Text style={styles.orText}>{t("or")}</Text>
+
+                <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
+                    <Ionicons name="logo-google" size={24} color="white" />
+                    <Text style={styles.buttonText}>{t("log_in_google")}</Text>
+                </TouchableOpacity>
 
                 {/* Forgot Password & Sign Up */}
                 <TouchableOpacity style={styles.secondaryButton} onPress={() => navigation.navigate("ResetPassword")}>
@@ -190,6 +212,12 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginTop: 20,
     },
+    orText: {
+        fontSize: 18,
+        color: "#555",
+        textAlign: "center",
+        margin: 20,
+    },
     linkText: {
         color: "#007BFF",
         textDecorationLine: "underline",
@@ -199,6 +227,25 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
         marginVertical: 10,
+    },
+    googleButton: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#DB4437",
+        paddingVertical: 15,
+        borderRadius: 8,
+        justifyContent: "center",
+        marginBottom: 10,
+    },
+
+    facebookButton: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#3b5998",
+        paddingVertical: 15,
+        borderRadius: 8,
+        justifyContent: "center",
+        marginBottom: 10,
     },
 });
 

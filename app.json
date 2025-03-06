@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "CookingApp",
-    "slug": "CookingApp",
+    "name": "Smart Chef",
+    "slug": "SmartChef",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,7 +13,9 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.rFrost.SmartChef",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,6 +25,23 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3d61730c-3eff-4a01-8439-bc1a1ac4aedf"
+      }
+    },
+    "plugins": [
+      "@react-native-firebase/auth",
+      "@react-native-firebase/app",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ]
   }
 }
