@@ -2,8 +2,10 @@
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
 import { getFirestore, Firestore } from "firebase/firestore";
 import { initializeAuth, getReactNativePersistence, browserLocalPersistence, setPersistence  } from "firebase/auth";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {firebaseApiKey} from "./data/secrets";
+import {firebaseApiKey, googleWebClientId} from "./data/secrets";
 
 const firebaseConfig = {
     apiKey: firebaseApiKey,
@@ -26,6 +28,8 @@ if (!getApps().length) {
 export const auth = initializeAuth(app, {
     persistence: getReactNativePersistence(AsyncStorage),
 });
-
+GoogleSignin.configure({
+    webClientId: googleWebClientId,
+});
 // Initialize Firestore
 export const db: Firestore = getFirestore(app);

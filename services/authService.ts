@@ -14,16 +14,7 @@ import {
 } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
-//import { GoogleSignin } from "@react-native-google-signin/google-signin";
-//import { LoginManager, AccessToken } from "react-native-fbsdk-next";
-import {googleWebClientId} from "../data/secrets";
-
-// Configure Google Sign-In
-/*
-GoogleSignin.configure({
-    webClientId: googleWebClientId, // Replace with your actual web client ID from Firebase
-});
- */
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 // Sign Up with Email & Password + Email Verification
 export const signUp = async (email: string, password: string) => {
@@ -101,22 +92,33 @@ export const logIn = async (email: string, password: string, t: (key: string) =>
     }
 };
 
-/*
-// Google Sign-In (React Native)
+// Google Sign-In
 export const signInWithGoogle = async () => {
     try {
-        await GoogleSignin.hasPlayServices();
-        const { idToken } = await GoogleSignin.signIn();
+        // Check if your device supports Google Play
+        const  playServices = await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+        // Get the user's ID token
+        const data = await GoogleSignin.signIn();
+        const idToken = data.data?.idToken;
+
+        if (!idToken) {
+            throw new Error("No ID token found");
+        }
+
+        // Create a Google credential with the token
         const googleCredential = GoogleAuthProvider.credential(idToken);
+
+        // Sign-in the user with the credential
         const userCredential = await signInWithCredential(auth, googleCredential);
 
+        // Save user in Firestore
         await setUserInDB(userCredential.user);
+
         return userCredential.user;
-    } catch (error) {
+    } catch (error: any) {
         throw new Error(error.message);
     }
 };
- */
 
 /*
 // Facebook Sign-In (React Native)

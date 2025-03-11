@@ -1,7 +1,7 @@
 // LogInScreen.tsx
 import React, {useState} from "react";
 import {View, Text, TextInput, Button, StyleSheet, Alert, Linking, TouchableOpacity} from "react-native";
-import {logIn, resendVerificationEmail} from "../services/authService";
+import {logIn, resendVerificationEmail, signInWithGoogle} from "../services/authService";
 import {useLanguage} from "../services/LanguageContext";
 import translations from "../data/translations.json";
 import {SafeAreaView} from "react-native-safe-area-context";
@@ -13,10 +13,15 @@ export default function LogInScreen({navigation}: any) {
     const [showResend, setShowResend] = useState(false);
     const {language} = useLanguage();
     const t = (key: string) => translations[language][key] || key;
- //   const { promptAsync } = useGoogleSignIn();
 
     const handleGoogleLogin = async () => {
- //       await promptAsync();
+        try {
+            const user = await signInWithGoogle();
+            Alert.alert(t("success"), t("logged_in_successfully"));
+            navigation.navigate("Home");
+        } catch (error: any) {
+            Alert.alert(t("error"), error.message);
+        }
     };
 
     const handleLogIn = async () => {

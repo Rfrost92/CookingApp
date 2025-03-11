@@ -190,7 +190,8 @@
     "generating_recipe": "Your recipe is being generated...",
     "loading_recipes": "Your recipes are being loaded...",
     "loading_recipe": "Your recipe is being loaded...",
-    "saving_recipe": "Your recipe is being saved..."
+    "saving_recipe": "Your recipe is being saved...",
+    "log_in_google": "Log in via Google"
   },
 
 
