@@ -1,3 +1,4 @@
+//ResetPasswordScreen.tsx
 import React, { useState } from "react";
 import { View, Text, TextInput, Alert, Linking, TouchableOpacity, StyleSheet } from "react-native";
 import { resetPassword } from "../services/authService";
@@ -18,12 +19,27 @@ export default function ForgotPasswordScreen({ navigation }: any) {
         }
 
         try {
-            await resetPassword(email);
+            await resetPassword(email, t);
             Alert.alert(t("success"), t("password_reset_email_sent"));
-        } catch (error) {
-            Alert.alert(t("error"), error.message);
+        } catch (error: any) {
+            if (error.message === t("error_google_password_reset")) {
+                Alert.alert(
+                    t("error"),
+                    t("google_users_cannot_reset_password"),
+                    [
+                        {
+                            text: t("go_to_google_account"),
+                            onPress: () => Linking.openURL("https://myaccount.google.com"),
+                        },
+                        { text: t("ok"), style: "cancel" },
+                    ]
+                );
+            } else {
+                Alert.alert(t("error"), error.message);
+            }
         }
     };
+
 
     return (
         <SafeAreaView style={styles.container}>

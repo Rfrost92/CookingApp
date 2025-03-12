@@ -57,7 +57,7 @@ export default function HomeScreen() {
                     const testStatus = await isUserTest(user.uid);
                     setIsTestUser(testStatus);
                 } catch (error) {
-                    console.error("Error checking test user:", error);
+                    console.log("Error checking test user:", error);
                     setIsTestUser(false); // Assume false if error occurs
                 }
             }

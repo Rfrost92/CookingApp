@@ -191,7 +191,10 @@
     "loading_recipes": "Your recipes are being loaded...",
     "loading_recipe": "Your recipe is being loaded...",
     "saving_recipe": "Your recipe is being saved...",
-    "log_in_google": "Log in via Google"
+    "log_in_google": "Log in via Google",
+    "error_google_password_reset": "Password reset is not possible for Google accounts.",
+    "google_users_cannot_reset_password": "You signed in using Google. Please reset your password via Google account settings.",
+    "go_to_google_account": "Go to Google Account"
   },
 
 

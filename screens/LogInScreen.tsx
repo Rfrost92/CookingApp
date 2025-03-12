@@ -20,7 +20,7 @@ export default function LogInScreen({navigation}: any) {
             Alert.alert(t("success"), t("logged_in_successfully"));
             navigation.navigate("Home");
         } catch (error: any) {
-            Alert.alert(t("error"), error.message);
+            return;
         }
     };
 

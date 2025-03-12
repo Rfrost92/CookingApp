@@ -12,7 +12,7 @@ import {
     fetchSignInMethodsForEmail,
     User
 } from "firebase/auth";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, limit } from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
@@ -34,7 +34,7 @@ export const signUp = async (email: string, password: string) => {
         console.log("Verification email sent to:", user.email);
 
         // Save user in Firestore
-        await setUserInDB(user);
+        await setUserInDB(user, 'email');
 
         // Immediately log out the user after registration
         await signOut(auth);
@@ -112,7 +112,7 @@ export const signInWithGoogle = async () => {
         const userCredential = await signInWithCredential(auth, googleCredential);
 
         // Save user in Firestore
-        await setUserInDB(userCredential.user);
+        await setUserInDB(userCredential.user, 'google');
 
         return userCredential.user;
     } catch (error: any) {
@@ -152,15 +152,16 @@ export const logOut = async () => {
 };
 
 // Save User Data in Firestore
-const setUserInDB = async (user: User) => {
+const setUserInDB = async (user: User, provider: string = "email") => {
     const userRef = doc(db, "users", user.uid);
     const userDoc = await getDoc(userRef);
 
     if (!userDoc.exists()) {
         await setDoc(userRef, {
             email: user.email,
+            signedUpWith: provider,
             subscriptionType: "guest",
-            requestsToday: 0
+            requestsToday: 0,
         });
     }
 };
@@ -242,16 +243,20 @@ export const resetPassword = async (email: string, t: (key: string) => string) =
     try {
         console.log("🔍 Checking sign-in methods for:", normalizedEmail);
 
-        // Step 1: Check Firebase Auth
+        // Check sign-in methods
         const signInMethods = await fetchSignInMethodsForEmail(auth, normalizedEmail);
         console.log("✅ Found sign-in methods:", signInMethods);
+
+        if (signInMethods.includes("google.com")) {
+            throw new Error(t("error_google_password_reset"));
+        }
 
         if (signInMethods.length === 0) {
             console.log("❌ No sign-in methods found. Checking Firestore...");
 
-            // Step 2: Query Firestore for user by email
+            // Query Firestore to check if the user exists (but only retrieve `signedUpWith`)
             const usersRef = collection(db, "users");
-            const q = query(usersRef, where("email", "==", normalizedEmail));
+            const q = query(usersRef, where("email", "==", normalizedEmail), limit(1));
             const querySnapshot = await getDocs(q);
 
             if (querySnapshot.empty) {
@@ -259,20 +264,34 @@ export const resetPassword = async (email: string, t: (key: string) => string) =
                 throw new Error(t("error_no_account"));
             }
 
-            console.log("✅ User found in Firestore. Sending reset email.");
+            // Extract user data
+            // Get user document
+            const userDoc = querySnapshot.docs[0];
+
+            // Only read `signedUpWith`, prevent full document access
+            const userData = { signedUpWith: userDoc.get("signedUpWith") };
+            console.log("🔥 Firestore user data:", userData);
+
+            // If Firestore user has "signedUpWith: google", block password reset
+            if (userData.signedUpWith === "google") {
+                throw new Error(t("error_google_password_reset"));
+            }
         }
 
-        // Step 3: Send Password Reset Email
+        // **Try to send password reset email**
         await sendPasswordResetEmail(auth, normalizedEmail);
         console.log("📩 Password reset email sent to:", normalizedEmail);
-
     } catch (error: any) {
-        console.error("🚨 Password Reset Error:", error?.code || error?.message);
+        console.log("🚨 Password Reset Error:", error?.code || error?.message);
 
         let errorMessage = t("error_reset_password");
         if (error?.code === "auth/invalid-email") errorMessage = t("error_invalid_email");
         if (error?.code === "auth/user-not-found") errorMessage = t("error_no_account");
+        if (error?.code === "permission-denied") errorMessage = "Permission denied: Check Firestore rules.";
+        if (error?.message === t("error_google_password_reset")) errorMessage = t("error_google_password_reset");
 
         return Promise.reject(new Error(errorMessage));
     }
 };
+
+
