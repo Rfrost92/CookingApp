@@ -29,7 +29,7 @@ const availableLanguages = [
 ];
 
 export default function HomeScreen() {
-    const {user, isLoggedIn} = useContext(AuthContext);
+    const {user, isLoggedIn, subscriptionType} = useContext(AuthContext);
     const {language, setLanguage} = useLanguage();
     const navigation = useNavigation();
     const [guestRequests, setGuestRequests] = useState<number>(0);
@@ -233,6 +233,12 @@ export default function HomeScreen() {
                                 </TouchableOpacity>
                             )}
 
+                            {!isLoggedIn || subscriptionType === "guest" ? (
+                                <TouchableOpacity style={styles.premiumButton} onPress={() => {navigation.navigate("GoPremium"), setAccountModalVisible(false)}}>
+                                    <Text style={styles.premiumButtonText}>Go Premium</Text>
+                                </TouchableOpacity>
+                            ) : null}
+
                             {/* LOGOUT BUTTON */}
                             <TouchableOpacity style={[styles.accountButton, styles.logoutButton]}
                                               onPress={handleLogout}>
@@ -419,6 +425,22 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(0,0,0,0.5)",
         justifyContent: "center",
         alignItems: "center",
+    },
+    premiumButton: {
+        backgroundColor: "#FFD700",
+        marginBottom: 10,
+        paddingVertical: 12,
+        paddingHorizontal: 40,
+        borderRadius: 8,
+        marginVertical: 8,
+        width: "80%",
+        alignItems: "center",
+
+    },
+    premiumButtonText: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "black",
     },
     languageOption: {
         padding: 15,

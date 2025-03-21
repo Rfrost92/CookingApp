@@ -194,7 +194,16 @@
     "log_in_google": "Log in via Google",
     "error_google_password_reset": "Password reset is not possible for Google accounts.",
     "google_users_cannot_reset_password": "You signed in using Google. Please reset your password via Google account settings.",
-    "go_to_google_account": "Go to Google Account"
+    "go_to_google_account": "Go to Google Account",
+    "go_premium": "Go Premium",
+    "try_free_3_days": "Try free for 3 days",
+    "unlimited_recipes": "Unlimited recipes every day",
+    "individual_recipes": "Individual recipes",
+    "fridge_analysis": "Analyze your fridge and cook what you want",
+    "try_premium_free": "Try Premium for Free",
+    "subscription_not_available": "Subscription is not available",
+    "premium_user_success": "You are now a premium user!",
+    "subscription_failed": "Subscription failed. Please try again."
   },
 
 
