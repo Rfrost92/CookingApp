@@ -37,3 +37,5 @@ yarn-error.*
 *.tsbuildinfo
 
 data/secrets.ts
+
+.env.local

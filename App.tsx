@@ -5,6 +5,8 @@ import {AuthProvider} from "./contexts/AuthContext";
 import {LanguageProvider} from "./services/LanguageContext";
 import {Buffer} from "buffer";
 import * as RNIap from "react-native-iap";
+import * as Sentry from '@sentry/react-native';
+import { captureConsoleIntegration } from "@sentry/core";
 
 global.Buffer = Buffer;
 
@@ -34,8 +36,16 @@ const initIAP = async () => {
         console.error("❌ IAP Initialization Error:", error);
     }
 };
+Sentry.init({
+    dsn: 'https://fdcc23544f251ec13abbd4af5bec0e72@o4509089542569984.ingest.de.sentry.io/4509089612562512',
+    integrations: [
+        captureConsoleIntegration({ levels: ["warn", "error"] }),
+    ],
+    // uncomment the line below to enable Spotlight (https://spotlightjs.com)
+    // spotlight: __DEV__,
+});
 
-export default function App() {
+export default Sentry.wrap(function App() {
     useEffect(() => {
         initIAP(); // Initialize IAP on App launch
 
@@ -50,4 +60,4 @@ export default function App() {
             </LanguageProvider>
         </AuthProvider>
     );
-}
+});

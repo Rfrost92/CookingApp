@@ -1,30 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Testing subscriptions. Not working yet">
-      <change afterPath="$PROJECT_DIR$/google-services.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/helpers/testUserAndRequestsHelpers.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screens/AuthPromptModal.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screens/PremiumModal.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screens/PremiumOnlyModal.tsx" afterDir="false" />
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="A lot of logic to make premium and registered users work">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contexts/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/contexts/AuthContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/translations.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/translations.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/incrementRequest.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/navigation/RootNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/RootNavigator.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/ChooseClassicRecipeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ChooseClassicRecipeScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/GoPremiumScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/GoPremiumScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/LogInScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/LogInScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/RecipeResultScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/RecipeResultScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/Scenario2Step3Screen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Scenario2Step3Screen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/openaiService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/openaiService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/subscriptionService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/subscriptionService.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +74,6 @@
     <setting file="file://$PROJECT_DIR$/screens/GoPremiumScreen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/helpers/firebase-auth-overrides.d.ts" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/data/translations.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/node_modules/@types/react/index.d.ts" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/screens/RecipeDetailScreen.tsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/screens/BookOfRecipesScreen.tsx" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -145,7 +129,7 @@
       <workItem from="1743091770455" duration="2346000" />
       <workItem from="1743094654306" duration="3645000" />
       <workItem from="1743511737324" duration="30000" />
-      <workItem from="1743511865228" duration="20496000" />
+      <workItem from="1743511865228" duration="26843000" />
     </task>
     <task id="LOCAL-00001" summary="Attach GPT-API and add mocked responses for testing">
       <created>1736528503716</created>
@@ -462,7 +446,14 @@
       <option name="project" value="LOCAL" />
       <updated>1742568899286</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="A lot of logic to make premium and registered users work">
+      <created>1743685960803</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1743685960803</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -481,7 +472,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="App localized fully to four languages: en, de, ua, ru" />
     <MESSAGE value="Recipes are coming back form GPT in json format and being parsed on our end" />
     <MESSAGE value="Images are generated and work across the application" />
     <MESSAGE value="Fix some error-handling" />
@@ -506,7 +496,8 @@
     <MESSAGE value="Google login works" />
     <MESSAGE value="Reset password works" />
     <MESSAGE value="Testing subscriptions. Not working yet" />
-    <option name="LAST_COMMIT_MESSAGE" value="Testing subscriptions. Not working yet" />
+    <MESSAGE value="A lot of logic to make premium and registered users work" />
+    <option name="LAST_COMMIT_MESSAGE" value="A lot of logic to make premium and registered users work" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

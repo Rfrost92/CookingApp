@@ -4,6 +4,7 @@
     "slug": "SmartChef",
     "version": "1.0.0",
     "orientation": "portrait",
+    "entryPoint": "./App.tsx",
     "icon": "./assets/SmartChefLogo2.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
@@ -45,7 +46,15 @@
           }
         }
       ],
-      "react-native-iap"
+      "react-native-iap",
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "react-native",
+          "organization": "roman-moroz"
+        }
+      ]
     ]
   }
 }

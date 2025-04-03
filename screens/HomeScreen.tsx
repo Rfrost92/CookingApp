@@ -26,6 +26,7 @@ import {useLanguage} from "../services/LanguageContext";
 import translations from "../data/translations.json";
 import {Ionicons} from '@expo/vector-icons';
 import AuthPromptModal from "./AuthPromptModal";
+import * as Sentry from "@sentry/react-native";
 
 const availableLanguages = [
     {code: "en", name: "English"},

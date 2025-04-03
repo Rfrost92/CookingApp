@@ -11,6 +11,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
 import { restorePurchases } from "../services/subscriptionService";
+import * as Sentry from '@sentry/react-native';
 
 const itemSkus = ["com.rFrostSmartChef.premium.monthly"];
 
@@ -41,61 +42,74 @@ export default function GoPremiumScreen() {
     const handleSubscriptionPurchase = async () => {
         try {
             if (!product) {
-                console.warn("⚠️ No product available for subscription.");
+                const msg = "⚠️ No product available for subscription.";
+                console.warn(msg);
+                Sentry.captureMessage(msg, { level: "warning" });
                 Alert.alert(t("error"), t("subscription_not_available"));
                 return;
             }
 
-            console.log("🛒 Initiating subscription purchase for:", product.productId);
+            Sentry.captureMessage(`🛒 User started subscription for ${product.productId}`, { level: "info" });
 
             const purchase = await RNIap.requestSubscription(product.productId);
-
-            console.log("✅ Subscription successful:", JSON.stringify(purchase, null, 2));
+            console.log("✅ Purchase successful:", purchase);
+            Sentry.captureMessage("✅ Subscription successful", { level: "info" });
 
             if (!user) {
-                console.warn("⚠️ Purchase succeeded but no user is logged in.");
+                const msg = "⚠️ Purchase succeeded but user is null";
+                console.warn(msg);
+                Sentry.captureMessage(msg, { level: "warning" });
                 Alert.alert(t("error"), t("must_be_logged_in"));
                 return;
             }
 
-            // Update Firestore subscriptionType
             const userRef = doc(db, "users", user.uid);
             await updateDoc(userRef, { subscriptionType: "premium" });
 
-            console.log("📦 Firestore updated: subscriptionType -> premium");
-
-            setSubscriptionType("premium"); // Update context state
+            Sentry.captureMessage("📦 Firestore updated with premium", { level: "info" });
+            setSubscriptionType("premium");
             await refreshSubscriptionType();
 
             Alert.alert(t("success"), t("premium_user_success"));
             navigation.goBack();
         } catch (error) {
-            console.error("❌ Subscription purchase failed:", JSON.stringify(error, null, 2));
+            console.error("❌ Subscription purchase failed:", error);
+            Sentry.captureException(error); // 💥 Only real exceptions
             Alert.alert(t("error"), t("subscription_failed"));
         }
     };
 
     const handleRestore = async () => {
         if (!user) {
+            const msg = "⚠️ Restore attempted without user logged in.";
+            console.warn(msg);
+            Sentry.captureMessage(msg, { level: "warning" });
             Alert.alert(t("error"), t("must_be_logged_in"));
             return;
         }
 
         try {
-            console.log("🔁 Starting restore process...");
+            console.log("🔁 User tapped Restore Purchases");
+            Sentry.captureMessage("🔁 Restore initiated by user", { level: "info" });
+
             const restored = await restorePurchases(setSubscriptionType, user);
             await refreshSubscriptionType();
 
             if (restored) {
+                Sentry.captureMessage("✅ Purchases successfully restored", { level: "info" });
                 Alert.alert(t("success"), t("restore_success"));
             } else {
+                Sentry.captureMessage("ℹ️ No purchases found to restore", { level: "info" });
                 Alert.alert(t("info"), t("nothing_to_restore"));
             }
         } catch (error) {
-            console.error("❌ Restore failed in UI:", JSON.stringify(error, null, 2));
+            console.error("❌ Restore failed:", error);
+            Sentry.captureException(error); // 💥 Real error
             Alert.alert(t("error"), t("restore_failed"));
         }
     };
+
+
 
 
     return (
