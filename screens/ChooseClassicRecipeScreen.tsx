@@ -13,13 +13,15 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
 import { fetchRecipeScenario3 } from "../services/openaiService";
-import { AuthContext } from "../contexts/AuthContext";
+import {AuthContext, useAuth} from "../contexts/AuthContext";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import {containsInappropriateWords, logInappropriateInput} from "../helpers/validator";
 import {getTranslation} from "../helpers/loadTranslations";
+import PremiumModal from "./PremiumModal";
+import PremiumOnlyModal from "./PremiumOnlyModal";
 
 export default function ChooseClassicRecipeScreen() {
     const { user, isLoggedIn } = useContext(AuthContext);
@@ -31,6 +33,9 @@ export default function ChooseClassicRecipeScreen() {
     const [customDish, setCustomDish] = useState<string>("");
     const [isLoading, setIsLoading] = useState(false);
     const navigation = useNavigation();
+    const { subscriptionType } = useAuth();
+    const [showPremiumOnlyModal, setShowPremiumOnlyModal] = useState(false);
+    const [showPremiumModal, setShowPremiumModal] = useState(false);
 
     const t = (key: string) => translations[language][key] || key;
 
@@ -99,14 +104,26 @@ export default function ChooseClassicRecipeScreen() {
                 await logInappropriateInput(user?.uid, dishName)
                 return;
             }
-            Alert.alert(
-                t("daily_limit_reached"),
-                response.error === "Error: Daily request limit reached."
-                    ? t("signup_for_free")
-                    : t("upgrade_subscription"),
-                [{ text: "OK" }]
-            );
-            return; // Prevent further execution
+            if (response.error === "Error: Weekly request limit reached.") {
+                if (!user) {
+                    Alert.alert(
+                        t("weekly_limit_reached"),
+                        t("signup_to_continue"),
+                        [
+                            {text: t("ok")},
+                            {
+                                text: t("log_in"),
+                                onPress: () => navigation.navigate("LogIn"),
+                            },
+                        ]
+                    );
+                } else {
+                    setTimeout(() => {
+                        setShowPremiumModal(true);
+                    }, 500);
+                }
+                return;
+            }
         }
 
         const recipe = response.recipe;
@@ -162,7 +179,14 @@ export default function ChooseClassicRecipeScreen() {
                         styles.confirmButton,
                         customDish.trim() !== "" && styles.confirmButtonActive,
                     ]}
-                    onPress={() => handleSelectDish(customDish)}
+                    onPress={() => {
+                        if (subscriptionType !== "premium") {
+                            setShowPremiumOnlyModal(true);
+                            return;
+                        }
+                            handleSelectDish(customDish);
+                        }
+                    }
                     disabled={customDish.trim() === ""}
                 >
                     <Text
@@ -193,8 +217,10 @@ export default function ChooseClassicRecipeScreen() {
                     </View>
                 </View>
             </Modal>
+            <PremiumModal visible={showPremiumModal} onClose={() => setShowPremiumModal(false)} />
+            <PremiumOnlyModal visible={showPremiumOnlyModal} onClose={() => setShowPremiumOnlyModal(false)} />
         </SafeAreaView>
-    );
+);
 }
 
 const styles = StyleSheet.create({

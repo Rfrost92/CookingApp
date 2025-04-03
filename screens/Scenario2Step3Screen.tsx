@@ -18,6 +18,7 @@ import translations from "../data/translations.json";
 import { useLanguage } from "../services/LanguageContext";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import PremiumModal from "./PremiumModal";
 
 export default function Scenario2Step3Screen() {
     const { user } = useContext(AuthContext);
@@ -31,7 +32,7 @@ export default function Scenario2Step3Screen() {
     const [isVegan, setIsVegan] = useState<boolean>(false);
     const [isVegetarian, setIsVegetarian] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState(false);
-
+    const [showPremiumModal, setShowPremiumModal] = useState(false);
 
     const navigation = useNavigation();
     const route = useRoute();
@@ -95,13 +96,26 @@ export default function Scenario2Step3Screen() {
                 );
                 return;
             }
-            Alert.alert(
-                t("daily_limit_reached"),
-                response.error === "Error: Daily request limit reached."
-                    ? t("signup_to_continue")
-                    : t("upgrade_for_more"),
-                [{ text: t("ok") }]
-            );
+            if (response.error === "Error: Weekly request limit reached.") {
+                if (!user) {
+                    Alert.alert(
+                        t("weekly_limit_reached"),
+                        t("signup_to_continue"),
+                        [
+                            {text: t("ok")},
+                            {
+                                text: t("log_in"),
+                                onPress: () => navigation.navigate("LogIn"),
+                            },
+                        ]
+                    );
+                } else {
+                    setTimeout(() => {
+                        setShowPremiumModal(true);
+                    }, 500);
+                }
+                return;
+            }
             return; // **Prevent further execution**
         }
 
@@ -237,6 +251,7 @@ export default function Scenario2Step3Screen() {
                     </View>
                 </View>
             </Modal>
+            <PremiumModal visible={showPremiumModal} onClose={() => setShowPremiumModal(false)} />
         </SafeAreaView>
     );
 }

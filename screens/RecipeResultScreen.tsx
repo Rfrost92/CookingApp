@@ -19,6 +19,7 @@ import RecipeImage from "../services/RecipeImage";
 import { Ionicons } from "@expo/vector-icons";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {logParseErrors} from "../helpers/validator";
+import PremiumModal from "./PremiumModal";
 
 export default function RecipeResultScreen() {
     const navigation = useNavigation();
@@ -30,7 +31,7 @@ export default function RecipeResultScreen() {
 
     const [base64Image, setBase64Image] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-
+    const [showPremiumModal, setShowPremiumModal] = useState(false);
 
     const handleTryAgain = async () => {
         if (!requestData) {
@@ -47,13 +48,24 @@ export default function RecipeResultScreen() {
             }
 
             if (newRecipeResponse?.error) {
-                Alert.alert(
-                    t("daily_limit_reached"),
-                    newRecipeResponse.error === "Error: Daily request limit reached."
-                        ? t("signup_to_continue")
-                        : t("upgrade_subscription"),
-                    [{ text: "OK" }]
-                );
+                if (newRecipeResponse.error === "Error: Daily request limit reached.") {
+                    Alert.alert(
+                        t("daily_limit_reached"),
+                        t("signup_to_continue"),
+                        [
+                            {
+                                text: t("log_in"),
+                                onPress: () => navigation.navigate("LogIn"),
+                            },
+                        ]
+                    );
+                } else if (newRecipeResponse.error === "Error: Weekly request limit reached.") {
+                    setTimeout(() => {
+                        setShowPremiumModal(true);
+                    }, 500);
+                } else {
+                    Alert.alert(t("error"), newRecipeResponse.error);
+                }
                 return;
             }
 
@@ -270,6 +282,7 @@ export default function RecipeResultScreen() {
                     </View>
                 </View>
             </Modal>
+            <PremiumModal visible={showPremiumModal} onClose={() => setShowPremiumModal(false)} />
         </SafeAreaView>
     );
 }

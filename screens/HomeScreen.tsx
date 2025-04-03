@@ -12,14 +12,20 @@ import {
     TouchableWithoutFeedback,
     Keyboard
 } from "react-native";
-import {useNavigation} from "@react-navigation/native";
+import {useFocusEffect, useNavigation} from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {AuthContext} from "../contexts/AuthContext";
 import {logOut} from "../services/authService";
-import {isUserTest, resetNonSignedInCounter, resetRequestsForTestUser} from "../helpers/incrementRequest";
+import {
+    isUserTest,
+    resetNonSignedInCounter,
+    resetRequestsForTestUser,
+    toggleTestUserSubscription
+} from "../helpers/testUserAndRequestsHelpers";
 import {useLanguage} from "../services/LanguageContext";
 import translations from "../data/translations.json";
 import {Ionicons} from '@expo/vector-icons';
+import AuthPromptModal from "./AuthPromptModal";
 
 const availableLanguages = [
     {code: "en", name: "English"},
@@ -29,7 +35,7 @@ const availableLanguages = [
 ];
 
 export default function HomeScreen() {
-    const {user, isLoggedIn, subscriptionType} = useContext(AuthContext);
+    const { user, isLoggedIn, subscriptionType, setSubscriptionType, refreshSubscriptionType } = useContext(AuthContext);
     const {language, setLanguage} = useLanguage();
     const navigation = useNavigation();
     const [guestRequests, setGuestRequests] = useState<number>(0);
@@ -37,6 +43,7 @@ export default function HomeScreen() {
     const [languageModalVisible, setLanguageModalVisible] = useState(false);
     const [isTestUser, setIsTestUser] = useState<boolean | null>(null);
     const [isLemonMenuVisible, setLemonMenuVisible] = useState(false);
+    const [showAuthPromptModal, setShowAuthPromptModal] = useState(false);
 
     const t = (key: string) => translations[language][key] || key;
     const testMode = false;
@@ -65,6 +72,25 @@ export default function HomeScreen() {
         checkUserTestStatus();
         fetchGuestRequests();
     }, [user]);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            if (user) {
+                refreshSubscriptionType(); // ✅ Ensures latest sub type is reflected
+            }
+        }, [user])
+    );
+
+    const handleProtectedAction = (screenName: string) => {
+        if (!isLoggedIn) {
+            setShowAuthPromptModal(true);
+        } else {
+            try {
+                navigation.navigate(screenName);
+            } catch (error) {
+                Alert.alert(t("unexpected_error"), t("error_message"), [{text: "OK"}]);
+            }        }
+    };
 
     const handleRequest = async (scenario: string) => {
         try {
@@ -100,7 +126,7 @@ export default function HomeScreen() {
             setLemonMenuVisible(false);
             navigation.navigate("BookOfRecipes");
         } else {
-            Alert.alert(t("signup_required"), t("recipe_book_access"));
+            setShowAuthPromptModal(true);
         }
     };
 
@@ -139,20 +165,26 @@ export default function HomeScreen() {
                 <Text style={styles.title}>{t("welcome")}</Text>
 
                 {/* Menu Options */}
-                <TouchableOpacity style={styles.button} onPress={() => {
-                    setLemonMenuVisible(false);
-                    handleRequest("IngredientSelection")
-                }}>
-                    <Image source={require("../assets/availableingr.png")} style={styles.buttonIcon}/>
-                    <Text style={styles.buttonText}>{t("ingredient_selection")}</Text>
+                <TouchableOpacity
+                    style={[styles.button, !isLoggedIn && styles.lockedButton]}
+                    onPress={() => handleProtectedAction("IngredientSelection")}
+                >
+                    <Image source={require("../assets/availableingr.png")} style={styles.buttonIcon} />
+                    <View style={styles.lockedRow}>
+                        <Text style={styles.buttonText}>{t("ingredient_selection")}</Text>
+                        {!isLoggedIn && <Ionicons name="lock-closed-outline" size={18} color="gray" style={styles.lockIcon} />}
+                    </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() => {
-                    setLemonMenuVisible(false);
-                    handleRequest("Scenario2Step1")
-                }}>
-                    <Image source={require("../assets/newingr.png")} style={styles.buttonIcon}/>
-                    <Text style={styles.buttonText}>{t("open_to_ideas")}</Text>
+                <TouchableOpacity
+                    style={[styles.button, !isLoggedIn && styles.lockedButton]}
+                    onPress={() => handleProtectedAction("Scenario2Step1")}
+                >
+                    <Image source={require("../assets/newingr.png")} style={styles.buttonIcon} />
+                    <View style={styles.lockedRow}>
+                        <Text style={styles.buttonText}>{t("open_to_ideas")}</Text>
+                        {!isLoggedIn && <Ionicons name="lock-closed-outline" size={18} color="gray" style={styles.lockIcon} />}
+                    </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.button} onPress={() => {
@@ -199,7 +231,8 @@ export default function HomeScreen() {
                     </TouchableOpacity>
 
                     {/* Recipe Book Icon */}
-                    <TouchableOpacity style={styles.navButton} onPress={handleRecipeBookPress}>
+                    <TouchableOpacity     style={[styles.navButton, !isLoggedIn && styles.lockedButton]}
+                                          onPress={handleRecipeBookPress}>
                         <Image source={require("../assets/book.png")} style={styles.bookIcon}/>
                     </TouchableOpacity>
 
@@ -218,6 +251,7 @@ export default function HomeScreen() {
                             <Text style={styles.modalText}>{t("welcome_user")} {user?.email || t("user")}</Text>
 
                             {isTestUser && (
+                                <>
                                 <TouchableOpacity
                                     style={[styles.accountButton, styles.logoutButton]}
                                     onPress={async () => {
@@ -231,6 +265,25 @@ export default function HomeScreen() {
                                 >
                                     <Text style={styles.modalButtonText}>{t("reset_requests")}</Text>
                                 </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    style={[styles.accountButton, styles.logoutButton]}
+                                    onPress={async () => {
+                                        try {
+                                            const newType = await toggleTestUserSubscription(user.uid);
+                                            setSubscriptionType(newType); // This updates the AuthContext globally
+                                            Alert.alert("Success", `Switched to ${newType}`);
+                                        } catch (error) {
+                                            Alert.alert("Error", error.message);
+                                        }
+                                    }}
+                                >
+                                    <Text style={styles.modalButtonText}>
+                                        {subscriptionType === "premium" ? "Switch to non-premium" : "Switch to premium"}
+                                    </Text>
+                                </TouchableOpacity>
+
+                                </>
                             )}
 
                             {!isLoggedIn || subscriptionType === "guest" ? (
@@ -280,6 +333,7 @@ export default function HomeScreen() {
                         </View>
                     </View>
                 </Modal>
+                <AuthPromptModal visible={showAuthPromptModal} onClose={() => setShowAuthPromptModal(false)} />
             </View>
         </TouchableWithoutFeedback>
 
@@ -526,4 +580,19 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
     },
+    lockedButton: {
+        opacity: 0.5,
+    },
+
+    lockedRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        flexShrink: 1,
+    },
+
+    lockIcon: {
+        marginLeft: 30,
+        marginTop: 1,
+    },
+
 });

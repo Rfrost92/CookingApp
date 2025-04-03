@@ -10,11 +10,12 @@ import { db } from "../firebaseConfig";
 import { doc, updateDoc } from "firebase/firestore";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
+import { restorePurchases } from "../services/subscriptionService";
 
 const itemSkus = ["com.rFrostSmartChef.premium.monthly"];
 
 export default function GoPremiumScreen() {
-    const { user, setSubscriptionType } = useAuth();
+    const { user, setSubscriptionType, refreshSubscriptionType } = useAuth();
     const navigation = useNavigation();
     const { language } = useLanguage();
     const t = (key: string) => translations[language][key] || key;
@@ -40,24 +41,62 @@ export default function GoPremiumScreen() {
     const handleSubscriptionPurchase = async () => {
         try {
             if (!product) {
+                console.warn("⚠️ No product available for subscription.");
                 Alert.alert(t("error"), t("subscription_not_available"));
                 return;
             }
+
+            console.log("🛒 Initiating subscription purchase for:", product.productId);
+
             const purchase = await RNIap.requestSubscription(product.productId);
-            console.log("✅ Subscription successful:", purchase);
+
+            console.log("✅ Subscription successful:", JSON.stringify(purchase, null, 2));
+
+            if (!user) {
+                console.warn("⚠️ Purchase succeeded but no user is logged in.");
+                Alert.alert(t("error"), t("must_be_logged_in"));
+                return;
+            }
 
             // Update Firestore subscriptionType
             const userRef = doc(db, "users", user.uid);
             await updateDoc(userRef, { subscriptionType: "premium" });
 
-            setSubscriptionType("premium"); // Update global state
+            console.log("📦 Firestore updated: subscriptionType -> premium");
+
+            setSubscriptionType("premium"); // Update context state
+            await refreshSubscriptionType();
+
             Alert.alert(t("success"), t("premium_user_success"));
             navigation.goBack();
         } catch (error) {
-            console.error("❌ Subscription failed:", error);
+            console.error("❌ Subscription purchase failed:", JSON.stringify(error, null, 2));
             Alert.alert(t("error"), t("subscription_failed"));
         }
     };
+
+    const handleRestore = async () => {
+        if (!user) {
+            Alert.alert(t("error"), t("must_be_logged_in"));
+            return;
+        }
+
+        try {
+            console.log("🔁 Starting restore process...");
+            const restored = await restorePurchases(setSubscriptionType, user);
+            await refreshSubscriptionType();
+
+            if (restored) {
+                Alert.alert(t("success"), t("restore_success"));
+            } else {
+                Alert.alert(t("info"), t("nothing_to_restore"));
+            }
+        } catch (error) {
+            console.error("❌ Restore failed in UI:", JSON.stringify(error, null, 2));
+            Alert.alert(t("error"), t("restore_failed"));
+        }
+    };
+
 
     return (
         <SafeAreaView style={styles.safeContainer}>
@@ -79,11 +118,16 @@ export default function GoPremiumScreen() {
                     <Text style={styles.benefit}>✅ {t("unlimited_recipes")}</Text>
                     <Text style={styles.benefit}>✅ {t("individual_recipes")}</Text>
                     <Text style={styles.benefit}>✅ {t("fridge_analysis")}</Text>
+                    <Text style={styles.benefit}>✅ {t("already_tried")}</Text>
                 </View>
 
                 {/* Subscription Button */}
                 <TouchableOpacity style={styles.subscribeButton} onPress={handleSubscriptionPurchase}>
                     <Text style={styles.subscribeButtonText}>{t("try_premium_free")}</Text>
+                </TouchableOpacity>
+                {/* Restore Purchases Button */}
+                <TouchableOpacity style={styles.restoreButton} onPress={handleRestore}>
+                    <Text style={styles.restoreButtonText}>{t("restore_purchases")}</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
@@ -157,6 +201,19 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold",
         color: "black",
+    },
+    restoreButton: {
+        paddingVertical: 10,
+        paddingHorizontal: 25,
+        marginTop: 10,
+        backgroundColor: "#eee",
+        borderRadius: 6,
+    },
+    restoreButtonText: {
+        fontSize: 14,
+        color: "#333",
+        textAlign: "center",
+        fontWeight: "500",
     },
 });
 

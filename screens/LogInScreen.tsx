@@ -34,6 +34,10 @@ export default function LogInScreen({navigation}: any) {
             await logIn(email, password, t);
             Alert.alert(t("success"), t("logged_in_successfully"));
             navigation.navigate("Home");
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Home' }],
+            });
         } catch (error: any) {
             if (error.message === "email-not-verified") {
                 Alert.alert(

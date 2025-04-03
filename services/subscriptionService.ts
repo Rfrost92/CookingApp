@@ -2,6 +2,7 @@
 
 import {doc, updateDoc} from "firebase/firestore";
 import {db} from "../firebaseConfig";
+import * as RNIap from "react-native-iap";
 
 const itemSkus = ["com.rFrostSmartChef.premium.monthly"];
 
@@ -29,21 +30,31 @@ const purchaseSubscription = async (sku) => {
 
 export const restorePurchases = async (setSubscriptionType, user) => {
     try {
+        console.log("🔄 Initializing IAP connection for restore...");
+        await RNIap.initConnection();
+
         const purchases = await RNIap.getAvailablePurchases();
+        console.log("🧾 Available purchases:", purchases);
+
         const hasPremium = purchases.some(purchase =>
             itemSkus.includes(purchase.productId)
         );
 
         if (hasPremium && user) {
-            // Update Firestore to ensure subscription state
+            console.log("🎉 Premium purchase found. Updating Firestore and state...");
             const userRef = doc(db, "users", user.uid);
             await updateDoc(userRef, { subscriptionType: "premium" });
-
-            setSubscriptionType("premium"); // Update global state
+            setSubscriptionType("premium");
+            return true; // ✅ Restored
         } else {
+            console.log("⚠️ No premium purchases found.");
             setSubscriptionType("guest");
+            return false; // ❌ Nothing to restore
         }
     } catch (error) {
-        console.error("❌ Restore purchases failed:", error);
+        console.error("❌ Restore purchases failed:", JSON.stringify(error, null, 2));
+        throw new Error("restore_failed_internal");
     }
 };
+
+

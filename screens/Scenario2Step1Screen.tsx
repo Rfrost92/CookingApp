@@ -19,11 +19,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import {containsInappropriateWords, logInappropriateInput} from "../helpers/validator";
 import {getTranslation} from "../helpers/loadTranslations";
-import {AuthContext} from "../contexts/AuthContext";
+import {AuthContext, useAuth} from "../contexts/AuthContext";
+import PremiumModal from "./PremiumModal";
+import PremiumOnlyModal from "./PremiumOnlyModal";
 
 export default function Scenario2Step1Screen() {
     const { language } = useLanguage();
     const t = (key: string) => translations[language][key] || key ||'';
+    const { subscriptionType } = useAuth();
+    const [showPremiumOnlyModal, setShowPremiumOnlyModal] = useState(false);
 
     const [cuisineOptions, setCuisineOptions] = useState<string[]>([
         t("any"),
@@ -257,6 +261,10 @@ export default function Scenario2Step1Screen() {
                     t("use"),
                     isCustomCuisineSelected,
                     () => {
+                        if (subscriptionType !== "premium") {
+                            setShowPremiumOnlyModal(true);
+                            return;
+                        }
                         setIsCustomCuisineSelected(true);
                         setSelectedCuisine("");
                     },
@@ -301,6 +309,10 @@ export default function Scenario2Step1Screen() {
                     t("use"),
                     isCustomThematicSelected,
                     () => {
+                        if (subscriptionType !== "premium") {
+                            setShowPremiumOnlyModal(true);
+                            return;
+                        }
                         setIsCustomThematicSelected(true);
                         setSelectedThematic("");
                     },
@@ -345,6 +357,10 @@ export default function Scenario2Step1Screen() {
                     t("use"),
                     isCustomStarIngredientSelected,
                     () => {
+                        if (subscriptionType !== "premium") {
+                            setShowPremiumOnlyModal(true);
+                            return;
+                        }
                         setIsCustomStarIngredientSelected(true);
                         setSelectedStarIngredient("");
                     },
@@ -364,6 +380,8 @@ export default function Scenario2Step1Screen() {
                     <Text style={styles.bottomButtonText}>{t("next")}</Text>
                 </TouchableOpacity>
             </View>
+            <PremiumOnlyModal visible={showPremiumOnlyModal} onClose={() => setShowPremiumOnlyModal(false)} />
+
         </SafeAreaView>
     );
 }

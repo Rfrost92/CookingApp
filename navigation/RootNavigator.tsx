@@ -25,7 +25,12 @@ export default function RootNavigator() {
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="Home" component={HomeScreen} />
+                <Stack.Screen name="Home" component={HomeScreen}
+                  options={{
+                      gestureEnabled: false, // 👈 disables swipe-to-go-back on iOS
+                      headerLeft: () => null, // (Optional) removes the back arrow
+                  }}
+                />
                 <Stack.Screen name="IngredientSelection" component={IngredientSelectionScreen} />
                 <Stack.Screen name="RecipeResult" component={RecipeResultScreen} />
                 <Stack.Screen name="ApplianceSelection" component={ApplianceSelectionScreen} />

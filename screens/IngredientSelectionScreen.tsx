@@ -19,7 +19,8 @@ import { getTranslation } from "../helpers/loadTranslations";
 import { Ionicons } from "@expo/vector-icons";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {containsInappropriateWords, logInappropriateInput} from "../helpers/validator";
-import {AuthContext} from "../contexts/AuthContext";
+import {AuthContext, useAuth} from "../contexts/AuthContext";
+import PremiumOnlyModal from "./PremiumOnlyModal";
 
 export default function IngredientSelectionScreen() {
     const { language } = useLanguage(); // Get the selected language
@@ -32,6 +33,8 @@ export default function IngredientSelectionScreen() {
     const [loading, setLoading] = useState(true);
     const [customIngredient, setCustomIngredient] = useState<string>(""); // Input for new ingredients
     const navigation = useNavigation();
+    const { subscriptionType } = useAuth();
+    const [showPremiumOnlyModal, setShowPremiumOnlyModal] = useState(false);
 
     useEffect(() => {
         const fetchIngredients = async () => {
@@ -92,6 +95,10 @@ export default function IngredientSelectionScreen() {
 
     // Add a custom ingredient to the Miscellaneous category
     const addCustomIngredient = async () => {
+        if (subscriptionType !== "premium") {
+            setShowPremiumOnlyModal(true);
+            return;
+        }
         if (!customIngredient.trim()) {
             Alert.alert(
                 getTranslation(language, "error"),
@@ -355,6 +362,7 @@ export default function IngredientSelectionScreen() {
                     <Text style={styles.bottomButtonText}>Next</Text>
                 </TouchableOpacity>
             </View>
+            <PremiumOnlyModal visible={showPremiumOnlyModal} onClose={() => setShowPremiumOnlyModal(false)} />
         </SafeAreaView>
     );
 }

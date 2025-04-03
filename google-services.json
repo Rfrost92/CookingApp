@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "251155118394",
+    "project_id": "cooking-app-3ff5f",
+    "storage_bucket": "cooking-app-3ff5f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:251155118394:android:0066c55892a2bcd7607803",
+        "android_client_info": {
+          "package_name": "com.rFrost.SmartChef"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "251155118394-849m3u57s847ppcr7hsr1r0lvjjmbg4v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuKbjV4fr_H0HkTjw37Zri_HTZujm1myY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "251155118394-849m3u57s847ppcr7hsr1r0lvjjmbg4v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "251155118394-180vkg572bpo53qvrvoot1ha25j8p67c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rFrost.SmartChef"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

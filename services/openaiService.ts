@@ -2,7 +2,7 @@
 import OpenAI from "openai";
 import {mockedResponses, mockImageUrl} from "../data/responseMock";
 import {gptApiKey, runwareApiKey} from "../data/secrets";
-import {incrementNonSignedInRequests, incrementRequest} from "../helpers/incrementRequest";
+import {incrementNonSignedInRequests, incrementRequest} from "../helpers/testUserAndRequestsHelpers";
 import {sanitizeAndParseRecipe} from "../helpers/recipeHelpers";
 import uuid from 'react-native-uuid';
 import {logGptErrorResponse} from "../helpers/validator";
@@ -70,8 +70,8 @@ export const fetchRecipeScenario1 = async (requestData) => {
                 await incrementNonSignedInRequests();
             }
         } catch (error) {
-            console.warn("Daily limit reached:", error);
-            return { error: "Error: Daily request limit reached." };
+            console.warn("Weekly limit reached:", error);
+            return { error: "Error: Weekly request limit reached." };
         }
 
         if (testing) {
@@ -173,8 +173,8 @@ export const fetchRecipeScenario2 = async (requestData) => {
                 await incrementNonSignedInRequests();
             }
         } catch (error) {
-            console.warn("Daily limit reached:", error);
-            return { error: "Error: Daily request limit reached." };
+            console.warn("Weekly limit reached:", error);
+            return { error: "Error: Weekly request limit reached." };
         }
 
         if (testing) {
@@ -248,8 +248,8 @@ export const fetchRecipeScenario3 = async ({ classicDishName, user, language }) 
                 await incrementNonSignedInRequests();
             }
         } catch (error) {
-            console.warn("Daily limit reached:", error);
-            return { error: "Error: Daily request limit reached." }; // Properly return error
+            console.warn("Weekly limit reached:", error);
+            return { error: "Error: Weekly request limit reached." }; // Properly return error
         }
 
         if (testing) {
