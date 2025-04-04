@@ -14,7 +14,7 @@ const OnboardingScreen = () => {
 
     const handleCreateAccount = async () => {
         await AsyncStorage.setItem("hasSeenOnboarding", "true");
-        navigation.replace("LogIn");
+        navigation.replace("InitialSignUp");
     };
 
     return (
