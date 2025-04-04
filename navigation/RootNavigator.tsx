@@ -1,10 +1,9 @@
-//RootNavigator.tsx
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import HomeScreen from '../screens/HomeScreen';
-import IngredientSelectionScreen from '../screens/IngredientSelectionScreen';
-import RecipeResultScreen from '../screens/RecipeResultScreen';
+// RootNavigator.tsx
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import HomeScreen from "../screens/HomeScreen";
+import IngredientSelectionScreen from "../screens/IngredientSelectionScreen";
+import RecipeResultScreen from "../screens/RecipeResultScreen";
 import ApplianceSelectionScreen from "../screens/ApplianceSelectionScreen";
 import MealTypeSelectionScreen from "../screens/MealTypeSelectionScreen";
 import Scenario2Step1Screen from "../screens/Scenario2Step1Screen";
@@ -18,18 +17,18 @@ import RecipeDetailScreen from "../screens/RecipeDetailScreen";
 import ResetPasswordScreen from "../screens/ResetPasswordScreen";
 import HelpScreen from "../screens/HelpScreen";
 import GoPremiumScreen from "../screens/GoPremiumScreen";
+import OnboardingScreen from "../screens/OnboardingScreen";
 
 const Stack = createStackNavigator();
 
-export default function RootNavigator() {
+export default function RootNavigator({ initialRouteName }: { initialRouteName: string }) {
     return (
-        <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="Home" component={HomeScreen}
-                  options={{
-                      gestureEnabled: false, // 👈 disables swipe-to-go-back on iOS
-                      headerLeft: () => null, // (Optional) removes the back arrow
-                  }}
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={initialRouteName}>
+                <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+                <Stack.Screen name="Home" component={HomeScreen} options={{
+                                gestureEnabled: false, // 👈 disables swipe-to-go-back on iOS
+                                headerLeft: () => null, // (Optional) removes the back arrow
+                        }}
                 />
                 <Stack.Screen name="IngredientSelection" component={IngredientSelectionScreen} />
                 <Stack.Screen name="RecipeResult" component={RecipeResultScreen} />
@@ -46,7 +45,6 @@ export default function RootNavigator() {
                 <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
                 <Stack.Screen name="HelpScreen" component={HelpScreen} options={{ title: 'Help & Info' }} />
                 <Stack.Screen name="GoPremium" component={GoPremiumScreen} />
-            </Stack.Navigator>
-        </NavigationContainer>
+        </Stack.Navigator>
     );
 }

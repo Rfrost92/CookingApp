@@ -123,6 +123,7 @@ export const resetRequestsForTestUser = async (userId: string) => {
                 lastUpdated: serverTimestamp(),
             });
             console.log("✅ Requests reset successfully for test user.");
+            return true;
         } else {
             throw new Error("🚫 This operation is not permitted for non-test users.");
         }
@@ -163,5 +164,25 @@ export const toggleTestUserSubscription = async (userId: string): Promise<"guest
 
     console.log(`✅ SubscriptionType changed to ${newType} for test user.`);
     return newType;
+};
+
+export const fetchTestUserStatusAndRequests = async (userId: string): Promise<{ isTestUser: boolean, requestsThisWeek: number }> => {
+    const userDocSnap = await getDoc(doc(db, "users", userId));
+    if (userDocSnap.exists()) {
+        const userData = userDocSnap.data();
+        return {
+            isTestUser: !!userData.testUser,
+            requestsThisWeek: userData.requestsThisWeek || 0,
+        };
+    } else {
+        throw new Error("User does not exist.");
+    }
+};
+
+export const getRequestsThisWeek = async (userId: string): Promise<number> => {
+    const userSnap = await getDoc(doc(db, "users", userId));
+    if (!userSnap.exists()) return 0;
+    const data = userSnap.data();
+    return data.requestsThisWeek || 0;
 };
 

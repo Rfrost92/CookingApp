@@ -180,10 +180,10 @@ export default function ChooseClassicRecipeScreen() {
                         customDish.trim() !== "" && styles.confirmButtonActive,
                     ]}
                     onPress={() => {
-                        if (subscriptionType !== "premium") {
-                            setShowPremiumOnlyModal(true);
-                            return;
-                        }
+                        // if (subscriptionType !== "premium") {
+                        //     setShowPremiumOnlyModal(true);
+                        //     return;
+                        // }
                             handleSelectDish(customDish);
                         }
                     }

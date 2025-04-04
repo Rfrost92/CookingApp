@@ -17,6 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {AuthContext} from "../contexts/AuthContext";
 import {logOut} from "../services/authService";
 import {
+    fetchTestUserStatusAndRequests, getRequestsThisWeek,
     isUserTest,
     resetNonSignedInCounter,
     resetRequestsForTestUser,
@@ -26,7 +27,6 @@ import {useLanguage} from "../services/LanguageContext";
 import translations from "../data/translations.json";
 import {Ionicons} from '@expo/vector-icons';
 import AuthPromptModal from "./AuthPromptModal";
-import * as Sentry from "@sentry/react-native";
 
 const availableLanguages = [
     {code: "en", name: "English"},
@@ -43,11 +43,12 @@ export default function HomeScreen() {
     const [accountModalVisible, setAccountModalVisible] = useState(false);
     const [languageModalVisible, setLanguageModalVisible] = useState(false);
     const [isTestUser, setIsTestUser] = useState<boolean | null>(null);
+    const [requestsThisWeek, setRequestsThisWeek] = useState<number | null>(null);
     const [isLemonMenuVisible, setLemonMenuVisible] = useState(false);
     const [showAuthPromptModal, setShowAuthPromptModal] = useState(false);
 
     const t = (key: string) => translations[language][key] || key;
-    const testMode = false;
+    const testMode = true;
 
     useEffect(() => {
         const fetchGuestRequests = async () => {
@@ -62,16 +63,19 @@ export default function HomeScreen() {
         const checkUserTestStatus = async () => {
             if (user && isLoggedIn) {
                 try {
-                    const testStatus = await isUserTest(user.uid);
-                    setIsTestUser(testStatus);
+                    const { isTestUser, requestsThisWeek } = await fetchTestUserStatusAndRequests(user.uid);
+                    setIsTestUser(isTestUser);
+                    setRequestsThisWeek(requestsThisWeek);
                 } catch (error) {
                     console.log("Error checking test user:", error);
                     setIsTestUser(false); // Assume false if error occurs
+                    setRequestsThisWeek(null);
                 }
             }
         };
         checkUserTestStatus();
         fetchGuestRequests();
+
     }, [user]);
 
     useFocusEffect(
@@ -252,40 +256,45 @@ export default function HomeScreen() {
                             <Text style={styles.modalText}>{t("welcome_user")} {user?.email || t("user")}</Text>
 
                             {isTestUser && (
-                                <>
-                                <TouchableOpacity
-                                    style={[styles.accountButton, styles.logoutButton]}
-                                    onPress={async () => {
-                                        try {
-                                            await resetRequestsForTestUser(user?.uid);
-                                            Alert.alert(t("success"), t("request_reset_success"));
-                                        } catch (error) {
-                                            Alert.alert(t("error"), t("request_reset_fail"));
-                                        }
-                                    }}
-                                >
-                                    <Text style={styles.modalButtonText}>{t("reset_requests")}</Text>
-                                </TouchableOpacity>
+                                <View style={styles.testUserBox}>
+                                    <Text style={styles.testUserTitle}>🧪 Test User Panel</Text>
+                                    <Text style={styles.testUserInfo}>Requests this week: {requestsThisWeek}</Text>
 
-                                <TouchableOpacity
-                                    style={[styles.accountButton, styles.logoutButton]}
-                                    onPress={async () => {
-                                        try {
-                                            const newType = await toggleTestUserSubscription(user.uid);
-                                            setSubscriptionType(newType); // This updates the AuthContext globally
-                                            Alert.alert("Success", `Switched to ${newType}`);
-                                        } catch (error) {
-                                            Alert.alert("Error", error.message);
-                                        }
-                                    }}
-                                >
-                                    <Text style={styles.modalButtonText}>
-                                        {subscriptionType === "premium" ? "Switch to non-premium" : "Switch to premium"}
-                                    </Text>
-                                </TouchableOpacity>
+                                    <TouchableOpacity
+                                        style={[styles.accountButton, styles.logoutButton]}
+                                        onPress={async () => {
+                                            try {
+                                                await resetRequestsForTestUser(user?.uid);
+                                                const updatedCount = await getRequestsThisWeek(user.uid);
+                                                setRequestsThisWeek(updatedCount);
+                                                Alert.alert(t("success"), t("request_reset_success"));
+                                            } catch (error) {
+                                                Alert.alert(t("error"), t("request_reset_fail"));
+                                            }
+                                        }}
+                                    >
+                                        <Text style={styles.modalButtonText}>{t("reset_requests")}</Text>
+                                    </TouchableOpacity>
 
-                                </>
+                                    <TouchableOpacity
+                                        style={[styles.accountButton, styles.logoutButton]}
+                                        onPress={async () => {
+                                            try {
+                                                const newType = await toggleTestUserSubscription(user.uid);
+                                                setSubscriptionType(newType);
+                                                Alert.alert("Success", `Switched to ${newType}`);
+                                            } catch (error) {
+                                                Alert.alert("Error", error.message);
+                                            }
+                                        }}
+                                    >
+                                        <Text style={styles.modalButtonText}>
+                                            {subscriptionType === "premium" ? "Switch to non-premium" : "Switch to premium"}
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
                             )}
+
 
                             {!isLoggedIn || subscriptionType === "guest" ? (
                                 <TouchableOpacity style={styles.premiumButton} onPress={() => {navigation.navigate("GoPremium"), setAccountModalVisible(false)}}>
@@ -595,5 +604,27 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         marginTop: 1,
     },
+    testUserBox: {
+        width: "100%",
+        borderColor: "#FFD700",
+        borderWidth: 2,
+        borderRadius: 10,
+        padding: 15,
+        marginBottom: 20,
+        backgroundColor: "#FFFCE1",
+        alignItems: "center",
+    },
 
+    testUserTitle: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#333",
+        marginBottom: 10,
+    },
+
+    testUserInfo: {
+        fontSize: 14,
+        color: "#555",
+        marginBottom: 10,
+    },
 });

@@ -132,7 +132,6 @@ export default function GoPremiumScreen() {
                     <Text style={styles.benefit}>✅ {t("unlimited_recipes")}</Text>
                     <Text style={styles.benefit}>✅ {t("individual_recipes")}</Text>
                     <Text style={styles.benefit}>✅ {t("fridge_analysis")}</Text>
-                    <Text style={styles.benefit}>✅ {t("already_tried")}</Text>
                 </View>
 
                 {/* Subscription Button */}
@@ -140,9 +139,12 @@ export default function GoPremiumScreen() {
                     <Text style={styles.subscribeButtonText}>{t("try_premium_free")}</Text>
                 </TouchableOpacity>
                 {/* Restore Purchases Button */}
-                <TouchableOpacity style={styles.restoreButton} onPress={handleRestore}>
-                    <Text style={styles.restoreButtonText}>{t("restore_purchases")}</Text>
+                <TouchableOpacity onPress={handleRestore}>
+                    <Text style={styles.restoreLink}>{t("restore_purchases")}</Text>
                 </TouchableOpacity>
+                <Text style={styles.alreadyTriedText}>
+                    {t("already_tried")}
+                </Text>
             </View>
         </SafeAreaView>
     );
@@ -229,6 +231,21 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontWeight: "500",
     },
+    restoreLink: {
+        fontSize: 14,
+        color: "#333",
+        textDecorationLine: "underline",
+        marginTop: 10,
+        fontWeight: "500",
+    },
+
+    alreadyTriedText: {
+        marginTop: 30,
+        fontSize: 13,
+        color: "#555",
+        fontStyle: "italic",
+        textAlign: "center",
+    }
 });
 
 export default GoPremiumScreen;
