@@ -47,7 +47,10 @@ export default function HomeScreen() {
     const [isLemonMenuVisible, setLemonMenuVisible] = useState(false);
     const [showAuthPromptModal, setShowAuthPromptModal] = useState(false);
 
-    const t = (key: string) => translations[language][key] || key;
+    const t = (key: string) => {
+        const langData = translations?.[language];
+        return langData?.[key] ?? `[${key}]`;
+    };
     const testMode = true;
 
     useEffect(() => {

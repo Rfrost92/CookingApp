@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from "react-native";
-import { signUp, signInWithGoogle } from "../services/authService";
+import {signUp, signInWithGoogle, checkPremiumOffer} from "../services/authService";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -36,9 +36,10 @@ export default function InitialSignUpScreen({ navigation }: any) {
 
     const handleGoogleSignup = async () => {
         try {
-            await signInWithGoogle();
+            const user = await signInWithGoogle();
             Alert.alert(t("success"), t("logged_in_successfully"));
             navigation.navigate("Home");
+            await checkPremiumOffer(user.uid, navigation);
         } catch (error) {
             Alert.alert(t("error"), error.message);
         }

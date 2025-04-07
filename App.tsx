@@ -49,12 +49,18 @@ export default Sentry.wrap(function App() {
 
         initIAP();
 
-        const checkOnboarding = async () => {
-            const hasSeen = await AsyncStorage.getItem("hasSeenOnboarding");
-            setInitialRouteName(hasSeen === "true" ? "Home" : "Onboarding");
+        const checkFlow = async () => {
+            const hasSeenLanguage = await AsyncStorage.getItem("hasSeenLanguageSelection");
+            const hasSeenOnboarding = await AsyncStorage.getItem("hasSeenOnboarding");
+
+            if (!hasSeenLanguage) {
+                setInitialRouteName("LanguageSelection");
+            } else {
+                setInitialRouteName(hasSeenOnboarding === "true" ? "Home" : "Onboarding");
+            }
         };
 
-        checkOnboarding();
+        checkFlow();
 
         return () => {
             RNIap.endConnection();

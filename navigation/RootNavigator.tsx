@@ -19,6 +19,7 @@ import HelpScreen from "../screens/HelpScreen";
 import GoPremiumScreen from "../screens/GoPremiumScreen";
 import OnboardingScreen from "../screens/OnboardingScreen";
 import InitialSignUpScreen from "../screens/InitialSignUpScreen";
+import LanguageSelectionScreen from "../screens/LanguageSelectionScreen";
 
 const Stack = createStackNavigator();
 
@@ -47,6 +48,8 @@ export default function RootNavigator({ initialRouteName }: { initialRouteName: 
                 <Stack.Screen name="HelpScreen" component={HelpScreen} options={{ title: 'Help & Info' }} />
                 <Stack.Screen name="GoPremium" component={GoPremiumScreen} />
                 <Stack.Screen name="InitialSignUp" component={InitialSignUpScreen} />
+                <Stack.Screen name="LanguageSelection" component={LanguageSelectionScreen} />
+
         </Stack.Navigator>
     );
 }

@@ -12,9 +12,10 @@ import {
     fetchSignInMethodsForEmail,
     User
 } from "firebase/auth";
-import { doc, setDoc, getDoc, limit } from "firebase/firestore";
+import {doc, setDoc, getDoc, limit, updateDoc} from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import {useNavigation} from "@react-navigation/native";
 
 // Sign Up with Email & Password + Email Verification
 export const signUp = async (email: string, password: string) => {
@@ -294,4 +295,13 @@ export const resetPassword = async (email: string, t: (key: string) => string) =
     }
 };
 
+export const checkPremiumOffer = async (uid: string, navigation: any) => {
+    const userRef = doc(db, "users", uid);
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists() && !userSnap.data().hasSeenPremiumOffer) {
+        navigation.navigate("GoPremium");
+        await updateDoc(userRef, { hasSeenPremiumOffer: true });
+    }
+};
 

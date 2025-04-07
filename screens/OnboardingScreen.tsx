@@ -3,10 +3,16 @@ import { Image, View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Onboarding from "react-native-onboarding-swiper";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useLanguage } from "../services/LanguageContext";
+import translations from "../data/translations.json";
 
 const OnboardingScreen = () => {
     const navigation = useNavigation();
-
+    const { language } = useLanguage();
+    const t = (key: string) => {
+        const langData = translations?.[language];
+        return langData?.[key] ?? `[${key}]`;
+    };
     const handleDone = async () => {
         await AsyncStorage.setItem("hasSeenOnboarding", "true");
         navigation.replace("Home");
@@ -38,8 +44,20 @@ const OnboardingScreen = () => {
                             />
                         </View>
                     ),
-                    title: "Welcome to Smart Chef",
-                    subtitle: "Whip up healthy meals with what you already have in your fridge. No stress, just good food.",
+                    title: t("onboarding_welcome_title"),
+                    subtitle: t("onboarding_welcome_subtitle"),
+                },
+                {
+                    backgroundColor: "#E9FCE7",
+                    image: (
+                        <Image
+                            source={require("../assets/generated-3.jpg")}
+                            style={{ width: 300, height: 300, borderRadius: 20 }}
+                            resizeMode="cover"
+                        />
+                    ),
+                    title: t("onboarding_discover_title"),
+                    subtitle: t("onboarding_discover_subtitle"),
                 },
                 {
                     backgroundColor: "#ffffff",
@@ -50,30 +68,56 @@ const OnboardingScreen = () => {
                             resizeMode="cover"
                         />
                     ),
-                    title: "Create a Free Account",
-                    subtitle: "Want more than just the basics?\nCreate a free account to save recipes, access all three cooking scenarios, and get the most out of Smart Chef.",
+                    title: t("onboarding_create_account_title"),
+                    subtitle: t("onboarding_create_account_subtitle"),
                 },
                 {
                     backgroundColor: "#FFFCE1",
                     image: (
-                        <View style={{ alignItems: "center" }}>
-                            <Image
-                                source={require("../assets/generated-3.jpg")}
-                                style={{ width: 320, height: 320, borderRadius: 20, marginBottom: 20 }}
-                                resizeMode="cover"
-                            />
+                        <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
+                            <Text style={styles.comparisonTitle}>{t("feature_comparison_title")}</Text>
+
+                            <View style={{ width: "100%", maxWidth: 400 }}>
+                                <View style={styles.table}>
+                                    <View style={[styles.tableRow, styles.tableHeader]}>
+                                        <Text style={[styles.headerCell, styles.featureColumn]}></Text>
+                                        <Text style={[styles.headerCell, styles.planColumn]}>{t("no_account")}</Text>
+                                        <Text style={[styles.headerCell, styles.planColumn]}>{t("signed_in")}</Text>
+                                        <Text style={[styles.headerCell, styles.planColumn]}>{t("smartchef_plus")}</Text>
+                                    </View>
+
+                                    {[
+                                        [t("feature_classic_recipes"), "✅", "✅", "✅"],
+                                        [t("feature_cook_from_ingredients"), "❌", "✅", "✅"],
+                                        [t("feature_personalized_recipes"), "❌", "✅", "✅"],
+                                        [t("feature_recipe_book"), "❌", "✅", "✅"],
+                                        [t("feature_weekly_requests"), "2", "2", t("unlimited")],
+                                        [t("feature_custom_input"), "❌", "❌", "✅"],
+                                        [t("feature_fridge_photo"), "❌", "❌", "✅"],
+                                    ].map((row, index) => (
+                                        <View key={index} style={styles.tableRow}>
+                                            <Text style={[styles.cell, styles.featureColumn]} numberOfLines={1} ellipsizeMode="tail">{row[0]}</Text>
+                                            <Text style={[styles.cell, styles.planColumn]} numberOfLines={1}>{row[1]}</Text>
+                                            <Text style={[styles.cell, styles.planColumn]} numberOfLines={1}>{row[2]}</Text>
+                                            <Text style={[styles.cell, styles.planColumn]} numberOfLines={1}>{row[3]}</Text>
+                                        </View>
+                                    ))}
+                                </View>
+                            </View>
+
                             <TouchableOpacity style={styles.ctaButton} onPress={handleCreateAccount}>
-                                <Text style={styles.ctaButtonText}>Create Free Account & Try Premium</Text>
+                                <Text style={styles.ctaButtonText}>{t("onboarding_cta")}</Text>
                             </TouchableOpacity>
                         </View>
                     ),
-                    title: "Enjoy Premium – Try 3 Days Free",
-                    subtitle: "Unlimited recipes, ad-free experience, and full personalization.\nTry it free for 3 days – cancel anytime!",
-                },
+                    title: t("onboarding_premium_title"),
+                    subtitle: t("onboarding_premium_subtitle"),
+                }
             ]}
         />
     );
 };
+
 
 const styles = StyleSheet.create({
     ctaButton: {
@@ -94,6 +138,57 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
     },
+    comparisonTitle: {
+        fontSize: 18,
+        fontWeight: "bold",
+        marginBottom: 12,
+        color: "#333",
+    },
+
+    table: {
+        borderWidth: 1,
+        borderColor: "#ccc",
+        borderRadius: 8,
+        marginBottom: 20,
+        overflow: "hidden",
+        width: "100%",
+    },
+
+    tableHeader: {
+        backgroundColor: "#FCE71C",
+    },
+
+    tableRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: "100%",
+    },
+
+    headerCell: {
+        paddingVertical: 8,
+        paddingHorizontal: 6,
+        fontWeight: "bold",
+        fontSize: 12,
+        textAlign: "center",
+        borderRightWidth: 1,
+        borderColor: "#ccc",
+        backgroundColor: "#FCE71C",
+    },
+
+    cell: {
+        paddingVertical: 8,
+        paddingHorizontal: 6,
+        fontSize: 12,
+        textAlign: "center",
+        borderTopWidth: 1,
+        borderRightWidth: 1,
+        borderColor: "#ccc",
+        backgroundColor: "#fff",
+    },
+
+
+    featureColumn: { flex: 2.2 },
+    planColumn: { flex: 1 },
 });
 
 export default OnboardingScreen;

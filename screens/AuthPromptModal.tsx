@@ -7,8 +7,10 @@ import translations from "../data/translations.json";
 export default function AuthPromptModal({ visible, onClose }) {
     const navigation = useNavigation();
     const { language } = useLanguage();
-    const t = (key: string) => translations[language][key] || key;
-
+    const t = (key: string) => {
+        const langData = translations?.[language];
+        return langData?.[key] ?? `[${key}]`;
+    };
     return (
         <Modal visible={visible} animationType="slide" transparent={false}>
             <View style={styles.container}>

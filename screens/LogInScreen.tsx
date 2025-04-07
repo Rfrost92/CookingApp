@@ -1,7 +1,7 @@
 // LogInScreen.tsx
 import React, {useState} from "react";
 import {View, Text, TextInput, Button, StyleSheet, Alert, Linking, TouchableOpacity} from "react-native";
-import {logIn, resendVerificationEmail, signInWithGoogle} from "../services/authService";
+import {checkPremiumOffer, logIn, resendVerificationEmail, signInWithGoogle} from "../services/authService";
 import {useLanguage} from "../services/LanguageContext";
 import translations from "../data/translations.json";
 import {SafeAreaView} from "react-native-safe-area-context";
@@ -19,6 +19,7 @@ export default function LogInScreen({navigation}: any) {
             const user = await signInWithGoogle();
             Alert.alert(t("success"), t("logged_in_successfully"));
             navigation.navigate("Home");
+            await checkPremiumOffer(user.uid, navigation);
         } catch (error: any) {
             return;
         }
@@ -31,9 +32,10 @@ export default function LogInScreen({navigation}: any) {
         }
 
         try {
-            await logIn(email, password, t);
+            const user = await logIn(email, password, t);
             Alert.alert(t("success"), t("logged_in_successfully"));
             navigation.navigate("Home");
+            await checkPremiumOffer(user.uid, navigation);
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'Home' }],
