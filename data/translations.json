@@ -240,7 +240,9 @@
     "feature_weekly_requests": "Weekly Recipe Requests",
     "feature_custom_input": "Custom Ingredient Input",
     "feature_fridge_photo": "Fridge Photo Analysis",
-    "unlimited": "Unlimited"
+    "unlimited": "Unlimited",
+    "unlock_smart_detection": "Unlock Smart Ingredient Detection",
+    "detection_promo_description": "Take a photo of your fridge or pantry and let AI detect your ingredients automatically. It’s fast, fun, and super convenient!"
   },
 
 

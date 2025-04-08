@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
     TextInput,
     Alert,
-    Image
+    Image, ActivityIndicator
 } from "react-native";
 import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
@@ -23,6 +23,7 @@ import {AuthContext, useAuth} from "../contexts/AuthContext";
 import PremiumOnlyModal from "./PremiumOnlyModal";
 import {fetchIngredientsFromImage} from "../services/openaiService";
 import * as ImagePicker from "expo-image-picker";
+import PremiumOnlyDetectionModal from "./PremiumOnlyDetectionModal";
 
 export default function IngredientSelectionScreen() {
     const { language } = useLanguage(); // Get the selected language
@@ -37,6 +38,11 @@ export default function IngredientSelectionScreen() {
     const navigation = useNavigation();
     const { subscriptionType } = useAuth();
     const [showPremiumOnlyModal, setShowPremiumOnlyModal] = useState(false);
+    const [showPremiumDetectionModal, setShowPremiumDetectionModal] = useState(false);
+    const [showDetectedModal, setShowDetectedModal] = useState(false);
+    const [detectedIngredients, setDetectedIngredients] = useState<string[]>([]);
+    const [selectedDetected, setSelectedDetected] = useState<{ [key: string]: boolean }>({});
+    const [analyzingPhoto, setAnalyzingPhoto] = useState(false);
 
     useEffect(() => {
         const fetchIngredients = async () => {
@@ -275,6 +281,11 @@ export default function IngredientSelectionScreen() {
     }
 
     const handleTakePhoto = async () => {
+        if (subscriptionType !== "premium") {
+            setShowPremiumDetectionModal(true);
+            return;
+        }
+
         try {
             const { status } = await ImagePicker.requestCameraPermissionsAsync();
             if (status !== "granted") {
@@ -297,67 +308,79 @@ export default function IngredientSelectionScreen() {
                     return;
                 }
 
+                setAnalyzingPhoto(true);
                 const visionResponse = await fetchIngredientsFromImage(base64Image, language);
+                setAnalyzingPhoto(false);
 
-                if (visionResponse?.ingredients?.length) {
-                    const newIngs = visionResponse.ingredients;
+                const newIngs = visionResponse.ingredients;
+                const initialSelection = Object.fromEntries(newIngs.map(ing => [ing, true]));
 
-                    setCategories(prev => {
-                        return prev.map(category => {
-                            if (category.id !== "miscellaneous") return category;
-
-                            const existingIds = category.ingredients.map(ing => ing.name[language]?.toLowerCase());
-                            const additions = newIngs.filter(ing => !existingIds.includes(ing.toLowerCase())).map((ing, idx) => ({
-                                id: `photo-${Date.now()}-${idx}`,
-                                name: { [language]: ing }
-                            }));
-
-                            return {
-                                ...category,
-                                ingredients: [...category.ingredients, ...additions],
-                            };
-                        });
-                    });
-
-                    setFilteredCategories(prev => {
-                        return prev.map(category => {
-                            if (category.id !== "miscellaneous") return category;
-
-                            const existingIds = category.ingredients.map(ing => ing.name[language]?.toLowerCase());
-                            const additions = newIngs.filter(ing => !existingIds.includes(ing.toLowerCase())).map((ing, idx) => ({
-                                id: `photo-${Date.now()}-${idx}`,
-                                name: { [language]: ing }
-                            }));
-
-                            return {
-                                ...category,
-                                ingredients: [...category.ingredients, ...additions],
-                            };
-                        });
-                    });
-
-                    // Mark all (existing and added) ingredients from image as selected
-                    const newSelected: { [key: string]: boolean } = {};
-                    categories.forEach(cat => {
-                        if (cat.id === "miscellaneous") {
-                            cat.ingredients.forEach(ing => {
-                                if (newIngs.includes(ing.name[language]?.toLowerCase() || ing.name.en.toLowerCase())) {
-                                    newSelected[ing.id] = true;
-                                }
-                            });
-                        }
-                    });
-
-                    setSelectedIngredients(prev => ({ ...prev, ...newSelected }));
-                } else {
-                    Alert.alert("No ingredients detected", "Please try a clearer photo.");
-                }
+                setDetectedIngredients(newIngs);
+                setSelectedDetected(initialSelection);
+                setShowDetectedModal(true);
+            } else {
+                Alert.alert("No ingredients detected", "Please try a clearer photo.");
             }
         } catch (err) {
             console.error("Camera/photo error:", err);
             Alert.alert("Error", "Something went wrong while using the camera.");
         }
     };
+
+    const handleAddDetectedIngredients = () => {
+        const toAdd = detectedIngredients.filter(ing => selectedDetected[ing]);
+        const newSelected = { ...selectedIngredients };
+
+        const deepCopy = (arr: any[]) => JSON.parse(JSON.stringify(arr));
+        const updatedCategories = deepCopy(categories);
+        const updatedFiltered = deepCopy(filteredCategories);
+
+        // Build map of all ingredient names
+        const existingMap: { [lowerName: string]: { id: string } } = {};
+        for (const cat of updatedCategories) {
+            for (const ing of cat.ingredients) {
+                const name = (ing.name[language] || ing.name.en)?.toLowerCase();
+                if (name) existingMap[name] = ing;
+            }
+        }
+
+        console.log('existing', existingMap);
+        let timestamp = Date.now();
+
+        toAdd.forEach((ingName, idx) => {
+            const lower = ingName.toLowerCase();
+
+            // Select if exists
+            if (existingMap[lower]) {
+                newSelected[existingMap[lower].id] = true;
+                return;
+            }
+
+            // Create new ingredient
+            const newIng = {
+                id: `photo-${timestamp}-${idx}`,
+                name: { [language]: ingName },
+            };
+
+            // Add only to Miscellaneous in each structure
+            for (const target of [updatedCategories, updatedFiltered]) {
+                const misc = target.find(c => c.id === "miscellaneous");
+                if (misc) {
+                    misc.ingredients.push(newIng);
+                }
+            }
+
+
+            newSelected[newIng.id] = true;
+        });
+
+        setCategories(updatedCategories);
+        setFilteredCategories(updatedFiltered);
+        setSelectedIngredients(newSelected);
+        setShowDetectedModal(false);
+    };
+
+
 
     return (
         <SafeAreaView style={styles.container} >
@@ -453,6 +476,50 @@ export default function IngredientSelectionScreen() {
                 </TouchableOpacity>
             </View>
             <PremiumOnlyModal visible={showPremiumOnlyModal} onClose={() => setShowPremiumOnlyModal(false)} />
+            <PremiumOnlyDetectionModal visible={showPremiumDetectionModal} onClose={() => setShowPremiumDetectionModal(false)} />
+            {showDetectedModal && (
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalTitle}>Detected Ingredients</Text>
+                        {detectedIngredients.map((ingredient) => (
+                            <TouchableOpacity
+                                key={ingredient}
+                                style={styles.ingredientRow}
+                                onPress={() =>
+                                    setSelectedDetected(prev => ({
+                                        ...prev,
+                                        [ingredient]: !prev[ingredient],
+                                    }))
+                                }
+                            >
+                                <View style={styles.checkboxContainer}>
+                                    {selectedDetected[ingredient] ? (
+                                        <Ionicons name="checkmark" size={22} color="black" />
+                                    ) : (
+                                        <View style={styles.emptyCheckbox} />
+                                    )}
+                                </View>
+                                <Text style={styles.ingredientText}>{ingredient}</Text>
+                            </TouchableOpacity>
+                        ))}
+                        <TouchableOpacity
+                            style={styles.addSelectedButton}
+                            onPress={handleAddDetectedIngredients}
+                        >
+                            <Text style={styles.addSelectedText}>Add Selected</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )}
+
+            {analyzingPhoto && (
+                <View style={styles.modalOverlay}>
+                    <View style={styles.analyzingModal}>
+                        <Text style={styles.analyzingText}>Analyzing image...</Text>
+                        <ActivityIndicator size="large" color="#000" style={{ marginTop: 10 }} />
+                    </View>
+                </View>
+            )}
         </SafeAreaView>
     );
 }
@@ -622,4 +689,56 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         marginBottom: 5,
     },
+    modalOverlay: {
+        position: "absolute",
+        top: 0, left: 0, right: 0, bottom: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.6)",
+        justifyContent: "center",
+        alignItems: "center",
+        paddingHorizontal: 20,
+    },
+    modalContent: {
+        backgroundColor: "#fff",
+        borderRadius: 12,
+        padding: 20,
+        width: "100%",
+        maxHeight: "80%",
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: "bold",
+        marginBottom: 15,
+        textAlign: "center",
+    },
+    addButtonContainer: {
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        marginTop: 20,
+    },
+
+    addSelectedButton: {
+        backgroundColor: "#71f2c9", // your mint green
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+    },
+
+    addSelectedText: {
+        color: "black",
+        fontWeight: "bold",
+        textAlign: "center",
+    },
+    analyzingModal: {
+        backgroundColor: "#fff",
+        borderRadius: 12,
+        padding: 20,
+        alignItems: "center",
+        justifyContent: "center",
+        minWidth: 200,
+    },
+    analyzingText: {
+        fontSize: 16,
+        fontWeight: "bold",
+        textAlign: "center",
+    }
 });

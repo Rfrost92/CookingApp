@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Onboarding and premium prompting navigation works">
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Ingredient recognition works">
+      <change afterPath="$PROJECT_DIR$/assets/generated-fridge.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/PremiumOnlyDetectionModal.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/translations.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/translations.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/openaiService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/openaiService.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,14 +128,7 @@
       <workItem from="1743511737324" duration="30000" />
       <workItem from="1743511865228" duration="48192000" />
       <workItem from="1744043160448" duration="16000" />
-      <workItem from="1744043203157" duration="5393000" />
-    </task>
-    <task id="LOCAL-00002" summary="Add the search bar for ingredients">
-      <created>1736529328879</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1736529328879</updated>
+      <workItem from="1744043203157" duration="10488000" />
     </task>
     <task id="LOCAL-00003" summary="Add custom ingredients">
       <created>1736530230584</created>
@@ -473,7 +466,14 @@
       <option name="project" value="LOCAL" />
       <updated>1744042802821</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Ingredient recognition works">
+      <created>1744121236579</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1744121236579</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -492,7 +492,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Authentication with email almost fully works" />
     <MESSAGE value="Authentication with email likely fully works" />
     <MESSAGE value="Add terms, conditions, privacy and disclaimer skeleton" />
     <MESSAGE value="Add the lemon button on homescreen" />
@@ -517,7 +516,8 @@
     <MESSAGE value="Onboarding works" />
     <MESSAGE value="New initial sign up screen after onboarding" />
     <MESSAGE value="Onboarding and premium prompting navigation works" />
-    <option name="LAST_COMMIT_MESSAGE" value="Onboarding and premium prompting navigation works" />
+    <MESSAGE value="Ingredient recognition works" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ingredient recognition works" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
