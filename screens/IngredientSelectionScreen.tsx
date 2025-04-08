@@ -21,6 +21,8 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import {containsInappropriateWords, logInappropriateInput} from "../helpers/validator";
 import {AuthContext, useAuth} from "../contexts/AuthContext";
 import PremiumOnlyModal from "./PremiumOnlyModal";
+import {fetchIngredientsFromImage} from "../services/openaiService";
+import * as ImagePicker from "expo-image-picker";
 
 export default function IngredientSelectionScreen() {
     const { language } = useLanguage(); // Get the selected language
@@ -272,6 +274,91 @@ export default function IngredientSelectionScreen() {
         );
     }
 
+    const handleTakePhoto = async () => {
+        try {
+            const { status } = await ImagePicker.requestCameraPermissionsAsync();
+            if (status !== "granted") {
+                Alert.alert("Permission required", "Camera access is needed to scan ingredients.");
+                return;
+            }
+
+            const result = await ImagePicker.launchCameraAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                quality: 0.6,
+                base64: true,
+            });
+
+            if (!result.canceled && result.assets?.[0]?.base64) {
+                const asset = result.assets?.[0];
+                const base64Image = asset?.base64;
+
+                if (!base64Image) {
+                    Alert.alert("Image Error", "Failed to capture a valid photo.");
+                    return;
+                }
+
+                const visionResponse = await fetchIngredientsFromImage(base64Image, language);
+
+                if (visionResponse?.ingredients?.length) {
+                    const newIngs = visionResponse.ingredients;
+
+                    setCategories(prev => {
+                        return prev.map(category => {
+                            if (category.id !== "miscellaneous") return category;
+
+                            const existingIds = category.ingredients.map(ing => ing.name[language]?.toLowerCase());
+                            const additions = newIngs.filter(ing => !existingIds.includes(ing.toLowerCase())).map((ing, idx) => ({
+                                id: `photo-${Date.now()}-${idx}`,
+                                name: { [language]: ing }
+                            }));
+
+                            return {
+                                ...category,
+                                ingredients: [...category.ingredients, ...additions],
+                            };
+                        });
+                    });
+
+                    setFilteredCategories(prev => {
+                        return prev.map(category => {
+                            if (category.id !== "miscellaneous") return category;
+
+                            const existingIds = category.ingredients.map(ing => ing.name[language]?.toLowerCase());
+                            const additions = newIngs.filter(ing => !existingIds.includes(ing.toLowerCase())).map((ing, idx) => ({
+                                id: `photo-${Date.now()}-${idx}`,
+                                name: { [language]: ing }
+                            }));
+
+                            return {
+                                ...category,
+                                ingredients: [...category.ingredients, ...additions],
+                            };
+                        });
+                    });
+
+                    // Mark all (existing and added) ingredients from image as selected
+                    const newSelected: { [key: string]: boolean } = {};
+                    categories.forEach(cat => {
+                        if (cat.id === "miscellaneous") {
+                            cat.ingredients.forEach(ing => {
+                                if (newIngs.includes(ing.name[language]?.toLowerCase() || ing.name.en.toLowerCase())) {
+                                    newSelected[ing.id] = true;
+                                }
+                            });
+                        }
+                    });
+
+                    setSelectedIngredients(prev => ({ ...prev, ...newSelected }));
+                } else {
+                    Alert.alert("No ingredients detected", "Please try a clearer photo.");
+                }
+            }
+        } catch (err) {
+            console.error("Camera/photo error:", err);
+            Alert.alert("Error", "Something went wrong while using the camera.");
+        }
+    };
+
     return (
         <SafeAreaView style={styles.container} >
             <View style={styles.content}>
@@ -357,6 +444,9 @@ export default function IngredientSelectionScreen() {
             <View style={styles.bottomBar}>
                 <TouchableOpacity style={styles.bottomButton} onPress={() => setSelectedIngredients({})}>
                     <Text style={styles.bottomButtonText}>Reset</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.photoButton} onPress={handleTakePhoto}>
+                    <Ionicons name="camera" size={32} color="#000" />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.bottomButton} onPress={handleNext}>
                     <Text style={styles.bottomButtonText}>Next</Text>
@@ -525,5 +615,11 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         marginRight: 12,
+    },
+    photoButton: {
+        backgroundColor: "#fff",
+        padding: 10,
+        borderRadius: 30,
+        marginBottom: 5,
     },
 });

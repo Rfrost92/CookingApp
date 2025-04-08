@@ -368,3 +368,66 @@ const generateRecipeFluxImage = async (title, description) => {
         return null;
     }
 };
+
+export const fetchIngredientsFromImage = async (base64Image: string, language: string) => {
+    const localizedInstruction = {
+        en: `You're an ingredient detector AI. I will send you a photo of ingredients.
+Your task is to return a JSON list of the visible ingredients (no quantities or units). The ingredient names must be in English.
+The JSON key must be "ingredients".`,
+        de: `Du bist eine Zutatenerkennungs-KI. Ich sende dir ein Foto von Zutaten.
+Gib bitte eine JSON-Liste der erkannten Zutaten zurück (keine Mengenangaben oder Einheiten). Die Zutaten sollen auf Deutsch sein.
+Aber der Schlüssel muss auf Englisch bleiben: "ingredients".`,
+        ua: `Ти — ШІ для розпізнавання інгредієнтів. Я надішлю фото інгредієнтів.
+Поверни JSON-список інгредієнтів (без кількостей і одиниць). Інгредієнти мають бути українською.
+Але ключ повинен залишитися англійською — "ingredients".`,
+        ru: `Ты — ИИ для распознавания ингредиентов. Я пришлю фото ингредиентов.
+Верни JSON-список ингредиентов (без количеств и единиц). Названия должны быть на русском.
+НО ключ должен остаться английским — "ingredients".`,
+    };
+
+    const prompt = `${localizedInstruction[language] || localizedInstruction.en}
+
+Return response strictly in this format:
+{ "ingredients": ["Ingredient1", "Ingredient2", "Ingredient3", ...] }
+Again: "ingredients" key should stay in English, the ingredients list ("Ingredient1", "Ingredient2") should be in the language that I asked you before: ${language}.
+Only return that JSON. Do not include explanations or anything else.`;
+
+    try {
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o",
+            messages: [
+                {
+                    role: "user",
+                    content: [
+                        { type: "text", text: prompt },
+                        { type: "image_url", image_url: { url: `data:image/jpeg;base64,${base64Image}` } },
+                    ],
+                },
+            ],
+            max_tokens: 500,
+        });
+
+        const raw = response.choices?.[0]?.message?.content;
+
+        if (!raw || typeof raw !== "string") {
+            console.warn("Unexpected vision response format:", response);
+            return null;
+        }
+
+        const match = raw.match(/\{[\s\S]*?\}/);
+        if (match) {
+            try {
+                return JSON.parse(match[0]);
+            } catch (err) {
+                console.error("❌ JSON parsing failed from AI vision result:", match[0]);
+                return null;
+            }
+        } else {
+            console.warn("No JSON object found in response:", raw);
+            return null;
+        }
+    } catch (err) {
+        console.error("OpenAI vision error:", err);
+        return null;
+    }
+};
