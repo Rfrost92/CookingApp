@@ -7,6 +7,8 @@ import { getTranslation } from "../helpers/loadTranslations";
 import translations from "../data/translations.json";
 import { Ionicons } from "@expo/vector-icons";
 import {SafeAreaView} from "react-native-safe-area-context";
+import {BannerAd, BannerAdSize, TestIds} from "react-native-google-mobile-ads";
+import {useAuth} from "../contexts/AuthContext";
 
 const appliances = [
     { id: "any", name: "Any" },
@@ -25,6 +27,7 @@ export default function ApplianceSelectionScreen() {
     const route = useRoute();
     const { selectedIngredients, selectedData } = route.params;
     const t = (key: string) => getTranslation(language, key);
+    const { subscriptionType } = useAuth();
 
     const [selectedAppliances, setSelectedAppliances] = useState<{ [key: string]: boolean }>({
         any: true, // Default selection
@@ -105,6 +108,15 @@ export default function ApplianceSelectionScreen() {
                 contentContainerStyle={styles.listContent}
             />
 
+            {/* Banner Ad for non-premium users */}
+            {subscriptionType !== "premium" && (
+                <View style={styles.adContainer}>
+                    <BannerAd
+                        unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534~2963819076'}
+                        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                    />
+                </View>
+            )}
             {/* Bottom Bar */}
             <View style={styles.bottomBar}>
                 <TouchableOpacity style={styles.bottomButton} onPress={handleReset}>
@@ -187,6 +199,12 @@ const styles = StyleSheet.create({
     bottomButtonText: {
         fontSize: 18,
         color: "#fff",
+    },
+    adContainer: {
+        width: "100%",
+        alignItems: "center",
+        marginTop: 0,
+        marginBottom: 50,
     },
 });
 

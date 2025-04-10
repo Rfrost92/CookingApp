@@ -13,12 +13,13 @@ import {
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Slider from "@react-native-community/slider";
 import { fetchRecipeScenario2 } from "../services/openaiService";
-import { AuthContext } from "../contexts/AuthContext";
+import {AuthContext, useAuth} from "../contexts/AuthContext";
 import translations from "../data/translations.json";
 import { useLanguage } from "../services/LanguageContext";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import PremiumModal from "./PremiumModal";
+import {BannerAd, BannerAdSize, TestIds} from "react-native-google-mobile-ads";
 
 export default function Scenario2Step3Screen() {
     const { user } = useContext(AuthContext);
@@ -37,6 +38,7 @@ export default function Scenario2Step3Screen() {
     const navigation = useNavigation();
     const route = useRoute();
     const { selectedData, selectedAppliances } = route.params;
+    const { subscriptionType } = useAuth();
 
     const handleReset = () => {
         setMealType("Dinner");
@@ -126,6 +128,8 @@ export default function Scenario2Step3Screen() {
 
     return (
         <SafeAreaView style={styles.container}>
+            <View style={{ flex: 1 }}>
+
             {/* Header */}
             <View style={styles.header}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
@@ -231,7 +235,16 @@ export default function Scenario2Step3Screen() {
                     </TouchableOpacity>
                 </View>
             </View>
-
+            </View>
+            {/* Banner Ad for non-premium users */}
+            {subscriptionType !== "premium" && (
+                <View style={styles.adContainer}>
+                    <BannerAd
+                        unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534~2963819076'}
+                        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                    />
+                </View>
+            )}
             {/* Bottom Bar */}
             <View style={styles.bottomBar}>
                 <TouchableOpacity style={styles.bottomButton} onPress={handleReset}>
@@ -432,5 +445,11 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#000",
         textAlign: "center"
-    }
+    },
+    adContainer: {
+        width: "100%",
+        alignItems: "center",
+        backgroundColor: "#71f2c9",
+        paddingBottom: 15,
+    },
 });

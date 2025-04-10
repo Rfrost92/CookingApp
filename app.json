@@ -17,7 +17,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.rFrost.SmartChef",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "infoPlist": {
+        "GADApplicationIdentifier": "ca-app-pub-5120112871612534~2963819076",
+        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
+      }
     },
     "android": {
       "googleServicesFile": "./google-services.json",
@@ -56,5 +60,8 @@
         }
       ]
     ]
+  },
+  "react-native-google-mobile-ads": {
+    "ios_app_id": "ca-app-pub-5120112871612534~2963819076"
   }
 }

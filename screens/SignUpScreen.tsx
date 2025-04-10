@@ -94,7 +94,7 @@ export default function SignUpScreen({ navigation }: any) {
             {/* Terms and Conditions Notice */}
             <Text style={styles.agreementText}>
                 {t("by_signing_up")}{" "}
-                <Text onPress={() => Linking.openURL("https://yourapp.com/terms")} style={styles.linkText}>
+                <Text onPress={() => Linking.openURL("https://rfrostapps1.web.app/terms.html")} style={styles.linkText}>
                     {t("terms_of_use")}
                 </Text>,{" "}
                 <Text onPress={() => Linking.openURL("https://yourapp.com/privacy")} style={styles.linkText}>

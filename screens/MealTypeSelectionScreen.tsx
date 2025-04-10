@@ -15,13 +15,14 @@ import {
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Slider from "@react-native-community/slider";
 import { fetchRecipeScenario1 } from "../services/openaiService";
-import { AuthContext } from "../contexts/AuthContext";
+import {AuthContext, useAuth} from "../contexts/AuthContext";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Ionicons} from "@expo/vector-icons";
 import {getTranslation} from "../helpers/loadTranslations";
 import PremiumModal from "./PremiumModal";
+import {BannerAd, BannerAdSize, TestIds} from "react-native-google-mobile-ads";
 
 export default function MealTypeSelectionScreen() {
     const { user } = useContext(AuthContext);
@@ -41,6 +42,8 @@ export default function MealTypeSelectionScreen() {
     const navigation = useNavigation();
     const route = useRoute();
     const { selectedIngredients, selectedAppliances } = route.params;
+    const { subscriptionType } = useAuth();
+
 
     const handleReset = () => {
         setMealType("Dinner");
@@ -130,6 +133,7 @@ export default function MealTypeSelectionScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
+            <View style={{ flex: 1 }}>
             {/* Header */}
             <View style={styles.header}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
@@ -250,6 +254,16 @@ export default function MealTypeSelectionScreen() {
                 </View>
 
             </View>
+            </View>
+            {/* Banner Ad for non-premium users */}
+            {subscriptionType !== "premium" && (
+                <View style={styles.adContainer}>
+                    <BannerAd
+                        unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534~2963819076'}
+                        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                    />
+                </View>
+            )}
 
             {/* Bottom Bar */}
             <View style={styles.bottomBar}>
@@ -265,6 +279,15 @@ export default function MealTypeSelectionScreen() {
                     <View style={styles.loadingBox}>
                         <ActivityIndicator size="large" color="#FCE71C" />
                         <Text style={styles.loadingText}>{t("generating_recipe")}</Text>
+
+                        {subscriptionType !== "premium" && (
+                            <View style={{ marginTop: 20 }}>
+                                <BannerAd
+                                    unitId={__DEV__ ? TestIds.BANNER : "ca-app-pub-5120112871612534/AD_UNIT_ID_FOR_LOADING"} // Replace with your real one
+                                    size={BannerAdSize.LARGE_BANNER}
+                                />
+                            </View>
+                        )}
                         {/* Placeholder for Ad: Future Implementation */}
                         {/* <AdComponent /> */}
                     </View>
@@ -453,4 +476,11 @@ const styles = StyleSheet.create({
         color: "#000",
         textAlign: "center"
     },
+    adContainer: {
+        width: "100%",
+        alignItems: "center",
+        backgroundColor: "#71f2c9",
+        paddingBottom: 15,
+    },
+
 });

@@ -22,6 +22,7 @@ import {getTranslation} from "../helpers/loadTranslations";
 import {AuthContext, useAuth} from "../contexts/AuthContext";
 import PremiumModal from "./PremiumModal";
 import PremiumOnlyModal from "./PremiumOnlyModal";
+import {BannerAd, BannerAdSize, TestIds} from "react-native-google-mobile-ads";
 
 export default function Scenario2Step1Screen() {
     const { language } = useLanguage();
@@ -368,6 +369,15 @@ export default function Scenario2Step1Screen() {
                 )}
             </View>
 
+            {/* Banner Ad for non-premium users */}
+            {subscriptionType !== "premium" && (
+                <View style={styles.adContainer}>
+                    <BannerAd
+                        unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534~2963819076'}
+                        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                    />
+                </View>
+            )}
             {/* Bottom Navigation */}
             <View style={styles.bottomBar}>
                 {/* Reset Button - Replaces Back Button */}
@@ -518,6 +528,12 @@ const styles = StyleSheet.create({
     },
     useButtonSelected: {
         backgroundColor: "#FCE71C", // Yellow when selected
+    },
+    adContainer: {
+        width: "100%",
+        alignItems: "center",
+        backgroundColor: "#71f2c9",
+        paddingBottom: 15,
     },
 
 });

@@ -1,3 +1,4 @@
+//HelpScreen.tsx
 import React, {useContext, useState} from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Modal, Linking, TextInput, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -8,6 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { db } from "../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import {AuthContext} from "../contexts/AuthContext";
+import InstructionSlides from "./InstructionSlides";
 
 const MAX_FEEDBACK_LENGTH = 500; // Define a reasonable limit for user feedback storage
 
@@ -21,15 +23,7 @@ export default function HelpScreen() {
     const [modalContent, setModalContent] = useState("");
     const [feedbackVisible, setFeedbackVisible] = useState(false);
     const [feedbackText, setFeedbackText] = useState("");
-
-    const openModal = (contentType: string) => {
-        if (contentType === "instructions") {
-            setModalContent(t("instructions_text"));
-        } else if (contentType === "disclaimer") {
-            setModalContent(t("disclaimer_text"));
-        }
-        setModalVisible(true);
-    };
+    const [showInstructionsSlides, setShowInstructionsSlides] = useState(false);
 
     const handleBack = () => {
         if (navigation.canGoBack()) {
@@ -60,6 +54,15 @@ export default function HelpScreen() {
         }
     };
 
+    const openModal = (contentType: string) => {
+        if (contentType === "instructions") {
+            setShowInstructionsSlides(true);
+        } else if (contentType === "disclaimer") {
+            setModalContent(t("disclaimer_text"));
+            setModalVisible(true);
+        }
+    };
+
     return (
         <SafeAreaView style={styles.safeContainer}>
             {/* Custom Header with Back Button */}
@@ -77,16 +80,16 @@ export default function HelpScreen() {
                 </TouchableOpacity>
 
                 {/* Disclaimer Button */}
-                <TouchableOpacity style={styles.button} onPress={() => openModal("disclaimer")}>
+                <TouchableOpacity style={styles.button} onPress={() => Linking.openURL("https://rfrostapps1.web.app/disclaimer.html")}>
                     <Text style={styles.buttonText}>{t("disclaimer")}</Text>
                 </TouchableOpacity>
 
                 {/* Legal Links */}
-                <TouchableOpacity style={styles.linkButton} onPress={() => Linking.openURL("https://your-terms-url.com")}>
-                    <Text style={styles.linkText}>{t("terms_and_conditions")}</Text>
+                <TouchableOpacity style={styles.button} onPress={() => Linking.openURL("https://rfrostapps1.web.app/terms.html")}>
+                    <Text style={styles.buttonText}>{t("terms_and_conditions")}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.linkButton} onPress={() => Linking.openURL("https://your-privacy-policy-url.com")}>
-                    <Text style={styles.linkText}>{t("privacy_policy")}</Text>
+                <TouchableOpacity style={styles.button} onPress={() => Linking.openURL("https://rfrostapps1.web.app/privacy.html")}>
+                    <Text style={styles.buttonText}>{t("privacy_policy")}</Text>
                 </TouchableOpacity>
 
                 {/* Feedback Button */}
@@ -139,6 +142,11 @@ export default function HelpScreen() {
                     </View>
                 </View>
             </Modal>
+            {showInstructionsSlides && (
+                <Modal visible={true} animationType="slide" transparent={false}>
+                    <InstructionSlides onDone={() => setShowInstructionsSlides(false)} />
+                </Modal>
+            )}
         </SafeAreaView>
     );
 }

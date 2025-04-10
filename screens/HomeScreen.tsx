@@ -27,6 +27,8 @@ import {useLanguage} from "../services/LanguageContext";
 import translations from "../data/translations.json";
 import {Ionicons} from '@expo/vector-icons';
 import AuthPromptModal from "./AuthPromptModal";
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+import {SafeAreaView} from "react-native-safe-area-context";
 
 const availableLanguages = [
     {code: "en", name: "English"},
@@ -160,12 +162,23 @@ export default function HomeScreen() {
 
 
     return (
+        <SafeAreaView style={styles.screenWrapper}>
+            {/* Banner Ad for non-premium users */}
+            {subscriptionType !== "premium" && (
+                <View style={styles.adContainer}>
+                    <BannerAd
+                        unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534~2963819076'}
+                        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                    />
+                </View>
+            )}
         <TouchableWithoutFeedback
             onPress={() => {
                 setLemonMenuVisible(false); // Close Lemon Menu when tapping anywhere
                 Keyboard.dismiss(); // Dismiss keyboard if open
             }}
         >
+
             <View style={styles.container}>
                 {/* Logo at the top */}
                 <Image source={require("../assets/orange.png")} style={styles.logo}/>
@@ -231,24 +244,7 @@ export default function HomeScreen() {
                     */}
                     </View>
                 )}
-                <View style={styles.bottomBar}>
-                    {/* Lemon Button */}
-                    <TouchableOpacity style={styles.lemonButton}
-                                      onPress={() => setLemonMenuVisible(!isLemonMenuVisible)}>
-                        <Image source={require("../assets/lemonIcon.png")} style={styles.lemonIcon}/>
-                    </TouchableOpacity>
 
-                    {/* Recipe Book Icon */}
-                    <TouchableOpacity     style={[styles.navButton, !isLoggedIn && styles.lockedButton]}
-                                          onPress={handleRecipeBookPress}>
-                        <Image source={require("../assets/book.png")} style={styles.bookIcon}/>
-                    </TouchableOpacity>
-
-                    {/* Language Selection (Current Language Code) */}
-                    <TouchableOpacity style={styles.navButton} onPress={handleLanguageChange}>
-                        <Text style={styles.languageCode}>{language.toUpperCase()}</Text>
-                    </TouchableOpacity>
-                </View>
 
                 {/* Account Modal */}
                 <Modal animationType="slide" transparent={true} visible={accountModalVisible}
@@ -348,8 +344,27 @@ export default function HomeScreen() {
                 </Modal>
                 <AuthPromptModal visible={showAuthPromptModal} onClose={() => setShowAuthPromptModal(false)} />
             </View>
-        </TouchableWithoutFeedback>
 
+        </TouchableWithoutFeedback>
+            <View style={styles.bottomBar}>
+                {/* Lemon Button */}
+                <TouchableOpacity style={styles.lemonButton}
+                                  onPress={() => setLemonMenuVisible(!isLemonMenuVisible)}>
+                    <Image source={require("../assets/lemonIcon.png")} style={styles.lemonIcon}/>
+                </TouchableOpacity>
+
+                {/* Recipe Book Icon */}
+                <TouchableOpacity     style={[styles.navButton, !isLoggedIn && styles.lockedButton]}
+                                      onPress={handleRecipeBookPress}>
+                    <Image source={require("../assets/book.png")} style={styles.bookIcon}/>
+                </TouchableOpacity>
+
+                {/* Language Selection (Current Language Code) */}
+                <TouchableOpacity style={styles.navButton} onPress={handleLanguageChange}>
+                    <Text style={styles.languageCode}>{language.toUpperCase()}</Text>
+                </TouchableOpacity>
+            </View>
+        </SafeAreaView>
     );
 }
 
@@ -420,15 +435,18 @@ const styles = StyleSheet.create({
         flexShrink: 1,  // Ensures text wraps instead of overflowing
     },
     bottomBar: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",  // Ensure equal spacing
         position: "absolute",
+        left: 0,
+        right: 0,
         bottom: 0,
-        width: "100%",  // Ensure it stretches full width
-        backgroundColor: "#000",  // Black background
+        width: "100%", // Fully stretched
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        backgroundColor: "#000",
         paddingVertical: 12,
-        paddingHorizontal: 25,
+        paddingHorizontal: 35, // Internal padding for button spacing
+        minHeight: 70,
     },
     navButton: {
         flex: 1,
@@ -572,7 +590,7 @@ const styles = StyleSheet.create({
 
     lemonMenu: {
         position: "absolute",
-        bottom: 60,
+        bottom: 35,
         left: 10,
         backgroundColor: "white",
         padding: 10,
@@ -629,5 +647,17 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: "#555",
         marginBottom: 10,
+    },
+    adContainer: {
+        width: "100%",
+        alignItems: "center",
+        marginTop: 0,
+        marginBottom: 0,
+    },
+    screenWrapper: {
+        flex: 1,
+        backgroundColor: "#71f2c9",
+        paddingTop: 0, // Or SafeAreaView if needed
+        paddingBottom: 0, // Or SafeAreaView if needed
     },
 });

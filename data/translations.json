@@ -242,7 +242,18 @@
     "feature_fridge_photo": "Fridge Photo Analysis",
     "unlimited": "Unlimited",
     "unlock_smart_detection": "Unlock Smart Ingredient Detection",
-    "detection_promo_description": "Take a photo of your fridge or pantry and let AI detect your ingredients automatically. It’s fast, fun, and super convenient!"
+    "detection_promo_description": "Take a photo of your fridge or pantry and let AI detect your ingredients automatically. It’s fast, fun, and super convenient!",
+    "slide1_title": "🥬 Welcome to SmartChef!",
+    "slide1_subtitle": "SmartChef helps you cook smarter with what you already have in your kitchen.\n\nChoose from 3 cooking modes:\n🍳 Classic Recipes\n🧠 AI-Personalized Recipes\n🧺 Cook from Available Ingredients",
+    "slide2_title": "👤 Why Create an Account?",
+    "slide2_subtitle": "By signing up (for free!) you unlock:\n\n✅ All 3 cooking scenarios\n✅ Weekly recipe limit of 2 requests\n✅ Option to try SmartChef Plus free for 3 days\n✅ Save and revisit your favorite recipes",
+    "slide3_title": "📸 Ingredient Detection Magic",
+    "slide3_subtitle": "Our coolest feature!\n\nTake a photo of your fridge 🧊\nWe detect the ingredients using AI 🤖\nGet recipes instantly based on what we see 👁️\n\nExclusive to SmartChef Plus members.",
+    "slide4_title": "🚀 Go Further with SmartChef Plus",
+    "slide4_subtitle": "SmartChef Plus members get:\n\n✅ Unlimited recipe requests\n✅ Custom input support (add any ingredient/dish)\n✅ 📷 Ingredient photo detection\n✅ Priority access to new features\n✅ 3-day free trial – cancel anytime!",
+    "slide5_title": "🧾 Weekly Usage Limits",
+    "slide5_subtitle": "🔓 No account? → 2 requests/week\n👤 Free account? → 2 requests/week\n✨ SmartChef Plus? → Unlimited access!\n\nCreate your account now to explore everything SmartChef has to offer!"
+
   },
 
 

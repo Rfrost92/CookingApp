@@ -89,14 +89,14 @@ export default function InitialSignUpScreen({ navigation }: any) {
 
             <Text style={styles.agreementText}>
                 {t("by_signing_up")}{" "}
-                <Text onPress={() => Linking.openURL("https://yourapp.com/terms")} style={styles.linkText}>
+                <Text onPress={() => Linking.openURL("https://rfrostapps1.web.app/terms.html")} style={styles.linkText}>
                     {t("terms_of_use")}
                 </Text>,{" "}
-                <Text onPress={() => Linking.openURL("https://yourapp.com/privacy")} style={styles.linkText}>
+                <Text onPress={() => Linking.openURL("https://rfrostapps1.web.app/privacy.html")} style={styles.linkText}>
                     {t("privacy_policy")}
                 </Text>{" "}
                 {t("and")}{" "}
-                <Text onPress={() => Linking.openURL("https://yourapp.com/disclaimer")} style={styles.linkText}>
+                <Text onPress={() => Linking.openURL("https://rfrostapps1.web.app/disclaimer.html")} style={styles.linkText}>
                     {t("disclaimer")}
                 </Text>
             </Text>

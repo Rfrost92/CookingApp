@@ -22,6 +22,7 @@ import {containsInappropriateWords, logInappropriateInput} from "../helpers/vali
 import {getTranslation} from "../helpers/loadTranslations";
 import PremiumModal from "./PremiumModal";
 import PremiumOnlyModal from "./PremiumOnlyModal";
+import {BannerAd, BannerAdSize, TestIds} from "react-native-google-mobile-ads";
 
 export default function ChooseClassicRecipeScreen() {
     const { user, isLoggedIn } = useContext(AuthContext);
@@ -207,6 +208,15 @@ export default function ChooseClassicRecipeScreen() {
                 renderItem={renderDish}
                 contentContainerStyle={styles.listContent}
             />
+            {/* Banner Ad for non-premium users */}
+            {subscriptionType !== "premium" && (
+                <View style={styles.adContainer}>
+                    <BannerAd
+                        unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534~2963819076'}
+                        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                    />
+                </View>
+            )}
             <Modal visible={isLoading} transparent={true} animationType="fade">
                 <View style={styles.loadingContainer}>
                     <View style={styles.loadingBox}>
@@ -340,5 +350,15 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#000",
         textAlign: "center"
-    }
+    },
+    adContainer: {
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: "100%", // Fully stretched
+        paddingVertical: 0,
+        paddingHorizontal: 0, // Internal padding for button spacing
+        minHeight: 70,
+    },
 });

@@ -143,15 +143,15 @@ export default function LogInScreen({navigation}: any) {
             {/* Terms and Conditions Notice */}
             <Text style={styles.agreementText}>
                 {t("by_signing_in") + " "}
-                <Text style={styles.linkText} onPress={() => Linking.openURL("https://yourapp.com/terms")}>
+                <Text style={styles.linkText} onPress={() => Linking.openURL("https://rfrostapps1.web.app/terms.html")}>
                     {t("terms_of_use")}
                 </Text>
                 {", "}
-                <Text style={styles.linkText} onPress={() => Linking.openURL("https://yourapp.com/privacy")}>
+                <Text style={styles.linkText} onPress={() => Linking.openURL("https://rfrostapps1.web.app/privacy.html")}>
                     {t("privacy_policy")}
                 </Text>
                 {" " + t("and") + " "}
-                <Text style={styles.linkText} onPress={() => Linking.openURL("https://yourapp.com/disclaimer")}>
+                <Text style={styles.linkText} onPress={() => Linking.openURL("https://rfrostapps1.web.app/disclaimer.html")}>
                     {t("disclaimer")}
                 </Text>
             </Text>
