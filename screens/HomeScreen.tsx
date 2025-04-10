@@ -169,6 +169,11 @@ export default function HomeScreen() {
                     <BannerAd
                         unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534/1046373801'}
                         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                        requestOptions={{
+                            requestNonPersonalizedAdsOnly: true,
+                        }}
+                        onAdLoaded={() => console.log('✅ Banner loaded')}
+                        onAdFailedToLoad={(err) => console.warn('❌ Banner failed:', err)}
                     />
                 </View>
             )}
