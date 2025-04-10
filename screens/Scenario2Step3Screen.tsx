@@ -1,5 +1,5 @@
 // Scenario2Step3Screen.ts
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
     View,
     Text,
@@ -19,7 +19,14 @@ import { useLanguage } from "../services/LanguageContext";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import PremiumModal from "./PremiumModal";
-import {BannerAd, BannerAdSize, TestIds} from "react-native-google-mobile-ads";
+import {BannerAd, BannerAdSize, InterstitialAd, TestIds} from "react-native-google-mobile-ads";
+
+const interstitial = InterstitialAd.createForAdRequest(
+    __DEV__ ? TestIds.INTERSTITIAL : "ca-app-pub-5120112871612534/5030453482",
+    {
+        requestNonPersonalizedAdsOnly: true,
+    }
+);
 
 export default function Scenario2Step3Screen() {
     const { user } = useContext(AuthContext);
@@ -39,6 +46,16 @@ export default function Scenario2Step3Screen() {
     const route = useRoute();
     const { selectedData, selectedAppliances } = route.params;
     const { subscriptionType } = useAuth();
+
+    useEffect(() => {
+        const unsubscribe = interstitial.addAdEventListener("loaded", () => {
+            console.log("Interstitial ad loaded");
+        });
+
+        interstitial.load();
+
+        return () => unsubscribe();
+    }, []);
 
     const handleReset = () => {
         setMealType("Dinner");
@@ -70,7 +87,7 @@ export default function Scenario2Step3Screen() {
         }
 
         const serializableUser = user ? { uid: user.uid } : null;
-        setIsLoading(true); // Show loading screen
+        setIsLoading(true);
 
         const requestData = {
             ...selectedData,
@@ -87,43 +104,42 @@ export default function Scenario2Step3Screen() {
 
         const response = await fetchRecipeScenario2(requestData);
 
-        setIsLoading(false); // Hide loading screen
-
         if (response?.error) {
+            setIsLoading(false); // ✅ hide loading
+
             if (response.error === "Error: Your input might be inappropriate or invalid. Try a different request.") {
-                Alert.alert(
-                    t("error"),
-                    t("inappropriate"),
-                    [{ text: "OK" }]
-                );
+                Alert.alert(t("error"), t("inappropriate"), [{ text: "OK" }]);
                 return;
             }
             if (response.error === "Error: Weekly request limit reached.") {
                 if (!user) {
-                    Alert.alert(
-                        t("weekly_limit_reached"),
-                        t("signup_to_continue"),
-                        [
-                            {text: t("ok")},
-                            {
-                                text: t("log_in"),
-                                onPress: () => navigation.navigate("LogIn"),
-                            },
-                        ]
-                    );
+                    Alert.alert(t("weekly_limit_reached"), t("signup_to_continue"), [
+                        { text: t("ok") },
+                        { text: t("log_in"), onPress: () => navigation.navigate("LogIn") },
+                    ]);
                 } else {
-                    setTimeout(() => {
-                        setShowPremiumModal(true);
-                    }, 500);
+                    setTimeout(() => setShowPremiumModal(true), 500);
                 }
                 return;
             }
-            return; // **Prevent further execution**
+            return;
         }
 
         const scenario = 2;
         const recipe = response.recipe;
-        navigation.navigate("RecipeResult", { recipe, requestData, scenario, image: response.image });
+
+        if (subscriptionType !== "premium" && interstitial?.loaded) {
+            interstitial.show();
+
+            const unsubscribe = interstitial.addAdEventListener("closed", () => {
+                setIsLoading(false); // ✅ hide loading after ad closes
+                navigation.navigate("RecipeResult", { recipe, requestData, scenario, image: response.image });
+                unsubscribe(); // ✅ clean up
+            });
+        } else {
+            setIsLoading(false); // ✅ hide loading if no ad
+            navigation.navigate("RecipeResult", { recipe, requestData, scenario, image: response.image });
+        }
     };
 
     return (
@@ -240,7 +256,7 @@ export default function Scenario2Step3Screen() {
             {subscriptionType !== "premium" && (
                 <View style={styles.adContainer}>
                     <BannerAd
-                        unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534~2963819076'}
+                        unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534/8043156879'}
                         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
                     />
                 </View>
@@ -259,8 +275,14 @@ export default function Scenario2Step3Screen() {
                     <View style={styles.loadingBox}>
                         <ActivityIndicator size="large" color="#FCE71C" />
                         <Text style={styles.loadingText}>{t("generating_recipe")}</Text>
-                        {/* Placeholder for Ad: Future Implementation */}
-                        {/* <AdComponent /> */}
+                        {subscriptionType !== "premium" && (
+                            <View style={{ marginTop: 20 }}>
+                                <BannerAd
+                                    unitId={__DEV__ ? TestIds.BANNER : "ca-app-pub-5120112871612534/9863977768"} // Replace with your real one
+                                    size={BannerAdSize.LARGE_BANNER}
+                                />
+                            </View>
+                        )}
                     </View>
                 </View>
             </Modal>

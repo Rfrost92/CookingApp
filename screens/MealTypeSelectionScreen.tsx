@@ -1,5 +1,5 @@
 // MealTypeSelectionScreen.tsx
-import React, { useContext, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
     View,
     Text,
@@ -22,7 +22,16 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import {Ionicons} from "@expo/vector-icons";
 import {getTranslation} from "../helpers/loadTranslations";
 import PremiumModal from "./PremiumModal";
-import {BannerAd, BannerAdSize, TestIds} from "react-native-google-mobile-ads";
+import {BannerAd, BannerAdSize, InterstitialAd, TestIds} from "react-native-google-mobile-ads";
+
+const interstitial = InterstitialAd.createForAdRequest(
+    __DEV__
+        ? TestIds.INTERSTITIAL
+        : 'ca-app-pub-5120112871612534/5030453482',
+    {
+        requestNonPersonalizedAdsOnly: true,
+    }
+);
 
 export default function MealTypeSelectionScreen() {
     const { user } = useContext(AuthContext);
@@ -44,6 +53,16 @@ export default function MealTypeSelectionScreen() {
     const { selectedIngredients, selectedAppliances } = route.params;
     const { subscriptionType } = useAuth();
 
+
+    useEffect(() => {
+        const unsubscribe = interstitial.addAdEventListener('loaded', () => {
+            console.log('Interstitial ad loaded');
+        });
+
+        interstitial.load();
+
+        return () => unsubscribe();
+    }, []);
 
     const handleReset = () => {
         setMealType("Dinner");
@@ -93,42 +112,53 @@ export default function MealTypeSelectionScreen() {
 
         const response = await fetchRecipeScenario1(requestData);
 
-        setIsLoading(false); // Hide loading screen
-
         if (response?.error) {
+            setIsLoading(false); // Hide loading screen
+
             if (response.error === "Error: Your input might be inappropriate or invalid. Try a different request.") {
-                Alert.alert(
-                    t("error"),
-                    t("inappropriate"),
-                    [{ text: "OK" }]
-                );
+                Alert.alert(t("error"), t("inappropriate"), [{ text: "OK" }]);
                 return;
             }
+
             if (response.error === "Error: Weekly request limit reached.") {
                 if (!user) {
-                    Alert.alert(
-                        t("weekly_limit_reached"),
-                        t("signup_to_continue"),
-                        [
-                            {text: t("ok")},
-                            {
-                                text: t("log_in"),
-                                onPress: () => navigation.navigate("LogIn"),
-                            },
-                        ]
-                    );
+                    Alert.alert(t("weekly_limit_reached"), t("signup_to_continue"), [
+                        { text: t("ok") },
+                        { text: t("log_in"), onPress: () => navigation.navigate("LogIn") },
+                    ]);
                 } else {
-                    setTimeout(() => {
-                        setShowPremiumModal(true);
-                    }, 500);
+                    setTimeout(() => setShowPremiumModal(true), 500);
                 }
                 return;
             }
         } else {
             const scenario = 1;
             const recipe = response.recipe;
-            navigation.navigate("RecipeResult", { recipe, requestData, scenario, image:response.image });
+
+            if (subscriptionType !== "premium" && interstitial?.loaded) {
+                interstitial.show();
+
+                const unsubscribe = interstitial.addAdEventListener("closed", () => {
+                    setIsLoading(false); // ✅ Now we hide the loading modal
+                    navigation.navigate("RecipeResult", {
+                        recipe,
+                        requestData,
+                        scenario,
+                        image: response.image,
+                    });
+                    unsubscribe(); // Clean up
+                });
+            } else {
+                setIsLoading(false); // ✅ Also handle this fallback path
+                navigation.navigate("RecipeResult", {
+                    recipe,
+                    requestData,
+                    scenario,
+                    image: response.image,
+                });
+            }
         }
+
     };
 
     return (
@@ -259,7 +289,7 @@ export default function MealTypeSelectionScreen() {
             {subscriptionType !== "premium" && (
                 <View style={styles.adContainer}>
                     <BannerAd
-                        unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534~2963819076'}
+                        unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534/8043156879'}
                         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
                     />
                 </View>
@@ -283,7 +313,7 @@ export default function MealTypeSelectionScreen() {
                         {subscriptionType !== "premium" && (
                             <View style={{ marginTop: 20 }}>
                                 <BannerAd
-                                    unitId={__DEV__ ? TestIds.BANNER : "ca-app-pub-5120112871612534/AD_UNIT_ID_FOR_LOADING"} // Replace with your real one
+                                    unitId={__DEV__ ? TestIds.BANNER : "ca-app-pub-5120112871612534/9863977768"} // Replace with your real one
                                     size={BannerAdSize.LARGE_BANNER}
                                 />
                             </View>

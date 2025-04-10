@@ -112,7 +112,7 @@ export default function ApplianceSelectionScreen() {
             {subscriptionType !== "premium" && (
                 <View style={styles.adContainer}>
                     <BannerAd
-                        unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534~2963819076'}
+                        unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534/8043156879'}
                         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
                     />
                 </View>

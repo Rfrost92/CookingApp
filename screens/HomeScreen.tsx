@@ -167,7 +167,7 @@ export default function HomeScreen() {
             {subscriptionType !== "premium" && (
                 <View style={styles.adContainer}>
                     <BannerAd
-                        unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534~2963819076'}
+                        unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534/1046373801'}
                         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
                     />
                 </View>

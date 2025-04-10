@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Ingredient recognition works correctly and there is the ad for this feature">
-      <change afterPath="$PROJECT_DIR$/screens/InstructionSlides.tsx" afterDir="false" />
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Update terms and conditions, add simple ads">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/translations.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/translations.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/ApplianceSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ApplianceSelectionScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/ChooseClassicRecipeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ChooseClassicRecipeScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/HelpScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HelpScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/InitialSignUpScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/InitialSignUpScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/LogInScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/LogInScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/Scenario2Step3Screen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Scenario2Step3Screen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/SignUpScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/SignUpScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/openaiService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/openaiService.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,14 +132,7 @@
       <workItem from="1743511865228" duration="48192000" />
       <workItem from="1744043160448" duration="16000" />
       <workItem from="1744043203157" duration="20521000" />
-      <workItem from="1744284351452" duration="5313000" />
-    </task>
-    <task id="LOCAL-00004" summary="Make scenario 1 work">
-      <created>1736781281888</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1736781281888</updated>
+      <workItem from="1744284351452" duration="8427000" />
     </task>
     <task id="LOCAL-00005" summary="Fine tuning the screens of the scenario 1">
       <created>1736781883948</created>
@@ -485,7 +470,14 @@
       <option name="project" value="LOCAL" />
       <updated>1744127411638</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Update terms and conditions, add simple ads">
+      <created>1744304191951</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1744304191957</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -504,7 +496,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add terms, conditions, privacy and disclaimer skeleton" />
     <MESSAGE value="Add the lemon button on homescreen" />
     <MESSAGE value="Style homescreen new" />
     <MESSAGE value="New design for help, home, book of recipes, IngredientSelectionScreen" />
@@ -529,7 +520,8 @@
     <MESSAGE value="Onboarding and premium prompting navigation works" />
     <MESSAGE value="Ingredient recognition works" />
     <MESSAGE value="Ingredient recognition works correctly and there is the ad for this feature" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ingredient recognition works correctly and there is the ad for this feature" />
+    <MESSAGE value="Update terms and conditions, add simple ads" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update terms and conditions, add simple ads" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
