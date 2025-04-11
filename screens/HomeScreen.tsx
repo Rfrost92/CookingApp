@@ -53,7 +53,7 @@ export default function HomeScreen() {
         const langData = translations?.[language];
         return langData?.[key] ?? `[${key}]`;
     };
-    const testMode = true;
+    const testMode = false;
 
     useEffect(() => {
         const fetchGuestRequests = async () => {

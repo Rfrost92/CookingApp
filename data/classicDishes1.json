@@ -447,5 +447,817 @@
       "it": "Fattet Hummus",
       "pt": "Fattet Hummus"
     }
+  },
+  {
+    "id": "spaghetti_carbonara",
+    "name": {
+      "en": "Spaghetti Carbonara",
+      "de": "Spaghetti Carbonara",
+      "ua": "Спагеті Карбонара",
+      "ru": "Спагетти Карбонара",
+      "pl": "Spaghetti Carbonara",
+      "fr": "Spaghetti à la Carbonara",
+      "cz": "Špagety Carbonara",
+      "es": "Espaguetis Carbonara",
+      "it": "Spaghetti alla Carbonara",
+      "pt": "Espaguete Carbonara"
+    },
+    "description": {
+      "en": "A classic Roman pasta dish made with eggs, cheese, pancetta, and pepper.",
+      "de": "Ein klassisches römisches Pastagericht mit Eiern, Käse, Pancetta und Pfeffer.",
+      "ua": "Класична римська паста з яйцями, сиром, панчеттою та перцем.",
+      "ru": "Классическое римское блюдо из пасты с яйцами, сыром, панчеттой и перцем.",
+      "pl": "Klasyczne rzymskie danie z makaronem, jajkami, serem, pancettą i pieprzem.",
+      "fr": "Un plat de pâtes romain classique à base d'œufs, de fromage, de pancetta et de poivre.",
+      "cz": "Klasické římské těstoviny s vejci, sýrem, pancettou a pepřem.",
+      "es": "Un plato clásico romano de pasta con huevos, queso, panceta y pimienta.",
+      "it": "Un classico piatto romano di pasta con uova, formaggio, pancetta e pepe.",
+      "pt": "Um prato clássico romano de massa com ovos, queijo, pancetta e pimenta."
+    },
+    "image": "spaghetti_carbonara.jpg"
+  },
+  {
+    "id": "beef_bourguignon",
+    "name": {
+      "en": "Beef Bourguignon",
+      "de": "Boeuf Bourguignon",
+      "ua": "Яловичина Бургіньйон",
+      "ru": "Говядина по-бургундски",
+      "pl": "Wołowina po burgundzku",
+      "fr": "Bœuf Bourguignon",
+      "cz": "Hovězí po Burgundsku",
+      "es": "Ternera Bourguignon",
+      "it": "Manzo alla Bourguignonne",
+      "pt": "Carne de Vaca à Bourguignon"
+    },
+    "description": {
+      "en": "A rich French stew made with beef braised in red wine and beef broth, flavored with garlic, onions, and mushrooms.",
+      "de": "Ein reichhaltiger französischer Eintopf aus Rindfleisch, geschmort in Rotwein und Brühe, mit Knoblauch, Zwiebeln und Pilzen.",
+      "ua": "Насичене французьке рагу з яловичини, тушкованої у червоному вині з бульйоном, часником, цибулею та грибами.",
+      "ru": "Богатое французское рагу из говядины, тушёной в красном вине и бульоне с чесноком, луком и грибами.",
+      "pl": "Bogaty francuski gulasz z wołowiną duszoną w czerwonym winie i bulionie, z czosnkiem, cebulą i grzybami.",
+      "fr": "Un ragoût français riche à base de bœuf mijoté dans du vin rouge et du bouillon, parfumé à l’ail, aux oignons et aux champignons.",
+      "cz": "Bohatý francouzský guláš z hovězího masa dušeného ve víně a vývaru s česnekem, cibulí a houbami.",
+      "es": "Un rico estofado francés de carne de res cocida en vino tinto y caldo, con ajo, cebolla y champiñones.",
+      "it": "Uno stufato francese ricco a base di manzo brasato nel vino rosso e brodo, con aglio, cipolle e funghi.",
+      "pt": "Um rico ensopado francês de carne bovina cozida em vinho tinto e caldo, com alho, cebola e cogumelos."
+    },
+    "image": "beef_bourguignon.jpg"
+  },
+  {
+    "id": "ratatouille",
+    "name": {
+      "en": "Ratatouille",
+      "de": "Ratatouille",
+      "ua": "Рататуй",
+      "ru": "Рататуй",
+      "pl": "Ratatouille",
+      "fr": "Ratatouille",
+      "cz": "Ratatouille",
+      "es": "Ratatouille",
+      "it": "Ratatouille",
+      "pt": "Ratatouille"
+    },
+    "description": {
+      "en": "A colorful Provençal vegetable dish made with tomatoes, zucchini, eggplant, peppers, and herbs.",
+      "de": "Ein farbenfrohes Gemüsegericht aus der Provence mit Tomaten, Zucchini, Auberginen, Paprika und Kräutern.",
+      "ua": "Яскрава овочева страва з Провансу з томатами, кабачками, баклажанами, перцем та травами.",
+      "ru": "Яркое овощное блюдо из Прованса с томатами, кабачками, баклажанами, перцем и травами.",
+      "pl": "Kolorowe danie warzywne z Prowansji z pomidorami, cukinią, bakłażanem, papryką i ziołami.",
+      "fr": "Un plat de légumes provençal coloré avec des tomates, des courgettes, des aubergines, des poivrons et des herbes.",
+      "cz": "Barevný provensálský pokrm ze zeleniny s rajčaty, cuketou, lilkem, paprikou a bylinkami.",
+      "es": "Un colorido plato de verduras provenzal con tomates, calabacines, berenjenas, pimientos y hierbas.",
+      "it": "Un piatto di verdure provenzale colorato con pomodori, zucchine, melanzane, peperoni e erbe aromatiche.",
+      "pt": "Um prato provençal colorido de legumes com tomates, abobrinha, berinjela, pimentões e ervas."
+    },
+    "image": "ratatouille.jpg"
+  },
+  {
+    "id": "chicken_tikka_masala",
+    "name": {
+      "en": "Chicken Tikka Masala",
+      "de": "Hähnchen Tikka Masala",
+      "ua": "Курка Тікка Масала",
+      "ru": "Курица Тикка Масала",
+      "pl": "Kurczak Tikka Masala",
+      "fr": "Poulet Tikka Masala",
+      "cz": "Kuře Tikka Masala",
+      "es": "Pollo Tikka Masala",
+      "it": "Pollo Tikka Masala",
+      "pt": "Frango Tikka Masala"
+    },
+    "description": {
+      "en": "A flavorful Indian-inspired dish of grilled chicken in a creamy tomato curry sauce.",
+      "de": "Ein würziges indisch inspiriertes Gericht mit gegrilltem Hähnchen in einer cremigen Tomatensauce.",
+      "ua": "Смачна страва з індійським натхненням з куркою на грилі у вершково-томатному карі соусі.",
+      "ru": "Ароматное блюдо с индийскими мотивами: курица-гриль в сливочно-томатном соусе карри.",
+      "pl": "Aromatyczne danie inspirowane Indiami z grillowanym kurczakiem w kremowym sosie curry z pomidorami.",
+      "fr": "Un plat savoureux inspiré de l’Inde avec du poulet grillé dans une sauce curry crémeuse aux tomates.",
+      "cz": "Chuťově výrazné indické jídlo s grilovaným kuřetem v krémové rajčatové kari omáčce.",
+      "es": "Un sabroso plato de inspiración india con pollo a la parrilla en una salsa cremosa de curry de tomate.",
+      "it": "Un piatto saporito ispirato all'India con pollo grigliato in salsa cremosa al curry di pomodoro.",
+      "pt": "Um prato saboroso de inspiração indiana com frango grelhado em um molho de curry de tomate cremoso."
+    },
+    "image": "chicken_tikka_masala.jpg"
+  },
+  {
+    "id": "sushi",
+    "name": {
+      "en": "Sushi",
+      "de": "Sushi",
+      "ua": "Суші",
+      "ru": "Суши",
+      "pl": "Sushi",
+      "fr": "Sushi",
+      "cz": "Sushi",
+      "es": "Sushi",
+      "it": "Sushi",
+      "pt": "Sushi"
+    },
+    "description": {
+      "en": "A Japanese dish featuring vinegared rice combined with seafood, vegetables, or egg, often wrapped in seaweed.",
+      "de": "Ein japanisches Gericht aus Reis mit Essig, kombiniert mit Meeresfrüchten, Gemüse oder Ei, oft in Algen gewickelt.",
+      "ua": "Японська страва з рису з оцтом у поєднанні з морепродуктами, овочами або яйцем, часто загорнута в водорості.",
+      "ru": "Японское блюдо из риса с уксусом, морепродуктами, овощами или яйцом, часто завернутое в водоросли.",
+      "pl": "Japońskie danie z ryżu zaprawionego octem z dodatkiem owoców morza, warzyw lub jajka, często zawinięte w algi.",
+      "fr": "Un plat japonais à base de riz vinaigré accompagné de fruits de mer, de légumes ou d’œufs, souvent enroulé dans des algues.",
+      "cz": "Japonský pokrm z octové rýže kombinovaný s mořskými plody, zeleninou nebo vejcem, často zabalený v řase.",
+      "es": "Plato japonés de arroz avinagrado combinado con mariscos, verduras o huevo, a menudo envuelto en alga nori.",
+      "it": "Piatto giapponese a base di riso condito con aceto, combinato con pesce, verdure o uovo, spesso avvolto in alga.",
+      "pt": "Prato japonês feito com arroz avinagrado e combinado com frutos do mar, vegetais ou ovo, geralmente envolto em alga."
+    },
+    "image": "sushi.jpg"
+  },
+  {
+    "id": "paella",
+    "name": {
+      "en": "Paella",
+      "de": "Paella",
+      "ua": "Паелья",
+      "ru": "Паэлья",
+      "pl": "Paella",
+      "fr": "Paella",
+      "cz": "Paella",
+      "es": "Paella",
+      "it": "Paella",
+      "pt": "Paella"
+    },
+    "description": {
+      "en": "A famous Spanish rice dish typically made with seafood, chicken, and vegetables, cooked with saffron for a golden color.",
+      "de": "Ein berühmtes spanisches Reisgericht mit Meeresfrüchten, Hühnchen und Gemüse, mit Safran für die goldene Farbe.",
+      "ua": "Відома іспанська страва з рису з морепродуктами, куркою та овочами, приготована з шафраном для золотистого кольору.",
+      "ru": "Известное испанское блюдо из риса с морепродуктами, курицей и овощами, приготовленное с шафраном для золотистого цвета.",
+      "pl": "Słynne hiszpańskie danie ryżowe z owocami morza, kurczakiem i warzywami, gotowane z szafranem dla złotego koloru.",
+      "fr": "Un célèbre plat espagnol à base de riz, souvent avec des fruits de mer, du poulet et des légumes, parfumé au safran.",
+      "cz": "Slavné španělské jídlo z rýže s mořskými plody, kuřetem a zeleninou, vařené se šafránem pro zlatavou barvu.",
+      "es": "Famoso plato español de arroz, normalmente con mariscos, pollo y verduras, cocinado con azafrán para darle color dorado.",
+      "it": "Famoso piatto spagnolo a base di riso con frutti di mare, pollo e verdure, insaporito con zafferano.",
+      "pt": "Prato espanhol famoso feito com arroz, frutos do mar, frango e legumes, com açafrão para dar cor dourada."
+    },
+    "image": "paella.jpg"
+  },
+  {
+    "id": "lasagna",
+    "name": {
+      "en": "Lasagna",
+      "de": "Lasagne",
+      "ua": "Лазанья",
+      "ru": "Лазанья",
+      "pl": "Lasagna",
+      "fr": "Lasagnes",
+      "cz": "Lasagne",
+      "es": "Lasaña",
+      "it": "Lasagna",
+      "pt": "Lasanha"
+    },
+    "description": {
+      "en": "A traditional Italian baked pasta dish made with layers of pasta, meat sauce, béchamel, and cheese.",
+      "de": "Ein traditionelles italienisches Nudelgericht mit Schichten aus Pasta, Fleischsoße, Béchamel und Käse.",
+      "ua": "Традиційна італійська запечена страва з шарів пасти, м’ясного соусу, бешамелю та сиру.",
+      "ru": "Традиционное итальянское блюдо из слоёв пасты, мясного соуса, бешамеля и сыра, запечённое в духовке.",
+      "pl": "Tradycyjne włoskie danie z zapiekanych warstw makaronu, sosu mięsnego, beszamelu i sera.",
+      "fr": "Un plat traditionnel italien de pâtes cuites au four avec des couches de pâtes, sauce à la viande, béchamel et fromage.",
+      "cz": "Tradiční italské pečené těstoviny s vrstvami těstovin, masovou omáčkou, bešamelem a sýrem.",
+      "es": "Plato tradicional italiano de pasta horneada con capas de pasta, salsa de carne, bechamel y queso.",
+      "it": "Un piatto tradizionale italiano da forno a base di strati di pasta, ragù, besciamella e formaggio.",
+      "pt": "Prato tradicional italiano de massa assada em camadas com molho de carne, bechamel e queijo."
+    },
+    "image": "lasagna.jpg"
+  },
+  {
+    "id": "ceviche",
+    "name": {
+      "en": "Ceviche",
+      "de": "Ceviche",
+      "ua": "Севіче",
+      "ru": "Севиче",
+      "pl": "Ceviche",
+      "fr": "Ceviche",
+      "cz": "Ceviche",
+      "es": "Ceviche",
+      "it": "Ceviche",
+      "pt": "Ceviche"
+    },
+    "description": {
+      "en": "A Latin American dish of raw fish cured in citrus juices, usually served with onions, chili, and herbs.",
+      "de": "Ein lateinamerikanisches Gericht aus rohem Fisch, der in Zitrussaft mariniert wird, serviert mit Zwiebeln, Chili und Kräutern.",
+      "ua": "Латиноамериканська страва з сирої риби, маринованої у цитрусовому соці, зазвичай з цибулею, чилі та зеленню.",
+      "ru": "Латиноамериканское блюдо из сырой рыбы, маринованной в цитрусовом соке с луком, перцем чили и зеленью.",
+      "pl": "Latynoamerykańskie danie z surowej ryby marynowanej w soku cytrusowym z cebulą, chili i ziołami.",
+      "fr": "Un plat d’Amérique latine à base de poisson cru mariné dans des jus d’agrumes, servi avec oignons, piment et herbes.",
+      "cz": "Latinskoamerické jídlo z ryby naložené v citrusové šťávě, podávané s cibulí, chilli a bylinkami.",
+      "es": "Plato latinoamericano de pescado crudo marinado en jugos cítricos, acompañado de cebolla, chile y hierbas.",
+      "it": "Piatto dell'America Latina a base di pesce crudo marinato in succhi agrumati, servito con cipolla, peperoncino ed erbe.",
+      "pt": "Prato latino-americano com peixe cru marinado em sucos cítricos, servido com cebola, pimenta e ervas."
+    },
+    "image": "ceviche.jpg"
+  },
+  {
+    "id": "goulash",
+    "name": {
+      "en": "Goulash",
+      "de": "Gulasch",
+      "ua": "Гуляш",
+      "ru": "Гуляш",
+      "pl": "Gulasz",
+      "fr": "Goulash",
+      "cz": "Guláš",
+      "es": "Goulash",
+      "it": "Gulasch",
+      "pt": "Goulash"
+    },
+    "description": {
+      "en": "A hearty stew of meat and vegetables seasoned with paprika, originating from Hungary.",
+      "de": "Ein herzhaftes Eintopfgericht mit Fleisch und Gemüse, gewürzt mit Paprika, ursprünglich aus Ungarn.",
+      "ua": "Ситне рагу з м’яса та овочів зі спецією паприка, родом з Угорщини.",
+      "ru": "Сытное рагу из мяса и овощей с паприкой, родом из Венгрии.",
+      "pl": "Syty gulasz z mięsa i warzyw z papryką, wywodzący się z Węgier.",
+      "fr": "Un ragoût copieux de viande et légumes, assaisonné de paprika, originaire de Hongrie.",
+      "cz": "Syté dušené jídlo z masa a zeleniny s paprikou, pochází z Maďarska.",
+      "es": "Un guiso contundente de carne y verduras sazonado con pimentón, originario de Hungría.",
+      "it": "Uno stufato sostanzioso di carne e verdure con paprika, originario dell'Ungheria.",
+      "pt": "Um ensopado robusto de carne e vegetais temperado com páprica, originário da Hungria."
+    },
+    "image": "goulash.jpg"
+  },
+  {
+    "id": "tiramisu",
+    "name": {
+      "en": "Tiramisu",
+      "de": "Tiramisu",
+      "ua": "Тірамісу",
+      "ru": "Тирамису",
+      "pl": "Tiramisu",
+      "fr": "Tiramisu",
+      "cz": "Tiramisu",
+      "es": "Tiramisú",
+      "it": "Tiramisù",
+      "pt": "Tiramisù"
+    },
+    "description": {
+      "en": "A classic Italian dessert made of layers of coffee-soaked ladyfingers and mascarpone cream.",
+      "de": "Ein klassisches italienisches Dessert mit Schichten aus in Kaffee getränkten Löffelbiskuits und Mascarponecreme.",
+      "ua": "Класичний італійський десерт із шарів печива савоярді, просочених кавою, та крему з маскарпоне.",
+      "ru": "Классический итальянский десерт из слоев савоярди, пропитанных кофе, и крема из маскарпоне.",
+      "pl": "Klasyczny włoski deser z warstwami biszkoptów nasączonych kawą i kremu z mascarpone.",
+      "fr": "Un dessert italien classique à base de biscuits imbibés de café et de crème au mascarpone.",
+      "cz": "Klasický italský dezert s vrstvami piškotů namočených v kávě a mascarpone krémem.",
+      "es": "Un postre clásico italiano con capas de bizcochos empapados en café y crema de mascarpone.",
+      "it": "Classico dessert italiano con strati di savoiardi imbevuti di caffè e crema al mascarpone.",
+      "pt": "Sobremesa italiana clássica com camadas de biscoito embebido em café e creme de mascarpone."
+    },
+    "image": "tiramisu.jpg"
+  },
+  {
+    "id": "moussaka",
+    "name": {
+      "en": "Moussaka",
+      "de": "Moussaka",
+      "ua": "Мусака",
+      "ru": "Мусака",
+      "pl": "Musaka",
+      "fr": "Moussaka",
+      "cz": "Musaka",
+      "es": "Musaca",
+      "it": "Moussaka",
+      "pt": "Moussaka"
+    },
+    "description": {
+      "en": "A traditional Mediterranean casserole layered with eggplant, minced meat, tomato sauce, and béchamel.",
+      "de": "Ein traditioneller mediterraner Auflauf mit Auberginen, Hackfleisch, Tomatensoße und Béchamel.",
+      "ua": "Традиційна середземноморська запіканка з баклажанами, фаршем, томатним соусом та бешамелем.",
+      "ru": "Традиционная средиземноморская запеканка с баклажанами, мясным фаршем, томатным соусом и бешамелем.",
+      "pl": "Tradycyjna śródziemnomorska zapiekanka z bakłażanem, mięsem mielonym, sosem pomidorowym i beszamelem.",
+      "fr": "Un gratin méditerranéen traditionnel avec aubergines, viande hachée, sauce tomate et béchamel.",
+      "cz": "Tradiční středomořský nákyp s lilkem, mletým masem, rajčatovou omáčkou a bešamelem.",
+      "es": "Cazuela tradicional mediterránea con berenjena, carne picada, salsa de tomate y bechamel.",
+      "it": "Una casseruola mediterranea tradizionale con melanzane, carne macinata, sugo di pomodoro e besciamella.",
+      "pt": "Casserola tradicional mediterrânea com berinjela, carne moída, molho de tomate e molho bechamel."
+    },
+    "image": "moussaka.jpg"
+  },
+  {
+    "id": "pho",
+    "name": {
+      "en": "Pho",
+      "de": "Pho",
+      "ua": "Фо",
+      "ru": "Фо",
+      "pl": "Pho",
+      "fr": "Pho",
+      "cz": "Pho",
+      "es": "Pho",
+      "it": "Pho",
+      "pt": "Pho"
+    },
+    "description": {
+      "en": "A traditional Vietnamese soup made with rice noodles, aromatic broth, herbs, and meat, usually beef or chicken.",
+      "de": "Eine traditionelle vietnamesische Suppe mit Reisnudeln, aromatischer Brühe, Kräutern und Fleisch, meist Rind oder Huhn.",
+      "ua": "Традиційний в’єтнамський суп з рисовою локшиною, ароматним бульйоном, травами та м’ясом (зазвичай яловичина або курка).",
+      "ru": "Традиционный вьетнамский суп с рисовой лапшой, ароматным бульоном, травами и мясом (обычно говядина или курица).",
+      "pl": "Tradycyjna wietnamska zupa z makaronem ryżowym, aromatycznym bulionem, ziołami i mięsem – zwykle wołowina lub kurczak.",
+      "fr": "Une soupe vietnamienne traditionnelle avec nouilles de riz, bouillon parfumé, herbes et viande (souvent bœuf ou poulet).",
+      "cz": "Tradiční vietnamská polévka s rýžovými nudlemi, voňavým vývarem, bylinkami a masem (obvykle hovězím nebo kuřecím).",
+      "es": "Sopa tradicional vietnamita con fideos de arroz, caldo aromático, hierbas y carne (generalmente de res o pollo).",
+      "it": "Zuppa tradizionale vietnamita con noodles di riso, brodo aromatico, erbe e carne (di solito manzo o pollo).",
+      "pt": "Sopa tradicional vietnamita feita com macarrão de arroz, caldo aromático, ervas e carne (geralmente boi ou frango)."
+    },
+    "image": "pho.jpg"
+  },
+  {
+    "id": "shepherds_pie",
+    "name": {
+      "en": "Shepherd's Pie",
+      "de": "Shepherd’s Pie",
+      "ua": "Пастуший пиріг",
+      "ru": "Пастуший пирог",
+      "pl": "Zapiekanka pasterska",
+      "fr": "Hachis Parmentier",
+      "cz": "Pastýřský koláč",
+      "es": "Pastel de carne",
+      "it": "Pastiera di carne",
+      "pt": "Torta do pastor"
+    },
+    "description": {
+      "en": "A comforting British dish made with minced meat and vegetables, topped with mashed potatoes.",
+      "de": "Ein britisches Wohlfühlessen mit Hackfleisch, Gemüse und Kartoffelpüree als Topping.",
+      "ua": "Затишна британська страва з фаршем, овочами та пюре зверху.",
+      "ru": "Уютное британское блюдо с фаршем, овощами и картофельным пюре сверху.",
+      "pl": "Brytyjskie danie z mielonym mięsem, warzywami i ziemniaczanym puree na wierzchu.",
+      "fr": "Un plat britannique réconfortant à base de viande hachée, légumes et purée de pommes de terre.",
+      "cz": "Britské jídlo z mletého masa, zeleniny a bramborové kaše navrchu.",
+      "es": "Plato británico reconfortante con carne picada, verduras y puré de papas.",
+      "it": "Un piatto britannico confortante con carne macinata, verdure e purè di patate.",
+      "pt": "Prato britânico reconfortante com carne moída, legumes e purê de batata."
+    },
+    "image": "shepherds_pie.jpg"
+  },
+  {
+    "id": "biryani",
+    "name": {
+      "en": "Biryani",
+      "de": "Biryani",
+      "ua": "Бірʼяні",
+      "ru": "Бирьяни",
+      "pl": "Biryani",
+      "fr": "Biryani",
+      "cz": "Biryani",
+      "es": "Biryani",
+      "it": "Biryani",
+      "pt": "Biryani"
+    },
+    "description": {
+      "en": "A fragrant South Asian rice dish cooked with spices, meat or vegetables.",
+      "de": "Ein aromatisches südasiatisches Reisgericht mit Gewürzen, Fleisch oder Gemüse.",
+      "ua": "Ароматна страва з Південної Азії з рису, приготованого зі спеціями, м’ясом або овочами.",
+      "ru": "Ароматное южноазиатское блюдо из риса с пряностями, мясом или овощами.",
+      "pl": "Aromatyczne danie ryżowe z Azji Południowej z przyprawami, mięsem lub warzywami.",
+      "fr": "Un plat de riz parfumé d’Asie du Sud, préparé avec des épices, de la viande ou des légumes.",
+      "cz": "Voňavé jihoasijské rýžové jídlo s kořením, masem nebo zeleninou.",
+      "es": "Plato de arroz fragante del sur de Asia con especias, carne o verduras.",
+      "it": "Piatto di riso profumato dell’Asia meridionale con spezie, carne o verdure.",
+      "pt": "Prato de arroz aromático do sul da Ásia, feito com especiarias, carne ou vegetais."
+    },
+    "image": "biryani.jpg"
+  },
+  {
+    "id": "pierogi",
+    "name": {
+      "en": "Pierogi",
+      "de": "Pierogi",
+      "ua": "Вареники",
+      "ru": "Вареники",
+      "pl": "Pierogi",
+      "fr": "Pierogi",
+      "cz": "Pirohy",
+      "es": "Pierogi",
+      "it": "Pierogi",
+      "pt": "Pierogi"
+    },
+    "description": {
+      "en": "Traditional dumplings from Central and Eastern Europe, filled with savory or sweet ingredients.",
+      "de": "Traditionelle Teigtaschen aus Mittel- und Osteuropa mit süßer oder herzhafter Füllung.",
+      "ua": "Традиційні вареники з Центральної та Східної Європи з солоною або солодкою начинкою.",
+      "ru": "Традиционные пельмени из Центральной и Восточной Европы с солёной или сладкой начинкой.",
+      "pl": "Tradycyjne pierogi z Europy Środkowo-Wschodniej, nadziewane słodko lub słono.",
+      "fr": "Raviolis traditionnels d’Europe centrale et orientale, farcis d’ingrédients sucrés ou salés.",
+      "cz": "Tradiční knedlíky ze střední a východní Evropy, plněné sladkou nebo slanou náplní.",
+      "es": "Empanadillas tradicionales de Europa Central y del Este, con relleno dulce o salado.",
+      "it": "Ravioli tradizionali dell’Europa centrale e orientale, ripieni dolci o salati.",
+      "pt": "Bolinhos tradicionais da Europa Central e Oriental, recheados com ingredientes doces ou salgados."
+    },
+    "image": "pierogi.jpg"
+  },
+  {
+    "id": "falafel",
+    "name": {
+      "en": "Falafel",
+      "de": "Falafel",
+      "ua": "Фалафель",
+      "ru": "Фалафель",
+      "pl": "Falafel",
+      "fr": "Falafel",
+      "cz": "Falafel",
+      "es": "Falafel",
+      "it": "Falafel",
+      "pt": "Falafel"
+    },
+    "description": {
+      "en": "Deep-fried balls made from ground chickpeas or fava beans, a popular Middle Eastern street food.",
+      "de": "Frittierte Bällchen aus Kichererbsen oder Favabohnen – ein beliebtes Streetfood aus dem Nahen Osten.",
+      "ua": "Смажені кульки з нуту або бобів фава — популярна вулична їжа Близького Сходу.",
+      "ru": "Жареные шарики из нута или бобов фава — популярная уличная еда Ближнего Востока.",
+      "pl": "Smażone kulki z ciecierzycy lub bobu — popularne uliczne jedzenie z Bliskiego Wschodu.",
+      "fr": "Boulettes frites à base de pois chiches ou de fèves, plat de rue populaire du Moyen-Orient.",
+      "cz": "Smažené kuličky z cizrny nebo bobů – oblíbené pouliční jídlo z Blízkého východu.",
+      "es": "Bolas fritas de garbanzos o habas, un plato callejero popular de Oriente Medio.",
+      "it": "Polpette fritte di ceci o fave, popolare street food del Medio Oriente.",
+      "pt": "Bolinhos fritos de grão-de-bico ou favas – uma comida de rua popular do Oriente Médio."
+    },
+    "image": "falafel.jpg"
+  },
+  {
+    "id": "dumplings",
+    "name": {
+      "en": "Dumplings",
+      "de": "Knödel",
+      "ua": "Пельмені",
+      "ru": "Пельмени",
+      "pl": "Pierożki",
+      "fr": "Raviolis",
+      "cz": "Knedlíky",
+      "es": "Empanadillas",
+      "it": "Ravioli",
+      "pt": "Bolinhos"
+    },
+    "description": {
+      "en": "Dough parcels filled with meat, vegetables or cheese, found in many global cuisines.",
+      "de": "Teigtaschen gefüllt mit Fleisch, Gemüse oder Käse – in vielen Küchen der Welt zu finden.",
+      "ua": "Кульки з тіста з м’ясом, овочами або сиром — поширені у багатьох кухнях світу.",
+      "ru": "Тесто с начинкой из мяса, овощей или сыра — популярно во многих кухнях мира.",
+      "pl": "Ciasto z nadzieniem z mięsa, warzyw lub sera – obecne w wielu kuchniach świata.",
+      "fr": "Pâtes farcies de viande, légumes ou fromage, présentes dans de nombreuses cuisines du monde.",
+      "cz": "Těsto plněné masem, zeleninou nebo sýrem – běžné v mnoha kuchyních světa.",
+      "es": "Masa rellena de carne, verduras o queso – presente en muchas cocinas del mundo.",
+      "it": "Involtini di pasta ripieni di carne, verdure o formaggio, presenti in molte cucine del mondo.",
+      "pt": "Massa recheada com carne, legumes ou queijo – comum em várias cozinhas do mundo."
+    },
+    "image": "dumplings.jpg"
+  },
+  {
+    "id": "shakshuka",
+    "name": {
+      "en": "Shakshuka",
+      "de": "Shakshuka",
+      "ua": "Шакшука",
+      "ru": "Шакшука",
+      "pl": "Szakszuka",
+      "fr": "Shakshuka",
+      "cz": "Shakshuka",
+      "es": "Shakshuka",
+      "it": "Shakshuka",
+      "pt": "Shakshuka"
+    },
+    "description": {
+      "en": "A North African dish of eggs poached in a spicy tomato and pepper sauce.",
+      "de": "Ein nordafrikanisches Gericht mit Eiern, die in einer würzigen Tomaten-Paprika-Soße pochiert werden.",
+      "ua": "Північноафриканська страва з яєць, приготованих у пряному томатно-перцевому соусі.",
+      "ru": "Североафриканское блюдо из яиц, приготовленных в пряном томатно-перечном соусе.",
+      "pl": "Północnoafrykańskie danie z jajkami gotowanymi w pikantnym sosie pomidorowo-paprykowym.",
+      "fr": "Plat nord-africain composé d’œufs pochés dans une sauce tomate et poivron épicée.",
+      "cz": "Severoafrický pokrm s vejci vařenými v pikantní rajčatovo-paprikové omáčce.",
+      "es": "Plato del norte de África con huevos escalfados en una salsa picante de tomate y pimiento.",
+      "it": "Piatto nordafricano a base di uova in camicia in salsa piccante di pomodoro e peperoni.",
+      "pt": "Prato norte-africano de ovos escalfados em molho de tomate e pimentão picante."
+    },
+    "image": "shakshuka.jpg"
+  },
+  {
+    "id": "bibimbap",
+    "name": {
+      "en": "Bibimbap",
+      "de": "Bibimbap",
+      "ua": "Бібімбап",
+      "ru": "Бибимбап",
+      "pl": "Bibimbap",
+      "fr": "Bibimbap",
+      "cz": "Bibimbap",
+      "es": "Bibimbap",
+      "it": "Bibimbap",
+      "pt": "Bibimbap"
+    },
+    "description": {
+      "en": "A Korean rice bowl topped with mixed vegetables, meat, a fried egg, and chili paste.",
+      "de": "Eine koreanische Reisschale mit Gemüse, Fleisch, Spiegelei und Chilipaste.",
+      "ua": "Корейська страва з рисом, овочами, м’ясом, смаженим яйцем та гострим соусом.",
+      "ru": "Корейское блюдо с рисом, овощами, мясом, жареным яйцом и острым соусом.",
+      "pl": "Koreańska miska ryżu z warzywami, mięsem, jajkiem sadzonym i pastą chili.",
+      "fr": "Bol coréen de riz garni de légumes, viande, œuf au plat et pâte de piment.",
+      "cz": "Korejská miska s rýží, zeleninou, masem, smaženým vejcem a chilli pastou.",
+      "es": "Cuenco de arroz coreano con verduras, carne, huevo frito y pasta de chile.",
+      "it": "Ciotola di riso coreana con verdure, carne, uovo fritto e pasta di peperoncino.",
+      "pt": "Tigela de arroz coreana com legumes, carne, ovo frito e pasta de pimenta."
+    },
+    "image": "bibimbap.jpg"
+  },
+  {
+    "id": "bibimbap",
+    "name": {
+      "en": "Bibimbap",
+      "de": "Bibimbap",
+      "ua": "Бібімбап",
+      "ru": "Бибимбап",
+      "pl": "Bibimbap",
+      "fr": "Bibimbap",
+      "cz": "Bibimbap",
+      "es": "Bibimbap",
+      "it": "Bibimbap",
+      "pt": "Bibimbap"
+    },
+    "description": {
+      "en": "A Korean rice bowl topped with mixed vegetables, meat, a fried egg, and chili paste.",
+      "de": "Eine koreanische Reisschale mit Gemüse, Fleisch, Spiegelei und Chilipaste.",
+      "ua": "Корейська страва з рисом, овочами, м’ясом, смаженим яйцем та гострим соусом.",
+      "ru": "Корейское блюдо с рисом, овощами, мясом, жареным яйцом и острым соусом.",
+      "pl": "Koreańska miska ryżu z warzywami, mięsem, jajkiem sadzonym i pastą chili.",
+      "fr": "Bol coréen de riz garni de légumes, viande, œuf au plat et pâte de piment.",
+      "cz": "Korejská miska s rýží, zeleninou, masem, smaženým vejcem a chilli pastou.",
+      "es": "Cuenco de arroz coreano con verduras, carne, huevo frito y pasta de chile.",
+      "it": "Ciotola di riso coreana con verdure, carne, uovo fritto e pasta di peperoncino.",
+      "pt": "Tigela de arroz coreana com legumes, carne, ovo frito e pasta de pimenta."
+    },
+    "image": "bibimbap.jpg"
+  },
+  {
+    "id": "greek_salad",
+    "name": {
+      "en": "Greek Salad",
+      "de": "Griechischer Salat",
+      "ua": "Грецький салат",
+      "ru": "Греческий салат",
+      "pl": "Sałatka grecka",
+      "fr": "Salade grecque",
+      "cz": "Řecký salát",
+      "es": "Ensalada griega",
+      "it": "Insalata greca",
+      "pt": "Salada grega"
+    },
+    "description": {
+      "en": "A fresh salad made with tomatoes, cucumbers, olives, onions, and feta cheese.",
+      "de": "Ein frischer Salat aus Tomaten, Gurken, Oliven, Zwiebeln und Feta.",
+      "ua": "Свіжий салат з помідорами, огірками, оливками, цибулею та сиром фета.",
+      "ru": "Свежий салат из помидоров, огурцов, оливок, лука и сыра фета.",
+      "pl": "Świeża sałatka z pomidorami, ogórkami, oliwkami, cebulą i serem feta.",
+      "fr": "Salade fraîche avec tomates, concombres, olives, oignons et fromage feta.",
+      "cz": "Čerstvý salát z rajčat, okurek, oliv, cibule a sýra feta.",
+      "es": "Ensalada fresca con tomates, pepinos, aceitunas, cebolla y queso feta.",
+      "it": "Insalata fresca con pomodori, cetrioli, olive, cipolla e formaggio feta.",
+      "pt": "Salada fresca com tomates, pepinos, azeitonas, cebola e queijo feta."
+    },
+    "image": "greek_salad.jpg"
+  },
+  {
+    "id": "hummus",
+    "name": {
+      "en": "Hummus",
+      "de": "Hummus",
+      "ua": "Хумус",
+      "ru": "Хумус",
+      "pl": "Hummus",
+      "fr": "Houmous",
+      "cz": "Hummus",
+      "es": "Hummus",
+      "it": "Hummus",
+      "pt": "Hummus"
+    },
+    "description": {
+      "en": "A creamy Middle Eastern dip made from blended chickpeas, tahini, lemon juice, and garlic.",
+      "de": "Ein cremiger Dip aus dem Nahen Osten aus Kichererbsen, Tahini, Zitronensaft und Knoblauch.",
+      "ua": "Кремовий близькосхідний соус з нуту, тахіні, лимонного соку та часнику.",
+      "ru": "Кремообразная ближневосточная паста из нута, тахини, лимонного сока и чеснока.",
+      "pl": "Kremowy dip z Bliskiego Wschodu z ciecierzycy, tahini, soku z cytryny i czosnku.",
+      "fr": "Une purée crémeuse du Moyen-Orient à base de pois chiches, tahini, citron et ail.",
+      "cz": "Krémový blízkovýchodní dip z cizrny, tahini, citronové šťávy a česneku.",
+      "es": "Crema del Medio Oriente hecha con garbanzos, tahini, jugo de limón y ajo.",
+      "it": "Crema mediorientale a base di ceci, tahini, succo di limone e aglio.",
+      "pt": "Pasta cremosa do Oriente Médio feita com grão-de-bico, tahine, limão e alho."
+    },
+    "image": "hummus.jpg"
+  },
+  {
+    "id": "baba_ganoush",
+    "name": {
+      "en": "Baba Ganoush",
+      "de": "Baba Ghanoush",
+      "ua": "Баба гануш",
+      "ru": "Баба гануш",
+      "pl": "Baba ghanoush",
+      "fr": "Baba ganoush",
+      "cz": "Baba ghanoush",
+      "es": "Baba ganoush",
+      "it": "Baba ganoush",
+      "pt": "Baba ganoush"
+    },
+    "description": {
+      "en": "A smoky Middle Eastern dip made from roasted eggplant, tahini, lemon juice, and garlic.",
+      "de": "Ein rauchiger Dip aus dem Nahen Osten aus gerösteter Aubergine, Tahini, Zitronensaft und Knoblauch.",
+      "ua": "Копчений соус зі смаженого баклажана, тахіні, лимонного соку та часнику.",
+      "ru": "Копченый ближневосточный соус из запечённого баклажана, тахини, лимонного сока и чеснока.",
+      "pl": "Wędzony dip z Bliskiego Wschodu z pieczonym bakłażanem, tahini, sokiem z cytryny i czosnkiem.",
+      "fr": "Une purée fumée du Moyen-Orient à base d’aubergine rôtie, tahini, citron et ail.",
+      "cz": "Uzený blízkovýchodní dip z pečeného lilku, tahini, citronové šťávy a česneku.",
+      "es": "Crema del Medio Oriente hecha con berenjena asada, tahini, jugo de limón y ajo.",
+      "it": "Crema mediorientale affumicata a base di melanzane arrostite, tahini, limone e aglio.",
+      "pt": "Pasta do Oriente Médio feita com berinjela assada, tahine, limão e alho."
+    },
+    "image": "baba_ganoush.jpg"
+  },
+  {
+    "id": "tabbouleh",
+    "name": {
+      "en": "Tabbouleh",
+      "de": "Taboulé",
+      "ua": "Табуле",
+      "ru": "Табуле",
+      "pl": "Tabbouleh",
+      "fr": "Taboulé",
+      "cz": "Tabbouleh",
+      "es": "Tabulé",
+      "it": "Tabbouleh",
+      "pt": "Tabule"
+    },
+    "description": {
+      "en": "A fresh Levantine salad made with bulgur, parsley, mint, tomatoes, and lemon juice.",
+      "de": "Ein frischer levantinischer Salat mit Bulgur, Petersilie, Minze, Tomaten und Zitronensaft.",
+      "ua": "Свіжий левантійський салат з булгуром, петрушкою, м'ятою, помідорами та лимонним соком.",
+      "ru": "Свежий лева́нтский салат с булгуром, петрушкой, мятой, помидорами и лимонным соком.",
+      "pl": "Świeża sałatka lewantyńska z bulgurem, pietruszką, miętą, pomidorami i sokiem z cytryny.",
+      "fr": "Une salade levantine fraîche à base de boulgour, persil, menthe, tomates et jus de citron.",
+      "cz": "Čerstvý levantinský salát s bulgurem, petrželí, mátou, rajčaty a citronovou šťávou.",
+      "es": "Ensalada fresca levantina con bulgur, perejil, menta, tomate y jugo de limón.",
+      "it": "Insalata levantina fresca a base di bulgur, prezzemolo, menta, pomodori e limone.",
+      "pt": "Salada fresca do Levante com trigo bulgur, salsa, hortelã, tomate e limão."
+    },
+    "image": "tabbouleh.jpg"
+  },
+  {
+    "id": "dolma",
+    "name": {
+      "en": "Dolma",
+      "de": "Dolma",
+      "ua": "Долма",
+      "ru": "Долма",
+      "pl": "Dolma",
+      "fr": "Dolma",
+      "cz": "Dolma",
+      "es": "Dolma",
+      "it": "Dolma",
+      "pt": "Dolma"
+    },
+    "description": {
+      "en": "Grape leaves stuffed with a mixture of rice, herbs, and sometimes meat, a staple in many Middle Eastern cuisines.",
+      "de": "Weinblätter gefüllt mit Reis, Kräutern und manchmal Fleisch – ein Grundnahrungsmittel in vielen Nahostküchen.",
+      "ua": "Виноградне листя, фаршироване рисом, зеленню і іноді м’ясом — страва з Близького Сходу.",
+      "ru": "Виноградные листья, фаршированные рисом, зеленью и иногда мясом — популярное блюдо Ближнего Востока.",
+      "pl": "Liście winogron faszerowane ryżem, ziołami i czasem mięsem – klasyczne danie kuchni Bliskiego Wschodu.",
+      "fr": "Feuilles de vigne farcies au riz, herbes et parfois viande – un classique du Moyen-Orient.",
+      "cz": "Vinné listy plněné rýží, bylinkami a někdy masem – tradiční blízkovýchodní pokrm.",
+      "es": "Hojas de parra rellenas de arroz, hierbas y a veces carne – un plato típico de Oriente Medio.",
+      "it": "Foglie di vite ripiene di riso, erbe e talvolta carne – tipico piatto mediorientale.",
+      "pt": "Folhas de uva recheadas com arroz, ervas e às vezes carne – prato tradicional do Oriente Médio."
+    },
+    "image": "dolma.jpg"
+  },
+  {
+    "id": "shish_kebab",
+    "name": {
+      "en": "Shish Kebab",
+      "de": "Schaschlik",
+      "ua": "Шашлик",
+      "ru": "Шашлык",
+      "pl": "Szaszłyk",
+      "fr": "Brochette",
+      "cz": "Šašlik",
+      "es": "Pincho moruno",
+      "it": "Spiedino",
+      "pt": "Espetinho"
+    },
+    "description": {
+      "en": "Grilled skewers of marinated meat and vegetables, a popular dish in Turkish and Mediterranean cuisine.",
+      "de": "Gegrillte Spieße mit mariniertem Fleisch und Gemüse – beliebt in der türkischen und mediterranen Küche.",
+      "ua": "Смажені шпажки з маринованого м’яса та овочів – популярна страва в турецькій та середземноморській кухні.",
+      "ru": "Жареные шампуры из маринованного мяса и овощей — популярное блюдо турецкой и средиземноморской кухни.",
+      "pl": "Grillowane szaszłyki z marynowanym mięsem i warzywami – popularne w kuchni tureckiej i śródziemnomorskiej.",
+      "fr": "Brochettes grillées de viande marinée et légumes – plat populaire turc et méditerranéen.",
+      "cz": "Grilované špízy z marinovaného masa a zeleniny – oblíbené v turecké a středomořské kuchyni.",
+      "es": "Brochetas a la parrilla de carne marinada y verduras – típicas en la cocina turca y mediterránea.",
+      "it": "Spiedini alla griglia con carne marinata e verdure – piatto popolare in Turchia e nel Mediterraneo.",
+      "pt": "Espetinhos grelhados de carne marinada e legumes – populares na culinária turca e mediterrânea."
+    },
+    "image": "shish_kebab.jpg"
+  },
+  {
+    "id": "spanakopita",
+    "name": {
+      "en": "Spanakopita",
+      "de": "Spanakopita",
+      "ua": "Спанакопіта",
+      "ru": "Спанакопита",
+      "pl": "Spanakopita",
+      "fr": "Spanakopita",
+      "cz": "Spanakopita",
+      "es": "Spanakopita",
+      "it": "Spanakopita",
+      "pt": "Spanakopita"
+    },
+    "description": {
+      "en": "A Greek savory pie made with layers of phyllo dough, filled with spinach, feta cheese, and herbs.",
+      "de": "Ein griechischer herzhafter Kuchen mit Filoteigschichten, gefüllt mit Spinat, Feta und Kräutern.",
+      "ua": "Грецький солоний пиріг з шарами філо тіста, шпинатом, фетою та спеціями.",
+      "ru": "Греческий пирог из слоеного теста с начинкой из шпината, феты и зелени.",
+      "pl": "Grecka wytrawna tarta z ciasta filo, nadziewana szpinakiem, fetą i ziołami.",
+      "fr": "Tourte salée grecque faite de pâte filo, garnie d’épinards, de feta et d’herbes.",
+      "cz": "Řecký slaný koláč z filo těsta se špenátem, fetou a bylinkami.",
+      "es": "Tarta griega salada hecha con masa filo, espinacas, queso feta y hierbas.",
+      "it": "Torta salata greca con pasta fillo, spinaci, feta e erbe aromatiche.",
+      "pt": "Torta salgada grega com massa filo, espinafre, queijo feta e ervas."
+    },
+    "image": "spanakopita.jpg"
+  },
+  {
+    "id": "briam",
+    "name": {
+      "en": "Briam",
+      "de": "Briam",
+      "ua": "Бріам",
+      "ru": "Бриам",
+      "pl": "Briam",
+      "fr": "Briam",
+      "cz": "Briam",
+      "es": "Briam",
+      "it": "Briam",
+      "pt": "Briam"
+    },
+    "description": {
+      "en": "A Greek roasted vegetable dish made with potatoes, zucchini, eggplant, and tomatoes baked in olive oil.",
+      "de": "Ein griechisches Gericht aus geröstetem Gemüse wie Kartoffeln, Zucchini, Auberginen und Tomaten in Olivenöl gebacken.",
+      "ua": "Грецька запечена овочева страва з картоплі, цукіні, баклажанів і томатів у оливковій олії.",
+      "ru": "Греческое блюдо из запечённых овощей — картофеля, кабачков, баклажанов и помидоров в оливковом масле.",
+      "pl": "Grecka zapiekanka warzywna z ziemniaków, cukinii, bakłażanów i pomidorów w oliwie z oliwek.",
+      "fr": "Plat grec de légumes rôtis comprenant pommes de terre, courgettes, aubergines et tomates cuits à l’huile d’olive.",
+      "cz": "Řecké pečené zeleninové jídlo z brambor, cukety, lilku a rajčat v olivovém oleji.",
+      "es": "Plato griego de verduras al horno con patatas, calabacines, berenjenas y tomates en aceite de oliva.",
+      "it": "Piatto greco di verdure al forno con patate, zucchine, melanzane e pomodori in olio d'oliva.",
+      "pt": "Prato grego de vegetais assados com batatas, abobrinhas, berinjelas e tomates no azeite."
+    },
+    "image": "briam.jpg"
+  },
+  {
+    "id": "fattet_hummus",
+    "name": {
+      "en": "Fattet Hummus",
+      "de": "Fattet Hummus",
+      "ua": "Фаттех Хумус",
+      "ru": "Фаттех Хумус",
+      "pl": "Fattet Hummus",
+      "fr": "Fattet Hummus",
+      "cz": "Fattet Hummus",
+      "es": "Fattet Hummus",
+      "it": "Fattet Hummus",
+      "pt": "Fattet Hummus"
+    },
+    "description": {
+      "en": "A Levantine dish made with layers of crispy pita, chickpeas, yogurt, tahini, and pine nuts.",
+      "de": "Ein levantinisches Gericht mit Schichten aus knusprigem Pita, Kichererbsen, Joghurt, Tahini und Pinienkernen.",
+      "ua": "Левантійська страва з шарами хрусткого піта-хліба, нуту, йогурту, тахіні та кедрових горіхів.",
+      "ru": "Левантийское блюдо из слоёв хрустящего лаваша, нута, йогурта, тахини и кедровых орешков.",
+      "pl": "Levantyńska potrawa z warstw chrupiącego pita, ciecierzycy, jogurtu, tahini i orzeszków piniowych.",
+      "fr": "Un plat levantin en couches de pain pita croustillant, pois chiches, yaourt, tahini et pignons de pin.",
+      "cz": "Levantinské jídlo ze vrstev křupavého pita chleba, cizrny, jogurtu, tahini a piniových oříšků.",
+      "es": "Plato levantino con capas de pan de pita crujiente, garbanzos, yogur, tahini y piñones.",
+      "it": "Piatto levantino a strati con pita croccante, ceci, yogurt, tahini e pinoli.",
+      "pt": "Prato levantino com camadas de pão pita crocante, grão-de-bico, iogurte, tahine e pinhões."
+    },
+    "image": "fattet_hummus.jpg"
   }
 ]

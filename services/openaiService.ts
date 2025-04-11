@@ -11,7 +11,7 @@ const openai = new OpenAI({
     apiKey: gptApiKey
 });
 
-const testing = true; // Set to `false` for production
+const testing = false; // Set to `false` for production
 
 const getLocalizedPromptPrefix = (language: string) => {
     const prefixMap = {
@@ -212,10 +212,11 @@ export const fetchRecipeScenario2 = async (requestData) => {
 };
 
 
-export const fetchRecipeScenario3 = async ({ classicDishName, user, language }) => {
+export const fetchRecipeScenario3 = async ({ classicDishName, user, language, description }) => {
     try {
         const languagePrefix = getLocalizedPromptPrefix(language);
-        const prompt = `${languagePrefix}\nPlease provide a detailed recipe for the classic dish "${classicDishName}". 
+        const descriptionIncluded = description ? 'Description of the dish: ' + description : '';
+        const prompt = `${languagePrefix}\nPlease provide a detailed recipe for the classic dish "${classicDishName}". ${descriptionIncluded}
 
         The recipe should include ingredients, quantities, and step-by-step instructions. Ensure the recipe is clear and easy to follow.
 

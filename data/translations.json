@@ -29,7 +29,7 @@
     "error_message": "There is an error",
     "loading_dishes": "Loading dishes...",
     "choose_classic_dish": "Choose a Classic Dish",
-    "search_dishes_placeholder": "Search dishes...",
+    "search_dishes_placeholder": "Search dishes by name, cuisine, keywords...",
     "type_custom_dish": "Type a custom dish name",
     "confirm": "Confirm",
     "load_dishes_fail": "Failed to load classic dishes.",
@@ -299,7 +299,8 @@
     "movie_night": "Movie Night",
     "high_protein": "High Protein",
     "low_carb": "Low Carb",
-    "vegan_feast": "Vegan Feast"
+    "vegan_feast": "Vegan Feast",
+    "get_recipe": "Get Recipe!"
   },
 
   "de": {
@@ -333,7 +334,7 @@
     "error_message": "Es ist ein Fehler aufgetreten",
     "loading_dishes": "Gerichte werden geladen...",
     "choose_classic_dish": "Wählen Sie ein klassisches Gericht",
-    "search_dishes_placeholder": "Gerichte suchen...",
+    "search_dishes_placeholder": "Gerichte nach Name, Küche, Stichwort suchen...",
     "type_custom_dish": "Geben Sie den Namen eines eigenen Gerichts ein",
     "confirm": "Bestätigen",
     "load_dishes_fail": "Klassische Gerichte konnten nicht geladen werden.",
@@ -602,7 +603,8 @@
     "movie_night": "Filmabend",
     "high_protein": "Eiweißreich",
     "low_carb": "Kohlenhydratarm",
-    "vegan_feast": "Veganes Festmahl"
+    "vegan_feast": "Veganes Festmahl",
+    "get_recipe": "Rezept anzeigen!"
   },
   "ua": {
     "welcome": "Ласкаво просимо до smartchef!",
@@ -635,7 +637,7 @@
     "error_message": "Виникла помилка",
     "loading_dishes": "Завантаження страв...",
     "choose_classic_dish": "Виберіть класичну страву",
-    "search_dishes_placeholder": "Пошук страв...",
+    "search_dishes_placeholder": "Пошук страв за назвою, кухнею...",
     "type_custom_dish": "Введіть назву власної страви",
     "confirm": "Підтвердити",
     "load_dishes_fail": "Не вдалося завантажити класичні страви.",
@@ -904,7 +906,8 @@
     "movie_night": "Вечір кіно",
     "high_protein": "Багато білка",
     "low_carb": "Мало вуглеводів",
-    "vegan_feast": "Веганський бенкет"
+    "vegan_feast": "Веганський бенкет",
+    "get_recipe": "Отримати рецепт!"
   },
 
   "ru": {
@@ -938,7 +941,7 @@
     "error_message": "Произошла ошибка",
     "loading_dishes": "Загрузка блюд...",
     "choose_classic_dish": "Выберите классическое блюдо",
-    "search_dishes_placeholder": "Искать блюда...",
+    "search_dishes_placeholder": "Искать блюда по названию, кухне...",
     "type_custom_dish": "Введите название своего блюда",
     "confirm": "Подтвердить",
     "load_dishes_fail": "Не удалось загрузить классические блюда.",
@@ -1207,6 +1210,6 @@
     "movie_night": "Вечер кино",
     "high_protein": "Высокобелковое",
     "low_carb": "Низкоуглеводное",
-    "vegan_feast": "Веганский пир"
+    "vegan_feast": "Получить рецепт!"
   }
 }

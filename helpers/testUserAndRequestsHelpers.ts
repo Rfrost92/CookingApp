@@ -21,21 +21,35 @@ export const incrementRequest = async (userId: string) => {
 
     const userData = userSnap.data();
 
-    // 🛡️ Skip limits for premium users
-    if (userData.subscriptionType === "premium") {
-        console.log("🚀 Premium user — skipping request limits");
-        return;
-    }
-
     const today = new Date();
     const todayStr = today.toISOString().split("T")[0];
     const weekStart = getStartOfWeek(today).toISOString().split("T")[0];
+    const monthStr = `${today.getFullYear()}-${today.getMonth() + 1}`; // 🧠 define before using
 
     const updateData: any = {
         lastUpdated: serverTimestamp(),
     };
 
-    // --- DAILY tracking (preserved for future use)
+    // ✅ Total requests ever
+    updateData.totalRequests = (userData.totalRequests ?? 0) + 1;
+
+    // ✅ Requests this month
+    const currentMonth = userData.currentMonth ?? "";
+    if (currentMonth !== monthStr) {
+        updateData.requestsThisMonth = 1;
+        updateData.currentMonth = monthStr;
+    } else {
+        updateData.requestsThisMonth = (userData.requestsThisMonth ?? 0) + 1;
+    }
+
+    // 🛡️ Skip limits for premium users
+    if (userData.subscriptionType === "premium") {
+        console.log("🚀 Premium user — skipping request limits");
+        await updateDoc(userDoc, updateData); // update stats even for premium
+        return;
+    }
+
+    // --- DAILY tracking
     const requestsToday = userData.requestsToday ?? 0;
     const lastRequestDate = userData.lastRequestDate ?? "";
 
@@ -59,8 +73,7 @@ export const incrementRequest = async (userId: string) => {
         throw new Error("Weekly request limit reached");
     }
 
-    console.log(userDoc)
-    console.log(updateData)
+    console.log("⬆️ Updating user request stats:", updateData);
     await updateDoc(userDoc, updateData);
 };
 

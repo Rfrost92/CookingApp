@@ -1,32 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="testing ads log">
-      <change afterPath="$PROJECT_DIR$/assets/smartchef_icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/classicDishes2.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/firestoreNodeConfig.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/ingredients2.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/ingredients3.json" afterDir="false" />
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Add all the translations and more data">
+      <change afterPath="$PROJECT_DIR$/data/dishImages.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/populateDishImages.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/classicDishes1.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/classicDishes1.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/populateClassicDishesScript.ts" beforeDir="false" afterPath="$PROJECT_DIR$/data/populateClassicDishesScript.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/classicDishes2.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/classicDishes2.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/populateIngredientsScript.ts" beforeDir="false" afterPath="$PROJECT_DIR$/data/populateIngredientsScript.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/translations.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/translations.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/firebaseConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/firebaseConfig.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/testUserAndRequestsHelpers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/testUserAndRequestsHelpers.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/AuthPromptModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/AuthPromptModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/GoPremiumScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/GoPremiumScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/ChooseClassicRecipeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ChooseClassicRecipeScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/InitialSignUpScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/InitialSignUpScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/InstructionSlides.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/InstructionSlides.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/LogInScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/LogInScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/OnboardingScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/OnboardingScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/RecipeResultScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/RecipeResultScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/openaiService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/openaiService.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,17 +91,19 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/dishes" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/dishes" />
       <recent name="$PROJECT_DIR$/data" />
       <recent name="$PROJECT_DIR$/screens" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/dishes" />
       <recent name="$PROJECT_DIR$/data" />
       <recent name="$PROJECT_DIR$/assets" />
       <recent name="$PROJECT_DIR$" />
@@ -150,14 +140,7 @@
       <workItem from="1743511865228" duration="48192000" />
       <workItem from="1744043160448" duration="16000" />
       <workItem from="1744043203157" duration="20521000" />
-      <workItem from="1744284351452" duration="28006000" />
-    </task>
-    <task id="LOCAL-00007" summary="Step 1 scenario 2 fix">
-      <created>1736783805368</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1736783805368</updated>
+      <workItem from="1744284351452" duration="37966000" />
     </task>
     <task id="LOCAL-00008" summary="Scenario 3 works">
       <created>1736788350169</created>
@@ -495,7 +478,14 @@
       <option name="project" value="LOCAL" />
       <updated>1744310768264</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="Add all the translations and more data">
+      <created>1744381791019</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1744381791019</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -514,7 +504,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="New design for help, home, book of recipes, IngredientSelectionScreen" />
     <MESSAGE value="New design for IngredientSelectionScreen" />
     <MESSAGE value="New design for the whole first scenario journey" />
     <MESSAGE value="BIG COMMIT. Channge design of a few screens. Now all except login screens are in new UI. Add validator, add logging to DB" />
@@ -539,7 +528,8 @@
     <MESSAGE value="Update terms and conditions, add simple ads" />
     <MESSAGE value="Add loading ads, ads work" />
     <MESSAGE value="testing ads log" />
-    <option name="LAST_COMMIT_MESSAGE" value="testing ads log" />
+    <MESSAGE value="Add all the translations and more data" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add all the translations and more data" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
