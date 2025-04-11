@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "smartchef",
-    "slug": "smartchef",
+    "slug": "SmartChef",
     "version": "1.0.0",
     "orientation": "portrait",
     "entryPoint": "./App.tsx",
