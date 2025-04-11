@@ -27,6 +27,9 @@ const OnboardingScreen = () => {
         <Onboarding
             onDone={handleDone}
             onSkip={handleDone}
+            skipLabel={t("skip")}
+            nextLabel={t("next")}
+            doneLabel={t("done")}
             pages={[
                 {
                     backgroundColor: "#71f2c9",

@@ -1,0 +1,882 @@
+[
+  {
+    "name": {
+      "en": "Zucchini",
+      "de": "Zucchini",
+      "ua": "Цукіні",
+      "ru": "Цуккини",
+      "pl": "Cukinia",
+      "fr": "Courgette",
+      "cz": "Cuketa",
+      "es": "Calabacín",
+      "it": "Zucchina",
+      "pt": "Abobrinha"
+    },
+    "category": "fruits_vegetables",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Lentils",
+      "de": "Linsen",
+      "ua": "Чечевиця",
+      "ru": "Чечевица",
+      "pl": "Soczewica",
+      "fr": "Lentilles",
+      "cz": "Čočka",
+      "es": "Lentejas",
+      "it": "Lenticchie",
+      "pt": "Lentilhas"
+    },
+    "category": "grains_nuts",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Tofu",
+      "de": "Tofu",
+      "ua": "Тофу",
+      "ru": "Тофу",
+      "pl": "Tofu",
+      "fr": "Tofu",
+      "cz": "Tofu",
+      "es": "Tofu",
+      "it": "Tofu",
+      "pt": "Tofu"
+    },
+    "category": "proteins",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Yogurt",
+      "de": "Joghurt",
+      "ua": "Йогурт",
+      "ru": "Йогурт",
+      "pl": "Jogurt",
+      "fr": "Yaourt",
+      "cz": "Jogurt",
+      "es": "Yogur",
+      "it": "Yogurt",
+      "pt": "Iogurte"
+    },
+    "category": "dairy",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Soy Sauce",
+      "de": "Sojasauce",
+      "ua": "Соєвий соус",
+      "ru": "Соевый соус",
+      "pl": "Sos sojowy",
+      "fr": "Sauce soja",
+      "cz": "Sójová omáčka",
+      "es": "Salsa de soja",
+      "it": "Salsa di soia",
+      "pt": "Molho de soja"
+    },
+    "category": "spices_oils_sauces",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Orange Juice",
+      "de": "Orangensaft",
+      "ua": "Апельсиновий сік",
+      "ru": "Апельсиновый сок",
+      "pl": "Sok pomarańczowy",
+      "fr": "Jus d'orange",
+      "cz": "Pomerančový džus",
+      "es": "Jugo de naranja",
+      "it": "Succo d'arancia",
+      "pt": "Suco de laranja"
+    },
+    "category": "beverages",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Flour",
+      "de": "Mehl",
+      "ua": "Борошно",
+      "ru": "Мука",
+      "pl": "Mąka",
+      "fr": "Farine",
+      "cz": "Mouka",
+      "es": "Harina",
+      "it": "Farina",
+      "pt": "Farinha"
+    },
+    "category": "grains_nuts",
+    "isEssential": true
+  },
+  {
+    "name": {
+      "en": "Apple",
+      "de": "Apfel",
+      "ua": "Яблуко",
+      "ru": "Яблоко",
+      "pl": "Jabłko",
+      "fr": "Pomme",
+      "cz": "Jablko",
+      "es": "Manzana",
+      "it": "Mela",
+      "pt": "Maçã"
+    },
+    "category": "fruits_vegetables",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Cabbage",
+      "de": "Kohl",
+      "ua": "Капуста",
+      "ru": "Капуста",
+      "pl": "Kapusta",
+      "fr": "Chou",
+      "cz": "Zelí",
+      "es": "Repollo",
+      "it": "Cavolo",
+      "pt": "Repolho"
+    },
+    "category": "fruits_vegetables",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Mayonnaise",
+      "de": "Mayonnaise",
+      "ua": "Майонез",
+      "ru": "Майонез",
+      "pl": "Majonez",
+      "fr": "Mayonnaise",
+      "cz": "Majonéza",
+      "es": "Mayonesa",
+      "it": "Maionese",
+      "pt": "Maionese"
+    },
+    "category": "spices_oils_sauces",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Lemon",
+      "de": "Zitrone",
+      "ua": "Лимон",
+      "ru": "Лимон",
+      "pl": "Cytryna",
+      "fr": "Citron",
+      "cz": "Citron",
+      "es": "Limón",
+      "it": "Limone",
+      "pt": "Limão"
+    },
+    "category": "fruits_vegetables",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Bread",
+      "de": "Brot",
+      "ua": "Хліб",
+      "ru": "Хлеб",
+      "pl": "Chleb",
+      "fr": "Pain",
+      "cz": "Chléb",
+      "es": "Pan",
+      "it": "Pane",
+      "pt": "Pão"
+    },
+    "category": "grains_nuts",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Oats",
+      "de": "Haferflocken",
+      "ua": "Вівсянка",
+      "ru": "Овсянка",
+      "pl": "Płatki owsiane",
+      "fr": "Flocons d'avoine",
+      "cz": "Ovesné vločky",
+      "es": "Avena",
+      "it": "Avena",
+      "pt": "Aveia"
+    },
+    "category": "grains_nuts",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Apple Cider Vinegar",
+      "de": "Apfelessig",
+      "ua": "Яблучний оцет",
+      "ru": "Яблочный уксус",
+      "pl": "Ocet jabłkowy",
+      "fr": "Vinaigre de cidre",
+      "cz": "Jablečný ocet",
+      "es": "Vinagre de manzana",
+      "it": "Aceto di mele",
+      "pt": "Vinagre de maçã"
+    },
+    "category": "spices_oils_sauces",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Green Tea",
+      "de": "Grüner Tee",
+      "ua": "Зелений чай",
+      "ru": "Зелёный чай",
+      "pl": "Zielona herbata",
+      "fr": "Thé vert",
+      "cz": "Zelený čaj",
+      "es": "Té verde",
+      "it": "Tè verde",
+      "pt": "Chá verde"
+    },
+    "category": "beverages",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Ketchup",
+      "de": "Ketchup",
+      "ua": "Кетчуп",
+      "ru": "Кетчуп",
+      "pl": "Ketchup",
+      "fr": "Ketchup",
+      "cz": "Kečup",
+      "es": "Kétchup",
+      "it": "Ketchup",
+      "pt": "Ketchup"
+    },
+    "category": "spices_oils_sauces",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Mustard",
+      "de": "Senf",
+      "ua": "Гірчиця",
+      "ru": "Горчица",
+      "pl": "Musztarda",
+      "fr": "Moutarde",
+      "cz": "Hořčice",
+      "es": "Mostaza",
+      "it": "Senape",
+      "pt": "Mostarda"
+    },
+    "category": "spices_oils_sauces",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Spinach",
+      "de": "Spinat",
+      "ua": "Шпинат",
+      "ru": "Шпинат",
+      "pl": "Szpinak",
+      "fr": "Épinards",
+      "cz": "Špenát",
+      "es": "Espinacas",
+      "it": "Spinaci",
+      "pt": "Espinafre"
+    },
+    "category": "fruits_vegetables",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Corn",
+      "de": "Mais",
+      "ua": "Кукурудза",
+      "ru": "Кукуруза",
+      "pl": "Kukurydza",
+      "fr": "Maïs",
+      "cz": "Kukuřice",
+      "es": "Maíz",
+      "it": "Mais",
+      "pt": "Milho"
+    },
+    "category": "fruits_vegetables",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Chili Powder",
+      "de": "Chilipulver",
+      "ua": "Порошок чилі",
+      "ru": "Чили порошок",
+      "pl": "Papryka chili w proszku",
+      "fr": "Poudre de chili",
+      "cz": "Chilli prášek",
+      "es": "Polvo de chile",
+      "it": "Peperoncino in polvere",
+      "pt": "Pimenta em pó"
+    },
+    "category": "spices_oils_sauces",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Vinegar",
+      "de": "Essig",
+      "ua": "Оцет",
+      "ru": "Уксус",
+      "pl": "Ocet",
+      "fr": "Vinaigre",
+      "cz": "Ocet",
+      "es": "Vinagre",
+      "it": "Aceto",
+      "pt": "Vinagre"
+    },
+    "category": "spices_oils_sauces",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Coconut Milk",
+      "de": "Kokosmilch",
+      "ua": "Кокосове молоко",
+      "ru": "Кокосовое молоко",
+      "pl": "Mleko kokosowe",
+      "fr": "Lait de coco",
+      "cz": "Kokosové mléko",
+      "es": "Leche de coco",
+      "it": "Latte di cocco",
+      "pt": "Leite de coco"
+    },
+    "category": "dairy",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Black Beans",
+      "de": "Schwarze Bohnen",
+      "ua": "Чорна квасоля",
+      "ru": "Чёрная фасоль",
+      "pl": "Czarna fasola",
+      "fr": "Haricots noirs",
+      "cz": "Černé fazole",
+      "es": "Frijoles negros",
+      "it": "Fagioli neri",
+      "pt": "Feijão preto"
+    },
+    "category": "grains_nuts",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Oregano",
+      "de": "Oregano",
+      "ua": "Орегано",
+      "ru": "Орегано",
+      "pl": "Oregano",
+      "fr": "Origan",
+      "cz": "Oregano",
+      "es": "Orégano",
+      "it": "Origano",
+      "pt": "Orégano"
+    },
+    "category": "spices_oils_sauces",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Green Peas",
+      "de": "Grüne Erbsen",
+      "ua": "Зелений горошок",
+      "ru": "Зелёный горошек",
+      "pl": "Zielony groszek",
+      "fr": "Petits pois",
+      "cz": "Zelený hrášek",
+      "es": "Guisantes",
+      "it": "Piselli",
+      "pt": "Ervilhas"
+    },
+    "category": "fruits_vegetables",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Chickpeas",
+      "de": "Kichererbsen",
+      "ua": "Нут",
+      "ru": "Нут",
+      "pl": "Ciecierzyca",
+      "fr": "Pois chiches",
+      "cz": "Cizrna",
+      "es": "Garbanzos",
+      "it": "Ceci",
+      "pt": "Grão-de-bico"
+    },
+    "category": "grains_nuts",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Cinnamon",
+      "de": "Zimt",
+      "ua": "Кориця",
+      "ru": "Корица",
+      "pl": "Cynamon",
+      "fr": "Cannelle",
+      "cz": "Skořice",
+      "es": "Canela",
+      "it": "Cannella",
+      "pt": "Canela"
+    },
+    "category": "spices_oils_sauces",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Broccoli",
+      "de": "Brokkoli",
+      "ua": "Броколі",
+      "ru": "Брокколи",
+      "pl": "Brokuły",
+      "fr": "Brocoli",
+      "cz": "Brokolice",
+      "es": "Brócoli",
+      "it": "Broccoli",
+      "pt": "Brócolis"
+    },
+    "category": "fruits_vegetables",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Cocoa Powder",
+      "de": "Kakaopulver",
+      "ua": "Какао-порошок",
+      "ru": "Какао-порошок",
+      "pl": "Proszek kakaowy",
+      "fr": "Poudre de cacao",
+      "cz": "Kakaový prášek",
+      "es": "Cacao en polvo",
+      "it": "Cacao in polvere",
+      "pt": "Cacau em pó"
+    },
+    "category": "miscellaneous",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Sour Cream",
+      "de": "Saure Sahne",
+      "ua": "Сметана",
+      "ru": "Сметана",
+      "pl": "Śmietana",
+      "fr": "Crème aigre",
+      "cz": "Zakysaná smetana",
+      "es": "Crema agria",
+      "it": "Panna acida",
+      "pt": "Creme de leite azedo"
+    },
+    "category": "dairy",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Baking Powder",
+      "de": "Backpulver",
+      "ua": "Розпушувач",
+      "ru": "Разрыхлитель теста",
+      "pl": "Proszek do pieczenia",
+      "fr": "Levure chimique",
+      "cz": "Prášek do pečiva",
+      "es": "Polvo de hornear",
+      "it": "Lievito in polvere",
+      "pt": "Fermento em pó"
+    },
+    "category": "miscellaneous",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Breadcrumbs",
+      "de": "Paniermehl",
+      "ua": "Сухарі панірувальні",
+      "ru": "Сухари панировочные",
+      "pl": "Bułka tarta",
+      "fr": "Chapelure",
+      "cz": "Strouhanka",
+      "es": "Pan rallado",
+      "it": "Pangrattato",
+      "pt": "Farinha de rosca"
+    },
+    "category": "grains_nuts",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Turkey",
+      "de": "Pute",
+      "ua": "Індичка",
+      "ru": "Индейка",
+      "pl": "Indyk",
+      "fr": "Dinde",
+      "cz": "Krůta",
+      "es": "Pavo",
+      "it": "Tacchino",
+      "pt": "Peru"
+    },
+    "category": "proteins",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Lamb",
+      "de": "Lamm",
+      "ua": "Баранина",
+      "ru": "Баранина",
+      "pl": "Jagnięcina",
+      "fr": "Agneau",
+      "cz": "Jehněčí",
+      "es": "Cordero",
+      "it": "Agnello",
+      "pt": "Cordeiro"
+    },
+    "category": "proteins",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Cottage Cheese",
+      "de": "Hüttenkäse",
+      "ua": "Сир (творог)",
+      "ru": "Творог",
+      "pl": "Twaróg",
+      "fr": "Fromage blanc",
+      "cz": "Tvaroh",
+      "es": "Requesón",
+      "it": "Ricotta",
+      "pt": "Ricota"
+    },
+    "category": "dairy",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Sour Cream",
+      "de": "Saure Sahne",
+      "ua": "Сметана",
+      "ru": "Сметана",
+      "pl": "Śmietana",
+      "fr": "Crème aigre",
+      "cz": "Zakysaná smetana",
+      "es": "Crema agria",
+      "it": "Panna acida",
+      "pt": "Creme de leite azedo"
+    },
+    "category": "dairy",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Whey Protein",
+      "de": "Molkenprotein",
+      "ua": "Сироватковий протеїн",
+      "ru": "Сывороточный протеин",
+      "pl": "Białko serwatkowe",
+      "fr": "Protéine de lactosérum",
+      "cz": "Syrovátkový protein",
+      "es": "Proteína de suero",
+      "it": "Proteine del siero di latte",
+      "pt": "Proteína do soro do leite"
+    },
+    "category": "proteins",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Tofu",
+      "de": "Tofu",
+      "ua": "Тофу",
+      "ru": "Тофу",
+      "pl": "Tofu",
+      "fr": "Tofu",
+      "cz": "Tofu",
+      "es": "Tofu",
+      "it": "Tofu",
+      "pt": "Tofu"
+    },
+    "category": "proteins",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Oat Milk",
+      "de": "Hafermilch",
+      "ua": "Вівсяне молоко",
+      "ru": "Овсяное молоко",
+      "pl": "Mleko owsiane",
+      "fr": "Lait d'avoine",
+      "cz": "Ovesné mléko",
+      "es": "Leche de avena",
+      "it": "Latte d'avena",
+      "pt": "Leite de aveia"
+    },
+    "category": "beverages",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Almond Milk",
+      "de": "Mandelmilch",
+      "ua": "Мигдальне молоко",
+      "ru": "Миндальное молоко",
+      "pl": "Mleko migdałowe",
+      "fr": "Lait d'amande",
+      "cz": "Mandlové mléko",
+      "es": "Leche de almendras",
+      "it": "Latte di mandorla",
+      "pt": "Leite de amêndoas"
+    },
+    "category": "beverages",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Coconut Milk",
+      "de": "Kokosmilch",
+      "ua": "Кокосове молоко",
+      "ru": "Кокосовое молоко",
+      "pl": "Mleko kokosowe",
+      "fr": "Lait de coco",
+      "cz": "Kokosové mléko",
+      "es": "Leche de coco",
+      "it": "Latte di cocco",
+      "pt": "Leite de coco"
+    },
+    "category": "beverages",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Kefir",
+      "de": "Kefir",
+      "ua": "Кефір",
+      "ru": "Кефир",
+      "pl": "Kefir",
+      "fr": "Kéfir",
+      "cz": "Kefír",
+      "es": "Kéfir",
+      "it": "Kefir",
+      "pt": "Kefir"
+    },
+    "category": "dairy",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Liver",
+      "de": "Leber",
+      "ua": "Печінка",
+      "ru": "Печень",
+      "pl": "Wątróbka",
+      "fr": "Foie",
+      "cz": "Játra",
+      "es": "Hígado",
+      "it": "Fegato",
+      "pt": "Fígado"
+    },
+    "category": "proteins",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Sardines",
+      "de": "Sardinen",
+      "ua": "Сардини",
+      "ru": "Сардины",
+      "pl": "Sardynki",
+      "fr": "Sardines",
+      "cz": "Sardinky",
+      "es": "Sardinas",
+      "it": "Sardine",
+      "pt": "Sardinhas"
+    },
+    "category": "proteins",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Mozzarella",
+      "de": "Mozzarella",
+      "ua": "Моцарела",
+      "ru": "Моцарелла",
+      "pl": "Mozzarella",
+      "fr": "Mozzarella",
+      "cz": "Mozzarella",
+      "es": "Mozzarella",
+      "it": "Mozzarella",
+      "pt": "Mussarela"
+    },
+    "category": "dairy",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Sparkling Water",
+      "de": "Sprudelwasser",
+      "ua": "Газована вода",
+      "ru": "Газированная вода",
+      "pl": "Woda gazowana",
+      "fr": "Eau gazeuse",
+      "cz": "Perlivá voda",
+      "es": "Agua con gas",
+      "it": "Acqua frizzante",
+      "pt": "Água com gás"
+    },
+    "category": "beverages",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Green Tea",
+      "de": "Grüner Tee",
+      "ua": "Зелений чай",
+      "ru": "Зелёный чай",
+      "pl": "Zielona herbata",
+      "fr": "Thé vert",
+      "cz": "Zelený čaj",
+      "es": "Té verde",
+      "it": "Tè verde",
+      "pt": "Chá verde"
+    },
+    "category": "beverages",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Duck",
+      "de": "Ente",
+      "ua": "Качка",
+      "ru": "Утка",
+      "pl": "Kaczka",
+      "fr": "Canard",
+      "cz": "Kachna",
+      "es": "Pato",
+      "it": "Anatra",
+      "pt": "Pato"
+    },
+    "category": "proteins",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Turkey",
+      "de": "Truthahn",
+      "ua": "Індичка",
+      "ru": "Индейка",
+      "pl": "Indyk",
+      "fr": "Dinde",
+      "cz": "Krůta",
+      "es": "Pavo",
+      "it": "Tacchino",
+      "pt": "Peru"
+    },
+    "category": "proteins",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Goat Cheese",
+      "de": "Ziegenkäse",
+      "ua": "Козячий сир",
+      "ru": "Козий сыр",
+      "pl": "Ser kozi",
+      "fr": "Fromage de chèvre",
+      "cz": "Kozí sýr",
+      "es": "Queso de cabra",
+      "it": "Formaggio di capra",
+      "pt": "Queijo de cabra"
+    },
+    "category": "dairy",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Mozzarella",
+      "de": "Mozzarella",
+      "ua": "Моцарела",
+      "ru": "Моцарелла",
+      "pl": "Mozzarella",
+      "fr": "Mozzarella",
+      "cz": "Mozzarella",
+      "es": "Mozzarella",
+      "it": "Mozzarella",
+      "pt": "Mussarela"
+    },
+    "category": "dairy",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Parmesan",
+      "de": "Parmesan",
+      "ua": "Пармезан",
+      "ru": "Пармезан",
+      "pl": "Parmezan",
+      "fr": "Parmesan",
+      "cz": "Parmazán",
+      "es": "Parmesano",
+      "it": "Parmigiano",
+      "pt": "Parmesão"
+    },
+    "category": "dairy",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Ham",
+      "de": "Schinken",
+      "ua": "Шинка",
+      "ru": "Ветчина",
+      "pl": "Szynka",
+      "fr": "Jambon",
+      "cz": "Šunka",
+      "es": "Jamón",
+      "it": "Prosciutto",
+      "pt": "Presunto"
+    },
+    "category": "proteins",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Salami",
+      "de": "Salami",
+      "ua": "Салямі",
+      "ru": "Салями",
+      "pl": "Salami",
+      "fr": "Saucisson",
+      "cz": "Salám",
+      "es": "Salami",
+      "it": "Salame",
+      "pt": "Salame"
+    },
+    "category": "proteins",
+    "isEssential": false
+  },
+  {
+    "name": {
+      "en": "Blue Cheese",
+      "de": "Blauschimmelkäse",
+      "ua": "Блакитний сир",
+      "ru": "Сыр с плесенью",
+      "pl": "Ser pleśniowy",
+      "fr": "Fromage bleu",
+      "cz": "Plísňový sýr",
+      "es": "Queso azul",
+      "it": "Formaggio erborinato",
+      "pt": "Queijo azul"
+    },
+    "category": "dairy",
+    "isEssential": false
+  }
+]

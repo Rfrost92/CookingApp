@@ -36,14 +36,38 @@ export default function Scenario2Step1Screen() {
         t("japanese"),
         t("any_asian"),
         t("any_european"),
+        t("fusion"),
+        t("street_food"),
         t("ukrainian"),
+        t("italian"),
+        t("indian"),
+        t("mediterranean"),
+        t("mexican"),
+        t("french"),
+        t("middle_eastern"),
+        t("german"),
+        t("spanish"),
+        t("american"),
     ]);
+
     const [thematicOptions, setThematicOptions] = useState<string[]>([
         t("any"),
         t("christmas_dinner"),
         t("birthday_celebration"),
         t("romantic_dinner"),
         t("business_lunch"),
+        t("family_dinner"),
+        t("brunch"),
+        t("movie_night"),
+        t("high_protein"),
+        t("low_carb"),
+        t("quick_meal"),
+        t("vegetarian_feast"),
+        t("bbq_party"),
+        t("kids_favorite"),
+        t("light_meal"),
+        t("summer_dish"),
+        t("comfort_food"),
     ]);
     const [starIngredientOptions, setStarIngredientOptions] = useState<any[]>([]);
     const [filteredCuisineOptions, setFilteredCuisineOptions] = useState<string[]>([

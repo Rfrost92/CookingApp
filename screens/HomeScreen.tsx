@@ -98,7 +98,7 @@ export default function HomeScreen() {
             try {
                 navigation.navigate(screenName);
             } catch (error) {
-                Alert.alert(t("unexpected_error"), t("error_message"), [{text: "OK"}]);
+                Alert.alert(t("unexpected_error"), t("error_message"), [{ text: t("ok") }]);
             }        }
     };
 
@@ -106,7 +106,7 @@ export default function HomeScreen() {
         try {
             navigation.navigate(scenario);
         } catch (error) {
-            Alert.alert(t("unexpected_error"), t("error_message"), [{text: "OK"}]);
+            Alert.alert(t("unexpected_error"), t("error_message"), [{ text: t("ok") }]);
         }
     };
 
@@ -261,8 +261,8 @@ export default function HomeScreen() {
 
                             {isTestUser && (
                                 <View style={styles.testUserBox}>
-                                    <Text style={styles.testUserTitle}>🧪 Test User Panel</Text>
-                                    <Text style={styles.testUserInfo}>Requests this week: {requestsThisWeek}</Text>
+                                    <Text style={styles.testUserTitle}>🧪 {t("test_user_panel")}</Text>
+                                    <Text style={styles.testUserInfo}>{t("requests_this_week")}: {requestsThisWeek}</Text>
 
                                     <TouchableOpacity
                                         style={[styles.accountButton, styles.logoutButton]}
@@ -286,14 +286,14 @@ export default function HomeScreen() {
                                             try {
                                                 const newType = await toggleTestUserSubscription(user.uid);
                                                 setSubscriptionType(newType);
-                                                Alert.alert("Success", `Switched to ${newType}`);
+                                                Alert.alert(t("success"), `${t("switched_to")} ${newType}`);
                                             } catch (error) {
-                                                Alert.alert("Error", error.message);
+                                                Alert.alert(t("error"), error.message);
                                             }
                                         }}
                                     >
                                         <Text style={styles.modalButtonText}>
-                                            {subscriptionType === "premium" ? "Switch to non-premium" : "Switch to premium"}
+                                            {subscriptionType === "premium" ? t("switch_to_guest") : t("switch_to_premium")}
                                         </Text>
                                     </TouchableOpacity>
                                 </View>
@@ -302,7 +302,7 @@ export default function HomeScreen() {
 
                             {!isLoggedIn || subscriptionType === "guest" ? (
                                 <TouchableOpacity style={styles.premiumButton} onPress={() => {navigation.navigate("GoPremium"), setAccountModalVisible(false)}}>
-                                    <Text style={styles.premiumButtonText}>Go Premium</Text>
+                                    <Text style={styles.premiumButtonText}>{t("go_premium")}</Text>
                                 </TouchableOpacity>
                             ) : null}
 
@@ -525,12 +525,12 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         width: "80%",
         alignItems: "center",
-
     },
     premiumButtonText: {
         fontSize: 18,
         fontWeight: "bold",
         color: "black",
+        textAlign: "center"
     },
     languageOption: {
         padding: 15,
@@ -557,6 +557,7 @@ const styles = StyleSheet.create({
         color: "#fff", // White text for "Save" button
         fontSize: 16,
         fontWeight: "bold",
+        textAlign: "center"
     },
     modalButton: {
         backgroundColor: "#4caf50",
@@ -569,6 +570,7 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 16,
         fontWeight: "bold",
+        textAlign: "center"
     },
     languageText: {
         fontSize: 16,

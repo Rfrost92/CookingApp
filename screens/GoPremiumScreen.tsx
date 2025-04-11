@@ -42,7 +42,7 @@ export default function GoPremiumScreen() {
     const handleSubscriptionPurchase = async () => {
         try {
             if (!product) {
-                const msg = "⚠️ No product available for subscription.";
+                const msg = t("no_product_available");
                 console.warn(msg);
                 Sentry.captureMessage(msg, { level: "warning" });
                 Alert.alert(t("error"), t("subscription_not_available"));

@@ -12,7 +12,21 @@
       "es": "Espaguetis Carbonara",
       "it": "Spaghetti alla Carbonara",
       "pt": "Espaguete Carbonara"
-    }
+    },
+    "description":
+    {
+      "en": "Spaghetti Carbonara",
+      "de": "Spaghetti Carbonara",
+      "ua": "Спагеті Карбонара",
+      "ru": "Спагетти Карбонара",
+      "pl": "Spaghetti Carbonara",
+      "fr": "Spaghetti à la Carbonara",
+      "cz": "Špagety Carbonara",
+      "es": "Espaguetis Carbonara",
+      "it": "Spaghetti alla Carbonara",
+      "pt": "Espaguete Carbonara"
+    },
+    "image": "spaghetti_carbonara.jpg"
   },
   {
     "id": "beef_bourguignon",
@@ -147,6 +161,291 @@
       "es": "Tiramisú",
       "it": "Tiramisù",
       "pt": "Tiramisù"
+    }
+  },
+  {
+    "id": "moussaka",
+    "name": {
+      "en": "Moussaka",
+      "de": "Moussaka",
+      "ua": "Мусака",
+      "ru": "Мусака",
+      "pl": "Musaka",
+      "fr": "Moussaka",
+      "cz": "Musaka",
+      "es": "Musaca",
+      "it": "Moussaka",
+      "pt": "Moussaka"
+    }
+  },
+  {
+    "id": "pho",
+    "name": {
+      "en": "Pho",
+      "de": "Pho",
+      "ua": "Фо",
+      "ru": "Фо",
+      "pl": "Pho",
+      "fr": "Pho",
+      "cz": "Pho",
+      "es": "Pho",
+      "it": "Pho",
+      "pt": "Pho"
+    }
+  },
+  {
+    "id": "shepherds_pie",
+    "name": {
+      "en": "Shepherd's Pie",
+      "de": "Shepherd’s Pie",
+      "ua": "Пастуший пиріг",
+      "ru": "Пастуший пирог",
+      "pl": "Zapiekanka pasterska",
+      "fr": "Hachis Parmentier",
+      "cz": "Pastýřský koláč",
+      "es": "Pastel de carne",
+      "it": "Pastiera di carne",
+      "pt": "Torta do pastor"
+    }
+  },
+  {
+    "id": "biryani",
+    "name": {
+      "en": "Biryani",
+      "de": "Biryani",
+      "ua": "Бірʼяні",
+      "ru": "Бирьяни",
+      "pl": "Biryani",
+      "fr": "Biryani",
+      "cz": "Biryani",
+      "es": "Biryani",
+      "it": "Biryani",
+      "pt": "Biryani"
+    }
+  },
+  {
+    "id": "pierogi",
+    "name": {
+      "en": "Pierogi",
+      "de": "Pierogi",
+      "ua": "Пироги",
+      "ru": "Пироги",
+      "pl": "Pierogi",
+      "fr": "Pierogi",
+      "cz": "Pirohy",
+      "es": "Pierogi",
+      "it": "Pierogi",
+      "pt": "Pierogi"
+    }
+  },
+  {
+    "id": "falafel",
+    "name": {
+      "en": "Falafel",
+      "de": "Falafel",
+      "ua": "Фалафель",
+      "ru": "Фалафель",
+      "pl": "Falafel",
+      "fr": "Falafel",
+      "cz": "Falafel",
+      "es": "Falafel",
+      "it": "Falafel",
+      "pt": "Falafel"
+    }
+  },
+  {
+    "id": "dumplings",
+    "name": {
+      "en": "Dumplings",
+      "de": "Knödel",
+      "ua": "Пельмені",
+      "ru": "Пельмени",
+      "pl": "Pierożki",
+      "fr": "Raviolis",
+      "cz": "Knedlíky",
+      "es": "Empanadillas",
+      "it": "Ravioli",
+      "pt": "Bolinhos"
+    }
+  },
+  {
+    "id": "shakshuka",
+    "name": {
+      "en": "Shakshuka",
+      "de": "Shakshuka",
+      "ua": "Шакшука",
+      "ru": "Шакшука",
+      "pl": "Szakszuka",
+      "fr": "Shakshuka",
+      "cz": "Shakshuka",
+      "es": "Shakshuka",
+      "it": "Shakshuka",
+      "pt": "Shakshuka"
+    }
+  },
+  {
+    "id": "bibimbap",
+    "name": {
+      "en": "Bibimbap",
+      "de": "Bibimbap",
+      "ua": "Бібімбап",
+      "ru": "Бибимбап",
+      "pl": "Bibimbap",
+      "fr": "Bibimbap",
+      "cz": "Bibimbap",
+      "es": "Bibimbap",
+      "it": "Bibimbap",
+      "pt": "Bibimbap"
+    }
+  },
+  {
+    "id": "baklava",
+    "name": {
+      "en": "Baklava",
+      "de": "Baklava",
+      "ua": "Баклава",
+      "ru": "Баклава",
+      "pl": "Baklawa",
+      "fr": "Baklava",
+      "cz": "Baklava",
+      "es": "Baklava",
+      "it": "Baklava",
+      "pt": "Baklava"
+    }
+  },
+  {
+    "id": "greek_salad",
+    "name": {
+      "en": "Greek Salad",
+      "de": "Griechischer Salat",
+      "ua": "Грецький салат",
+      "ru": "Греческий салат",
+      "pl": "Sałatka grecka",
+      "fr": "Salade grecque",
+      "cz": "Řecký salát",
+      "es": "Ensalada griega",
+      "it": "Insalata greca",
+      "pt": "Salada grega"
+    }
+  },
+  {
+    "id": "hummus",
+    "name": {
+      "en": "Hummus",
+      "de": "Hummus",
+      "ua": "Хумус",
+      "ru": "Хумус",
+      "pl": "Hummus",
+      "fr": "Houmous",
+      "cz": "Hummus",
+      "es": "Hummus",
+      "it": "Hummus",
+      "pt": "Hummus"
+    }
+  },
+  {
+    "id": "baba_ganoush",
+    "name": {
+      "en": "Baba Ganoush",
+      "de": "Baba Ghanoush",
+      "ua": "Баба гануш",
+      "ru": "Баба гануш",
+      "pl": "Baba ghanoush",
+      "fr": "Baba ganoush",
+      "cz": "Baba ghanoush",
+      "es": "Baba ganoush",
+      "it": "Baba ganoush",
+      "pt": "Baba ganoush"
+    }
+  },
+  {
+    "id": "tabbouleh",
+    "name": {
+      "en": "Tabbouleh",
+      "de": "Taboulé",
+      "ua": "Табуле",
+      "ru": "Табуле",
+      "pl": "Tabbouleh",
+      "fr": "Taboulé",
+      "cz": "Tabbouleh",
+      "es": "Tabulé",
+      "it": "Tabbouleh",
+      "pt": "Tabule"
+    }
+  },
+  {
+    "id": "dolma",
+    "name": {
+      "en": "Dolma",
+      "de": "Dolma",
+      "ua": "Долма",
+      "ru": "Долма",
+      "pl": "Dolma",
+      "fr": "Dolma",
+      "cz": "Dolma",
+      "es": "Dolma",
+      "it": "Dolma",
+      "pt": "Dolma"
+    }
+  },
+  {
+    "id": "shish_kebab",
+    "name": {
+      "en": "Shish Kebab",
+      "de": "Schaschlik",
+      "ua": "Шашлик",
+      "ru": "Шашлык",
+      "pl": "Szaszłyk",
+      "fr": "Brochette",
+      "cz": "Šašlik",
+      "es": "Pincho moruno",
+      "it": "Spiedino",
+      "pt": "Espetinho"
+    }
+  },
+  {
+    "id": "spanakopita",
+    "name": {
+      "en": "Spanakopita",
+      "de": "Spanakopita",
+      "ua": "Спанакопіта",
+      "ru": "Спанакопита",
+      "pl": "Spanakopita",
+      "fr": "Spanakopita",
+      "cz": "Spanakopita",
+      "es": "Spanakopita",
+      "it": "Spanakopita",
+      "pt": "Spanakopita"
+    }
+  },
+  {
+    "id": "briam",
+    "name": {
+      "en": "Briam",
+      "de": "Briam",
+      "ua": "Бріам",
+      "ru": "Бриам",
+      "pl": "Briam",
+      "fr": "Briam",
+      "cz": "Briam",
+      "es": "Briam",
+      "it": "Briam",
+      "pt": "Briam"
+    }
+  },
+  {
+    "id": "fattet_hummus",
+    "name": {
+      "en": "Fattet Hummus",
+      "de": "Fattet Hummus",
+      "ua": "Фаттех Хумус",
+      "ru": "Фаттех Хумус",
+      "pl": "Fattet Hummus",
+      "fr": "Fattet Hummus",
+      "cz": "Fattet Hummus",
+      "es": "Fattet Hummus",
+      "it": "Fattet Hummus",
+      "pt": "Fattet Hummus"
     }
   }
 ]

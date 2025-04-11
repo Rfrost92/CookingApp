@@ -289,7 +289,7 @@ export default function IngredientSelectionScreen() {
         try {
             const { status } = await ImagePicker.requestCameraPermissionsAsync();
             if (status !== "granted") {
-                Alert.alert("Permission required", "Camera access is needed to scan ingredients.");
+                Alert.alert(getTranslation(language, "permission_required"), getTranslation(language, "camera_access_required"));
                 return;
             }
 
@@ -304,7 +304,7 @@ export default function IngredientSelectionScreen() {
                 const base64Image = asset?.base64;
 
                 if (!base64Image) {
-                    Alert.alert("Image Error", "Failed to capture a valid photo.");
+                    Alert.alert(getTranslation(language, "image_error"), getTranslation(language, "failed_photo"))
                     return;
                 }
 
@@ -319,11 +319,11 @@ export default function IngredientSelectionScreen() {
                 setSelectedDetected(initialSelection);
                 setShowDetectedModal(true);
             } else {
-                Alert.alert("No ingredients detected", "Please try a clearer photo.");
+                Alert.alert(getTranslation(language, "no_ingredients"), getTranslation(language, "try_clearer_photo"))
             }
         } catch (err) {
             console.error("Camera/photo error:", err);
-            Alert.alert("Error", "Something went wrong while using the camera.");
+            Alert.alert(getTranslation(language, "error"), getTranslation(language, "camera_error"))
         }
     };
 
@@ -410,7 +410,7 @@ export default function IngredientSelectionScreen() {
                     onChangeText={setCustomIngredient}
                 />
                 <TouchableOpacity style={styles.addButton} onPress={addCustomIngredient}>
-                    <Text style={styles.addButtonText}>Add</Text>
+                    <Text style={styles.addButtonText}>{getTranslation(language, "add")}</Text>
                 </TouchableOpacity>
             </View>
 
@@ -466,13 +466,13 @@ export default function IngredientSelectionScreen() {
             {/* Bottom Bar */}
             <View style={styles.bottomBar}>
                 <TouchableOpacity style={styles.bottomButton} onPress={() => setSelectedIngredients({})}>
-                    <Text style={styles.bottomButtonText}>Reset</Text>
+                    <Text style={styles.bottomButtonText}>{getTranslation(language, "reset")}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.photoButton} onPress={handleTakePhoto}>
                     <Ionicons name="camera" size={32} color="#000" />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.bottomButton} onPress={handleNext}>
-                    <Text style={styles.bottomButtonText}>Next</Text>
+                    <Text style={styles.bottomButtonText}>{getTranslation(language, "next")}</Text>
                 </TouchableOpacity>
             </View>
             <PremiumOnlyModal visible={showPremiumOnlyModal} onClose={() => setShowPremiumOnlyModal(false)} />
@@ -480,7 +480,7 @@ export default function IngredientSelectionScreen() {
             {showDetectedModal && (
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Detected Ingredients</Text>
+                        <Text style={styles.modalTitle}>{getTranslation(language, "detected_ingredients")}</Text>
                         {detectedIngredients.map((ingredient) => (
                             <TouchableOpacity
                                 key={ingredient}
@@ -506,7 +506,7 @@ export default function IngredientSelectionScreen() {
                             style={styles.addSelectedButton}
                             onPress={handleAddDetectedIngredients}
                         >
-                            <Text style={styles.addSelectedText}>Add Selected</Text>
+                            <Text style={styles.addSelectedText}>{getTranslation(language, "add_selected")}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -515,7 +515,7 @@ export default function IngredientSelectionScreen() {
             {analyzingPhoto && (
                 <View style={styles.modalOverlay}>
                     <View style={styles.analyzingModal}>
-                        <Text style={styles.analyzingText}>Analyzing image...</Text>
+                        <Text style={styles.analyzingText}>{getTranslation(language, "analyzing_image")}</Text>
                         <ActivityIndicator size="large" color="#000" style={{ marginTop: 10 }} />
                     </View>
                 </View>
@@ -631,9 +631,8 @@ const styles = StyleSheet.create({
     categoryTitleContainer: {
         flexDirection: "row",
         alignItems: "center",
-        flex: 1, // Ensures proper spacing
+        flex: 1
     },
-
     categoryToggle: {
         fontSize: 22,
         fontWeight: "bold",
@@ -646,8 +645,10 @@ const styles = StyleSheet.create({
     },
 
     categoryTitle: {
-        fontSize: 20, // Make category title slightly bigger
+        fontSize: 20,
         fontWeight: "bold",
+        flexShrink: 1,
+        flexWrap: "wrap"
     },
 
     ingredientText: {

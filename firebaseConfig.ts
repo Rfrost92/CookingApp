@@ -1,7 +1,7 @@
 // firebaseConfig.ts
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
 import { getFirestore, Firestore } from "firebase/firestore";
-import { initializeAuth, getReactNativePersistence, browserLocalPersistence, setPersistence  } from "firebase/auth";
+import { initializeAuth, getReactNativePersistence  } from "firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";

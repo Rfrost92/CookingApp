@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold",
         color: "black",
+        textAlign: "center"
     },
     closeButton: {
         padding: 10,
@@ -76,5 +77,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: "black",
         textDecorationLine: "underline",
+        textAlign: "center"
     },
 });

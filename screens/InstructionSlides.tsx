@@ -12,6 +12,9 @@ export default function InstructionSlides({ onDone }: { onDone: () => void }) {
         <Onboarding
             onDone={onDone}
             onSkip={onDone}
+            skipLabel={t("skip")}
+            nextLabel={t("next")}
+            doneLabel={t("done")}
             pages={[
                 {
                     backgroundColor: "#71f2c9",

@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Smart Chef",
-    "slug": "SmartChef",
+    "name": "smartchef",
+    "slug": "smartchef",
     "version": "1.0.0",
     "orientation": "portrait",
     "entryPoint": "./App.tsx",
-    "icon": "./assets/SmartChefLogo2.png",
+    "icon": "./assets/smartchef_icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "scheme": "smartchef",

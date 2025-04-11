@@ -48,7 +48,7 @@ export default function InitialSignUpScreen({ navigation }: any) {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.title}>Create Account</Text>
+                <Text style={styles.title}>{t("create_account")}</Text>
             </View>
 
             <View>
@@ -75,7 +75,7 @@ export default function InitialSignUpScreen({ navigation }: any) {
                 <Text style={styles.orText}>{t("or")}</Text>
 
                 <TouchableOpacity style={styles.googleButton} onPress={handleGoogleSignup}>
-                    <Ionicons name="logo-google" size={24} color="white" />
+                    <Ionicons style = {styles.googleIcon} name="logo-google" size={24} color="white" />
                     <Text style={styles.buttonText}>{t("log_in_google")}</Text>
                 </TouchableOpacity>
 
@@ -83,7 +83,7 @@ export default function InitialSignUpScreen({ navigation }: any) {
                     style={styles.secondaryButton}
                     onPress={() => navigation.navigate("Home")}
                 >
-                    <Text style={styles.secondaryButtonText}>I will create account later</Text>
+                    <Text style={styles.secondaryButtonText}>{t("i_will_create_later")}</Text>
                 </TouchableOpacity>
             </View>
 
@@ -180,4 +180,7 @@ const styles = StyleSheet.create({
         color: "#007BFF",
         textDecorationLine: "underline",
     },
+    googleIcon: {
+        marginRight: 10,
+    }
 });

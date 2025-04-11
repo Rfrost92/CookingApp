@@ -227,7 +227,7 @@ export default function RecipeResultScreen() {
 
                     {/* Process Section */}
                     <View style={styles.section}>
-                        <Text style={styles.sectionHeader}>{t("Steps to cook")}</Text>
+                        <Text style={styles.sectionHeader}>{t("process")}</Text>
                         {(parsedRecipe?.Steps?.includes("\\n")
                                 ? parsedRecipe?.Steps?.split("\\n")
                                 : parsedRecipe?.Steps?.split("\n")

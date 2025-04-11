@@ -125,7 +125,7 @@ export default function LogInScreen({navigation}: any) {
                 <Text style={styles.orText}>{t("or")}</Text>
 
                 <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
-                    <Ionicons name="logo-google" size={24} color="white" />
+                    <Ionicons style= {styles.googleIcon} name="logo-google" size={24} color="white" />
                     <Text style={styles.buttonText}>{t("log_in_google")}</Text>
                 </TouchableOpacity>
 
@@ -258,5 +258,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginBottom: 10,
     },
+    googleIcon: {
+        marginRight: 10,
+    }
 });
 

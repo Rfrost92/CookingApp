@@ -298,10 +298,10 @@ export default function MealTypeSelectionScreen() {
             {/* Bottom Bar */}
             <View style={styles.bottomBar}>
                 <TouchableOpacity style={styles.bottomButton} onPress={handleReset}>
-                    <Text style={styles.bottomButtonText}>Reset</Text>
+                    <Text style={styles.bottomButtonText}>{t("reset")}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.bottomButton} onPress={handleSubmit}>
-                    <Text style={[styles.bottomButtonText, styles.submitButtonText]}>Submit</Text>
+                    <Text style={[styles.bottomButtonText, styles.submitButtonText]}>{t("submit")}</Text>
                 </TouchableOpacity>
             </View>
             <Modal visible={isLoading} transparent={true} animationType="fade">
