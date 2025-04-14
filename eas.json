@@ -10,7 +10,9 @@
         "firebaseApiKey": "$(firebaseApiKey)",
         "runwareApiKey": "$(runwareApiKey)",
         "googleWebClientId": "$(googleWebClientId)",
-        "gptApiKey": "$(gptApiKey)"
+        "gptApiKey": "$(gptApiKey)",
+        "SENTRY_AUTH_TOKEN": "$(SENTRY_AUTH_TOKEN)",
+        "SENTRY_ALLOW_FAILURE": "true"
       }
     },
     "preview": {
@@ -19,7 +21,9 @@
         "firebaseApiKey": "$(firebaseApiKey)",
         "runwareApiKey": "$(runwareApiKey)",
         "googleWebClientId": "$(googleWebClientId)",
-        "gptApiKey": "$(gptApiKey)"
+        "gptApiKey": "$(gptApiKey)",
+        "SENTRY_AUTH_TOKEN": "$(SENTRY_AUTH_TOKEN)",
+        "SENTRY_ALLOW_FAILURE": "true"
       }
     },
     "production": {
@@ -27,17 +31,9 @@
         "firebaseApiKey": "$(firebaseApiKey)",
         "runwareApiKey": "$(runwareApiKey)",
         "googleWebClientId": "$(googleWebClientId)",
-        "gptApiKey": "$(gptApiKey)"
-      }
-    }
-  },
-  "submit": {
-    "production": {
-      "env": {
-        "firebaseApiKey": "$(firebaseApiKey)",
-        "runwareApiKey": "$(runwareApiKey)",
-        "googleWebClientId": "$(googleWebClientId)",
-        "gptApiKey": "$(gptApiKey)"
+        "gptApiKey": "$(gptApiKey)",
+        "SENTRY_AUTH_TOKEN": "$(SENTRY_AUTH_TOKEN)",
+        "SENTRY_ALLOW_FAILURE": "true"
       }
     }
   }

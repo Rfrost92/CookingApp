@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="fix subscription rollbacks">
-      <change afterPath="$PROJECT_DIR$/babel.config.js" afterDir="false" />
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Start using .env">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/firestoreNodeConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/data/firestoreNodeConfig.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eas.json" beforeDir="false" afterPath="$PROJECT_DIR$/eas.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/firebaseConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/firebaseConfig.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/openaiService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/openaiService.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,14 +129,7 @@
       <workItem from="1743511865228" duration="48192000" />
       <workItem from="1744043160448" duration="16000" />
       <workItem from="1744043203157" duration="20521000" />
-      <workItem from="1744284351452" duration="45490000" />
-    </task>
-    <task id="LOCAL-00011" summary="Some fine tuning for all scenarios">
-      <created>1736799328948</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1736799328948</updated>
+      <workItem from="1744284351452" duration="47885000" />
     </task>
     <task id="LOCAL-00012" summary="Handle try again">
       <created>1736881695340</created>
@@ -480,7 +467,14 @@
       <option name="project" value="LOCAL" />
       <updated>1744623559429</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="Start using .env">
+      <created>1744627386669</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1744627386670</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -499,7 +493,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix log parse errors" />
     <MESSAGE value="Add inappropriate words" />
     <MESSAGE value="Add loading screens" />
     <MESSAGE value="Make login screen etc. into a new design" />
@@ -524,7 +517,8 @@
     <MESSAGE value="Rework of classic dishes, now with description and image" />
     <MESSAGE value="get slug back to SmartChef" />
     <MESSAGE value="fix subscription rollbacks" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix subscription rollbacks" />
+    <MESSAGE value="Start using .env" />
+    <option name="LAST_COMMIT_MESSAGE" value="Start using .env" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
