@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "entryPoint": "./App.tsx",
-    "icon": "./assets/smartchef_icon.png",
+    "icon": "./assets/smartchef_icon2.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "scheme": "smartchef",

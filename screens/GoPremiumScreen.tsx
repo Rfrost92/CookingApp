@@ -64,7 +64,15 @@ export default function GoPremiumScreen() {
             }
 
             const userRef = doc(db, "users", user.uid);
-            await updateDoc(userRef, { subscriptionType: "premium" });
+            if (purchase?.transactionId && purchase?.transactionDate) {
+                await updateDoc(userRef, {
+                    subscriptionType: "premium",
+                    lastPurchaseId: purchase.transactionId,
+                    purchaseTime: purchase.transactionDate,
+                });
+            } else {
+                await updateDoc(userRef, { subscriptionType: "premium" });
+            }
 
             Sentry.captureMessage("📦 Firestore updated with premium", { level: "info" });
             setSubscriptionType("premium");
