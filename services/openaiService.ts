@@ -1,14 +1,13 @@
 //openaiService.ts
 import OpenAI from "openai";
 import {mockedResponses, mockImageUrl} from "../data/responseMock";
-import {gptApiKey, runwareApiKey} from "../data/secrets";
 import {incrementNonSignedInRequests, incrementRequest} from "../helpers/testUserAndRequestsHelpers";
 import {sanitizeAndParseRecipe} from "../helpers/recipeHelpers";
 import uuid from 'react-native-uuid';
 import {logGptErrorResponse} from "../helpers/validator";
 
 const openai = new OpenAI({
-    apiKey: gptApiKey
+    apiKey: process.env.gptApiKey
 });
 
 const testing = false; // Set to `false` for production
@@ -323,7 +322,7 @@ export const generateRecipeImage = async (title: string, description: string) =>
 
 const generateRecipeFluxImage = async (title, description) => {
     try {
-        const apiKey = runwareApiKey
+        const apiKey = process.env.runwareApiKey
         const taskUUID = uuid.v4();
         const requestBody = [
             {

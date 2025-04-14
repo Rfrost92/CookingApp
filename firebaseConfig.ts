@@ -5,10 +5,9 @@ import { initializeAuth, getReactNativePersistence  } from "firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {firebaseApiKey, googleWebClientId} from "./data/secrets";
 
 const firebaseConfig = {
-    apiKey: firebaseApiKey,
+    apiKey: process.env.firebaseApiKey,
     authDomain: "cooking-app-3ff5f.firebaseapp.com",
     projectId: "cooking-app-3ff5f",
     storageBucket: "cooking-app-3ff5f.firebasestorage.app",
@@ -29,7 +28,7 @@ export const auth = initializeAuth(app, {
     persistence: getReactNativePersistence(AsyncStorage),
 });
 GoogleSignin.configure({
-    webClientId: googleWebClientId,
+    webClientId: process.env.googleWebClientId,
 });
 // Initialize Firestore
 export const db: Firestore = getFirestore(app);
