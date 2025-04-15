@@ -30,16 +30,31 @@ export const signUp = async (email: string, password: string) => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Send email verification
-        await sendEmailVerification(user);
-        console.log("Verification email sent to:", user.email);
+        // ✅ Step 1: Save user to Firestore
+        try {
+            await setUserInDB(user, "email");
+            console.log("📄 User saved in Firestore.");
+        } catch (dbError) {
+            console.error("❌ Failed to save user to Firestore:", dbError);
+            throw new Error("error_saving_user_db");
+        }
 
-        // Save user in Firestore
-        await setUserInDB(user, 'email');
+        // ✅ Step 2: Send email verification
+        try {
+            await sendEmailVerification(user);
+            console.log("📧 Verification email sent to:", user.email);
+        } catch (emailError) {
+            console.warn("⚠️ Failed to send verification email:", emailError);
+            // Not throwing — optional step
+        }
 
-        // Immediately log out the user after registration
-        await signOut(auth);
-        console.log("User signed out after registration.");
+        // ✅ Step 3: Sign out AFTER both tasks complete
+        try {
+            await signOut(auth);
+            console.log("👋 User signed out after registration.");
+        } catch (signOutError) {
+            console.warn("⚠️ Sign-out failed:", signOutError);
+        }
 
         return { success: true };
     } catch (error: any) {

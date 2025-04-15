@@ -10,7 +10,7 @@ const openai = new OpenAI({
     apiKey: process.env.gptApiKey
 });
 
-const testing = false; // Set to `false` for production
+const testing = true; // Set to `false` for production
 
 const getLocalizedPromptPrefix = (language: string) => {
     const prefixMap = {

@@ -7,7 +7,7 @@ import {
     ScrollView,
     TouchableOpacity,
     Alert,
-    Image, Modal, ActivityIndicator,
+    Image, Modal, ActivityIndicator, Linking,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { fetchRecipeScenario1, fetchRecipeScenario2 } from "../services/openaiService";
@@ -32,6 +32,7 @@ export default function RecipeResultScreen() {
     const [base64Image, setBase64Image] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [showPremiumModal, setShowPremiumModal] = useState(false);
+    const [showNutritionInfo, setShowNutritionInfo] = useState(false);
 
     const handleTryAgain = async () => {
         if (!requestData) {
@@ -204,6 +205,9 @@ export default function RecipeResultScreen() {
                                 <Ionicons name="time" size={20} color="black" />
                                 <Text style={styles.infoText}>{parsedRecipe.cookingTime} min</Text>
                             </View>
+                            <TouchableOpacity onPress={() => setShowNutritionInfo(true)}>
+                                <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 0 }}>ⓘ</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
 
@@ -283,6 +287,31 @@ export default function RecipeResultScreen() {
                 </View>
             </Modal>
             <PremiumModal visible={showPremiumModal} onClose={() => setShowPremiumModal(false)} />
+            <Modal visible={showNutritionInfo} transparent={true} animationType="slide">
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalTitle}>{t('nutrition_disclaimer_title')}</Text>
+                        <ScrollView style={{ maxHeight: 300 }}>
+                            <Text style={styles.modalText}>
+                                {t('nutrition_disclaimer_body_1')}
+                                {t('nutrition_disclaimer_body_2')}
+                            </Text>
+                            <Text style={[styles.modalText, { color: "blue" }]} onPress={() => Linking.openURL("https://fdc.nal.usda.gov/")}>
+                                • USDA FoodData Central
+                            </Text>
+                            <Text style={styles.modalText}>
+                                {t('nutrition_disclaimer_body_3')}
+                            </Text>
+                        </ScrollView>
+                        <TouchableOpacity
+                            style={styles.closeButton}
+                            onPress={() => setShowNutritionInfo(false)}
+                        >
+                            <Text style={styles.closeButtonText}>Close</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 }
@@ -435,5 +464,40 @@ const styles = StyleSheet.create({
         color: "#000",
         textAlign: "center"
     },
+    modalOverlay: {
+        flex: 1,
+        backgroundColor: "rgba(0, 0, 0, 0.6)",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    modalContent: {
+        backgroundColor: "#FFF",
+        padding: 20,
+        borderRadius: 10,
+        width: "85%",
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: "bold",
+        marginBottom: 10,
+    },
+    modalText: {
+        fontSize: 15,
+        marginBottom: 10,
+        color: "#000",
+    },
+    closeButton: {
+        marginTop: 10,
+        backgroundColor: "#FCE71C",
+        paddingVertical: 10,
+        borderRadius: 8,
+        alignItems: "center",
+    },
+    closeButtonText: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#000",
+    },
+
 });
 

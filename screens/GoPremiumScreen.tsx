@@ -28,6 +28,7 @@ export default function GoPremiumScreen() {
             try {
                 await RNIap.initConnection();
                 const products = await RNIap.getSubscriptions({ skus: itemSkus});
+                console.log('Available subscriptions', products);
                 if (products.length > 0) {
                     setProduct(products[0]);
                 }
