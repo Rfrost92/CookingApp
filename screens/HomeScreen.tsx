@@ -15,7 +15,7 @@ import {
 import {useFocusEffect, useNavigation} from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {AuthContext} from "../contexts/AuthContext";
-import {logOut} from "../services/authService";
+import {logOut, reauthenticateUser, reauthWithApple, reauthWithGoogle} from "../services/authService";
 import {
     fetchTestUserStatusAndRequests, getRequestsThisWeek,
     isUserTest,
@@ -30,6 +30,9 @@ import AuthPromptModal from "./AuthPromptModal";
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import {SafeAreaView} from "react-native-safe-area-context";
 import {testingMode} from "../services/openaiService";
+import { deleteUser } from "firebase/auth";
+import {deleteDoc, doc} from "firebase/firestore";
+import {auth, db} from "../firebaseConfig";
 
 const availableLanguages = [
     {code: "en", name: "English"},
@@ -157,6 +160,47 @@ export default function HomeScreen() {
             navigation.navigate("ChooseClassicRecipe");
         } else {
             Alert.alert(t("signup_required"), t("classic_recipes_access"));
+        }
+    };
+
+    const handleDeleteAccount = async () => {
+        try {
+            const provider = user?.providerData[0]?.providerId;
+
+            if (provider === "google.com") {
+                await reauthWithGoogle();
+            } else if (provider === "apple.com") {
+                await reauthWithApple();
+            } else {
+                // Email/password case - ask for password
+                Alert.prompt(
+                    t("confirm_delete"),
+                    t("enter_password_to_confirm"),
+                    async (password) => {
+                        if (!user?.email || !password) return;
+                        try {
+                            await reauthenticateUser(user.email, password);
+                            await deleteDoc(doc(db, "users", user.uid));
+                            await deleteUser(auth.currentUser);
+                            Alert.alert(t("deleted"), t("account_deleted"));
+                        } catch (error) {
+                            console.error("❌ Deletion error", error);
+                            Alert.alert(t("error"), error.message);
+                        }
+                    },
+                    "secure-text"
+                );
+                return;
+            }
+
+            // For Apple and Google (no password required)
+            await deleteDoc(doc(db, "users", user.uid));
+            await deleteUser(auth.currentUser);
+            Alert.alert(t("deleted"), t("account_deleted"));
+
+        } catch (error) {
+            console.error("❌ Reauth error", error);
+            Alert.alert(t("error"), error.message);
         }
     };
 
@@ -312,6 +356,11 @@ export default function HomeScreen() {
                                 <Text style={styles.logoutButtonText}>{t("logout")}</Text>
                             </TouchableOpacity>
 
+                            <TouchableOpacity style={styles.accountButton} onPress={handleDeleteAccount}>
+                                <Text style={[styles.modalButtonText, { color: "red" }]}>
+                                    {t("delete_account")}
+                                </Text>
+                            </TouchableOpacity>
                             {/* CLOSE BUTTON */}
                             <TouchableOpacity style={[styles.accountButton, styles.closeButton]}
                                               onPress={() => setAccountModalVisible(false)}>

@@ -11,12 +11,15 @@ import {
     signInWithCredential,
     fetchSignInMethodsForEmail,
     User,
-    OAuthProvider
+    OAuthProvider,
+    EmailAuthProvider,
+    reauthenticateWithCredential
 } from "firebase/auth";
 import {doc, setDoc, getDoc, limit, updateDoc} from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import {useNavigation} from "@react-navigation/native";
+import * as AppleAuthentication from 'expo-apple-authentication';
 
 // Sign Up with Email & Password + Email Verification
 export const signUp = async (email: string, password: string) => {
@@ -337,3 +340,38 @@ export const checkPremiumOffer = async (uid: string, navigation: any) => {
     }
 };
 
+export async function reauthenticateUser(email: string, password: string) {
+    const credential = EmailAuthProvider.credential(email, password);
+    return reauthenticateWithCredential(auth.currentUser, credential);
+}
+
+export const reauthWithApple = async () => {
+    try {
+        const appleCredential = await AppleAuthentication.signInAsync({
+            requestedScopes: [
+                AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+                AppleAuthentication.AppleAuthenticationScope.EMAIL,
+            ],
+        });
+
+        if (!appleCredential.identityToken) {
+            throw new Error("Apple Sign-In failed: No identity token.");
+        }
+
+        const provider = new OAuthProvider('apple.com');
+        const credential = provider.credential({
+            idToken: appleCredential.identityToken,
+        });
+
+        await reauthenticateWithCredential(auth.currentUser, credential);
+    } catch (err) {
+        throw new Error("Failed to reauthenticate with Apple: " + err.message);
+    }
+};
+
+export const reauthWithGoogle = async () => {
+    await GoogleSignin.hasPlayServices();
+    const { idToken } = await GoogleSignin.signIn();
+    const googleCredential = GoogleAuthProvider.credential(idToken);
+    await reauthenticateWithCredential(auth.currentUser, googleCredential);
+};
