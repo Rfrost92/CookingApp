@@ -12,7 +12,8 @@
         "googleWebClientId": "$(googleWebClientId)",
         "gptApiKey": "$(gptApiKey)",
         "SENTRY_AUTH_TOKEN": "$(SENTRY_AUTH_TOKEN)",
-        "SENTRY_ALLOW_FAILURE": "true"
+        "SENTRY_ALLOW_FAILURE": "true",
+        "revenueCatPublicApiKey": "$(revenueCatPublicApiKey)"
       }
     },
     "preview": {
@@ -23,7 +24,8 @@
         "googleWebClientId": "$(googleWebClientId)",
         "gptApiKey": "$(gptApiKey)",
         "SENTRY_AUTH_TOKEN": "$(SENTRY_AUTH_TOKEN)",
-        "SENTRY_ALLOW_FAILURE": "true"
+        "SENTRY_ALLOW_FAILURE": "true",
+        "revenueCatPublicApiKey": "$(revenueCatPublicApiKey)"
       }
     },
     "production": {
@@ -33,7 +35,8 @@
         "googleWebClientId": "$(googleWebClientId)",
         "gptApiKey": "$(gptApiKey)",
         "SENTRY_AUTH_TOKEN": "$(SENTRY_AUTH_TOKEN)",
-        "SENTRY_ALLOW_FAILURE": "true"
+        "SENTRY_ALLOW_FAILURE": "true",
+        "revenueCatPublicApiKey": "$(revenueCatPublicApiKey)"
       }
     }
   }

@@ -6,13 +6,14 @@ import {
     Alert,
     Linking,
     TouchableOpacity,
-    StyleSheet,
+    StyleSheet, Platform,
 } from "react-native";
-import {signUp, signInWithGoogle, checkPremiumOffer} from "../services/authService";
+import {signUp, signInWithGoogle, checkPremiumOffer, signInWithApple} from "../services/authService";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import * as AppleAuthentication from 'expo-apple-authentication';
 
 export default function InitialSignUpScreen({ navigation }: any) {
     const [email, setEmail] = useState("");
@@ -59,6 +60,29 @@ export default function InitialSignUpScreen({ navigation }: any) {
         }
     };
 
+    const handleAppleSignIn = async () => {
+        try {
+            const credential = await AppleAuthentication.signInAsync({
+                requestedScopes: [
+                    AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+                    AppleAuthentication.AppleAuthenticationScope.EMAIL,
+                ],
+            });
+
+            const user = await signInWithApple(credential);
+            Alert.alert(t("success"), t("logged_in_successfully"));
+            navigation.navigate("Home");
+            await checkPremiumOffer(user.uid, navigation);
+        } catch (e: any) {
+            if (e.code === 'ERR_CANCELED') {
+                console.log("Apple sign in cancelled");
+            } else {
+                console.error(e);
+                Alert.alert("Apple Sign-In Failed", e.message || "Please try again.");
+            }
+        }
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
@@ -92,6 +116,16 @@ export default function InitialSignUpScreen({ navigation }: any) {
                     <Ionicons style = {styles.googleIcon} name="logo-google" size={24} color="white" />
                     <Text style={styles.buttonText}>{t("log_in_google")}</Text>
                 </TouchableOpacity>
+
+                {Platform.OS === 'ios' && AppleAuthentication.isAvailableAsync() && (
+                    <AppleAuthentication.AppleAuthenticationButton
+                        buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+                        buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+                        cornerRadius={5}
+                        style={{ width: "100%", height: 45, marginBottom: 10 }}
+                        onPress={handleAppleSignIn}
+                    />
+                )}
 
                 <TouchableOpacity
                     style={styles.secondaryButton}

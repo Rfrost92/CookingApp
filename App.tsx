@@ -8,6 +8,7 @@ import * as RNIap from "react-native-iap";
 import * as Sentry from "@sentry/react-native";
 import { captureConsoleIntegration } from "@sentry/core";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Purchases from 'react-native-purchases';
 
 global.Buffer = Buffer;
 
@@ -25,6 +26,11 @@ export default Sentry.wrap(function App() {
     useEffect(() => {
         const initIAP = async () => {
             try {
+                Purchases.configure({
+                    apiKey: process.env.revenueCatPublicApiKey,
+                    appUserID: null, // or set to your Firebase UID if you want to manage it yourself
+                });
+
                 const result = await RNIap.initConnection();
                 console.log("✅ IAP Initialized:", result);
 

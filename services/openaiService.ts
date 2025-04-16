@@ -10,7 +10,7 @@ const openai = new OpenAI({
     apiKey: process.env.gptApiKey
 });
 
-const testing = true; // Set to `false` for production
+export const testingMode = true; // Set to `false` for production
 
 const getLocalizedPromptPrefix = (language: string) => {
     const prefixMap = {
@@ -73,7 +73,7 @@ export const fetchRecipeScenario1 = async (requestData) => {
             return { error: "Error: Weekly request limit reached." };
         }
 
-        if (testing) {
+        if (testingMode) {
             console.log(prompt);
             recipe = mockedResponses[0].choices[0].message.content;
             image = mockImageUrl;
@@ -176,7 +176,7 @@ export const fetchRecipeScenario2 = async (requestData) => {
             return { error: "Error: Weekly request limit reached." };
         }
 
-        if (testing) {
+        if (testingMode) {
             console.log(prompt);
             recipe = mockedResponses[0].choices[0].message.content;
             image = mockImageUrl;
@@ -252,7 +252,7 @@ export const fetchRecipeScenario3 = async ({ classicDishName, user, language, de
             return { error: "Error: Weekly request limit reached." }; // Properly return error
         }
 
-        if (testing) {
+        if (testingMode) {
             console.log(prompt);
             recipe = mockedResponses[0].choices[0].message.content;
             image = mockImageUrl;

@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Add Sentry to env">
-      <change afterPath="$PROJECT_DIR$/data/verifyEmail.ts" afterDir="false" />
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Fix verify email issue with creating account without DB entry, also add disclaimer">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/translations.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/translations.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contexts/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/contexts/AuthContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eas.json" beforeDir="false" afterPath="$PROJECT_DIR$/eas.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/GoPremiumScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/GoPremiumScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/InitialSignUpScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/InitialSignUpScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/RecipeDetailScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/RecipeDetailScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/RecipeResultScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/RecipeResultScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/LogInScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/LogInScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/authService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/authService.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/openaiService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/openaiService.ts" afterDir="false" />
     </list>
@@ -137,14 +140,7 @@
       <workItem from="1743511865228" duration="48192000" />
       <workItem from="1744043160448" duration="16000" />
       <workItem from="1744043203157" duration="20521000" />
-      <workItem from="1744284351452" duration="61482000" />
-    </task>
-    <task id="LOCAL-00013" summary="Skeleton for sign up and login">
-      <created>1736889169816</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1736889169816</updated>
+      <workItem from="1744284351452" duration="75921000" />
     </task>
     <task id="LOCAL-00014" summary="User sign up and login works. Daily limits for logged in users work.">
       <created>1736962341538</created>
@@ -482,7 +478,14 @@
       <option name="project" value="LOCAL" />
       <updated>1744630428967</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Fix verify email issue with creating account without DB entry, also add disclaimer">
+      <created>1744727953558</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1744727953558</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -501,7 +504,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add loading screens" />
     <MESSAGE value="Make login screen etc. into a new design" />
     <MESSAGE value="fix login, signup and reset password screens, considering the text error" />
     <MESSAGE value="implement user feedback through DB" />
@@ -526,7 +528,8 @@
     <MESSAGE value="fix subscription rollbacks" />
     <MESSAGE value="Start using .env" />
     <MESSAGE value="Add Sentry to env" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Sentry to env" />
+    <MESSAGE value="Fix verify email issue with creating account without DB entry, also add disclaimer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix verify email issue with creating account without DB entry, also add disclaimer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -58,7 +58,8 @@
           "project": "react-native",
           "organization": "roman-moroz"
         }
-      ]
+      ],
+      "expo-tracking-transparency"
     ]
   },
   "react-native-google-mobile-ads": {

@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import {doc, getDoc, updateDoc} from "firebase/firestore";
 import { auth, db } from "../firebaseConfig";
-import * as RNIap from "react-native-iap";
+import Purchases from "react-native-purchases";
 
 // Define shape for context
 export const AuthContext = createContext({
@@ -50,37 +50,48 @@ export const AuthProvider = ({ children }: any) => {
         try {
             const userRef = doc(db, "users", uid);
             const userDoc = await getDoc(userRef);
-
             if (!userDoc.exists()) return;
 
             const userData = userDoc.data();
             let newType = "guest";
 
-            // Check with IAP if the user still has a valid subscription
-            const purchases = await RNIap.getAvailablePurchases();
-            const hasPremium = purchases.some(purchase =>
-                itemSkus.includes(purchase.productId)
-            );
+            const { entitlements } = await Purchases.getCustomerInfo();
+            const isActive = entitlements.active["smartchef Plus"];
 
-            if (hasPremium) {
-                newType = "premium";
+            if (isActive) {
+                const now = Date.now();
+                const expiresAt = isActive.expirationDate ? new Date(isActive.expirationDate).getTime() : null;
+
+                const isExpired = expiresAt !== null && expiresAt < now;
+                const isSandbox = isActive.isSandbox;
+
+                console.log("📜 Entitlement info:", {
+                    isSandbox,
+                    willRenew: isActive.willRenew,
+                    expirationDate: isActive.expirationDate,
+                    expired: isExpired,
+                });
+
+                if (!(isSandbox && isExpired)) {
+                    newType = "premium";
+                } else {
+                    console.log("🧪 Sandbox subscription manually marked as expired");
+                }
             }
 
-            // If subscriptionType in Firestore doesn't match, update it
             if (userData.subscriptionType !== newType) {
-                if (userData.testUser && userData.testUser === true) {
-                    console.log('Test user keeps subscription')
-                    return
-                }
+                if (userData.testUser === true) return;
                 await updateDoc(userRef, { subscriptionType: newType });
             }
 
             setSubscriptionType(newType);
-            console.log("✅ SubscriptionType validated & set:", newType);
+            console.log("✅ SubscriptionType set via RevenueCat:", newType);
         } catch (error) {
-            console.error("❌ Failed to validate subscriptionType:", error);
+            console.error("❌ Failed to validate subscriptionType via RevenueCat:", error);
         }
     };
+
+
 
     const refreshSubscriptionType = async () => {
         if (!user?.uid) return;

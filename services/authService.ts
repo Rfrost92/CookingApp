@@ -10,7 +10,8 @@ import {
     FacebookAuthProvider,
     signInWithCredential,
     fetchSignInMethodsForEmail,
-    User
+    User,
+    OAuthProvider
 } from "firebase/auth";
 import {doc, setDoc, getDoc, limit, updateDoc} from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -134,6 +135,22 @@ export const signInWithGoogle = async () => {
     } catch (error: any) {
         throw new Error(error.message);
     }
+};
+
+export const signInWithApple = async (appleCredential: any) => {
+    if (!appleCredential.identityToken) {
+        throw new Error("Apple Sign-In failed: No identity token.");
+    }
+
+    const provider = new OAuthProvider('apple.com');
+    const firebaseCredential = provider.credential({
+        idToken: appleCredential.identityToken,
+    });
+
+    const userCredential = await signInWithCredential(auth, firebaseCredential);
+    await setUserInDB(userCredential.user, 'apple');
+
+    return userCredential.user;
 };
 
 /*

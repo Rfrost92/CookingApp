@@ -29,6 +29,7 @@ import {Ionicons} from '@expo/vector-icons';
 import AuthPromptModal from "./AuthPromptModal";
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import {SafeAreaView} from "react-native-safe-area-context";
+import {testingMode} from "../services/openaiService";
 
 const availableLanguages = [
     {code: "en", name: "English"},
@@ -53,7 +54,6 @@ export default function HomeScreen() {
         const langData = translations?.[language];
         return langData?.[key] ?? `[${key}]`;
     };
-    const testMode = true;
 
     useEffect(() => {
         const fetchGuestRequests = async () => {
@@ -221,7 +221,7 @@ export default function HomeScreen() {
                     <Text style={styles.buttonText}>{t("classic_recipes")}</Text>
                 </TouchableOpacity>
 
-                {testMode &&
+                {testingMode &&
                 <TouchableOpacity style={styles.button} title={t("reset_counter")} onPress={resetNonSignedInCounter}/>}
                 {isLemonMenuVisible && (
                     <View style={styles.lemonMenu}>
@@ -300,7 +300,7 @@ export default function HomeScreen() {
                             )}
 
 
-                            {!isLoggedIn || subscriptionType === "guest" ? (
+                            {!isLoggedIn || subscriptionType === "guest" || testingMode ? (
                                 <TouchableOpacity style={styles.premiumButton} onPress={() => {navigation.navigate("GoPremium"), setAccountModalVisible(false)}}>
                                     <Text style={styles.premiumButtonText}>{t("go_premium")}</Text>
                                 </TouchableOpacity>
