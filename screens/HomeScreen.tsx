@@ -183,6 +183,7 @@ export default function HomeScreen() {
                             await deleteDoc(doc(db, "users", user.uid));
                             await deleteUser(auth.currentUser);
                             Alert.alert(t("deleted"), t("account_deleted"));
+                            setAccountModalVisible(false);
                         } catch (error) {
                             console.error("❌ Deletion error", error);
                             Alert.alert(t("error"), error.message);

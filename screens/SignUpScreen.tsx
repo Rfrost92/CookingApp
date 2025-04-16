@@ -22,8 +22,21 @@ export default function SignUpScreen({ navigation }: any) {
 
         try {
             await signUp(email, password);
-            Alert.alert(t("success"), t("account_created_successfully") + "\n" + t("please_verify_email"));
-            setShowResend(true);
+            Alert.alert(
+                t("success"),
+                t("account_created_successfully") + "\n" + t("please_verify_email"),
+                [
+                    {
+                        text: t("ok"),
+                        onPress: () => {
+                            navigation.reset({
+                                index: 0,
+                                routes: [{ name: "Home" }],
+                            });
+                        },
+                    },
+                ]
+            );
         } catch (error) {
             Alert.alert(t("error"), error.message);
         }

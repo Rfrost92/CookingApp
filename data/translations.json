@@ -312,7 +312,7 @@
     "account_deleted": "Your account has been successfully deleted.",
     "delete_failed": "Account deletion failed.",
     "reauth_required": "Please log in again before deleting your account.",
-    "enter_password_to_confirm": "Enter password to confirm",
+    "enter_password_to_confirm": "Enter password to confirm"
   },
 
   "de": {
@@ -620,7 +620,15 @@
     "nutrition_disclaimer_title": "Haftungsausschluss für Nährwertangaben",
     "nutrition_disclaimer_body_1": "Alle Nährwertangaben, einschließlich Kalorien, werden von einer KI mithilfe der OpenAI GPT-API generiert. Es handelt sich um Schätzwerte, die auf typischen Werten aus öffentlich zugänglichen Datenbanken basieren und nicht den tatsächlichen Werten entsprechen müssen.",
     "nutrition_disclaimer_body_2": "Für genauere Nährwertangaben konsultieren Sie bitte offizielle Quellen wie:",
-    "nutrition_disclaimer_body_3": "Diese App bietet keine medizinische oder ernährungsbezogene Beratung. Alle Rezepte werden basierend auf Ihren Angaben generiert und sind möglicherweise nicht für alle Ernährungsbedürfnisse geeignet. Verwenden Sie Ihr eigenes Urteilsvermögen und konsultieren Sie bei Bedarf einen Fachmann."
+    "nutrition_disclaimer_body_3": "Diese App bietet keine medizinische oder ernährungsbezogene Beratung. Alle Rezepte werden basierend auf Ihren Angaben generiert und sind möglicherweise nicht für alle Ernährungsbedürfnisse geeignet. Verwenden Sie Ihr eigenes Urteilsvermögen und konsultieren Sie bei Bedarf einen Fachmann.",
+    "delete_account": "Konto löschen",
+    "confirm_delete": "Bist du sicher?",
+    "delete_warning": "Dein Konto und alle zugehörigen Daten werden dauerhaft gelöscht.",
+    "deleted": "Gelöscht",
+    "account_deleted": "Dein Konto wurde erfolgreich gelöscht.",
+    "delete_failed": "Löschen des Kontos fehlgeschlagen.",
+    "reauth_required": "Bitte melde dich erneut an, bevor du dein Konto löschen kannst.",
+    "enter_password_to_confirm": "Gib dein Passwort ein, um zu bestätigen"
   },
   "ua": {
     "welcome": "Ласкаво просимо до smartchef!",
@@ -927,7 +935,15 @@
     "nutrition_disclaimer_title": "Застереження щодо поживної інформації",
     "nutrition_disclaimer_body_1": "Усі значення поживних речовин, включно з калорійністю, згенеровані ШІ за допомогою GPT API від OpenAI. Це приблизні оцінки, які базуються на загальнодоступних даних і можуть не відповідати дійсності.",
     "nutrition_disclaimer_body_2": "Для більш точної інформації про поживність звертайтесь до офіційних джерел, наприклад:",
-    "nutrition_disclaimer_body_3": "Цей додаток не надає медичних чи дієтичних рекомендацій. Усі рецепти згенеровані на основі ваших введених даних і можуть не відповідати всім дієтичним потребам. Використовуйте власний розсуд і за потреби зверніться до фахівця."
+    "nutrition_disclaimer_body_3": "Цей додаток не надає медичних чи дієтичних рекомендацій. Усі рецепти згенеровані на основі ваших введених даних і можуть не відповідати всім дієтичним потребам. Використовуйте власний розсуд і за потреби зверніться до фахівця.",
+    "delete_account": "Видалити обліковий запис",
+    "confirm_delete": "Ви впевнені?",
+    "delete_warning": "Ваш обліковий запис та всі пов'язані дані буде остаточно видалено.",
+    "deleted": "Видалено",
+    "account_deleted": "Ваш обліковий запис успішно видалено.",
+    "delete_failed": "Не вдалося видалити обліковий запис.",
+    "reauth_required": "Будь ласка, увійдіть знову перед видаленням облікового запису.",
+    "enter_password_to_confirm": "Введіть пароль для підтвердження"
   },
 
   "ru": {
@@ -1235,7 +1251,14 @@
     "nutrition_disclaimer_title": "Отказ от ответственности по питательной информации",
     "nutrition_disclaimer_body_1": "Все значения питательных веществ, включая калории, сгенерированы ИИ с использованием OpenAI GPT API. Это приблизительные оценки на основе общедоступных данных и они могут не соответствовать фактическим значениям.",
     "nutrition_disclaimer_body_2": "Для более точной информации о питательных веществах, пожалуйста, обратитесь к официальным источникам, таким как:",
-    "nutrition_disclaimer_body_3": "Это приложение не предоставляет медицинских или диетических рекомендаций. Все рецепты создаются на основе введенных вами данных и могут не подходить для всех диетических потребностей. Пожалуйста, полагайтесь на собственное суждение и при необходимости проконсультируйтесь со специалистом."
-
+    "nutrition_disclaimer_body_3": "Это приложение не предоставляет медицинских или диетических рекомендаций. Все рецепты создаются на основе введенных вами данных и могут не подходить для всех диетических потребностей. Пожалуйста, полагайтесь на собственное суждение и при необходимости проконсультируйтесь со специалистом.",
+    "delete_account": "Удалить аккаунт",
+    "confirm_delete": "Вы уверены?",
+    "delete_warning": "Ваш аккаунт и все связанные данные будут удалены без возможности восстановления.",
+    "deleted": "Удалено",
+    "account_deleted": "Ваш аккаунт успешно удален.",
+    "delete_failed": "Не удалось удалить аккаунт.",
+    "reauth_required": "Пожалуйста, войдите снова перед удалением аккаунта.",
+    "enter_password_to_confirm": "Введите пароль для подтверждения"
   }
 }
