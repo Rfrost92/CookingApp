@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Add delete account button">
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Fix for small screens">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/RecipeResultScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/RecipeResultScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/openaiService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/openaiService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,14 +130,7 @@
       <workItem from="1744043160448" duration="16000" />
       <workItem from="1744043203157" duration="20521000" />
       <workItem from="1744284351452" duration="79902000" />
-      <workItem from="1744881216811" duration="2833000" />
-    </task>
-    <task id="LOCAL-00016" summary="gitignore">
-      <created>1737128503933</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1737128503933</updated>
+      <workItem from="1744881216811" duration="4098000" />
     </task>
     <task id="LOCAL-00017" summary="Book of recipes works with the firebase Storage">
       <created>1737718931984</created>
@@ -479,7 +468,14 @@
       <option name="project" value="LOCAL" />
       <updated>1744826252122</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="Fix for small screens">
+      <created>1744890246542</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1744890246542</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -498,7 +494,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="implement user feedback through DB" />
     <MESSAGE value="make user feedback look better and limit to 500 characters" />
     <MESSAGE value="prepare for google Login" />
     <MESSAGE value="Google login works" />
@@ -523,7 +518,8 @@
     <MESSAGE value="Fix verify email issue with creating account without DB entry, also add disclaimer" />
     <MESSAGE value="Implement revenuecat and testing subscription - works" />
     <MESSAGE value="Add delete account button" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add delete account button" />
+    <MESSAGE value="Fix for small screens" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix for small screens" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
