@@ -3,9 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Add delete account button">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/translations.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/translations.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/SignUpScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/SignUpScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/IngredientSelectionScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/RecipeResultScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/RecipeResultScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Scenario2Step1Screen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/openaiService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/openaiService.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,6 +134,7 @@
       <workItem from="1744043160448" duration="16000" />
       <workItem from="1744043203157" duration="20521000" />
       <workItem from="1744284351452" duration="79902000" />
+      <workItem from="1744881216811" duration="2833000" />
     </task>
     <task id="LOCAL-00016" summary="gitignore">
       <created>1737128503933</created>

@@ -8,15 +8,15 @@ import {
     TouchableOpacity,
     TextInput,
     Button,
-    Alert,
+    Alert, ScrollView,
 } from "react-native";
-import { db } from "../firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
-import { useNavigation } from "@react-navigation/native";
-import { useLanguage } from "../services/LanguageContext";
+import {db} from "../firebaseConfig";
+import {collection, getDocs} from "firebase/firestore";
+import {useNavigation} from "@react-navigation/native";
+import {useLanguage} from "../services/LanguageContext";
 import translations from "../data/translations.json";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
+import {SafeAreaView} from "react-native-safe-area-context";
+import {Ionicons} from "@expo/vector-icons";
 import {containsInappropriateWords, logInappropriateInput} from "../helpers/validator";
 import {getTranslation} from "../helpers/loadTranslations";
 import {AuthContext, useAuth} from "../contexts/AuthContext";
@@ -25,9 +25,9 @@ import PremiumOnlyModal from "./PremiumOnlyModal";
 import {BannerAd, BannerAdSize, TestIds} from "react-native-google-mobile-ads";
 
 export default function Scenario2Step1Screen() {
-    const { language } = useLanguage();
-    const t = (key: string) => translations[language][key] || key ||'';
-    const { subscriptionType } = useAuth();
+    const {language} = useLanguage();
+    const t = (key: string) => translations[language][key] || key || '';
+    const {subscriptionType} = useAuth();
     const [showPremiumOnlyModal, setShowPremiumOnlyModal] = useState(false);
 
     const [cuisineOptions, setCuisineOptions] = useState<string[]>([
@@ -75,7 +75,7 @@ export default function Scenario2Step1Screen() {
     ]);
     const [filteredThematicOptions, setFilteredThematicOptions] = useState<string[]>([t("any")]);
     const [filteredStarIngredients, setFilteredStarIngredients] = useState<any[]>([
-        { name: { [language]: t("any") } },
+        {name: {[language]: t("any")}},
     ]);
 
     const [selectedCuisine, setSelectedCuisine] = useState<string>(t("any"));
@@ -95,7 +95,7 @@ export default function Scenario2Step1Screen() {
     const [thematicSearch, setThematicSearch] = useState<string>("");
     const [starIngredientSearch, setStarIngredientSearch] = useState<string>("");
 
-    const { user, isLoggedIn } = useContext(AuthContext);
+    const {user, isLoggedIn} = useContext(AuthContext);
 
     const [loading, setLoading] = useState<boolean>(true);
     const navigation = useNavigation();
@@ -110,7 +110,7 @@ export default function Scenario2Step1Screen() {
                 }));
 
                 const filteredIngredients = [
-                    { name: { [language]: t("any") } },
+                    {name: {[language]: t("any")}},
                     ...fetchedIngredients.filter((ingredient) =>
                         ["fruits_vegetables", "proteins"].includes(ingredient.category)
                     ),
@@ -206,7 +206,7 @@ export default function Scenario2Step1Screen() {
             starIngredient,
         };
 
-        navigation.navigate("ApplianceSelection", { selectedData });
+        navigation.navigate("ApplianceSelection", {selectedData});
     };
 
     const renderChoiceButton = (
@@ -243,156 +243,159 @@ export default function Scenario2Step1Screen() {
             {/* Header */}
             <View style={styles.header}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={28} color="black" />
+                    <Ionicons name="arrow-back" size={28} color="black"/>
                 </TouchableOpacity>
                 <Text style={styles.title}>{t("customize_recipe")}</Text>
                 <Text style={styles.stepText}>1/3</Text>
             </View>
 
-            {/* Cuisine Selection */}
-            <Text style={styles.label}>{t("cuisine")}:</Text>
-            <View style={styles.choiceSearchBox}>
-            <TextInput
-                style={styles.searchBar}
-                placeholder={t("search_cuisine")}
-                value={cuisineSearch}
-                onChangeText={setCuisineSearch}
-            />
-            <FlatList style={styles.customFlatlist}
-                data={filteredCuisineOptions}
-                horizontal
-                keyExtractor={(item, index) => `${item}-${index}`} // Ensure a unique key
-                renderItem={({ item }) =>
-                    renderChoiceButton(
-                        item,
-                        selectedCuisine === item && !isCustomCuisineSelected,
-                        () => {
-                            setSelectedCuisine(item);
-                            setIsCustomCuisineSelected(false);
-                        }
-                    )
-                }
-                showsHorizontalScrollIndicator={false}
-            />
-            </View>
-            <View style={styles.customInputContainer}>
-                <TextInput
-                    style={styles.input}
-                    placeholder={t("custom_cuisine")}
-                    value={customCuisine}
-                    onChangeText={setCustomCuisine}
-                />
-                {renderChoiceButton(
-                    t("use"),
-                    isCustomCuisineSelected,
-                    () => {
-                        if (subscriptionType !== "premium") {
-                            setShowPremiumOnlyModal(true);
-                            return;
-                        }
-                        setIsCustomCuisineSelected(true);
-                        setSelectedCuisine("");
-                    },
-                    !customCuisine.trim()
-                )}
-            </View>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
 
-            {/* Thematic Selection */}
-            <Text style={styles.label}>{t("thematic")}:</Text>
-            <View style={styles.choiceSearchBox}>
-            <TextInput
-                style={styles.searchBar}
-                placeholder={t("search_thematic")}
-                value={thematicSearch}
-                onChangeText={setThematicSearch}
-            />
-            <FlatList style={styles.customFlatlist}
-                data={filteredThematicOptions}
-                horizontal
-                keyExtractor={(item, index) => `${item}-${index}`} // Ensure a unique key
-                renderItem={({ item }) =>
-                    renderChoiceButton(
-                        item,
-                        selectedThematic === item && !isCustomThematicSelected,
+                {/* Cuisine Selection */}
+                <Text style={styles.label}>{t("cuisine")}:</Text>
+                <View style={styles.choiceSearchBox}>
+                    <TextInput
+                        style={styles.searchBar}
+                        placeholder={t("search_cuisine")}
+                        value={cuisineSearch}
+                        onChangeText={setCuisineSearch}
+                    />
+                    <FlatList style={styles.customFlatlist}
+                              data={filteredCuisineOptions}
+                              horizontal
+                              keyExtractor={(item, index) => `${item}-${index}`} // Ensure a unique key
+                              renderItem={({item}) =>
+                                  renderChoiceButton(
+                                      item,
+                                      selectedCuisine === item && !isCustomCuisineSelected,
+                                      () => {
+                                          setSelectedCuisine(item);
+                                          setIsCustomCuisineSelected(false);
+                                      }
+                                  )
+                              }
+                              showsHorizontalScrollIndicator={false}
+                    />
+                </View>
+                <View style={styles.customInputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder={t("custom_cuisine")}
+                        value={customCuisine}
+                        onChangeText={setCustomCuisine}
+                    />
+                    {renderChoiceButton(
+                        t("use"),
+                        isCustomCuisineSelected,
                         () => {
-                            setSelectedThematic(item);
-                            setIsCustomThematicSelected(false);
-                        }
-                    )
-                }
-                showsHorizontalScrollIndicator={false}
-            />
-            </View>
-            <View style={styles.customInputContainer}>
-                <TextInput
-                    style={styles.input}
-                    placeholder={t("custom_thematic")}
-                    value={customThematic}
-                    onChangeText={setCustomThematic}
-                />
-                {renderChoiceButton(
-                    t("use"),
-                    isCustomThematicSelected,
-                    () => {
-                        if (subscriptionType !== "premium") {
-                            setShowPremiumOnlyModal(true);
-                            return;
-                        }
-                        setIsCustomThematicSelected(true);
-                        setSelectedThematic("");
-                    },
-                    !customThematic.trim()
-                )}
-            </View>
+                            if (subscriptionType !== "premium") {
+                                setShowPremiumOnlyModal(true);
+                                return;
+                            }
+                            setIsCustomCuisineSelected(true);
+                            setSelectedCuisine("");
+                        },
+                        !customCuisine.trim()
+                    )}
+                </View>
 
-            {/* Star Ingredient */}
-            <Text style={styles.label}>{t("star_ingredient")}:</Text>
-            <View style={styles.choiceSearchBox}>
-            <TextInput
-                style={styles.searchBar}
-                placeholder={t("search_star_ingredient")}
-                value={starIngredientSearch}
-                onChangeText={setStarIngredientSearch}
-            />
-            <FlatList style={styles.customFlatlist}
-                data={filteredStarIngredients}
-                horizontal
-                keyExtractor={(item, index) => `${item}-${index}`} // Ensure a unique key
-                renderItem={({ item }) =>
-                    renderChoiceButton(
-                        item.name[language],
-                        selectedStarIngredient === item.name[language] && !isCustomStarIngredientSelected,
+                {/* Thematic Selection */}
+                <Text style={styles.label}>{t("thematic")}:</Text>
+                <View style={styles.choiceSearchBox}>
+                    <TextInput
+                        style={styles.searchBar}
+                        placeholder={t("search_thematic")}
+                        value={thematicSearch}
+                        onChangeText={setThematicSearch}
+                    />
+                    <FlatList style={styles.customFlatlist}
+                              data={filteredThematicOptions}
+                              horizontal
+                              keyExtractor={(item, index) => `${item}-${index}`} // Ensure a unique key
+                              renderItem={({item}) =>
+                                  renderChoiceButton(
+                                      item,
+                                      selectedThematic === item && !isCustomThematicSelected,
+                                      () => {
+                                          setSelectedThematic(item);
+                                          setIsCustomThematicSelected(false);
+                                      }
+                                  )
+                              }
+                              showsHorizontalScrollIndicator={false}
+                    />
+                </View>
+                <View style={styles.customInputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder={t("custom_thematic")}
+                        value={customThematic}
+                        onChangeText={setCustomThematic}
+                    />
+                    {renderChoiceButton(
+                        t("use"),
+                        isCustomThematicSelected,
                         () => {
-                            setSelectedStarIngredient(item.name[language]);
-                            setIsCustomStarIngredientSelected(false);
-                        }
-                    )
-                }
-                showsHorizontalScrollIndicator={false}
-            />
-            </View>
-            <View style={styles.customInputContainer}>
-                <TextInput
-                    style={styles.input}
-                    placeholder={t("custom_star_ingredient")}
-                    value={customStarIngredient}
-                    onChangeText={setCustomStarIngredient}
-                />
-                {renderChoiceButton(
-                    t("use"),
-                    isCustomStarIngredientSelected,
-                    () => {
-                        if (subscriptionType !== "premium") {
-                            setShowPremiumOnlyModal(true);
-                            return;
-                        }
-                        setIsCustomStarIngredientSelected(true);
-                        setSelectedStarIngredient("");
-                    },
-                    !customStarIngredient.trim()
-                )}
-            </View>
+                            if (subscriptionType !== "premium") {
+                                setShowPremiumOnlyModal(true);
+                                return;
+                            }
+                            setIsCustomThematicSelected(true);
+                            setSelectedThematic("");
+                        },
+                        !customThematic.trim()
+                    )}
+                </View>
 
+                {/* Star Ingredient */}
+                <Text style={styles.label}>{t("star_ingredient")}:</Text>
+                <View style={styles.choiceSearchBox}>
+                    <TextInput
+                        style={styles.searchBar}
+                        placeholder={t("search_star_ingredient")}
+                        value={starIngredientSearch}
+                        onChangeText={setStarIngredientSearch}
+                    />
+                    <FlatList style={styles.customFlatlist}
+                              data={filteredStarIngredients}
+                              horizontal
+                              keyExtractor={(item, index) => `${item}-${index}`} // Ensure a unique key
+                              renderItem={({item}) =>
+                                  renderChoiceButton(
+                                      item.name[language],
+                                      selectedStarIngredient === item.name[language] && !isCustomStarIngredientSelected,
+                                      () => {
+                                          setSelectedStarIngredient(item.name[language]);
+                                          setIsCustomStarIngredientSelected(false);
+                                      }
+                                  )
+                              }
+                              showsHorizontalScrollIndicator={false}
+                    />
+                </View>
+                <View style={styles.customInputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder={t("custom_star_ingredient")}
+                        value={customStarIngredient}
+                        onChangeText={setCustomStarIngredient}
+                    />
+                    {renderChoiceButton(
+                        t("use"),
+                        isCustomStarIngredientSelected,
+                        () => {
+                            if (subscriptionType !== "premium") {
+                                setShowPremiumOnlyModal(true);
+                                return;
+                            }
+                            setIsCustomStarIngredientSelected(true);
+                            setSelectedStarIngredient("");
+                        },
+                        !customStarIngredient.trim()
+                    )}
+                </View>
+
+            </ScrollView>
             {/* Banner Ad for non-premium users */}
             {subscriptionType !== "premium" && (
                 <View style={styles.adContainer}>
@@ -414,7 +417,7 @@ export default function Scenario2Step1Screen() {
                     <Text style={styles.bottomButtonText}>{t("next")}</Text>
                 </TouchableOpacity>
             </View>
-            <PremiumOnlyModal visible={showPremiumOnlyModal} onClose={() => setShowPremiumOnlyModal(false)} />
+            <PremiumOnlyModal visible={showPremiumOnlyModal} onClose={() => setShowPremiumOnlyModal(false)}/>
 
         </SafeAreaView>
     );
@@ -516,8 +519,7 @@ const styles = StyleSheet.create({
     customFlatlist: {
         marginBottom: 5,  // Reduce space after slider
     },
-    choiceSearchBox: {
-    },
+    choiceSearchBox: {},
     customInputContainer: {
         flexDirection: "row",
         alignItems: "center",
@@ -559,5 +561,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#71f2c9",
         paddingBottom: 15,
     },
-
+    scrollContainer: {
+        paddingBottom: 100,
+        paddingTop: 10,
+        justifyContent: "center",
+    },
 });

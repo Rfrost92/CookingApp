@@ -416,6 +416,8 @@ export default function IngredientSelectionScreen() {
 
             {/* Category List */}
             <FlatList
+                style={styles.flatlist}
+                showsVerticalScrollIndicator={false}
                 data={filteredCategories}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => {
@@ -741,5 +743,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
         textAlign: "center",
+    },
+    flatlist: {
+        marginBottom: 20,
     }
 });

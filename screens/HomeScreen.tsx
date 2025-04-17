@@ -10,7 +10,7 @@ import {
     FlatList,
     Image,
     TouchableWithoutFeedback,
-    Keyboard
+    Keyboard, ScrollView
 } from "react-native";
 import {useFocusEffect, useNavigation} from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -27,10 +27,10 @@ import {useLanguage} from "../services/LanguageContext";
 import translations from "../data/translations.json";
 import {Ionicons} from '@expo/vector-icons';
 import AuthPromptModal from "./AuthPromptModal";
-import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
-import {SafeAreaView} from "react-native-safe-area-context";
+import {BannerAd, BannerAdSize, TestIds} from 'react-native-google-mobile-ads';
+import {SafeAreaView, useSafeAreaInsets} from "react-native-safe-area-context";
 import {testingMode} from "../services/openaiService";
-import { deleteUser } from "firebase/auth";
+import {deleteUser} from "firebase/auth";
 import {deleteDoc, doc} from "firebase/firestore";
 import {auth, db} from "../firebaseConfig";
 
@@ -42,7 +42,7 @@ const availableLanguages = [
 ];
 
 export default function HomeScreen() {
-    const { user, isLoggedIn, subscriptionType, setSubscriptionType, refreshSubscriptionType } = useContext(AuthContext);
+    const {user, isLoggedIn, subscriptionType, setSubscriptionType, refreshSubscriptionType} = useContext(AuthContext);
     const {language, setLanguage} = useLanguage();
     const navigation = useNavigation();
     const [guestRequests, setGuestRequests] = useState<number>(0);
@@ -52,6 +52,8 @@ export default function HomeScreen() {
     const [requestsThisWeek, setRequestsThisWeek] = useState<number | null>(null);
     const [isLemonMenuVisible, setLemonMenuVisible] = useState(false);
     const [showAuthPromptModal, setShowAuthPromptModal] = useState(false);
+    const insets = useSafeAreaInsets();
+    const BOTTOM_BAR_HEIGHT = 35;
 
     const t = (key: string) => {
         const langData = translations?.[language];
@@ -71,7 +73,7 @@ export default function HomeScreen() {
         const checkUserTestStatus = async () => {
             if (user && isLoggedIn) {
                 try {
-                    const { isTestUser, requestsThisWeek } = await fetchTestUserStatusAndRequests(user.uid);
+                    const {isTestUser, requestsThisWeek} = await fetchTestUserStatusAndRequests(user.uid);
                     setIsTestUser(isTestUser);
                     setRequestsThisWeek(requestsThisWeek);
                 } catch (error) {
@@ -101,15 +103,16 @@ export default function HomeScreen() {
             try {
                 navigation.navigate(screenName);
             } catch (error) {
-                Alert.alert(t("unexpected_error"), t("error_message"), [{ text: t("ok") }]);
-            }        }
+                Alert.alert(t("unexpected_error"), t("error_message"), [{text: t("ok")}]);
+            }
+        }
     };
 
     const handleRequest = async (scenario: string) => {
         try {
             navigation.navigate(scenario);
         } catch (error) {
-            Alert.alert(t("unexpected_error"), t("error_message"), [{ text: t("ok") }]);
+            Alert.alert(t("unexpected_error"), t("error_message"), [{text: t("ok")}]);
         }
     };
 
@@ -222,185 +225,169 @@ export default function HomeScreen() {
                     />
                 </View>
             )}
-        <TouchableWithoutFeedback
-            onPress={() => {
-                setLemonMenuVisible(false); // Close Lemon Menu when tapping anywhere
-                Keyboard.dismiss(); // Dismiss keyboard if open
-            }}
-        >
+            <TouchableWithoutFeedback
+                onPress={() => {
+                    setLemonMenuVisible(false); // Close Lemon Menu when tapping anywhere
+                    Keyboard.dismiss(); // Dismiss keyboard if open
+                }}
+            >
 
-            <View style={styles.container}>
-                {/* Logo at the top */}
-                <Image source={require("../assets/orange.png")} style={styles.logo}/>
+                <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
 
-                <Text style={styles.title}>{t("welcome")}</Text>
+                    <View style={styles.container}>
+                        {/* Logo at the top */}
+                        <Image source={require("../assets/orange.png")} style={styles.logo}/>
 
-                {/* Menu Options */}
-                <TouchableOpacity
-                    style={[styles.button, !isLoggedIn && styles.lockedButton]}
-                    onPress={() => handleProtectedAction("IngredientSelection")}
-                >
-                    <Image source={require("../assets/availableingr.png")} style={styles.buttonIcon} />
-                    <View style={styles.lockedRow}>
-                        <Text style={styles.buttonText}>{t("ingredient_selection")}</Text>
-                        {!isLoggedIn && <Ionicons name="lock-closed-outline" size={18} color="gray" style={styles.lockIcon} />}
-                    </View>
-                </TouchableOpacity>
+                        <Text style={styles.title}>{t("welcome")}</Text>
 
-                <TouchableOpacity
-                    style={[styles.button, !isLoggedIn && styles.lockedButton]}
-                    onPress={() => handleProtectedAction("Scenario2Step1")}
-                >
-                    <Image source={require("../assets/newingr.png")} style={styles.buttonIcon} />
-                    <View style={styles.lockedRow}>
-                        <Text style={styles.buttonText}>{t("open_to_ideas")}</Text>
-                        {!isLoggedIn && <Ionicons name="lock-closed-outline" size={18} color="gray" style={styles.lockIcon} />}
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.button} onPress={() => {
-                    setLemonMenuVisible(false);
-                    handleRequest("ChooseClassicRecipe")
-                }}>
-                    <Image source={require("../assets/classic.png")} style={styles.buttonIcon}/>
-                    <Text style={styles.buttonText}>{t("classic_recipes")}</Text>
-                </TouchableOpacity>
-
-                {testingMode &&
-                <TouchableOpacity style={styles.button} title={t("reset_counter")} onPress={resetNonSignedInCounter}/>}
-                {isLemonMenuVisible && (
-                    <View style={styles.lemonMenu}>
-                        {/* Account/Login Button */}
-                        <TouchableOpacity style={styles.lemonMenuItem} onPress={handleAccountPress}>
-                            <Text style={styles.lemonMenuText}>{isLoggedIn ? t("account") : t("login")}</Text>
+                        {/* Menu Options */}
+                        <TouchableOpacity
+                            style={[styles.button, !isLoggedIn && styles.lockedButton]}
+                            onPress={() => handleProtectedAction("IngredientSelection")}
+                        >
+                            <Image source={require("../assets/availableingr.png")} style={styles.buttonIcon}/>
+                            <View style={styles.lockedRow}>
+                                <Text style={styles.buttonText}>{t("ingredient_selection")}</Text>
+                                {!isLoggedIn &&
+                                <Ionicons name="lock-closed-outline" size={18} color="gray" style={styles.lockIcon}/>}
+                            </View>
                         </TouchableOpacity>
 
-                        {/* Help Button */}
-                        <TouchableOpacity style={styles.lemonMenuItem}
-                                          onPress={() => {
-                                              setLemonMenuVisible(false);
-                                              navigation.navigate("HelpScreen")
-                                          }}>
-                            <Text style={styles.lemonMenuText}>{t("help")}</Text>
+                        <TouchableOpacity
+                            style={[styles.button, !isLoggedIn && styles.lockedButton]}
+                            onPress={() => handleProtectedAction("Scenario2Step1")}
+                        >
+                            <Image source={require("../assets/newingr.png")} style={styles.buttonIcon}/>
+                            <View style={styles.lockedRow}>
+                                <Text style={styles.buttonText}>{t("open_to_ideas")}</Text>
+                                {!isLoggedIn &&
+                                <Ionicons name="lock-closed-outline" size={18} color="gray" style={styles.lockIcon}/>}
+                            </View>
                         </TouchableOpacity>
 
-                        {/* Home Button (Only visible when NOT on Home) */}
-                        {/*
-                    {navigation.getState().index !== 0 && (
-                        <TouchableOpacity style={styles.lemonMenuItem} onPress={() => navigation.navigate("Home")}>
-                            <Text style={styles.lemonMenuText}>{t("home")}</Text>
+                        <TouchableOpacity style={styles.button} onPress={() => {
+                            setLemonMenuVisible(false);
+                            handleRequest("ChooseClassicRecipe")
+                        }}>
+                            <Image source={require("../assets/classic.png")} style={styles.buttonIcon}/>
+                            <Text style={styles.buttonText}>{t("classic_recipes")}</Text>
                         </TouchableOpacity>
-                    )}
-                    */}
-                    </View>
-                )}
+
+                        {testingMode &&
+                        <TouchableOpacity style={styles.button} title={t("reset_counter")}
+                                          onPress={resetNonSignedInCounter}/>}
+
+                        {/* Account Modal */}
+                        <Modal animationType="slide" transparent={true} visible={accountModalVisible}
+                               onRequestClose={() => setAccountModalVisible(false)}>
+                            <View style={styles.modalOverlay}>
+                                <View style={styles.modalContent}>
+                                    <Text style={styles.modalTitle}>{t("account_menu")}</Text>
+                                    <Text style={styles.modalText}>{t("welcome_user")} {user?.email || t("user")}</Text>
+
+                                    {isTestUser && (
+                                        <View style={styles.testUserBox}>
+                                            <Text style={styles.testUserTitle}>🧪 {t("test_user_panel")}</Text>
+                                            <Text
+                                                style={styles.testUserInfo}>{t("requests_this_week")}: {requestsThisWeek}</Text>
+
+                                            <TouchableOpacity
+                                                style={[styles.accountButton, styles.logoutButton]}
+                                                onPress={async () => {
+                                                    try {
+                                                        await resetRequestsForTestUser(user?.uid);
+                                                        const updatedCount = await getRequestsThisWeek(user.uid);
+                                                        setRequestsThisWeek(updatedCount);
+                                                        Alert.alert(t("success"), t("request_reset_success"));
+                                                    } catch (error) {
+                                                        Alert.alert(t("error"), t("request_reset_fail"));
+                                                    }
+                                                }}
+                                            >
+                                                <Text style={styles.modalButtonText}>{t("reset_requests")}</Text>
+                                            </TouchableOpacity>
+
+                                            <TouchableOpacity
+                                                style={[styles.accountButton, styles.logoutButton]}
+                                                onPress={async () => {
+                                                    try {
+                                                        const newType = await toggleTestUserSubscription(user.uid);
+                                                        setSubscriptionType(newType);
+                                                        Alert.alert(t("success"), `${t("switched_to")} ${newType}`);
+                                                    } catch (error) {
+                                                        Alert.alert(t("error"), error.message);
+                                                    }
+                                                }}
+                                            >
+                                                <Text style={styles.modalButtonText}>
+                                                    {subscriptionType === "premium" ? t("switch_to_guest") : t("switch_to_premium")}
+                                                </Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    )}
 
 
-                {/* Account Modal */}
-                <Modal animationType="slide" transparent={true} visible={accountModalVisible}
-                       onRequestClose={() => setAccountModalVisible(false)}>
-                    <View style={styles.modalOverlay}>
-                        <View style={styles.modalContent}>
-                            <Text style={styles.modalTitle}>{t("account_menu")}</Text>
-                            <Text style={styles.modalText}>{t("welcome_user")} {user?.email || t("user")}</Text>
+                                    {!isLoggedIn || subscriptionType === "guest" || testingMode ? (
+                                        <TouchableOpacity style={styles.premiumButton} onPress={() => {
+                                            navigation.navigate("GoPremium"), setAccountModalVisible(false)
+                                        }}>
+                                            <Text style={styles.premiumButtonText}>{t("go_premium")}</Text>
+                                        </TouchableOpacity>
+                                    ) : null}
 
-                            {isTestUser && (
-                                <View style={styles.testUserBox}>
-                                    <Text style={styles.testUserTitle}>🧪 {t("test_user_panel")}</Text>
-                                    <Text style={styles.testUserInfo}>{t("requests_this_week")}: {requestsThisWeek}</Text>
-
-                                    <TouchableOpacity
-                                        style={[styles.accountButton, styles.logoutButton]}
-                                        onPress={async () => {
-                                            try {
-                                                await resetRequestsForTestUser(user?.uid);
-                                                const updatedCount = await getRequestsThisWeek(user.uid);
-                                                setRequestsThisWeek(updatedCount);
-                                                Alert.alert(t("success"), t("request_reset_success"));
-                                            } catch (error) {
-                                                Alert.alert(t("error"), t("request_reset_fail"));
-                                            }
-                                        }}
-                                    >
-                                        <Text style={styles.modalButtonText}>{t("reset_requests")}</Text>
+                                    {/* LOGOUT BUTTON */}
+                                    <TouchableOpacity style={[styles.accountButton, styles.logoutButton]}
+                                                      onPress={handleLogout}>
+                                        <Text style={styles.logoutButtonText}>{t("logout")}</Text>
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity
-                                        style={[styles.accountButton, styles.logoutButton]}
-                                        onPress={async () => {
-                                            try {
-                                                const newType = await toggleTestUserSubscription(user.uid);
-                                                setSubscriptionType(newType);
-                                                Alert.alert(t("success"), `${t("switched_to")} ${newType}`);
-                                            } catch (error) {
-                                                Alert.alert(t("error"), error.message);
-                                            }
-                                        }}
-                                    >
-                                        <Text style={styles.modalButtonText}>
-                                            {subscriptionType === "premium" ? t("switch_to_guest") : t("switch_to_premium")}
+                                    <TouchableOpacity style={styles.accountButton} onPress={handleDeleteAccount}>
+                                        <Text style={[styles.modalButtonText, {color: "red"}]}>
+                                            {t("delete_account")}
                                         </Text>
                                     </TouchableOpacity>
+                                    {/* CLOSE BUTTON */}
+                                    <TouchableOpacity style={[styles.accountButton, styles.closeButton]}
+                                                      onPress={() => setAccountModalVisible(false)}>
+                                        <Text style={styles.closeButtonText}>{t("close")}</Text>
+                                    </TouchableOpacity>
                                 </View>
-                            )}
+                            </View>
+                        </Modal>
 
 
-                            {!isLoggedIn || subscriptionType === "guest" || testingMode ? (
-                                <TouchableOpacity style={styles.premiumButton} onPress={() => {navigation.navigate("GoPremium"), setAccountModalVisible(false)}}>
-                                    <Text style={styles.premiumButtonText}>{t("go_premium")}</Text>
-                                </TouchableOpacity>
-                            ) : null}
-
-                            {/* LOGOUT BUTTON */}
-                            <TouchableOpacity style={[styles.accountButton, styles.logoutButton]}
-                                              onPress={handleLogout}>
-                                <Text style={styles.logoutButtonText}>{t("logout")}</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={styles.accountButton} onPress={handleDeleteAccount}>
-                                <Text style={[styles.modalButtonText, { color: "red" }]}>
-                                    {t("delete_account")}
-                                </Text>
-                            </TouchableOpacity>
-                            {/* CLOSE BUTTON */}
-                            <TouchableOpacity style={[styles.accountButton, styles.closeButton]}
-                                              onPress={() => setAccountModalVisible(false)}>
-                                <Text style={styles.closeButtonText}>{t("close")}</Text>
-                            </TouchableOpacity>
-                        </View>
+                        {/* Language Modal */}
+                        <Modal animationType="slide" transparent={true} visible={languageModalVisible}
+                               onRequestClose={() => setLanguageModalVisible(false)}>
+                            <View style={styles.modalOverlay}>
+                                <View style={styles.modalContent}>
+                                    <Text style={styles.modalTitle}>{t("select_language")}</Text>
+                                    {availableLanguages.map((item) => (
+                                        <TouchableOpacity
+                                            key={item.code}
+                                            style={[
+                                                styles.languageOption,
+                                                language === item.code && styles.languageOptionSelected,
+                                            ]}
+                                            onPress={() => selectLanguage(item.code)}
+                                        >
+                                            <Text style={styles.languageText}>{item.name}</Text>
+                                        </TouchableOpacity>
+                                    ))}
+                                    {/* SAVE BUTTON */}
+                                    <TouchableOpacity style={styles.saveButton}
+                                                      onPress={() => setLanguageModalVisible(false)}>
+                                        <Text style={styles.saveButtonText}>{t("close")}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </Modal>
+                        <AuthPromptModal visible={showAuthPromptModal} onClose={() => setShowAuthPromptModal(false)}/>
                     </View>
-                </Modal>
+                </ScrollView>
 
 
-                {/* Language Modal */}
-                <Modal animationType="slide" transparent={true} visible={languageModalVisible}
-                       onRequestClose={() => setLanguageModalVisible(false)}>
-                    <View style={styles.modalOverlay}>
-                        <View style={styles.modalContent}>
-                            <Text style={styles.modalTitle}>{t("select_language")}</Text>
-                            {availableLanguages.map((item) => (
-                                <TouchableOpacity
-                                    key={item.code}
-                                    style={[
-                                        styles.languageOption,
-                                        language === item.code && styles.languageOptionSelected,
-                                    ]}
-                                    onPress={() => selectLanguage(item.code)}
-                                >
-                                    <Text style={styles.languageText}>{item.name}</Text>
-                                </TouchableOpacity>
-                            ))}
-                            {/* SAVE BUTTON */}
-                            <TouchableOpacity style={styles.saveButton} onPress={() => setLanguageModalVisible(false)}>
-                                <Text style={styles.saveButtonText}>{t("close")}</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
-                <AuthPromptModal visible={showAuthPromptModal} onClose={() => setShowAuthPromptModal(false)} />
-            </View>
-
-        </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
             <View style={styles.bottomBar}>
                 {/* Lemon Button */}
                 <TouchableOpacity style={styles.lemonButton}
@@ -409,8 +396,8 @@ export default function HomeScreen() {
                 </TouchableOpacity>
 
                 {/* Recipe Book Icon */}
-                <TouchableOpacity     style={[styles.navButton, !isLoggedIn && styles.lockedButton]}
-                                      onPress={handleRecipeBookPress}>
+                <TouchableOpacity style={[styles.navButton, !isLoggedIn && styles.lockedButton]}
+                                  onPress={handleRecipeBookPress}>
                     <Image source={require("../assets/book.png")} style={styles.bookIcon}/>
                 </TouchableOpacity>
 
@@ -419,6 +406,32 @@ export default function HomeScreen() {
                     <Text style={styles.languageCode}>{language.toUpperCase()}</Text>
                 </TouchableOpacity>
             </View>
+            {isLemonMenuVisible && (
+                <View style={[styles.lemonMenu, { bottom: BOTTOM_BAR_HEIGHT + insets.bottom }]}>
+                    {/* Account/Login Button */}
+                    <TouchableOpacity style={styles.lemonMenuItem} onPress={handleAccountPress}>
+                        <Text style={styles.lemonMenuText}>{isLoggedIn ? t("account") : t("login")}</Text>
+                    </TouchableOpacity>
+
+                    {/* Help Button */}
+                    <TouchableOpacity style={styles.lemonMenuItem}
+                                      onPress={() => {
+                                          setLemonMenuVisible(false);
+                                          navigation.navigate("HelpScreen")
+                                      }}>
+                        <Text style={styles.lemonMenuText}>{t("help")}</Text>
+                    </TouchableOpacity>
+
+                    {/* Home Button (Only visible when NOT on Home) */}
+                    {/*
+                    {navigation.getState().index !== 0 && (
+                        <TouchableOpacity style={styles.lemonMenuItem} onPress={() => navigation.navigate("Home")}>
+                            <Text style={styles.lemonMenuText}>{t("home")}</Text>
+                        </TouchableOpacity>
+                    )}
+                    */}
+                </View>
+            )}
         </SafeAreaView>
     );
 }
@@ -647,16 +660,16 @@ const styles = StyleSheet.create({
 
     lemonMenu: {
         position: "absolute",
-        bottom: 35,
         left: 10,
         backgroundColor: "white",
         padding: 10,
         borderRadius: 10,
         shadowColor: "#000",
-        shadowOffset: {width: 0, height: 2},
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 4,
         elevation: 5,
+        zIndex: 1000, // ensures it stays above other content
     },
 
     lemonMenuItem: {
@@ -716,5 +729,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#71f2c9",
         paddingTop: 0, // Or SafeAreaView if needed
         paddingBottom: 0, // Or SafeAreaView if needed
+    },
+    scrollContainer: {
+        paddingBottom: 100,
+        paddingTop: 50,
+        justifyContent: "center",
     },
 });

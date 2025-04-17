@@ -326,6 +326,7 @@ const styles = StyleSheet.create({
         flex: 1, // Takes all available space above bottom bar
         padding: 20, // This padding now applies only to the main content
         paddingTop: 0, // This padding now applies only to the main content
+        marginBottom: 40
     },
     header: {
         flexDirection: "row",
