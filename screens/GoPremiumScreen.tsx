@@ -161,6 +161,11 @@ export default function GoPremiumScreen() {
                     <Text style={styles.subscribeButtonText}>Check Active Subscription</Text>
                 </TouchableOpacity> }
 
+                <Text style={styles.subscriptionInfoText}>
+                    {product?.localizedPrice
+                        ? t("subscription_info_dynamic").replace("{{price}}", product.localizedPrice)
+                        : t("subscription_info")}
+                </Text>
                 <Text style={styles.alreadyTriedText}>
                     {t("already_tried")}
                 </Text>
@@ -264,7 +269,15 @@ const styles = StyleSheet.create({
         color: "#555",
         fontStyle: "italic",
         textAlign: "center",
-    }
+    },
+    subscriptionInfoText: {
+        fontSize: 12,
+        color: "#666",
+        fontStyle: "italic",
+        textAlign: "center",
+        marginTop: 5,
+        marginHorizontal: 20,
+    },
 });
 
 export default GoPremiumScreen;

@@ -20,6 +20,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import PremiumModal from "./PremiumModal";
 import {BannerAd, BannerAdSize, InterstitialAd, TestIds} from "react-native-google-mobile-ads";
+import { ScrollView } from "react-native";
 
 const interstitial = InterstitialAd.createForAdRequest(
     __DEV__ ? TestIds.INTERSTITIAL : "ca-app-pub-5120112871612534/5030453482",
@@ -35,7 +36,7 @@ export default function Scenario2Step3Screen() {
 
     const [mealType, setMealType] = useState<string>("Dinner");
     const [dishType, setDishType] = useState<string>("Main Course");
-    const [portions, setPortions] = useState<string>("2");
+    const [portions, setPortions] = useState<number>(2);
     const [maxCookingTime, setMaxCookingTime] = useState<number>(60);
     const [isVegan, setIsVegan] = useState<boolean>(false);
     const [isVegetarian, setIsVegetarian] = useState<boolean>(false);
@@ -94,7 +95,7 @@ export default function Scenario2Step3Screen() {
             selectedAppliances,
             mealType,
             dishType,
-            portions: Number(portions),
+            portions: portions,
             maxCookingTime,
             isVegan,
             isVegetarian,
@@ -177,35 +178,52 @@ export default function Scenario2Step3Screen() {
             </View>
 
             {/* Dish Type Selection */}
-            <Text style={styles.label}>{t("dish_type")}</Text>
-            <View style={styles.choiceContainer}>
-                {["Starter", "Main Course", "Dessert"].map((type) => (
-                    <TouchableOpacity
-                        key={type}
-                        style={[
-                            styles.choiceItem,
-                            dishType === type && styles.choiceItemSelected,
-                        ]}
-                        onPress={() => setDishType(type)}
+                <Text style={styles.label}>{t("dish_type")}</Text>
+                <View style={{ height: 44, marginBottom: 10 }}>
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={styles.choiceScroll}
                     >
-                        <Text
-                            style={dishType === type ? styles.choiceTextSelected : styles.choiceText}
-                        >
-                            {t(type.toLowerCase().replace(" ", "_"))}
-                        </Text>
-                    </TouchableOpacity>
-                ))}
-            </View>
+                        {["Starter", "Main Course", "Dessert"].map((type) => (
+                            <TouchableOpacity
+                                key={type}
+                                style={[
+                                    styles.choiceItem,
+                                    dishType === type && styles.choiceItemSelected,
+                                ]}
+                                onPress={() => setDishType(type)}
+                            >
+                                <Text
+                                    style={dishType === type ? styles.choiceTextSelected : styles.choiceText}
+                                    numberOfLines={1}
+                                >
+                                    {t(type.toLowerCase().replace(" ", "_"))}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+                </View>
 
-            {/* Portions Input */}
-            <Text style={styles.label}>{t("number_of_portions")}</Text>
-            <TextInput
-                style={styles.input}
-                keyboardType="numeric"
-                value={portions}
-                onChangeText={setPortions}
-                placeholder={t("e.g. 2")}
-            />
+
+
+                {/* Portions Stepper */}
+                <Text style={styles.label}>{t("number_of_portions")}</Text>
+                <View style={styles.portionsContainer}>
+                    <TouchableOpacity
+                        style={styles.portionButton}
+                        onPress={() => setPortions((prev) => Math.max(1, prev - 1))}
+                    >
+                        <Ionicons name="remove" size={24} color="black" />
+                    </TouchableOpacity>
+                    <Text style={styles.portionsText}>{portions}</Text>
+                    <TouchableOpacity
+                        style={styles.portionButton}
+                        onPress={() => setPortions((prev) => Math.min(10, prev + 1))}
+                    >
+                        <Ionicons name="add" size={24} color="black" />
+                    </TouchableOpacity>
+                </View>
 
             {/* Cooking Time Slider */}
             <Text style={styles.label}>{t("max_cooking_time")} ⏱</Text>
@@ -327,12 +345,13 @@ const styles = StyleSheet.create({
     },
     choiceItem: {
         backgroundColor: "white",
-        paddingVertical: 12,
-        paddingHorizontal: 20,
+        paddingHorizontal: 14,
+        paddingVertical: 6,
         borderRadius: 10,
-        //  borderWidth: 2,
-        borderColor: "gray",
         marginHorizontal: 5,
+        height: 40, // consistent height
+        justifyContent: "center",
+        alignItems: "center",
     },
     choiceItemSelected: {
         backgroundColor: "#FCE71C",
@@ -473,5 +492,28 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#71f2c9",
         paddingBottom: 15,
+    },
+    portionsContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "white",
+        borderRadius: 10,
+        marginTop: 8,
+        paddingVertical: 6,
+        paddingHorizontal: 12,
+        alignSelf: "flex-start", // center container in parent
+    },
+    portionButton: {
+        padding: 10,
+    },
+    portionsText: {
+        fontSize: 18,
+        fontWeight: "bold",
+        marginHorizontal: 10,
+    },
+    choiceScroll: {
+        flexDirection: "row",
+        alignItems: "center",
+        paddingHorizontal: 5,
     },
 });

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Platform } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useLanguage } from "../services/LanguageContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -24,21 +24,18 @@ export default function LanguageSelectionScreen() {
 
     return (
         <View style={styles.container}>
-            <View style={styles.content}>
-                <Text style={styles.title}>Choose your language</Text>
-                <FlatList
-                    data={availableLanguages}
-                    keyExtractor={(item) => item.code}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity
-                            style={styles.languageButton}
-                            onPress={() => handleLanguageSelect(item.code)}
-                        >
-                            <Text style={styles.languageText}>{item.label}</Text>
-                        </TouchableOpacity>
-                    )}
-                />
-            </View>
+            <Text style={styles.title}>Choose your language</Text>
+            <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+                {availableLanguages.map((item) => (
+                    <TouchableOpacity
+                        key={item.code}
+                        style={styles.languageButton}
+                        onPress={() => handleLanguageSelect(item.code)}
+                    >
+                        <Text style={styles.languageText}>{item.label}</Text>
+                    </TouchableOpacity>
+                ))}
+            </ScrollView>
         </View>
     );
 }
@@ -47,14 +44,18 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#71f2c9",
-        paddingTop: 80,
+        paddingTop: Platform.OS === "ios" ? 80 : 60,
         paddingHorizontal: 30,
-        alignItems: "center",
     },
     title: {
         fontSize: 24,
         fontWeight: "bold",
-        marginBottom: 30,
+        marginBottom: 20,
+        alignSelf: "center",
+    },
+    scrollContent: {
+        paddingBottom: 40,
+        alignItems: "center",
     },
     languageButton: {
         backgroundColor: "#fff",
@@ -70,8 +71,4 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#000",
     },
-    languagesContainer: {
-        flexDirection: "column",
-        justifyContent: "center"
-    }
 });

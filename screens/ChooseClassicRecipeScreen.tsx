@@ -275,6 +275,7 @@ export default function ChooseClassicRecipeScreen() {
                 keyExtractor={(item) => item.id}
                 renderItem={renderDish}
                 contentContainerStyle={styles.listContent}
+                showsVerticalScrollIndicator={false}
             />
 
             {/* Banner Ad for non-premium users */}

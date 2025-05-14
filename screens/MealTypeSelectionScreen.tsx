@@ -1,28 +1,20 @@
 // MealTypeSelectionScreen.tsx
 import React, {useContext, useEffect, useState} from "react";
 import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableOpacity,
-    TextInput,
-    Button,
-    Alert,
-    Switch,
-    Modal,
-    ActivityIndicator
+    View, Text, TouchableOpacity, Alert, Modal, ActivityIndicator, StyleSheet, ScrollView
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
 import Slider from "@react-native-community/slider";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+import { BannerAd, BannerAdSize, InterstitialAd, TestIds } from "react-native-google-mobile-ads";
+
 import { fetchRecipeScenario1 } from "../services/openaiService";
-import {AuthContext, useAuth} from "../contexts/AuthContext";
-import { useLanguage } from "../services/LanguageContext";
-import translations from "../data/translations.json";
-import {SafeAreaView} from "react-native-safe-area-context";
-import {Ionicons} from "@expo/vector-icons";
-import {getTranslation} from "../helpers/loadTranslations";
 import PremiumModal from "./PremiumModal";
-import {BannerAd, BannerAdSize, InterstitialAd, TestIds} from "react-native-google-mobile-ads";
+import translations from "../data/translations.json";
+import { AuthContext, useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../services/LanguageContext";
+import {getTranslation} from "../helpers/loadTranslations";
 
 const interstitial = InterstitialAd.createForAdRequest(
     __DEV__
@@ -40,7 +32,7 @@ export default function MealTypeSelectionScreen() {
 
     const [mealType, setMealType] = useState<string>("Dinner");
     const [dishType, setDishType] = useState<string>("Main Course");
-    const [portions, setPortions] = useState<string>("2");
+    const [portions, setPortions] = useState(2);
     const [maxCookingTime, setMaxCookingTime] = useState<number>(60);
     const [openness, setOpenness] = useState<number>(0);
     const [isVegan, setIsVegan] = useState<boolean>(false);
@@ -67,7 +59,7 @@ export default function MealTypeSelectionScreen() {
     const handleReset = () => {
         setMealType("Dinner");
         setDishType("Main Course");
-        setPortions("2");
+        setPortions(2);
         setMaxCookingTime(60);
         setOpenness(0);
         setIsVegan(false);
@@ -101,7 +93,7 @@ export default function MealTypeSelectionScreen() {
             selectedAppliances,
             mealType,
             dishType,
-            portions: Number(portions),
+            portions,
             maxCookingTime,
             openness,
             isVegan,
@@ -173,53 +165,48 @@ export default function MealTypeSelectionScreen() {
                 <Text style={styles.stepText}>3/3</Text>
             </View>
 
-            {/* Meal Type Selection */}
-            <Text style={styles.label}>{t("meal_type")}</Text>
-            <View style={styles.choiceContainer}>
-                {["Breakfast", "Lunch", "Dinner"].map((type) => (
-                    <TouchableOpacity
-                        key={type}
-                        style={[
-                            styles.choiceItem,
-                            mealType === type && styles.choiceItemSelected,
-                        ]}
-                        onPress={() => setMealType(type)}
-                    >
-                        <Text style={mealType === type ? styles.choiceTextSelected : styles.choiceText}>
-                            {t(type.toLowerCase())}
-                        </Text>
-                    </TouchableOpacity>
-                ))}
-            </View>
+                <Text style={styles.label}>{t("meal_type")}</Text>
+                <View style={styles.choiceContainer}>
+                    {["Breakfast", "Lunch", "Dinner"].map((type) => (
+                        <TouchableOpacity
+                            key={type}
+                            style={[styles.choiceItem, mealType === type && styles.choiceItemSelected]}
+                            onPress={() => setMealType(type)}
+                        >
+                            <Text style={mealType === type ? styles.choiceTextSelected : styles.choiceText}>
+                                {t(type.toLowerCase())}
+                            </Text>
+                        </TouchableOpacity>
+                    ))}
+                </View>
 
-            {/* Dish Type Selection */}
-            <Text style={styles.label}>{t("dish_type")}</Text>
-            <View style={styles.choiceContainer}>
-                {["Starter", "Main Course", "Dessert"].map((type) => (
-                    <TouchableOpacity
-                        key={type}
-                        style={[
-                            styles.choiceItem,
-                            dishType === type && styles.choiceItemSelected,
-                        ]}
-                        onPress={() => setDishType(type)}
-                    >
-                        <Text style={dishType === type ? styles.choiceTextSelected : styles.choiceText}>
-                            {t(type.toLowerCase().replace(" ", "_"))}
-                        </Text>
-                    </TouchableOpacity>
-                ))}
-            </View>
+                <Text style={styles.label}>{t("dish_type")}</Text>
+                <View style={{ height: 44, marginBottom: 10 }}>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.choiceScroll}>
+                        {["Starter", "Main Course", "Dessert"].map((type) => (
+                            <TouchableOpacity
+                                key={type}
+                                style={[styles.choiceItem, dishType === type && styles.choiceItemSelected]}
+                                onPress={() => setDishType(type)}
+                            >
+                                <Text style={dishType === type ? styles.choiceTextSelected : styles.choiceText}>
+                                    {t(type.toLowerCase().replace(" ", "_"))}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+                </View>
 
-            {/* Portions Input */}
-            <Text style={styles.label}>{t("number_of_portions")}</Text>
-            <TextInput
-                style={styles.input}
-                keyboardType="numeric"
-                value={portions}
-                onChangeText={setPortions}
-                placeholder={t("e.g. 2")}
-            />
+                <Text style={styles.label}>{t("number_of_portions")}</Text>
+                <View style={styles.portionsContainer}>
+                    <TouchableOpacity onPress={() => setPortions(Math.max(1, portions - 1))} style={styles.portionButton}>
+                        <Ionicons name="remove" size={24} color="black" />
+                    </TouchableOpacity>
+                    <Text style={styles.portionsText}>{portions}</Text>
+                    <TouchableOpacity onPress={() => setPortions(Math.min(10, portions + 1))} style={styles.portionButton}>
+                        <Ionicons name="add" size={24} color="black" />
+                    </TouchableOpacity>
+                </View>
 
             {/* Cooking Time Slider with Clock Thumb */}
             <Text style={styles.label}>{t("max_cooking_time")} ⏱</Text>
@@ -365,16 +352,17 @@ const styles = StyleSheet.create({
     },
     choiceItem: {
         backgroundColor: "white",
-        paddingVertical: 12,
-        paddingHorizontal: 20,
+        paddingHorizontal: 14,
+        paddingVertical: 6,
         borderRadius: 10,
-      //  borderWidth: 2,
-        borderColor: "gray",
         marginHorizontal: 5,
+        height: 40, // consistent height
+        justifyContent: "center",
+        alignItems: "center",
     },
     choiceItemSelected: {
         backgroundColor: "#FCE71C",
-       // borderColor: "yellow",
+        // borderColor: "yellow",
     },
     choiceText: { fontSize: 16, color: "black" },
     choiceTextSelected: { fontSize: 16, fontWeight: "bold", color: "black" },
@@ -400,7 +388,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold",
         marginLeft: 10,
-       // color: "#ffb440", // Orange Text
+        // color: "#ffb440", // Orange Text
     },
     checkmarkContainer: {
         flexDirection: "row",
@@ -512,5 +500,27 @@ const styles = StyleSheet.create({
         backgroundColor: "#71f2c9",
         paddingBottom: 15,
     },
-
+    portionsContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "white",
+        borderRadius: 10,
+        marginTop: 8,
+        paddingVertical: 6,
+        paddingHorizontal: 12,
+        alignSelf: "flex-start", // center container in parent
+    },
+    portionButton: {
+        padding: 10,
+    },
+    portionsText: {
+        fontSize: 18,
+        fontWeight: "bold",
+        marginHorizontal: 10,
+    },
+    choiceScroll: {
+        flexDirection: "row",
+        alignItems: "center",
+        paddingHorizontal: 5,
+    },
 });

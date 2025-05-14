@@ -1,18 +1,18 @@
 import React from "react";
-import { Image, View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { ScrollView, Image, View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import Onboarding from "react-native-onboarding-swiper";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
 
+const screenHeight = Dimensions.get("window").height;
+
 const OnboardingScreen = () => {
     const navigation = useNavigation();
     const { language } = useLanguage();
-    const t = (key: string) => {
-        const langData = translations?.[language];
-        return langData?.[key] ?? `[${key}]`;
-    };
+    const t = (key: string) => translations?.[language]?.[key] ?? `[${key}]`;
+
     const handleDone = async () => {
         await AsyncStorage.setItem("hasSeenOnboarding", "true");
         navigation.replace("Home");
@@ -34,60 +34,79 @@ const OnboardingScreen = () => {
                 {
                     backgroundColor: "#71f2c9",
                     image: (
-                        <View style={{ alignItems: "center" }}>
+                        <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
                             <Image
                                 source={require("../assets/generated-1.jpg")}
-                                style={{ width: 300, height: 300, borderRadius: 16, marginBottom: 20 }}
+                                style={styles.image}
                                 resizeMode="cover"
                             />
                             <Image
                                 source={require("../assets/orange.png")}
-                                style={{ width: 120, height: 120 }}
+                                style={styles.logo}
                                 resizeMode="contain"
                             />
-                        </View>
+                            <Text style={styles.title}>{t("onboarding_welcome_title")}</Text>
+                            <Text style={styles.subtitle}>{t("onboarding_welcome_subtitle")}</Text>
+                        </ScrollView>
                     ),
-                    title: t("onboarding_welcome_title"),
-                    subtitle: t("onboarding_welcome_subtitle"),
+                    title: "",
+                    subtitle: "",
                 },
                 {
                     backgroundColor: "#E9FCE7",
                     image: (
-                        <Image
-                            source={require("../assets/generated-3.jpg")}
-                            style={{ width: 300, height: 300, borderRadius: 20 }}
-                            resizeMode="cover"
-                        />
+                        <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+                            <Image
+                                source={require("../assets/generated-3.jpg")}
+                                style={styles.image}
+                                resizeMode="cover"
+                            />
+                            <Text style={styles.title}>{t("onboarding_discover_title")}</Text>
+                            <Text style={styles.subtitle}>{t("onboarding_discover_subtitle")}</Text>
+                        </ScrollView>
                     ),
-                    title: t("onboarding_discover_title"),
-                    subtitle: t("onboarding_discover_subtitle"),
+                    title: "",
+                    subtitle: "",
                 },
                 {
                     backgroundColor: "#ffffff",
                     image: (
-                        <Image
-                            source={require("../assets/generated-2.jpg")}
-                            style={{ width: 300, height: 300, borderRadius: 20 }}
-                            resizeMode="cover"
-                        />
+                        <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+                            <Image
+                                source={require("../assets/generated-2.jpg")}
+                                style={styles.image}
+                                resizeMode="cover"
+                            />
+                            <Text style={styles.title}>{t("onboarding_create_account_title")}</Text>
+                            <Text style={styles.subtitle}>{t("onboarding_create_account_subtitle")}</Text>
+                        </ScrollView>
                     ),
-                    title: t("onboarding_create_account_title"),
-                    subtitle: t("onboarding_create_account_subtitle"),
+                    title: "",
+                    subtitle: "",
                 },
                 {
                     backgroundColor: "#FFFCE1",
                     image: (
-                        <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
+                        <ScrollView contentContainerStyle={[styles.scrollContainer, { paddingHorizontal: 10, marginTop:20 }]} showsVerticalScrollIndicator={false}>
                             <Text style={styles.comparisonTitle}>{t("feature_comparison_title")}</Text>
 
                             <View style={{ width: "100%", maxWidth: 400 }}>
                                 <View style={styles.table}>
                                     <View style={[styles.tableRow, styles.tableHeader]}>
-                                        <Text style={[styles.headerCell, styles.featureColumn]}></Text>
-                                        <Text style={[styles.headerCell, styles.planColumn]}>{t("no_account")}</Text>
-                                        <Text style={[styles.headerCell, styles.planColumn]}>{t("signed_in")}</Text>
-                                        <Text style={[styles.headerCell, styles.planColumn]}>{t("smartchef_plus")}</Text>
+                                        <View style={[styles.headerCell, styles.featureColumn]}>
+                                            <Text style={styles.headerText}></Text>
+                                        </View>
+                                        <View style={[styles.headerCell, styles.planColumn]}>
+                                            <Text style={styles.headerText}>{t("no_account")}</Text>
+                                        </View>
+                                        <View style={[styles.headerCell, styles.planColumn]}>
+                                            <Text style={styles.headerText}>{t("signed_in")}</Text>
+                                        </View>
+                                        <View style={[styles.headerCell, styles.planColumn]}>
+                                            <Text style={styles.headerText}>{t("smartchef_plus")}</Text>
+                                        </View>
                                     </View>
+
 
                                     {[
                                         [t("feature_classic_recipes"), "✅", "✅", "✅"],
@@ -99,10 +118,18 @@ const OnboardingScreen = () => {
                                         [t("feature_fridge_photo"), "❌", "❌", "✅"],
                                     ].map((row, index) => (
                                         <View key={index} style={styles.tableRow}>
-                                            <Text style={[styles.cell, styles.featureColumn]} numberOfLines={1} ellipsizeMode="tail">{row[0]}</Text>
-                                            <Text style={[styles.cell, styles.planColumn]} numberOfLines={1}>{row[1]}</Text>
-                                            <Text style={[styles.cell, styles.planColumn]} numberOfLines={1}>{row[2]}</Text>
-                                            <Text style={[styles.cell, styles.planColumn]} numberOfLines={1}>{row[3]}</Text>
+                                            <View style={[styles.cell, styles.featureColumn]}>
+                                                <Text style={styles.cellText}>{row[0]}</Text>
+                                            </View>
+                                            <View style={[styles.cell, styles.planColumn]}>
+                                                <Text style={styles.cellText}>{row[1]}</Text>
+                                            </View>
+                                            <View style={[styles.cell, styles.planColumn]}>
+                                                <Text style={styles.cellText}>{row[2]}</Text>
+                                            </View>
+                                            <View style={[styles.cell, styles.planColumn]}>
+                                                <Text style={styles.cellText}>{row[3]}</Text>
+                                            </View>
                                         </View>
                                     ))}
                                 </View>
@@ -111,20 +138,51 @@ const OnboardingScreen = () => {
                             <TouchableOpacity style={styles.ctaButton} onPress={handleCreateAccount}>
                                 <Text style={styles.ctaButtonText}>{t("onboarding_cta")}</Text>
                             </TouchableOpacity>
-                        </View>
+
+                            <Text style={styles.title}>{t("onboarding_premium_title")}</Text>
+                            <Text style={styles.subtitle}>{t("onboarding_premium_subtitle")}</Text>
+                        </ScrollView>
                     ),
-                    title: t("onboarding_premium_title"),
-                    subtitle: t("onboarding_premium_subtitle"),
+                    title: "",
+                    subtitle: "",
                 }
             ]}
         />
     );
 };
 
-
 const styles = StyleSheet.create({
-    ctaButton: {
+    scrollContainer: {
+        alignItems: "center",
+        justifyContent: "center",
+        paddingVertical: 30,
+        minHeight: screenHeight,
+    },
+    image: {
+        width: 300,
+        height: 300,
+        borderRadius: 20,
+        marginBottom: 20,
+    },
+    logo: {
+        width: 120,
+        height: 120,
+        marginBottom: 20,
+    },
+    title: {
+        fontSize: 22,
+        fontWeight: "bold",
+        textAlign: "center",
         marginTop: 10,
+    },
+    subtitle: {
+        fontSize: 16,
+        textAlign: "center",
+        marginHorizontal: 20,
+        marginTop: 8,
+    },
+    ctaButton: {
+        marginTop: 20,
         backgroundColor: "#FFD700",
         paddingVertical: 12,
         paddingHorizontal: 24,
@@ -146,8 +204,8 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginBottom: 12,
         color: "#333",
+        textAlign: "center",
     },
-
     table: {
         borderWidth: 1,
         borderColor: "#ccc",
@@ -156,42 +214,50 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         width: "100%",
     },
-
     tableHeader: {
         backgroundColor: "#FCE71C",
     },
-
     tableRow: {
         flexDirection: "row",
-        alignItems: "center",
         width: "100%",
+        alignItems: "stretch", // ← force all cells to match height
     },
+    featureColumn: { flex: 2.2 },
+    planColumn: { flex: 1.2 },
 
-    headerCell: {
-        paddingVertical: 8,
+    cell: {
+        paddingVertical: 10,
         paddingHorizontal: 6,
+        borderTopWidth: 1,
+        borderRightWidth: 1,
+        borderBottomWidth: 1,
+        borderColor: "#ccc",
+        backgroundColor: "#fff",
+        justifyContent: "center",  // ensures alignment
+        minHeight: 48,
+    },
+    cellText: {
+        fontSize: 13,
+        textAlign: "center",
+        flexWrap: "wrap",
+    },
+    headerCell: {
+        paddingVertical: 10,
+        paddingHorizontal: 6,
+        backgroundColor: "#FCE71C",
+        borderRightWidth: 1,
+        borderColor: "#ccc",
+        justifyContent: "center",
+        alignItems: "center", // ← add this to ensure consistent layout
+    },
+    headerText: {
         fontWeight: "bold",
         fontSize: 12,
         textAlign: "center",
-        borderRightWidth: 1,
-        borderColor: "#ccc",
-        backgroundColor: "#FCE71C",
-    },
-
-    cell: {
-        paddingVertical: 8,
-        paddingHorizontal: 6,
-        fontSize: 12,
-        textAlign: "center",
-        borderTopWidth: 1,
-        borderRightWidth: 1,
-        borderColor: "#ccc",
-        backgroundColor: "#fff",
-    },
+        flexWrap: "wrap",
+    }
 
 
-    featureColumn: { flex: 2.2 },
-    planColumn: { flex: 1 },
 });
 
 export default OnboardingScreen;

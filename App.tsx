@@ -9,6 +9,8 @@ import * as Sentry from "@sentry/react-native";
 import { captureConsoleIntegration } from "@sentry/core";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Purchases from 'react-native-purchases';
+import { View, StatusBar } from 'react-native';
+import * as TrackingTransparency from 'expo-tracking-transparency';
 
 global.Buffer = Buffer;
 
@@ -71,6 +73,21 @@ export default Sentry.wrap(function App() {
         return () => {
             RNIap.endConnection();
         };
+    }, []);
+
+    // 🔥 ATT Prompt useEffect (new block)
+    useEffect(() => {
+        const requestTrackingPermission = async () => {
+            const { status } = await TrackingTransparency.getTrackingPermissionsAsync();
+            const statusResponse = await TrackingTransparency.getTrackingPermissionsAsync();
+            console.log("📊 Full ATT status response:", statusResponse);
+            if (status === 'undetermined') {
+                const finalStatus = await TrackingTransparency.requestTrackingPermissionsAsync();
+                console.log("📲 ATT permission result:", finalStatus.status);
+            }
+        };
+
+        requestTrackingPermission();
     }, []);
 
     if (initialRouteName === null) return null;

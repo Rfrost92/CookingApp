@@ -312,7 +312,8 @@
     "account_deleted": "Your account has been successfully deleted.",
     "delete_failed": "Account deletion failed.",
     "reauth_required": "Please log in again before deleting your account.",
-    "enter_password_to_confirm": "Enter password to confirm"
+    "enter_password_to_confirm": "Enter password to confirm",
+    "subscription_info_dynamic": "SmartChef Plus – {{price}}/month. Monthly subscription. Auto-renewing. Cancel anytime in your iTunes settings."
   },
 
   "de": {
@@ -369,7 +370,7 @@
     "microwave": "Mikrowelle",
     "stove": "Herd",
     "mixer": "Mixer",
-    "blender": "Mixer",
+    "blender": "Blender",
     "multicooker": "Multikocher",
     "hot-air grill": "Heißluftgrill",
     "no_appliances_selected": "Keine Geräte ausgewählt",
@@ -628,7 +629,8 @@
     "account_deleted": "Dein Konto wurde erfolgreich gelöscht.",
     "delete_failed": "Löschen des Kontos fehlgeschlagen.",
     "reauth_required": "Bitte melde dich erneut an, bevor du dein Konto löschen kannst.",
-    "enter_password_to_confirm": "Gib dein Passwort ein, um zu bestätigen"
+    "enter_password_to_confirm": "Gib dein Passwort ein, um zu bestätigen",
+    "subscription_info_dynamic": "SmartChef Plus – {{price}}/Monat. Monatliches Abo. Automatische Verlängerung. Jederzeit in den iTunes-Einstellungen kündbar."
   },
   "ua": {
     "welcome": "Ласкаво просимо до smartchef!",
@@ -695,8 +697,8 @@
     "number_of_portions": "Кількість порцій",
     "max_cooking_time": "Максимальний час приготування (хвилини)",
     "openness_to_ingredients": "Відкритість до додаткових інгредієнтів",
-    "vegan": "Веган",
-    "vegetarian": "Вегетаріанець",
+    "vegan": "Веганська",
+    "vegetarian": "Вегетаріанська",
     "submit": "Надіслати",
     "invalid_input": "Неправильне введення",
     "valid_portions": "Будь ласка, введіть правильну кількість порцій.",
@@ -943,7 +945,8 @@
     "account_deleted": "Ваш обліковий запис успішно видалено.",
     "delete_failed": "Не вдалося видалити обліковий запис.",
     "reauth_required": "Будь ласка, увійдіть знову перед видаленням облікового запису.",
-    "enter_password_to_confirm": "Введіть пароль для підтвердження"
+    "enter_password_to_confirm": "Введіть пароль для підтвердження",
+    "subscription_info_dynamic": "SmartChef Plus – {{price}}/місяць. Місячна підписка. Автоматичне поновлення. Можна скасувати у налаштуваннях iTunes у будь-який момент."
   },
 
   "ru": {
@@ -1011,8 +1014,8 @@
     "number_of_portions": "Количество порций",
     "max_cooking_time": "Максимальное время приготовления (минуты)",
     "openness_to_ingredients": "Открытость к дополнительным ингредиентам",
-    "vegan": "Веган",
-    "vegetarian": "Вегетарианец",
+    "vegan": "Веганская",
+    "vegetarian": "Вегетарианская",
     "submit": "Отправить",
     "invalid_input": "Неверный ввод",
     "valid_portions": "Пожалуйста, введите правильное количество порций.",
@@ -1259,6 +1262,7 @@
     "account_deleted": "Ваш аккаунт успешно удален.",
     "delete_failed": "Не удалось удалить аккаунт.",
     "reauth_required": "Пожалуйста, войдите снова перед удалением аккаунта.",
-    "enter_password_to_confirm": "Введите пароль для подтверждения"
+    "enter_password_to_confirm": "Введите пароль для подтверждения",
+    "subscription_info_dynamic": "SmartChef Plus – {{price}}/мес. Ежемесячная подписка. Автоматическое продление. Можно отменить в настройках iTunes в любое время."
   }
 }

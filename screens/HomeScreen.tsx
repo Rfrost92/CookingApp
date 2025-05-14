@@ -210,27 +210,27 @@ export default function HomeScreen() {
 
 
     return (
-        <SafeAreaView style={styles.screenWrapper}>
-            {/* Banner Ad for non-premium users */}
-            {subscriptionType !== "premium" && (
-                <View style={styles.adContainer}>
-                    <BannerAd
-                        unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534/1046373801'}
-                        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-                        requestOptions={{
-                            requestNonPersonalizedAdsOnly: true,
-                        }}
-                        onAdLoaded={() => console.log('✅ Banner loaded')}
-                        onAdFailedToLoad={(err) => console.warn('❌ Banner failed:', err)}
-                    />
-                </View>
-            )}
-            <TouchableWithoutFeedback
-                onPress={() => {
-                    setLemonMenuVisible(false); // Close Lemon Menu when tapping anywhere
-                    Keyboard.dismiss(); // Dismiss keyboard if open
-                }}
-            >
+        <TouchableWithoutFeedback
+            onPress={() => {
+                setLemonMenuVisible(false); // Close Lemon Menu when tapping anywhere
+                Keyboard.dismiss(); // Dismiss keyboard if open
+            }}
+        >
+            <SafeAreaView style={styles.screenWrapper}>
+                {/* Banner Ad for non-premium users */}
+                {subscriptionType !== "premium" && (
+                    <View style={styles.adContainer}>
+                        <BannerAd
+                            unitId={__DEV__ ? TestIds.BANNER : 'ca-app-pub-5120112871612534/1046373801'}
+                            size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                            requestOptions={{
+                                requestNonPersonalizedAdsOnly: true,
+                            }}
+                            onAdLoaded={() => console.log('✅ Banner loaded')}
+                            onAdFailedToLoad={(err) => console.warn('❌ Banner failed:', err)}
+                        />
+                    </View>
+                )}
 
                 <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
 
@@ -387,52 +387,53 @@ export default function HomeScreen() {
                 </ScrollView>
 
 
-            </TouchableWithoutFeedback>
-            <View style={styles.bottomBar}>
-                {/* Lemon Button */}
-                <TouchableOpacity style={styles.lemonButton}
-                                  onPress={() => setLemonMenuVisible(!isLemonMenuVisible)}>
-                    <Image source={require("../assets/lemonIcon.png")} style={styles.lemonIcon}/>
-                </TouchableOpacity>
-
-                {/* Recipe Book Icon */}
-                <TouchableOpacity style={[styles.navButton, !isLoggedIn && styles.lockedButton]}
-                                  onPress={handleRecipeBookPress}>
-                    <Image source={require("../assets/book.png")} style={styles.bookIcon}/>
-                </TouchableOpacity>
-
-                {/* Language Selection (Current Language Code) */}
-                <TouchableOpacity style={styles.navButton} onPress={handleLanguageChange}>
-                    <Text style={styles.languageCode}>{language.toUpperCase()}</Text>
-                </TouchableOpacity>
-            </View>
-            {isLemonMenuVisible && (
-                <View style={[styles.lemonMenu, { bottom: BOTTOM_BAR_HEIGHT + insets.bottom }]}>
-                    {/* Account/Login Button */}
-                    <TouchableOpacity style={styles.lemonMenuItem} onPress={handleAccountPress}>
-                        <Text style={styles.lemonMenuText}>{isLoggedIn ? t("account") : t("login")}</Text>
+                <View style={styles.bottomBar}>
+                    {/* Lemon Button */}
+                    <TouchableOpacity style={styles.lemonButton}
+                                      onPress={() => setLemonMenuVisible(!isLemonMenuVisible)}>
+                        <Image source={require("../assets/lemonIcon.png")} style={styles.lemonIcon}/>
                     </TouchableOpacity>
 
-                    {/* Help Button */}
-                    <TouchableOpacity style={styles.lemonMenuItem}
-                                      onPress={() => {
-                                          setLemonMenuVisible(false);
-                                          navigation.navigate("HelpScreen")
-                                      }}>
-                        <Text style={styles.lemonMenuText}>{t("help")}</Text>
+                    {/* Recipe Book Icon */}
+                    <TouchableOpacity style={[styles.navButton, !isLoggedIn && styles.lockedButton]}
+                                      onPress={handleRecipeBookPress}>
+                        <Image source={require("../assets/book.png")} style={styles.bookIcon}/>
                     </TouchableOpacity>
 
-                    {/* Home Button (Only visible when NOT on Home) */}
-                    {/*
+                    {/* Language Selection (Current Language Code) */}
+                    <TouchableOpacity style={styles.navButton} onPress={handleLanguageChange}>
+                        <Text style={styles.languageCode}>{language.toUpperCase()}</Text>
+                    </TouchableOpacity>
+                </View>
+                {isLemonMenuVisible && (
+                    <View style={[styles.lemonMenu, {bottom: BOTTOM_BAR_HEIGHT + insets.bottom}]}>
+                        {/* Account/Login Button */}
+                        <TouchableOpacity style={styles.lemonMenuItem} onPress={handleAccountPress}>
+                            <Text style={styles.lemonMenuText}>{isLoggedIn ? t("account") : t("login")}</Text>
+                        </TouchableOpacity>
+
+                        {/* Help Button */}
+                        <TouchableOpacity style={styles.lemonMenuItem}
+                                          onPress={() => {
+                                              setLemonMenuVisible(false);
+                                              navigation.navigate("HelpScreen")
+                                          }}>
+                            <Text style={styles.lemonMenuText}>{t("help")}</Text>
+                        </TouchableOpacity>
+
+                        {/* Home Button (Only visible when NOT on Home) */}
+                        {/*
                     {navigation.getState().index !== 0 && (
                         <TouchableOpacity style={styles.lemonMenuItem} onPress={() => navigation.navigate("Home")}>
                             <Text style={styles.lemonMenuText}>{t("home")}</Text>
                         </TouchableOpacity>
                     )}
                     */}
-                </View>
-            )}
-        </SafeAreaView>
+                    </View>
+                )}
+            </SafeAreaView>
+        </TouchableWithoutFeedback>
+
     );
 }
 
@@ -665,7 +666,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 10,
         shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
+        shadowOffset: {width: 0, height: 2},
         shadowOpacity: 0.2,
         shadowRadius: 4,
         elevation: 5,

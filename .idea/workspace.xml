@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Fix for small screens">
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Increase buildnumber">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/translations.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/translations.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/ChooseClassicRecipeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ChooseClassicRecipeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/GoPremiumScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/GoPremiumScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/HelpScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HelpScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/InstructionSlides.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/InstructionSlides.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/LanguageSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/LanguageSelectionScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/MealTypeSelectionScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/OnboardingScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/OnboardingScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Scenario2Step3Screen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Scenario2Step3Screen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,14 +140,10 @@
       <workItem from="1744043160448" duration="16000" />
       <workItem from="1744043203157" duration="20521000" />
       <workItem from="1744284351452" duration="79902000" />
-      <workItem from="1744881216811" duration="4098000" />
-    </task>
-    <task id="LOCAL-00017" summary="Book of recipes works with the firebase Storage">
-      <created>1737718931984</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1737718931984</updated>
+      <workItem from="1744881216811" duration="5488000" />
+      <workItem from="1745576812010" duration="554000" />
+      <workItem from="1746791594683" duration="545000" />
+      <workItem from="1747126948608" duration="12796000" />
     </task>
     <task id="LOCAL-00018" summary="Languages initially work">
       <created>1737729808939</created>
@@ -475,7 +481,14 @@
       <option name="project" value="LOCAL" />
       <updated>1744890246542</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="Increase buildnumber">
+      <created>1744892930679</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1744892930680</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -494,7 +507,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="make user feedback look better and limit to 500 characters" />
     <MESSAGE value="prepare for google Login" />
     <MESSAGE value="Google login works" />
     <MESSAGE value="Reset password works" />
@@ -519,7 +531,8 @@
     <MESSAGE value="Implement revenuecat and testing subscription - works" />
     <MESSAGE value="Add delete account button" />
     <MESSAGE value="Fix for small screens" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix for small screens" />
+    <MESSAGE value="Increase buildnumber" />
+    <option name="LAST_COMMIT_MESSAGE" value="Increase buildnumber" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

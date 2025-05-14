@@ -10,6 +10,7 @@ import { db } from "../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import {AuthContext} from "../contexts/AuthContext";
 import InstructionSlides from "./InstructionSlides";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
 
 const MAX_FEEDBACK_LENGTH = 500; // Define a reasonable limit for user feedback storage
 
@@ -113,6 +114,7 @@ export default function HelpScreen() {
 
             {/* Feedback Modal */}
             <Modal animationType="slide" transparent={true} visible={feedbackVisible} onRequestClose={() => setFeedbackVisible(false)}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>{t("send_feedback")}</Text>
@@ -141,6 +143,7 @@ export default function HelpScreen() {
                         </TouchableOpacity>
                     </View>
                 </View>
+                </TouchableWithoutFeedback>
             </Modal>
             {showInstructionsSlides && (
                 <Modal visible={true} animationType="slide" transparent={false}>
