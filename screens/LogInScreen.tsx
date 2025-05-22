@@ -13,6 +13,7 @@ import translations from "../data/translations.json";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Ionicons} from "@expo/vector-icons";
 import * as AppleAuthentication from 'expo-apple-authentication';
+import WhyLoginModal from "./WhyLoginModal";
 
 export default function LogInScreen({navigation}: any) {
     const [email, setEmail] = useState("");
@@ -20,6 +21,7 @@ export default function LogInScreen({navigation}: any) {
     const [showResend, setShowResend] = useState(false);
     const {language} = useLanguage();
     const t = (key: string) => translations[language][key] || key;
+    const [whyModalVisible, setWhyModalVisible] = useState(false);
 
     const handleGoogleLogin = async () => {
         try {
@@ -177,6 +179,13 @@ export default function LogInScreen({navigation}: any) {
                 <TouchableOpacity style={styles.secondaryButton} onPress={() => navigation.navigate("SignUp")}>
                     <Text style={styles.secondaryButtonText}>{t("dont_have_account")}</Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => setWhyModalVisible(true)} style={{ marginTop: 5, marginBottom: 20 }}>
+                    <Text style={{ textAlign: 'center', color: '#444' }}>{t("why_login") || "🛈 Why do I need to log in?"}</Text>
+                </TouchableOpacity>
+
+                <WhyLoginModal visible={whyModalVisible} onClose={() => setWhyModalVisible(false)} />
+
 
 
             </View>

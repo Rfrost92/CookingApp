@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Fix keyboard not disappearing, fix portions, fix some things not fitting in screen, make onboarding and instructions scrollable">
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Bumb build version">
+      <change afterPath="$PROJECT_DIR$/screens/WhyLoginModal.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/translations.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/translations.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/AuthPromptModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/AuthPromptModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/LogInScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/LogInScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/SignUpScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/SignUpScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,14 +137,7 @@
       <workItem from="1744881216811" duration="5488000" />
       <workItem from="1745576812010" duration="554000" />
       <workItem from="1746791594683" duration="545000" />
-      <workItem from="1747126948608" duration="14545000" />
-    </task>
-    <task id="LOCAL-00019" summary="App localized fully to four languages: en, de, ua, ru">
-      <created>1737736592234</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1737736592234</updated>
+      <workItem from="1747126948608" duration="24314000" />
     </task>
     <task id="LOCAL-00020" summary="Recipes are coming back form GPT in json format and being parsed on our end">
       <created>1738008090581</created>
@@ -479,7 +475,14 @@
       <option name="project" value="LOCAL" />
       <updated>1747221113157</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="Bumb build version">
+      <created>1747236026214</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1747236026214</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -498,7 +501,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Google login works" />
     <MESSAGE value="Reset password works" />
     <MESSAGE value="Testing subscriptions. Not working yet" />
     <MESSAGE value="A lot of logic to make premium and registered users work" />
@@ -523,7 +525,8 @@
     <MESSAGE value="Fix for small screens" />
     <MESSAGE value="Increase buildnumber" />
     <MESSAGE value="Fix keyboard not disappearing, fix portions, fix some things not fitting in screen, make onboarding and instructions scrollable" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix keyboard not disappearing, fix portions, fix some things not fitting in screen, make onboarding and instructions scrollable" />
+    <MESSAGE value="Bumb build version" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bumb build version" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

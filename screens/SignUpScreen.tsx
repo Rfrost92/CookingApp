@@ -6,6 +6,7 @@ import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import WhyLoginModal from "./WhyLoginModal";
 
 export default function SignUpScreen({ navigation }: any) {
     const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ export default function SignUpScreen({ navigation }: any) {
     const [showResend, setShowResend] = useState(false);
     const { language } = useLanguage();
     const t = (key: string) => translations[language][key] || key;
+    const [whyModalVisible, setWhyModalVisible] = useState(false);
 
     const handleSignUp = async () => {
         if (!email.trim() || !password.trim()) {
@@ -95,6 +97,13 @@ export default function SignUpScreen({ navigation }: any) {
                         <Text style={styles.secondaryButtonText}>{t("resend_verification")}</Text>
                     </TouchableOpacity>
                 )}
+
+
+                <TouchableOpacity onPress={() => setWhyModalVisible(true)} style={{ marginTop: 5, marginBottom: 20 }}>
+                    <Text style={{ textAlign: 'center', color: '#444' }}>{t("why_signup") || "🛈 Why do I need to log in?"}</Text>
+                </TouchableOpacity>
+
+                <WhyLoginModal visible={whyModalVisible} onClose={() => setWhyModalVisible(false)} />
 
                 {/* Already Have an Account? */}
                 {/*

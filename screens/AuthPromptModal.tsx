@@ -1,12 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useLanguage } from "../services/LanguageContext";
 import translations from "../data/translations.json";
+import WhyLoginModal from "./WhyLoginModal";
 
 export default function AuthPromptModal({ visible, onClose }) {
     const navigation = useNavigation();
     const { language } = useLanguage();
+    const [whyModalVisible, setWhyModalVisible] = useState(false);
     const t = (key: string) => {
         const langData = translations?.[language];
         return langData?.[key] ?? `[${key}]`;
@@ -18,6 +20,12 @@ export default function AuthPromptModal({ visible, onClose }) {
                 <Text style={styles.description}>
                     {t("auth_prompt_description") || "Unlock personalized recipes, your own recipe book, and the ability to go premium."}
                 </Text>
+
+                <TouchableOpacity onPress={() => setWhyModalVisible(true)} style={{ marginTop: 5, marginBottom: 20 }}>
+                    <Text style={{ textAlign: 'center', color: '#444' }}>{t("why_login_to_try") || "🛈 Why do I need to log in?"}</Text>
+                </TouchableOpacity>
+
+                <WhyLoginModal visible={whyModalVisible} onClose={() => setWhyModalVisible(false)} />
 
                 <TouchableOpacity
                     style={styles.button}
