@@ -116,6 +116,11 @@ export default function GoPremiumScreen() {
                 {/* White Box Containing Benefits */}
                 <View style={styles.whiteBox}>
                     <Text style={styles.benefit}>✅ {t("try_free_3_days")}</Text>
+                    <Text style={styles.benefit}>✅
+                        {product?.localizedPrice
+                            ? t("price_info_dynamic").replace("{{price}}", product.localizedPrice)
+                            : t("price_info_generic")}
+                    </Text>
                     <Text style={styles.benefit}>✅ {t("unlimited_recipes")}</Text>
                     <Text style={styles.benefit}>✅ {t("individual_recipes")}</Text>
                     <Text style={styles.benefit}>✅ {t("fridge_analysis")}</Text>
@@ -168,6 +173,9 @@ export default function GoPremiumScreen() {
                 </Text>
                 <Text style={styles.alreadyTriedText}>
                     {t("already_tried")}
+                </Text>
+                <Text style={styles.supportText}>
+                    {t("support_text")}
                 </Text>
             </View>
         </SafeAreaView>
@@ -265,6 +273,13 @@ const styles = StyleSheet.create({
 
     alreadyTriedText: {
         marginTop: 30,
+        fontSize: 13,
+        color: "#555",
+        fontStyle: "italic",
+        textAlign: "center",
+    },
+    supportText: {
+        marginTop: 5,
         fontSize: 13,
         color: "#555",
         fontStyle: "italic",

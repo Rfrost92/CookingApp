@@ -200,7 +200,7 @@
     "unlimited_recipes": "Unlimited recipes every day",
     "individual_recipes": "Individual recipes",
     "fridge_analysis": "Analyze your fridge and cook what you want",
-    "try_premium_free": "Try smartchef Plus for Free",
+    "try_premium_free": "Try smartchef Plus",
     "subscription_not_available": "Subscription is not available",
     "premium_user_success": "You are now a smartchef Plus user!",
     "subscription_failed": "Subscription failed. Please try again.",
@@ -209,7 +209,7 @@
     "maybe_later": "Maybe later",
     "ok": "OK",
     "premium_feature": "This is a smartchef Plus only feature",
-    "upgrade_to_access": "Upgrade your account and try smartchefPlus for free to access it.",
+    "upgrade_to_access": "Upgrade your account and try smartchefPlus 3 days for free to access it.",
     "log_in_or_sign_up": "Log in or sign up for free!",
     "auth_prompt_description": "🔒 Save your favorite recipes\n• 📖 Access your personal recipe book\n• 📊 Track your weekly usage\n• 🚀 Activate SmartChef Plus on all devices",
     "log_in_now": "Log in or sign up (it's free)",
@@ -226,9 +226,9 @@
     "onboarding_discover_subtitle": "Get creative with three smart recipe scenarios – including a new premium feature: just snap a photo of your fridge and get a recipe based on what's inside!",
     "onboarding_create_account_title": "Create a Free Account",
     "onboarding_create_account_subtitle": "Want more than just the basics?\nCreate a free account to save recipes, access all three cooking scenarios, and get the most out of smartchef.",
-    "onboarding_premium_title": "Enjoy smartchef Plus – Try 3 Days Free",
-    "onboarding_premium_subtitle": "Unlimited recipes, ad-free experience, and full personalization.\nTry it free for 3 days – cancel anytime!",
-    "onboarding_cta": "Create Free Account & Try smartchef Plus",
+    "onboarding_premium_title": "Enjoy smartchef Plus – Try 3 Days",
+    "onboarding_premium_subtitle": "Unlimited recipes, ad-free experience, and full personalization.\nTry it free for 3 days, then 9.99 per month (may vary depending on your country) – cancel anytime!",
+    "onboarding_cta": "Create Free Account",
     "feature_comparison_title": "Feature Comparison",
     "no_account": "No Account",
     "signed_in": "Signed In",
@@ -314,13 +314,17 @@
     "reauth_required": "Please log in again before deleting your account.",
     "enter_password_to_confirm": "Enter password to confirm",
     "subscription_info_dynamic": "SmartChef Plus – {{price}}/month. Monthly subscription. Auto-renewing. Cancel anytime in your iTunes settings.",
+    "price_info_dynamic": " Then {{price}}/month. Cancel anytime",
+    "price_info_generic": " Then 9.99/month (Price may vary depending on your country). Cancel anytime",
     "why_login_to_try": "\uD83D\uDCE3 Why do I need to login to try smartchef Plus?",
     "why_login": "\uD83D\uDCE3 Why do I need to login?",
     "why_signup": "\uD83D\uDCE3 Why do I need to create an account?",
     "why_login_bullets": "• Save your favorite recipes\n• Access your subscription from any device\n• Track your weekly usage limit\n• Restore purchases if you reinstall",
-    "why_login_explanation": "Without an account, you can still use SmartChef — but only to create classic recipes, with no ability to personalize or save them. We need your account to enable SmartChef Plus across devices and give you access to the full experience.",
+    "why_login_explanation_bold": "Without an account, you can still use SmartChef",
+    "why_login_explanation_rest": " — but only to create classic recipes, with no ability to personalize or save them. We need your account to enable SmartChef Plus across devices and give you access to the full experience.",
     "why_login_explanation2": "We only use your account to save your recipes and subscription. You can log in using Apple to hide your email — we don’t need any personal data.",
-    "okay_got_it": "Okay, got it!"
+    "okay_got_it": "Okay, got it!",
+    "support_text": "If you have any questions, feel free to contact us: rFrost.apps@gmail.com"
   },
 
   "de": {
@@ -638,13 +642,17 @@
     "reauth_required": "Bitte melde dich erneut an, bevor du dein Konto löschen kannst.",
     "enter_password_to_confirm": "Gib dein Passwort ein, um zu bestätigen",
     "subscription_info_dynamic": "SmartChef Plus – {{price}}/Monat. Monatliches Abo. Automatische Verlängerung. Jederzeit in den iTunes-Einstellungen kündbar.",
+    "price_info_dynamic": " Dann {{price}}/Monat. Jederzeit kündbar",
+    "price_info_generic": " Dann 9,99/Monat (Preis kann je nach Land variieren). Jederzeit kündbar",
     "why_login_to_try": "📣 Warum muss ich mich anmelden, um SmartChef Plus auszuprobieren?",
     "why_login": "📣 Warum muss ich mich anmelden?",
     "why_signup": "📣 Warum muss ich ein Konto erstellen?",
     "why_login_bullets": "• Speichere deine Lieblingsrezepte\n• Greife von jedem Gerät auf dein Abo zu\n• Verfolge dein wöchentliches Nutzungslimit\n• Stelle Käufe nach einer Neuinstallation wieder her",
-    "why_login_explanation": "Ohne Konto kannst du SmartChef weiterhin nutzen – aber nur zum Erstellen klassischer Rezepte, ohne Personalisierung oder Speicherfunktion. Wir benötigen dein Konto, um SmartChef Plus auf allen Geräten freizuschalten und dir das volle Erlebnis zu bieten.",
+    "why_login_explanation_bold": "Ohne ein Konto kannst du SmartChef trotzdem nutzen",
+    "why_login_explanation_rest": " – aber nur, um klassische Rezepte zu erstellen, ohne die Möglichkeit zur Personalisierung oder zum Speichern. Wir benötigen dein Konto, um SmartChef Plus geräteübergreifend zu aktivieren und dir das volle Erlebnis zu bieten.",
     "why_login_explanation2": "Wir verwenden dein Konto nur, um deine Rezepte und dein Abonnement zu speichern. Du kannst dich mit Apple anmelden und dabei deine E-Mail-Adresse verbergen – wir benötigen keine persönlichen Daten.",
-    "okay_got_it": "Alles klar!"
+    "okay_got_it": "Alles klar!",
+    "support_text": "Wenn Sie Fragen haben, können Sie uns gerne kontaktieren: rFrost.apps@gmail.com"
   },
   "ua": {
     "welcome": "Ласкаво просимо до smartchef!",
@@ -961,13 +969,17 @@
     "reauth_required": "Будь ласка, увійдіть знову перед видаленням облікового запису.",
     "enter_password_to_confirm": "Введіть пароль для підтвердження",
     "subscription_info_dynamic": "SmartChef Plus – {{price}}/місяць. Місячна підписка. Автоматичне поновлення. Можна скасувати у налаштуваннях iTunes у будь-який момент.",
+    "price_info_dynamic": " Потім {{price}}/місяць. Можна скасувати в будь-який час",
+    "price_info_generic": " Потім 9,99/місяць (Ціна може відрізнятись залежно від країни). Можна скасувати в будь-який час",
     "why_login_to_try": "📣 Чому потрібно увійти, щоб спробувати SmartChef Plus?",
     "why_login": "📣 Чому потрібно увійти?",
     "why_signup": "📣 Чому потрібно створити обліковий запис?",
     "why_login_bullets": "• Зберігай улюблені рецепти\n• Отримуй доступ до підписки з будь-якого пристрою\n• Слідкуй за щотижневим лімітом використання\n• Відновлюй покупки після перевстановлення",
-    "why_login_explanation": "Без облікового запису ти все одно можеш користуватись SmartChef – але лише для створення класичних рецептів, без можливості персоналізації та збереження. Обліковий запис потрібен для активації SmartChef Plus на всіх твоїх пристроях і повного доступу до функцій.",
+    "why_login_explanation_bold": "Без облікового запису ви все ще можете користуватися SmartChef",
+    "why_login_explanation_rest": " — але лише для створення класичних рецептів без можливості персоналізації чи збереження. Нам потрібен ваш обліковий запис, щоб активувати SmartChef Plus на всіх пристроях і надати вам повний функціонал.",
     "why_login_explanation2": "Ми використовуємо твій обліковий запис лише для збереження рецептів і підписки. Ти можеш увійти через Apple і приховати свою електронну адресу – нам не потрібні твої персональні дані.",
-    "okay_got_it": "Зрозуміло!"
+    "okay_got_it": "Зрозуміло!",
+    "support_text": "Якщо у вас є запитання, зв'яжіться з нами: rFrost.apps@gmail.com"
   },
 
   "ru": {
@@ -1285,12 +1297,16 @@
     "reauth_required": "Пожалуйста, войдите снова перед удалением аккаунта.",
     "enter_password_to_confirm": "Введите пароль для подтверждения",
     "subscription_info_dynamic": "SmartChef Plus – {{price}}/мес. Ежемесячная подписка. Автоматическое продление. Можно отменить в настройках iTunes в любое время.",
+    "price_info_dynamic": " Затем {{price}}/месяц. Отмена в любой момент",
+    "price_info_generic": " Затем 9,99/месяц (Цена может отличаться в зависимости от страны). Отмена в любой момент",
     "why_login_to_try": "📣 Почему нужно войти, чтобы попробовать SmartChef Plus?",
     "why_login": "📣 Почему нужно войти?",
     "why_signup": "📣 Почему нужно создать аккаунт?",
     "why_login_bullets": "• Сохраняйте любимые рецепты\n• Получайте доступ к подписке с любого устройства\n• Отслеживайте недельный лимит использования\n• Восстанавливайте покупки при переустановке",
-    "why_login_explanation": "Без аккаунта вы всё равно можете пользоваться SmartChef — но только для создания классических рецептов, без персонализации и сохранения. Аккаунт нужен, чтобы активировать SmartChef Plus на всех устройствах и открыть все функции.",
+    "why_login_explanation_bold": "Без учетной записи вы всё ещё можете пользоваться SmartChef",
+    "why_login_explanation_rest": " — но только для создания классических рецептов, без возможности персонализации или сохранения. Нам нужна ваша учётная запись, чтобы активировать SmartChef Plus на всех устройствах и предоставить вам полный функционал.",
     "why_login_explanation2": "Мы используем ваш аккаунт только для сохранения рецептов и подписки. Вы можете войти через Apple и скрыть свой email — нам не нужны ваши личные данные.",
-    "okay_got_it": "Понятно!"
+    "okay_got_it": "Понятно!",
+    "support_text": "Если у вас есть вопросы, напишите нам: rFrost.apps@gmail.com"
   }
 }

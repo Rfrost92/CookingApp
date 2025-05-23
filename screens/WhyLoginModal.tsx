@@ -17,7 +17,10 @@ export default function WhyLoginModal({ visible, onClose }: { visible: boolean; 
                 <View style={styles.modalContent}>
                     <Text style={styles.title}>{t("why_login")}</Text>
                     <Text style={styles.text}>{t("why_login_bullets")}</Text>
-                    <Text style={styles.paragraph}>{t("why_login_explanation")}</Text>
+                    <Text style={styles.paragraph}>
+                        <Text style={styles.bold}>{t("why_login_explanation_bold")}</Text>
+                        <Text>{t("why_login_explanation_rest")}</Text>
+                    </Text>
                     <Text style={styles.paragraph}>{t("why_login_explanation2")}</Text>
                     <TouchableOpacity style={styles.button} onPress={onClose}>
                         <Text style={styles.buttonText}>{t("okay_got_it")}</Text>
@@ -72,5 +75,9 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         color: '#444',
         lineHeight: 20,
-    }
+    },
+    bold: {
+        fontWeight: 'bold',
+        color: '#000', // optional
+    },
 });
