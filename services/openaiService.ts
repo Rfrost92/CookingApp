@@ -10,7 +10,7 @@ const openai = new OpenAI({
     apiKey: process.env.gptApiKey
 });
 
-export const testingMode = false; // Set to `false` for production
+export const testingMode = true; // Set to `false` for production
 
 const getLocalizedPromptPrefix = (language: string) => {
     const prefixMap = {

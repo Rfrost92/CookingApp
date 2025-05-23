@@ -15,7 +15,7 @@ export default function WhyLoginModal({ visible, onClose }: { visible: boolean; 
         <Modal animationType="slide" transparent={true} visible={visible} onRequestClose={onClose}>
             <View style={styles.overlay}>
                 <View style={styles.modalContent}>
-                    <Text style={styles.title}>Why do I need to log in?</Text>
+                    <Text style={styles.title}>{t("why_login")}</Text>
                     <Text style={styles.text}>{t("why_login_bullets")}</Text>
                     <Text style={styles.paragraph}>{t("why_login_explanation")}</Text>
                     <Text style={styles.paragraph}>{t("why_login_explanation2")}</Text>
