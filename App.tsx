@@ -82,7 +82,10 @@ export default Sentry.wrap(function App() {
             const statusResponse = await TrackingTransparency.getTrackingPermissionsAsync();
             console.log("📊 Full ATT status response:", statusResponse);
             if (status === 'undetermined') {
-                const finalStatus = await TrackingTransparency.requestTrackingPermissionsAsync();
+                let finalStatus;
+                setTimeout(async () => {
+                    finalStatus = await TrackingTransparency.requestTrackingPermissionsAsync();
+                }, 2000);
                 console.log("📲 ATT permission result:", finalStatus.status);
             }
         };

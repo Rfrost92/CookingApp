@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Add more why do i need to login prompt">
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Make it clearly visible which price users pay">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/translations.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/translations.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/GoPremiumScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/GoPremiumScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/WhyLoginModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/WhyLoginModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/openaiService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/openaiService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,14 +134,8 @@
       <workItem from="1744881216811" duration="5488000" />
       <workItem from="1745576812010" duration="554000" />
       <workItem from="1746791594683" duration="545000" />
-      <workItem from="1747126948608" duration="28966000" />
-    </task>
-    <task id="LOCAL-00022" summary="Fix some error-handling">
-      <created>1738183511618</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1738183511618</updated>
+      <workItem from="1747126948608" duration="30641000" />
+      <workItem from="1748867021777" duration="3597000" />
     </task>
     <task id="LOCAL-00023" summary="Images on flux generator">
       <created>1738271876580</created>
@@ -481,7 +473,14 @@
       <option name="project" value="LOCAL" />
       <updated>1747996934015</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="Make it clearly visible which price users pay">
+      <created>1748000033278</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1748000033278</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -500,7 +499,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="A lot of logic to make premium and registered users work" />
     <MESSAGE value="Sentry integrate" />
     <MESSAGE value="Onboarding works" />
     <MESSAGE value="New initial sign up screen after onboarding" />
@@ -525,7 +523,8 @@
     <MESSAGE value="Bumb build version" />
     <MESSAGE value="Why do i need to log in modal window add" />
     <MESSAGE value="Add more why do i need to login prompt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add more why do i need to login prompt" />
+    <MESSAGE value="Make it clearly visible which price users pay" />
+    <option name="LAST_COMMIT_MESSAGE" value="Make it clearly visible which price users pay" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
