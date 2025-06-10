@@ -33,6 +33,7 @@ import {testingMode} from "../services/openaiService";
 import {deleteUser} from "firebase/auth";
 import {deleteDoc, doc} from "firebase/firestore";
 import {auth, db} from "../firebaseConfig";
+import {deleteRevenueCatSubscriber} from "../services/subscriptionService";
 
 const availableLanguages = [
     {code: "en", name: "English"},
@@ -183,6 +184,9 @@ export default function HomeScreen() {
                         if (!user?.email || !password) return;
                         try {
                             await reauthenticateUser(user.email, password);
+                            if (subscriptionType !== "guest") {
+                                await deleteRevenueCatSubscriber(user.uid);
+                            }
                             await deleteDoc(doc(db, "users", user.uid));
                             await deleteUser(auth.currentUser);
                             Alert.alert(t("deleted"), t("account_deleted"));
@@ -197,6 +201,9 @@ export default function HomeScreen() {
                 return;
             }
 
+            if (subscriptionType !== "guest") {
+                await deleteRevenueCatSubscriber(user.uid);
+            }
             // For Apple and Google (no password required)
             await deleteDoc(doc(db, "users", user.uid));
             await deleteUser(auth.currentUser);
@@ -341,11 +348,6 @@ export default function HomeScreen() {
                                         <Text style={styles.logoutButtonText}>{t("logout")}</Text>
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity style={styles.accountButton} onPress={handleDeleteAccount}>
-                                        <Text style={[styles.modalButtonText, {color: "red"}]}>
-                                            {t("delete_account")}
-                                        </Text>
-                                    </TouchableOpacity>
                                     {/* CLOSE BUTTON */}
                                     <TouchableOpacity style={[styles.accountButton, styles.closeButton]}
                                                       onPress={() => setAccountModalVisible(false)}>

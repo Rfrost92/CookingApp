@@ -20,6 +20,7 @@ import GoPremiumScreen from "../screens/GoPremiumScreen";
 import OnboardingScreen from "../screens/OnboardingScreen";
 import InitialSignUpScreen from "../screens/InitialSignUpScreen";
 import LanguageSelectionScreen from "../screens/LanguageSelectionScreen";
+import DeleteAccountScreen from "../screens/DeleteAccountScreen";
 
 const Stack = createStackNavigator();
 
@@ -49,6 +50,7 @@ export default function RootNavigator({ initialRouteName }: { initialRouteName: 
                 <Stack.Screen name="GoPremium" component={GoPremiumScreen} />
                 <Stack.Screen name="InitialSignUp" component={InitialSignUpScreen} />
                 <Stack.Screen name="LanguageSelection" component={LanguageSelectionScreen} />
+                <Stack.Screen name="DeleteAccount" component={DeleteAccountScreen} />
 
         </Stack.Navigator>
     );

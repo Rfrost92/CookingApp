@@ -3,6 +3,7 @@
 import {doc, updateDoc} from "firebase/firestore";
 import {db} from "../firebaseConfig";
 import * as RNIap from "react-native-iap";
+import axios from "axios";
 
 const itemSkus = ["com.rFrostSmartChef.premium.monthly"];
 
@@ -57,4 +58,19 @@ export const restorePurchases = async (setSubscriptionType, user) => {
     }
 };
 
+export const deleteRevenueCatSubscriber = async (uid: string) => {
+    console.error(`Account Deletion: 🚨 User ${uid} deleted their account — check RevenueCat!`);
+    return;
+    try {
+        const res = await axios.delete(`https://api.revenuecat.com/v1/subscribers/${uid}`, {
+            headers: {
+                Authorization: `Bearer ${process.env.REVENUECAT_SECRET_API_KEY}`,
+            },
+        });
+        console.log("✅ RevenueCat user deleted:", res.status);
+    } catch (error: any) {
+        console.error("❌ Error deleting RevenueCat subscriber:", error?.response?.data || error.message);
+        throw error;
+    }
+};
 

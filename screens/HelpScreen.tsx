@@ -97,6 +97,15 @@ export default function HelpScreen() {
                 <TouchableOpacity style={styles.button} onPress={() => setFeedbackVisible(true)}>
                     <Text style={styles.buttonText}>{t("send_feedback")}</Text>
                 </TouchableOpacity>
+
+                {user && (
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate("DeleteAccount")}
+                    >
+                        <Text style={styles.buttonTextDelete}>{t("delete_account")}</Text>
+                    </TouchableOpacity>
+                )}
             </View>
 
             {/* Instructions/Disclaimer Modal */}
@@ -206,6 +215,16 @@ const styles = StyleSheet.create({
         textAlign: "center",
         width: "100%",
     },
+
+    buttonTextDelete: {
+        fontSize: 12,
+        fontWeight: "bold",
+        color: "#c90000",
+        flexShrink: 1,
+        textAlign: "center",
+        width: "100%",
+    },
+
     linkButton: {
         padding: 10,
     },

@@ -370,8 +370,17 @@ export const reauthWithApple = async () => {
 };
 
 export const reauthWithGoogle = async () => {
-    await GoogleSignin.hasPlayServices();
-    const { idToken } = await GoogleSignin.signIn();
-    const googleCredential = GoogleAuthProvider.credential(idToken);
-    await reauthenticateWithCredential(auth.currentUser, googleCredential);
+    const result = await GoogleSignin.signIn();
+
+    const idToken = result.data?.idToken; // ← this is usually where it is
+    if (!idToken) {
+        throw new Error("No ID token found for Google reauthentication");
+    }
+
+    const credential = GoogleAuthProvider.credential(idToken);
+    if (!auth.currentUser) {
+        throw new Error("No current user");
+    }
+
+    return await reauthenticateWithCredential(auth.currentUser, credential);
 };

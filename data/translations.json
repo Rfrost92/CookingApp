@@ -306,13 +306,14 @@
     "nutrition_disclaimer_body_2": "For more precise nutritional information, please refer to official resources like:",
     "nutrition_disclaimer_body_3": "This app does not offer medical or nutritional advice. All recipes are generated based on your input and may not be suitable for all dietary needs. Please use your own judgment and consult a professional if needed.",
     "delete_account": "Delete Account",
+    "delete_recipe": "Delete Recipe from your book?",
     "confirm_delete": "Are you sure?",
     "delete_warning": "Your account and all associated data will be permanently deleted.",
     "deleted": "Deleted",
     "account_deleted": "Your account has been successfully deleted.",
     "delete_failed": "Account deletion failed.",
     "reauth_required": "Please log in again before deleting your account.",
-    "enter_password_to_confirm": "Enter password to confirm",
+    "enter_password_to_confirm": "Enter your password to confirm account deletion",
     "subscription_info_dynamic": "SmartChef Plus – {{price}}/month. Monthly subscription. Auto-renewing. Cancel anytime in your iTunes settings.",
     "price_info_dynamic": " Then {{price}}/month. Cancel anytime",
     "price_info_generic": " Then 9.99/month (Price may vary depending on your country). Cancel anytime",
@@ -324,7 +325,11 @@
     "why_login_explanation_rest": " — but only to create classic recipes, with no ability to personalize or save them. We need your account to enable SmartChef Plus across devices and give you access to the full experience.",
     "why_login_explanation2": "We only use your account to save your recipes and subscription. You can log in using Apple to hide your email — we don’t need any personal data.",
     "okay_got_it": "Okay, got it!",
-    "support_text": "If you have any questions, feel free to contact us: rFrost.apps@gmail.com"
+    "support_text": "If you have any questions, feel free to contact us: rFrost.apps@gmail.com",
+    "confirm_delete_account": "Yes, delete my account",
+    "delete_warning_text": "Are you sure? This action is irreversible. If you delete your account, all your data will be permanently removed.",
+    "go_back": "No, go back",
+    "no_recipes_saved": "No recipes saved yet"
   },
 
   "de": {
@@ -634,6 +639,7 @@
     "nutrition_disclaimer_body_2": "Für genauere Nährwertangaben konsultieren Sie bitte offizielle Quellen wie:",
     "nutrition_disclaimer_body_3": "Diese App bietet keine medizinische oder ernährungsbezogene Beratung. Alle Rezepte werden basierend auf Ihren Angaben generiert und sind möglicherweise nicht für alle Ernährungsbedürfnisse geeignet. Verwenden Sie Ihr eigenes Urteilsvermögen und konsultieren Sie bei Bedarf einen Fachmann.",
     "delete_account": "Konto löschen",
+    "delete_recipe": "Rezept aus deinem Buch löschen?",
     "confirm_delete": "Bist du sicher?",
     "delete_warning": "Dein Konto und alle zugehörigen Daten werden dauerhaft gelöscht.",
     "deleted": "Gelöscht",
@@ -652,7 +658,11 @@
     "why_login_explanation_rest": " – aber nur, um klassische Rezepte zu erstellen, ohne die Möglichkeit zur Personalisierung oder zum Speichern. Wir benötigen dein Konto, um SmartChef Plus geräteübergreifend zu aktivieren und dir das volle Erlebnis zu bieten.",
     "why_login_explanation2": "Wir verwenden dein Konto nur, um deine Rezepte und dein Abonnement zu speichern. Du kannst dich mit Apple anmelden und dabei deine E-Mail-Adresse verbergen – wir benötigen keine persönlichen Daten.",
     "okay_got_it": "Alles klar!",
-    "support_text": "Wenn Sie Fragen haben, können Sie uns gerne kontaktieren: rFrost.apps@gmail.com"
+    "support_text": "Wenn Sie Fragen haben, können Sie uns gerne kontaktieren: rFrost.apps@gmail.com",
+    "confirm_delete_account": "Ja, mein Konto löschen",
+    "delete_warning_text": "Bist du sicher? Diese Aktion ist unwiderruflich. Wenn du dein Konto löschst, werden alle deine Daten dauerhaft entfernt.",
+    "go_back": "Nein, zurück",
+    "de": "Noch keine Rezepte gespeichert"
   },
   "ua": {
     "welcome": "Ласкаво просимо до smartchef!",
@@ -961,6 +971,7 @@
     "nutrition_disclaimer_body_2": "Для більш точної інформації про поживність звертайтесь до офіційних джерел, наприклад:",
     "nutrition_disclaimer_body_3": "Цей додаток не надає медичних чи дієтичних рекомендацій. Усі рецепти згенеровані на основі ваших введених даних і можуть не відповідати всім дієтичним потребам. Використовуйте власний розсуд і за потреби зверніться до фахівця.",
     "delete_account": "Видалити обліковий запис",
+    "delete_recipe": "Видалити рецепт із вашої книги?",
     "confirm_delete": "Ви впевнені?",
     "delete_warning": "Ваш обліковий запис та всі пов'язані дані буде остаточно видалено.",
     "deleted": "Видалено",
@@ -979,7 +990,11 @@
     "why_login_explanation_rest": " — але лише для створення класичних рецептів без можливості персоналізації чи збереження. Нам потрібен ваш обліковий запис, щоб активувати SmartChef Plus на всіх пристроях і надати вам повний функціонал.",
     "why_login_explanation2": "Ми використовуємо твій обліковий запис лише для збереження рецептів і підписки. Ти можеш увійти через Apple і приховати свою електронну адресу – нам не потрібні твої персональні дані.",
     "okay_got_it": "Зрозуміло!",
-    "support_text": "Якщо у вас є запитання, зв'яжіться з нами: rFrost.apps@gmail.com"
+    "support_text": "Якщо у вас є запитання, зв'яжіться з нами: rFrost.apps@gmail.com",
+    "confirm_delete_account": "Так, видалити мій обліковий запис",
+    "delete_warning_text": "Ви впевнені? Цю дію не можна скасувати. Якщо ви видалите обліковий запис, всі ваші дані буде остаточно втрачено.",
+    "go_back": "Ні, повернутися",
+    "uk": "Ще немає збережених рецептів"
   },
 
   "ru": {
@@ -1289,6 +1304,7 @@
     "nutrition_disclaimer_body_2": "Для более точной информации о питательных веществах, пожалуйста, обратитесь к официальным источникам, таким как:",
     "nutrition_disclaimer_body_3": "Это приложение не предоставляет медицинских или диетических рекомендаций. Все рецепты создаются на основе введенных вами данных и могут не подходить для всех диетических потребностей. Пожалуйста, полагайтесь на собственное суждение и при необходимости проконсультируйтесь со специалистом.",
     "delete_account": "Удалить аккаунт",
+    "delete_recipe": "Удалить рецепт из вашей книги?",
     "confirm_delete": "Вы уверены?",
     "delete_warning": "Ваш аккаунт и все связанные данные будут удалены без возможности восстановления.",
     "deleted": "Удалено",
@@ -1307,6 +1323,10 @@
     "why_login_explanation_rest": " — но только для создания классических рецептов, без возможности персонализации или сохранения. Нам нужна ваша учётная запись, чтобы активировать SmartChef Plus на всех устройствах и предоставить вам полный функционал.",
     "why_login_explanation2": "Мы используем ваш аккаунт только для сохранения рецептов и подписки. Вы можете войти через Apple и скрыть свой email — нам не нужны ваши личные данные.",
     "okay_got_it": "Понятно!",
-    "support_text": "Если у вас есть вопросы, напишите нам: rFrost.apps@gmail.com"
+    "support_text": "Если у вас есть вопросы, напишите нам: rFrost.apps@gmail.com",
+    "confirm_delete_account": "Да, удалить мой аккаунт",
+    "delete_warning_text": "Вы уверены? Это действие необратимо. Если вы удалите аккаунт, все ваши данные будут безвозвратно удалены.",
+    "go_back": "Нет, вернуться",
+    "ru": "Пока нет сохранённых рецептов"
   }
 }

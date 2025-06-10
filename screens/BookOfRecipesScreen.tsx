@@ -114,15 +114,40 @@ export default function BookOfRecipesScreen() {
                             </Text>
                             <TouchableOpacity
                                 style={styles.deleteButton}
-                                onPress={() => handleDeleteRecipe(item.id)}
+                                onPress={() => {
+                                    Alert.alert(
+                                        t("delete_recipe"),
+                                        t("confirm_delete"),
+                                        [
+                                            {
+                                                text: t("no"),
+                                                style: "cancel"
+                                            },
+                                            {
+                                                text: t("ok"),
+                                                style: "destructive",
+                                                onPress: () => handleDeleteRecipe(item.id)
+                                            }
+                                        ]
+                                    );
+                                }}
                             >
                                 <Ionicons name="trash-outline" size={22} color="white" />
                             </TouchableOpacity>
+
                         </TouchableOpacity>
                     )}
-                    contentContainerStyle={styles.listContainer}
+                    ListEmptyComponent={
+                        !isLoading ? (
+                            <View style={styles.emptyContainer}>
+                                <Text style={styles.emptyText}>{t("no_recipes_saved")}</Text>
+                            </View>
+                        ) : null
+                    }
+                    contentContainerStyle={filteredRecipes.length === 0 ? styles.emptyListPadding : styles.listContainer}
                     style={styles.list}
                 />
+
             </View>
             <Modal visible={isLoading} transparent={true} animationType="fade">
                 <View style={styles.loadingContainer}>
@@ -234,5 +259,21 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#000",
         textAlign: "center"
+    },
+    emptyContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 100,
+    },
+    emptyText: {
+        fontSize: 18,
+        color: "#555",
+        textAlign: "center",
+    },
+    emptyListPadding: {
+        flexGrow: 1,
+        justifyContent: "center",
+        alignItems: "center",
     },
 });

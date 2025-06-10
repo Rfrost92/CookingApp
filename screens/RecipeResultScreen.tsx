@@ -115,21 +115,43 @@ export default function RecipeResultScreen() {
         }
 
         try {
-            setIsLoading(true); // Show loading screen
+            setIsLoading(true);
             const parsedRecipe = sanitizeAndParseRecipe(recipe);
             if (!parsedRecipe) {
+                setIsLoading(false);
                 Alert.alert(t("error"), t("invalid_recipe_format"));
                 return;
             }
 
-            const saveResult = await saveRecipe(user?.uid, parsedRecipe.Title, parsedRecipe, base64Image);
-            setIsLoading(false); // Hide loading screen
-            if (saveResult.message === "Recipe with the same title already exists.") {
-                Alert.alert(t("error"), t("recipe_already_exists"));
-            } else {
-                Alert.alert(t("success"), t("recipe_saved"));
+            const baseTitle = parsedRecipe.Title;
+            let attempt = 0;
+            let saved = false;
+
+            while (attempt <= 10 && !saved) {
+                let titleToTry = baseTitle;
+                if (attempt === 1) {
+                    titleToTry = `${baseTitle} Alternative`;
+                } else if (attempt > 1) {
+                    titleToTry = `${baseTitle} Alternative ${attempt}`;
+                }
+
+                const result = await saveRecipe(user?.uid, titleToTry, parsedRecipe, base64Image);
+                if (result.message === "Recipe with the same title already exists.") {
+                    attempt++;
+                    continue;
+                } else {
+                    saved = true;
+                    Alert.alert(t("success"), t("recipe_saved"));
+                }
             }
+
+            if (!saved) {
+                Alert.alert(t("error"), t("recipe_already_exists"));
+            }
+
+            setIsLoading(false);
         } catch (error) {
+            setIsLoading(false);
             Alert.alert(t("error"), error.message || t("failed_to_save"));
         }
     };
