@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     },
     description: {
         fontSize: 18,
-        textAlign: "center",
+        textAlign: "left",
         marginBottom: 30,
         paddingHorizontal: 20,
     },

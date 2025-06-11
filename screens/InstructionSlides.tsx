@@ -7,6 +7,17 @@ import translations from "../data/translations.json";
 
 const screenHeight = Dimensions.get("window").height;
 
+export function renderBoldText(text: string) {
+    const parts = text.split(/\*\*\*\*(.*?)\*\*\*\*/g);
+    return parts.map((part, i) =>
+        i % 2 === 1 ? (
+            <Text key={i} style={{ fontWeight: 'bold' }}>{part}</Text>
+        ) : (
+            <Text key={i}>{part}</Text>
+        )
+    );
+}
+
 export default function InstructionSlides({ onDone }: { onDone: () => void }) {
     const { language } = useLanguage();
     const t = (key: string) => translations?.[language]?.[key] || `[${key}]`;
@@ -37,7 +48,7 @@ export default function InstructionSlides({ onDone }: { onDone: () => void }) {
                         <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
                             <Image source={require("../assets/generated-2.jpg")} style={styles.image} />
                             <Text style={styles.title}>{t("slide2_title")}</Text>
-                            <Text style={styles.subtitle}>{t("slide2_subtitle")}</Text>
+                            <Text style={styles.subtitle}>{renderBoldText(t("slide2_subtitle"))}</Text>
                         </ScrollView>
                     ),
                     title: "",
@@ -49,7 +60,7 @@ export default function InstructionSlides({ onDone }: { onDone: () => void }) {
                         <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
                             <Image source={require("../assets/generated-fridge.jpg")} style={styles.image} />
                             <Text style={styles.title}>{t("slide3_title")}</Text>
-                            <Text style={styles.subtitle}>{t("slide3_subtitle")}</Text>
+                            <Text style={styles.subtitle}>{renderBoldText(t("slide3_subtitle"))}</Text>
                         </ScrollView>
                     ),
                     title: "",
@@ -61,7 +72,7 @@ export default function InstructionSlides({ onDone }: { onDone: () => void }) {
                         <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
                             <Image source={require("../assets/orange.png")} style={styles.imageSmall} />
                             <Text style={styles.title}>{t("slide4_title")}</Text>
-                            <Text style={styles.subtitle}>{t("slide4_subtitle")}</Text>
+                            <Text style={styles.subtitle}>{renderBoldText(t("slide4_subtitle"))}</Text>
                         </ScrollView>
                     ),
                     title: "",
@@ -71,9 +82,9 @@ export default function InstructionSlides({ onDone }: { onDone: () => void }) {
                     backgroundColor: "#ffffff",
                     image: (
                         <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
-                            <Text style={styles.bigEmoji}>📅</Text>
+                            <Image source={require("../assets/calendarYellowIcon.png")} style={styles.imageSmall} />
                             <Text style={styles.title}>{t("slide5_title")}</Text>
-                            <Text style={styles.subtitle}>{t("slide5_subtitle")}</Text>
+                            <Text style={styles.subtitle}>{renderBoldText(t("slide5_subtitle"))}</Text>
                         </ScrollView>
                     ),
                     title: "",

@@ -373,13 +373,16 @@ export default function HomeScreen() {
                                             ]}
                                             onPress={() => selectLanguage(item.code)}
                                         >
-                                            <Text style={styles.languageText}>{item.name}</Text>
+                                            <Text style={[
+                                                styles.languageText,
+                                                language === item.code && styles.selectedLanguageText
+                                            ]}>{item.name}</Text>
                                         </TouchableOpacity>
                                     ))}
                                     {/* SAVE BUTTON */}
-                                    <TouchableOpacity style={styles.saveButton}
+                                    <TouchableOpacity style={styles.closeLanguageButton}
                                                       onPress={() => setLanguageModalVisible(false)}>
-                                        <Text style={styles.saveButtonText}>{t("close")}</Text>
+                                        <Text style={styles.closeLanguageButtonText}>{t("close")}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -601,16 +604,16 @@ const styles = StyleSheet.create({
     languageOption: {
         padding: 15,
         borderWidth: 2,
-        borderColor: "#71f2c9",
+        borderColor: "#000",
         borderRadius: 8,
         marginVertical: 8,
         width: "80%",
         alignItems: "center",
-        backgroundColor: "#fff", // Default white background
+        backgroundColor: "#000", // Default white background
     },
     languageOptionSelected: {
         backgroundColor: "#FCE71C", // Change selected language button to yellow
-        borderColor: "#71f2c9",
+        borderColor: "#FCE71C",
     },
     saveButton: {
         backgroundColor: "#000", // Black button for "Save"
@@ -618,9 +621,25 @@ const styles = StyleSheet.create({
         paddingHorizontal: 40,
         borderRadius: 8,
         marginTop: 20,
+        borderColor: "#000",
     },
     saveButtonText: {
         color: "#fff", // White text for "Save" button
+        fontSize: 16,
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    closeLanguageButton: {
+        backgroundColor: "#fff",
+        paddingVertical: 12,
+        paddingHorizontal: 40,
+        borderRadius: 8,
+        marginTop: 20,
+        borderWidth: 2,
+        borderColor: "#000",
+    },
+    closeLanguageButtonText: {
+        color: "#000",
         fontSize: 16,
         fontWeight: "bold",
         textAlign: "center"
@@ -640,6 +659,13 @@ const styles = StyleSheet.create({
     },
     languageText: {
         fontSize: 16,
+        fontWeight: "bold",
+        color: "#fff"
+    },
+    selectedLanguageText: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#000"
     },
     languageCode: {
         fontSize: 18,
