@@ -217,9 +217,9 @@ const styles = StyleSheet.create({
     },
 
     buttonTextDelete: {
-        fontSize: 12,
+        fontSize: 16,
         fontWeight: "bold",
-        color: "#c90000",
+        color: "#868686FF",
         flexShrink: 1,
         textAlign: "center",
         width: "100%",

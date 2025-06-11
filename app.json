@@ -2,7 +2,7 @@
   "expo": {
     "name": "smartchef",
     "slug": "SmartChef",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "entryPoint": "./App.tsx",
     "icon": "./assets/smartchef_icon2.png",
@@ -18,7 +18,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.rFrost.SmartChef",
       "googleServicesFile": "./GoogleService-Info.plist",
-      "buildNumber": "5",
+      "buildNumber": "7",
       "infoPlist": {
         "GADApplicationIdentifier": "ca-app-pub-5120112871612534~2963819076",
         "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
