@@ -15,8 +15,6 @@ export const AuthContext = createContext({
     refreshSubscriptionType: async () => {},
 });
 
-const itemSkus = ["com.rFrostSmartChef.premium.monthly"];
-
 export const AuthProvider = ({ children }: any) => {
     const [user, setUser] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);

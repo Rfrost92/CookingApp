@@ -11,10 +11,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Purchases from 'react-native-purchases';
 import { View, StatusBar } from 'react-native';
 import * as TrackingTransparency from 'expo-tracking-transparency';
+import {itemSkus} from "./services/subscriptionService";
 
 global.Buffer = Buffer;
 
-const itemSkus = { skus: ["com.rFrostSmartChef.premium.monthly"] };
+const itemSkusFetched = { skus: itemSkus };
 
 Sentry.init({
     dsn: "https://fdcc23544f251ec13abbd4af5bec0e72@o4509089542569984.ingest.de.sentry.io/4509089612562512",
@@ -36,7 +37,7 @@ export default Sentry.wrap(function App() {
                 const result = await RNIap.initConnection();
                 console.log("✅ IAP Initialized:", result);
 
-                const isAvailable = await RNIap.getSubscriptions(itemSkus);
+                const isAvailable = await RNIap.getSubscriptions(itemSkusFetched);
                 console.log("🔍 Available Subscriptions:", isAvailable);
 
                 const purchaseUpdateSubscription = RNIap.purchaseUpdatedListener(async (purchase) => {

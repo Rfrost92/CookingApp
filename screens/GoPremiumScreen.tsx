@@ -13,8 +13,7 @@ import translations from "../data/translations.json";
 import * as Sentry from '@sentry/react-native';
 import Purchases from "react-native-purchases";
 import {testingMode} from "../services/openaiService";
-
-const itemSkus = ["com.rFrostSmartChef.premium.monthly"];
+import {itemSkus} from "../services/subscriptionService";
 
 export default function GoPremiumScreen() {
     const {user, setSubscriptionType, refreshSubscriptionType} = useAuth();
@@ -45,6 +44,7 @@ export default function GoPremiumScreen() {
         try {
             const offerings = await Purchases.getOfferings();
             const current = offerings.current;
+            console.log('current: ', current);
 
             if (current && current.monthly) {
                 const purchaseInfo = await Purchases.purchasePackage(current.monthly);

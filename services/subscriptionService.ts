@@ -5,7 +5,7 @@ import {db} from "../firebaseConfig";
 import * as RNIap from "react-native-iap";
 import axios from "axios";
 
-const itemSkus = ["com.rFrostSmartChef.premium.monthly"];
+export const itemSkus = ["com.rFrostSmartChef.plus.monthly"];
 
 const fetchSubscriptions = async () => {
     try {
