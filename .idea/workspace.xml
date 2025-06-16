@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Final touches before release - fix some UI: language selection and so on">
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Final touches before release - change also the version">
+      <change afterPath="$PROJECT_DIR$/data/translationsV2.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/HelpScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HelpScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/translations.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/translations.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eas.json" beforeDir="false" afterPath="$PROJECT_DIR$/eas.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/GoPremiumScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/GoPremiumScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,9 +96,9 @@
       <recent name="$PROJECT_DIR$/screens" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data" />
       <recent name="$PROJECT_DIR$/assets" />
       <recent name="$PROJECT_DIR$/assets/dishes" />
-      <recent name="$PROJECT_DIR$/data" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/contexts" />
     </key>
@@ -138,14 +141,7 @@
       <workItem from="1748867021777" duration="4454000" />
       <workItem from="1749069300085" duration="897000" />
       <workItem from="1749546124772" duration="5028000" />
-      <workItem from="1749560045215" duration="12610000" />
-    </task>
-    <task id="LOCAL-00026" summary="Add terms, conditions, privacy and disclaimer skeleton">
-      <created>1738856228699</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1738856228699</updated>
+      <workItem from="1749560045215" duration="22200000" />
     </task>
     <task id="LOCAL-00027" summary="Add the lemon button on homescreen">
       <created>1739805662231</created>
@@ -483,7 +479,14 @@
       <option name="project" value="LOCAL" />
       <updated>1749654204741</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Final touches before release - change also the version">
+      <created>1749655890917</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1749655890917</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -502,7 +505,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Onboarding and premium prompting navigation works" />
     <MESSAGE value="Ingredient recognition works" />
     <MESSAGE value="Ingredient recognition works correctly and there is the ad for this feature" />
     <MESSAGE value="Update terms and conditions, add simple ads" />
@@ -527,7 +529,8 @@
     <MESSAGE value="Make ATT appear after timeout" />
     <MESSAGE value="Final touches before release - fix some flaws: Handle delete account better, handle delete recipe better, minor fixes" />
     <MESSAGE value="Final touches before release - fix some UI: language selection and so on" />
-    <option name="LAST_COMMIT_MESSAGE" value="Final touches before release - fix some UI: language selection and so on" />
+    <MESSAGE value="Final touches before release - change also the version" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final touches before release - change also the version" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

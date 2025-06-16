@@ -38,6 +38,20 @@
         "SENTRY_ALLOW_FAILURE": "true",
         "revenueCatPublicApiKey": "$(revenueCatPublicApiKey)"
       }
+    },
+    "simulator": {
+      "ios": {
+        "simulator": true
+      },
+      "env": {
+        "firebaseApiKey": "$(firebaseApiKey)",
+        "runwareApiKey": "$(runwareApiKey)",
+        "googleWebClientId": "$(googleWebClientId)",
+        "gptApiKey": "$(gptApiKey)",
+        "SENTRY_AUTH_TOKEN": "$(SENTRY_AUTH_TOKEN)",
+        "SENTRY_ALLOW_FAILURE": "true",
+        "revenueCatPublicApiKey": "$(revenueCatPublicApiKey)"
+      }
     }
   }
 }

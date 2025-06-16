@@ -1,6 +1,6 @@
 // GoPremiumScreen.ts
 import React, {useState, useEffect} from "react";
-import {View, Text, TouchableOpacity, StyleSheet, Alert, Image} from "react-native";
+import {View, Text, TouchableOpacity, StyleSheet, Alert, Image, ScrollView} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Ionicons} from '@expo/vector-icons';
@@ -109,77 +109,81 @@ export default function GoPremiumScreen() {
                 <Text style={styles.title}>{t("go_premium")}</Text>
             </View>
 
-            <View style={styles.container}>
-                {/* Logo Positioned Above the White Box */}
-                <Image source={require("../assets/orange.png")} style={styles.logo}/>
+            <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
+                <View style={styles.container}>
+                    {/* Logo Positioned Above the White Box */}
+                    <Image source={require("../assets/orange.png")} style={styles.logo}/>
 
-                {/* White Box Containing Benefits */}
-                <View style={styles.whiteBox}>
-                    <Text style={styles.benefit}>✅ {t("try_free_3_days")}</Text>
-                    <Text style={styles.benefit}>✅
-                        {product?.localizedPrice
+                    {/* White Box Containing Benefits */}
+                    <View style={styles.whiteBox}>
+                        <Text style={styles.benefit}>✅ {t("try_free_3_days")}</Text>
+                        <Text style={styles.benefit}>
+                            ✅ {product?.localizedPrice
                             ? t("price_info_dynamic").replace("{{price}}", product.localizedPrice)
                             : t("price_info_generic")}
-                    </Text>
-                    <Text style={styles.benefit}>✅ {t("unlimited_recipes")}</Text>
-                    <Text style={styles.benefit}>✅ {t("individual_recipes")}</Text>
-                    <Text style={styles.benefit}>✅ {t("fridge_analysis")}</Text>
-                </View>
+                        </Text>
+                        <Text style={styles.benefit}>✅ {t("unlimited_recipes")}</Text>
+                        <Text style={styles.benefit}>✅ {t("individual_recipes")}</Text>
+                        <Text style={styles.benefit}>✅ {t("fridge_analysis")}</Text>
+                    </View>
 
-                {/* Subscription Button */}
-                <TouchableOpacity style={styles.subscribeButton} onPress={handleSubscriptionPurchase}>
-                    <Text style={styles.subscribeButtonText}>{t("try_premium_free")}</Text>
-                </TouchableOpacity>
-                {/* Restore Purchases Button */}
-                <TouchableOpacity onPress={handleRestore}>
-                    <Text style={styles.restoreLink}>{t("restore_purchases")}</Text>
-                </TouchableOpacity>
-                {testingMode && <TouchableOpacity
-                    onPress={async () => {
-                        try {
-                            const customerInfo = await Purchases.getCustomerInfo();
-                            console.log("🧾 RevenueCat Customer Info:", customerInfo);
+                    {/* Subscription Button */}
+                    <TouchableOpacity style={styles.subscribeButton} onPress={handleSubscriptionPurchase}>
+                        <Text style={styles.subscribeButtonText}>{t("try_premium_free")}</Text>
+                    </TouchableOpacity>
 
-                            const active = customerInfo.entitlements.active;
-                            const entitlement = active["smartchef Plus"]; // or your actual entitlement key
+                    {/* Restore Purchases Button */}
+                    <TouchableOpacity onPress={handleRestore}>
+                        <Text style={styles.restoreLink}>{t("restore_purchases")}</Text>
+                    </TouchableOpacity>
 
-                            if (entitlement) {
-                                const msg = `
+                    {/* Optional Test Mode Debug Button */}
+                    {testingMode && <TouchableOpacity
+                        onPress={async () => {
+                            try {
+                                const customerInfo = await Purchases.getCustomerInfo();
+                                const active = customerInfo.entitlements.active;
+                                const entitlement = active["smartchef Plus"];
+
+                                if (entitlement) {
+                                    const msg = `
                                     🪪 Product ID: ${entitlement.productIdentifier}
                                     📆 Purchase Date: ${new Date(entitlement.purchaseDate).toLocaleString()}
                                     ⏭ Expires: ${entitlement.expirationDate
-                                                                        ? new Date(entitlement.expirationDate).toLocaleString()
-                                                                        : "Lifetime or undefined"}
+                                        ? new Date(entitlement.expirationDate).toLocaleString()
+                                        : "Lifetime or undefined"}
                                     🔁 Will Renew: ${entitlement.willRenew ? "Yes" : "No"}
-                                            `;
-                                Alert.alert("Active Subscription", msg.trim());
-                            } else {
-                                Alert.alert("No Active Subscription", "You're not subscribed.");
+                                `;
+                                    Alert.alert("Active Subscription", msg.trim());
+                                } else {
+                                    Alert.alert("No Active Subscription", "You're not subscribed.");
+                                }
+                            } catch (e) {
+                                console.error("❌ Error getting subscription info:", e);
+                                Alert.alert("Error", e.message);
                             }
-                        } catch (e) {
-                            console.error("❌ Error getting subscription info:", e);
-                            Alert.alert("Error", e.message);
-                        }
-                    }}
-                    style={[styles.subscribeButton, {backgroundColor: "#ccc"}]}
-                >
-                    <Text style={styles.subscribeButtonText}>Check Active Subscription</Text>
-                </TouchableOpacity> }
+                        }}
+                        style={[styles.subscribeButton, {backgroundColor: "#ccc"}]}
+                    >
+                        <Text style={styles.subscribeButtonText}>Check Active Subscription</Text>
+                    </TouchableOpacity>}
 
-                <Text style={styles.subscriptionInfoText}>
-                    {product?.localizedPrice
-                        ? t("subscription_info_dynamic").replace("{{price}}", product.localizedPrice)
-                        : t("subscription_info")}
-                </Text>
-                <Text style={styles.alreadyTriedText}>
-                    {t("already_tried")}
-                </Text>
-                <Text style={styles.supportText}>
-                    {t("support_text")}
-                </Text>
-            </View>
+                    <Text style={styles.subscriptionInfoText}>
+                        {product?.localizedPrice
+                            ? t("subscription_info_dynamic").replace("{{price}}", product.localizedPrice)
+                            : t("subscription_info")}
+                    </Text>
+                    <Text style={styles.alreadyTriedText}>
+                        {t("already_tried")}
+                    </Text>
+                    <Text style={styles.supportText}>
+                        {t("support_text")}
+                    </Text>
+                </View>
+            </ScrollView>
         </SafeAreaView>
     );
+
 }
 
 const styles = StyleSheet.create({
@@ -190,6 +194,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 20,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    scrollContainer: {
+        padding: 5,
         alignItems: "center",
         justifyContent: "center",
     },
