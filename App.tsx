@@ -11,11 +11,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Purchases from 'react-native-purchases';
 import { View, StatusBar } from 'react-native';
 import * as TrackingTransparency from 'expo-tracking-transparency';
-import {itemSkus} from "./services/subscriptionService";
 
 global.Buffer = Buffer;
-
-const itemSkusFetched = { skus: itemSkus };
 
 Sentry.init({
     dsn: "https://fdcc23544f251ec13abbd4af5bec0e72@o4509089542569984.ingest.de.sentry.io/4509089612562512",
@@ -31,14 +28,15 @@ export default Sentry.wrap(function App() {
             try {
                 Purchases.configure({
                     apiKey: process.env.revenueCatPublicApiKey,
-                    appUserID: null, // or set to your Firebase UID if you want to manage it yourself
+                    appUserID: null,
                 });
 
-                const result = await RNIap.initConnection();
-                console.log("✅ IAP Initialized:", result);
-
-                const isAvailable = await RNIap.getSubscriptions(itemSkusFetched);
-                console.log("🔍 Available Subscriptions:", isAvailable);
+                const offerings = await Purchases.getOfferings();
+                if (offerings.current) {
+                    console.log("🧾 RevenueCat Offerings:", offerings.current);
+                } else {
+                    console.warn("⚠️ No offerings configured in RevenueCat");
+                }
 
                 const purchaseUpdateSubscription = RNIap.purchaseUpdatedListener(async (purchase) => {
                     console.log("✅ Purchase Update:", purchase);
@@ -46,6 +44,9 @@ export default Sentry.wrap(function App() {
                         await RNIap.finishTransaction({ purchase });
                     }
                 });
+
+                await RNIap.initConnection();
+                console.log("✅ RNIap connection initialized");
 
                 return () => {
                     purchaseUpdateSubscription.remove();

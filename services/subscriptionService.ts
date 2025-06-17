@@ -4,18 +4,22 @@ import {doc, updateDoc} from "firebase/firestore";
 import {db} from "../firebaseConfig";
 import * as RNIap from "react-native-iap";
 import axios from "axios";
+import Purchases from "react-native-purchases";
 
-export const itemSkus = ["com.rFrostSmartChef.plus.monthly"];
-
-const fetchSubscriptions = async () => {
+export const fetchSubscriptions = async () => {
     try {
-        console.log('here')
-        const products = await RNIap.getSubscriptions({ skus: itemSkus });
-        console.log('here', products);
-        console.log("Available subscriptions:", products);
-        return products;
+        const offerings = await Purchases.getOfferings();
+        if (offerings.current && offerings.current.availablePackages.length > 0) {
+            const products = offerings.current.availablePackages.map(pkg => pkg.product);
+            console.log("✅ Available products:", products);
+            return products;
+        } else {
+            console.warn("⚠️ No available packages found in current offering.");
+            return [];
+        }
     } catch (error) {
-        console.error("Failed to fetch subscriptions:", error);
+        console.error("❌ Failed to fetch subscriptions from RevenueCat:", error);
+        return [];
     }
 };
 
@@ -37,9 +41,20 @@ export const restorePurchases = async (setSubscriptionType, user) => {
         const purchases = await RNIap.getAvailablePurchases();
         console.log("🧾 Available purchases:", purchases);
 
-        const hasPremium = purchases.some(purchase =>
-            itemSkus.includes(purchase.productId)
-        );
+        const customerInfo = await Purchases.getCustomerInfo();
+        const isEntitled = customerInfo.entitlements.active["smartchef Plus"];
+
+        if (isEntitled && user) {
+            console.log("🎉 Premium entitlement found. Updating Firestore and state...");
+            const userRef = doc(db, "users", user.uid);
+            await updateDoc(userRef, { subscriptionType: "premium" });
+            setSubscriptionType("premium");
+            return true;
+        } else {
+            console.log("⚠️ No active entitlement found.");
+            setSubscriptionType("guest");
+            return false;
+        }
 
         if (hasPremium && user) {
             console.log("🎉 Premium purchase found. Updating Firestore and state...");

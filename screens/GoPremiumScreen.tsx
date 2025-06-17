@@ -5,7 +5,6 @@ import {useNavigation} from "@react-navigation/native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Ionicons} from '@expo/vector-icons';
 import {useAuth} from "../contexts/AuthContext";
-import * as RNIap from "react-native-iap";
 import {db} from "../firebaseConfig";
 import {doc, updateDoc} from "firebase/firestore";
 import {useLanguage} from "../services/LanguageContext";
@@ -13,7 +12,6 @@ import translations from "../data/translations.json";
 import * as Sentry from '@sentry/react-native';
 import Purchases from "react-native-purchases";
 import {testingMode} from "../services/openaiService";
-import {itemSkus} from "../services/subscriptionService";
 
 export default function GoPremiumScreen() {
     const {user, setSubscriptionType, refreshSubscriptionType} = useAuth();
@@ -26,14 +24,12 @@ export default function GoPremiumScreen() {
     useEffect(() => {
         const fetchSubscription = async () => {
             try {
-                await RNIap.initConnection();
-                const products = await RNIap.getSubscriptions({skus: itemSkus});
-                console.log('Available subscriptions', products);
-                if (products.length > 0) {
-                    setProduct(products[0]);
+                const offerings = await Purchases.getOfferings();
+                if (offerings.current && offerings.current.availablePackages.length > 0) {
+                    setProduct(offerings.current.availablePackages[0].product);
                 }
             } catch (error) {
-                console.error("Error fetching subscription:", error);
+                console.error("Error fetching subscription via RevenueCat:", error);
             }
         };
 
@@ -45,6 +41,8 @@ export default function GoPremiumScreen() {
             const offerings = await Purchases.getOfferings();
             const current = offerings.current;
             console.log('current: ', current);
+            console.log('offerings: ', offerings);
+            console.log('product: ', product);
 
             if (current && current.monthly) {
                 const purchaseInfo = await Purchases.purchasePackage(current.monthly);
@@ -118,8 +116,8 @@ export default function GoPremiumScreen() {
                     <View style={styles.whiteBox}>
                         <Text style={styles.benefit}>✅ {t("try_free_3_days")}</Text>
                         <Text style={styles.benefit}>
-                            ✅ {product?.localizedPrice
-                            ? t("price_info_dynamic").replace("{{price}}", product.localizedPrice)
+                            ✅ {product?.pricePerMonthString
+                            ? t("price_info_dynamic").replace("{{price}}", product.pricePerMonthString)
                             : t("price_info_generic")}
                         </Text>
                         <Text style={styles.benefit}>✅ {t("unlimited_recipes")}</Text>
@@ -169,8 +167,8 @@ export default function GoPremiumScreen() {
                     </TouchableOpacity>}
 
                     <Text style={styles.subscriptionInfoText}>
-                        {product?.localizedPrice
-                            ? t("subscription_info_dynamic").replace("{{price}}", product.localizedPrice)
+                        {product?.pricePerMonthString
+                            ? t("subscription_info_dynamic").replace("{{price}}", product.pricePerMonthString)
                             : t("subscription_info")}
                     </Text>
                     <Text style={styles.alreadyTriedText}>

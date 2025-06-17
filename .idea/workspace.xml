@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Fix translations">
+    <list default="true" id="7dbeb4bf-27ea-45f1-be69-8fd356119041" name="Changes" comment="Change the subscriptions product to plus from premium">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contexts/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/contexts/AuthContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/GoPremiumScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/GoPremiumScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/subscriptionService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/subscriptionService.ts" afterDir="false" />
     </list>
@@ -140,14 +140,7 @@
       <workItem from="1748867021777" duration="4454000" />
       <workItem from="1749069300085" duration="897000" />
       <workItem from="1749546124772" duration="5028000" />
-      <workItem from="1749560045215" duration="27968000" />
-    </task>
-    <task id="LOCAL-00030" summary="New design for IngredientSelectionScreen">
-      <created>1739896097083</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1739896097083</updated>
+      <workItem from="1749560045215" duration="33084000" />
     </task>
     <task id="LOCAL-00031" summary="New design for the whole first scenario journey">
       <created>1740068130784</created>
@@ -485,7 +478,14 @@
       <option name="project" value="LOCAL" />
       <updated>1750082420830</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="Change the subscriptions product to plus from premium">
+      <created>1750088496085</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1750088496085</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -504,7 +504,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update terms and conditions, add simple ads" />
     <MESSAGE value="Add loading ads, ads work" />
     <MESSAGE value="testing ads log" />
     <MESSAGE value="Add all the translations and more data" />
@@ -529,7 +528,8 @@
     <MESSAGE value="Final touches before release - change also the version" />
     <MESSAGE value="Fix Ukrainian translation" />
     <MESSAGE value="Fix translations" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix translations" />
+    <MESSAGE value="Change the subscriptions product to plus from premium" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change the subscriptions product to plus from premium" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
