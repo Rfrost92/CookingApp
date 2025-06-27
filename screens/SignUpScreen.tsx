@@ -17,6 +17,8 @@ export default function SignUpScreen({ navigation }: any) {
     const [whyModalVisible, setWhyModalVisible] = useState(false);
 
     const handleSignUp = async () => {
+        console.warn(`[User Click] Sign Up with email button | Anonymous`);
+
         if (!email.trim() || !password.trim()) {
             Alert.alert(t("error"), t("please_enter_email_password"));
             return;

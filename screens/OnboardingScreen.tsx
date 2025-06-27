@@ -14,11 +14,13 @@ const OnboardingScreen = () => {
     const t = (key: string) => translations?.[language]?.[key] ?? `[${key}]`;
 
     const handleDone = async () => {
+        console.warn(`[User Click] Finish onboarding | Anonymous`);
         await AsyncStorage.setItem("hasSeenOnboarding", "true");
         navigation.replace("Home");
     };
 
     const handleCreateAccount = async () => {
+        console.warn(`[User Click] Sign up from onboarding | Anonymous`);
         await AsyncStorage.setItem("hasSeenOnboarding", "true");
         navigation.replace("InitialSignUp");
     };

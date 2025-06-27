@@ -334,9 +334,9 @@
   },
 
   "de": {
-    "welcome": "Willkommen bei smartchef!",
-    "ingredient_selection": "Ich möchte etwas aus den zu Hause verfügbaren Zutaten kochen",
-    "open_to_ideas": "Ich bin offen für neue Ideen, ich möchte etwas aus beliebigen Zutaten kochen",
+    "welcome": "Hey Chef, was kochen wir heute?",
+    "ingredient_selection": "Aus vorhandenen Zutaten kochen",
+    "open_to_ideas": "Mein persönliches Rezept erstellen",
     "classic_recipes": "Klassische Rezepte",
     "reset_counter": "Zähler für nicht angemeldete Benutzer zurücksetzen",
     "account": "Konto",
@@ -664,7 +664,7 @@
     "confirm_delete_account": "Ja, mein Konto löschen",
     "delete_warning_text": "Bist du sicher? Diese Aktion ist unwiderruflich. Wenn du dein Konto löschst, werden alle deine Daten dauerhaft entfernt.",
     "go_back": "Nein, zurück",
-    "de": "Noch keine Rezepte gespeichert"
+    "no_recipes_saved": "Noch keine Rezepte gespeichert"
   },
   "ua": {
     "welcome": "Привіт, Шеф! Що готуємо сьогодні?",
@@ -997,7 +997,7 @@
     "confirm_delete_account": "Так, видалити мій обліковий запис",
     "delete_warning_text": "Ви впевнені? Цю дію не можна скасувати. Якщо ви видалите обліковий запис, всі ваші дані буде остаточно втрачено.",
     "go_back": "Ні, повернутися",
-    "uk": "Ще немає збережених рецептів"
+    "no_recipes_saved": "Ще немає збережених рецептів"
   },
 
   "ru": {
@@ -1331,6 +1331,6 @@
     "confirm_delete_account": "Да, удалить мой аккаунт",
     "delete_warning_text": "Вы уверены? Это действие необратимо. Если вы удалите аккаунт, все ваши данные будут безвозвратно удалены.",
     "go_back": "Нет, вернуться",
-    "ru": "Пока нет сохранённых рецептов"
+    "no_recipes_saved": "Пока нет сохранённых рецептов"
   }
 }

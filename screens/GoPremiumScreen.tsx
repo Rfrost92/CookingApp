@@ -38,6 +38,7 @@ export default function GoPremiumScreen() {
 
     const handleSubscriptionPurchase = async () => {
         try {
+            console.warn(`[User Click] Try smartchef Plus purchase button | ${user?.email || user?.uid || "Anonymous"}`);
             const offerings = await Purchases.getOfferings();
             const current = offerings.current;
             console.log('current: ', current);

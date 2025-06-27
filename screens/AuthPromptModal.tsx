@@ -21,7 +21,10 @@ export default function AuthPromptModal({ visible, onClose }) {
                     {t("auth_prompt_description") || "Unlock personalized recipes, your own recipe book, and the ability to go premium."}
                 </Text>
 
-                <TouchableOpacity onPress={() => setWhyModalVisible(true)} style={{ marginTop: 5, marginBottom: 20 }}>
+                <TouchableOpacity onPress={() => {
+                    console.warn(`[User Click] Why login | Anonymous`);
+                    setWhyModalVisible(true)
+                }} style={{ marginTop: 5, marginBottom: 20 }}>
                     <Text style={{ textAlign: 'center', color: '#444' }}>{t("why_login_to_try") || "🛈 Why do I need to log in?"}</Text>
                 </TouchableOpacity>
 
@@ -30,6 +33,7 @@ export default function AuthPromptModal({ visible, onClose }) {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {
+                        console.warn(`[User Click] Log in from Auth Prompt | Anonymous`);
                         onClose();
                         navigation.navigate("LogIn");
                     }}
@@ -37,7 +41,10 @@ export default function AuthPromptModal({ visible, onClose }) {
                     <Text style={styles.buttonText}>{t("log_in_now") || "Log in or sign up (it's free)"}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+                <TouchableOpacity style={styles.closeButton} onPress={() => {
+                    console.warn(`[User Click] Maybe Later log in | Anonymous`);
+                    onClose()
+                }}>
                     <Text style={styles.closeButtonText}>{t("maybe_later")}</Text>
                 </TouchableOpacity>
             </View>

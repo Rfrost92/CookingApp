@@ -137,7 +137,10 @@ export default function InitialSignUpScreen({ navigation }: any) {
 
                 <TouchableOpacity
                     style={styles.secondaryButton}
-                    onPress={() => navigation.navigate("Home")}
+                    onPress={() => {
+                        console.warn(`[User Click] Initial sign up. Create account later | Anonymous`);
+                        navigation.navigate("Home")
+                    }}
                 >
                     <Text style={styles.secondaryButtonText}>{t("i_will_create_later")}</Text>
                 </TouchableOpacity>

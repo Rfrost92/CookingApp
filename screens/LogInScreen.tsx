@@ -25,6 +25,7 @@ export default function LogInScreen({navigation}: any) {
 
     const handleGoogleLogin = async () => {
         try {
+            console.warn(`[User Click] Google login | Anonymous`);
             const user = await signInWithGoogle();
             Alert.alert(t("success"), t("logged_in_successfully"));
             navigation.navigate("Home");
@@ -35,6 +36,8 @@ export default function LogInScreen({navigation}: any) {
     };
 
     const handleLogIn = async () => {
+        console.warn(`[User Click] Login with email Button | Anonymous`);
+
         if (!email.trim() || !password.trim()) {
             Alert.alert(t("error"), t("please_enter_email_password"));
             return;
@@ -91,6 +94,7 @@ export default function LogInScreen({navigation}: any) {
     };
 
     const handleAppleSignIn = async () => {
+        console.warn(`[User Click] Apple login button | Anonymous`);
         try {
             const credential = await AppleAuthentication.signInAsync({
                 requestedScopes: [
@@ -176,7 +180,10 @@ export default function LogInScreen({navigation}: any) {
                     <Text style={styles.secondaryButtonText}>{t("forgot_password")}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.secondaryButton} onPress={() => navigation.navigate("SignUp")}>
+                <TouchableOpacity style={styles.secondaryButton} onPress={() => {
+                    console.warn(`[User Click] Dont have account sign up | Anonymous`);
+                    navigation.navigate("SignUp")
+                }}>
                     <Text style={styles.secondaryButtonText}>{t("dont_have_account")}</Text>
                 </TouchableOpacity>
 

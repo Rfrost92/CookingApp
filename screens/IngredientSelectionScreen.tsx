@@ -281,6 +281,7 @@ export default function IngredientSelectionScreen() {
     }
 
     const handleTakePhoto = async () => {
+        console.warn(`[User Click] Camera ingredients | ${user?.email || user?.uid || "Anonymous"}`);
         if (subscriptionType !== "premium") {
             setShowPremiumDetectionModal(true);
             return;

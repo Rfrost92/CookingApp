@@ -22,6 +22,7 @@ export default function PremiumOnlyDetectionModal({ visible, onClose }) {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {
+                        console.warn(`[User Click] Get Plus from detection banner | Anonymous`);
                         onClose();
                         navigation.navigate("GoPremium");
                     }}

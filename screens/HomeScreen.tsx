@@ -119,9 +119,11 @@ export default function HomeScreen() {
 
     const handleAccountPress = () => {
         if (isLoggedIn) {
+            console.warn(`[User Click] Account modal opened | ${user?.email || user?.uid || "Anonymous"}`);
             setLemonMenuVisible(false);
             setAccountModalVisible(true);
         } else {
+            console.warn(`[User Click] Login button | ${user?.email || user?.uid || "Anonymous"}`);
             setLemonMenuVisible(false);
             navigation.navigate("LogIn");
         }
@@ -129,6 +131,7 @@ export default function HomeScreen() {
 
     const handleLogout = async () => {
         try {
+            console.warn(`[User Click] Log out | ${user?.email || user?.uid || "Anonymous"}`);
             await logOut();
             setAccountModalVisible(false);
             Alert.alert(t("logged_out"), t("logout_success"));
@@ -148,6 +151,8 @@ export default function HomeScreen() {
     };
 
     const handleLanguageChange = () => {
+        console.warn(`[User Click] Language modal opened | ${user?.email || user?.uid || "Anonymous"}`);
+
         setLemonMenuVisible(false);
 
         setLanguageModalVisible(true);
@@ -250,7 +255,11 @@ export default function HomeScreen() {
                         {/* Menu Options */}
                         <TouchableOpacity
                             style={[styles.button, !isLoggedIn && styles.lockedButton]}
-                            onPress={() => handleProtectedAction("IngredientSelection")}
+                            onPress={() => {
+                                console.warn(`[User Click] Available ingredients | ${user?.email || user?.uid || "Anonymous"}`);
+                                handleProtectedAction("IngredientSelection")
+                                }
+                            }
                         >
                             <Image source={require("../assets/availableingr.png")} style={styles.buttonIcon}/>
                             <View style={styles.lockedRow}>
@@ -262,7 +271,11 @@ export default function HomeScreen() {
 
                         <TouchableOpacity
                             style={[styles.button, !isLoggedIn && styles.lockedButton]}
-                            onPress={() => handleProtectedAction("Scenario2Step1")}
+                            onPress={() => {
+                                console.warn(`[User Click] Personalized Recipe | ${user?.email || user?.uid || "Anonymous"}`);
+                                handleProtectedAction("Scenario2Step1")
+                                }
+                            }
                         >
                             <Image source={require("../assets/newingr.png")} style={styles.buttonIcon}/>
                             <View style={styles.lockedRow}>
@@ -273,6 +286,7 @@ export default function HomeScreen() {
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.button} onPress={() => {
+                            console.warn(`[User Click] Classic Recipes | ${user?.email || user?.uid || "Anonymous"}`);
                             setLemonMenuVisible(false);
                             handleRequest("ChooseClassicRecipe")
                         }}>
@@ -336,6 +350,7 @@ export default function HomeScreen() {
 
                                     {!isLoggedIn || subscriptionType === "guest" || testingMode ? (
                                         <TouchableOpacity style={styles.premiumButton} onPress={() => {
+                                            console.warn(`[User Click] Get smartchef Plus button | ${user?.email || user?.uid || "Anonymous"}`);
                                             navigation.navigate("GoPremium"), setAccountModalVisible(false)
                                         }}>
                                             <Text style={styles.premiumButtonText}>{t("go_premium")}</Text>
@@ -395,7 +410,10 @@ export default function HomeScreen() {
                 <View style={styles.bottomBar}>
                     {/* Lemon Button */}
                     <TouchableOpacity style={styles.lemonButton}
-                                      onPress={() => setLemonMenuVisible(!isLemonMenuVisible)}>
+                                      onPress={() => {
+                                          console.warn(`[User Click] Lemon Menu | ${user?.email || user?.uid || "Anonymous"}`);
+                                          setLemonMenuVisible(!isLemonMenuVisible)
+                                      }}>
                         <Image source={require("../assets/lemonIcon.png")} style={styles.lemonIcon}/>
                     </TouchableOpacity>
 
@@ -420,6 +438,7 @@ export default function HomeScreen() {
                         {/* Help Button */}
                         <TouchableOpacity style={styles.lemonMenuItem}
                                           onPress={() => {
+                                              console.warn(`[User Click] Help button | ${user?.email || user?.uid || "Anonymous"}`);
                                               setLemonMenuVisible(false);
                                               navigation.navigate("HelpScreen")
                                           }}>
